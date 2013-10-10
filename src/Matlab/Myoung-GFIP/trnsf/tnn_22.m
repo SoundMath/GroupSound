@@ -1,0 +1,70 @@
+clear;
+n=4;
+n2=n+n;
+m=n/2;
+nn1=n*n;
+nn2=nn1+nn1;
+nn3=nn2+nn1;
+nn4=nn3+nn1;
+%s2=input('input the scene number 0--6     ')
+%sz=input('input the strip size 1--4    ')
+%gg=bkgd(s2,sz,n);
+%xx=gg(1:n,1:n2);
+%
+gp=input('enter group number 11 --4            ')
+%
+uu=rand(n2,n2);
+vv=rand(n2,n2);
+%uu=zeros(n2,n2);
+%vv=zeros(n2,n2);
+%uu(2+n,3+n)=1;
+%vv(3+n,2+n)=1;
+[x1,x21,x22,x23,x4]=nn_22(uu,gp);
+xx1=inn_22(x1,gp);
+xx21=inn_22(x21,gp);
+xx22=inn_22(x22,gp);
+xx23=inn_22(x23,gp);
+xx4=inn_22(x4,gp);
+%
+v1=reshape(vv(1:n,1:n),nn1,1);
+v2=reshape(vv(1+n:n2,1:n),nn1,1);
+v3=reshape(vv(1:n,1+n:n2),nn1,1);
+v4=reshape(vv(1+n:n2,1+n:n2),nn1,1);
+%
+v=[v1;v2;v3;v4];
+y=gnn_22(xx21,gp);
+b=y*v;
+%
+bb=rho1to2(b,n);
+%
+% convolution theorem
+for k=1:nn4
+   yy=rho1to2(y(:,k),n);
+   [ff1,ff21,ff22,ff23,ff4]=nn_22(yy,gp);
+   f1=rho2to1(ff1,n);
+   f21=rho2to1(ff21,n);
+   f22=rho2to1(ff22,n);
+   f23=rho2to1(ff23,n);
+   f4=rho2to1(ff4,n);
+   fu(:,k)=f1+f21+f22+f23+f4;
+end   
+fut=fu';
+for k=1:nn4
+   ff=rho1to2(fut(:,k),n);
+   [ff1,ff21,ff22,ff23,ff4]=nn_22(ff,gp);
+   f1=rho2to1(ff1,n);
+   f21=rho2to1(ff21,n);
+   f22=rho2to1(ff22,n);
+   f23=rho2to1(ff23,n);
+   f4=rho2to1(ff4,n);
+   fu(:,k)=f1+f21+f22+f23+f4;
+end
+fuf=fu';
+[fv1,fv21,fv22,fv23,fv4]=nn_22(vv,gp);
+fv=fv1+fv21+fv22+fv23+fv4;
+fvv=rho2to1(fv,n);
+dd=fuf*fvv;
+fd=rho1to2(dd,n);
+c2=inn_22(fd,gp);
+cv=rho2to1(c2,n);
+%

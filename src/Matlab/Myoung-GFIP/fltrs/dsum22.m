@@ -1,0 +1,15 @@
+clear;
+ny=32;
+nx=32;
+orgn=1;
+nn=max(nx,ny);
+ff=scene(6,nn,orgn);
+ff=ff(1:2*nx,1:2*ny);
+gx=2;
+gy=2;
+%
+[y1,y21,y12,y22]=n2n2(ff,nx,ny,gx,gy);
+yy1=real(in2n2(y1,nx,ny,gx,gy));
+yy21=real(in2n2(y21,nx,ny,gx,gy));
+yy12=real(in2n2(y12,nx,ny,gx,gy));
+yy22=real(in2n2(y22,nx,ny,gx,gy));
