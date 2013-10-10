@@ -3,7 +3,7 @@ Group Sound
 
 This is the main repository for original research on the acoustical properties of nonabelian group filters.
 
-Research Group
+Research Team
 --------------
 Matthew Corley -- University of South Carolina (CS major)
 
