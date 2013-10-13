@@ -26,5 +26,5 @@ to an international conference would be a big part of the budget.
     
     http://www.linuxjournal.com/content/super-collision-studio-dave-new-world-supercollider3-part-1
 
-6.  Discussed basics of mathematical theory of DSP underlying project idea.
+6.  Discussed basics of mathematical theory of DSP underlying project idea.  William will post some notes and links about this on our GitHub page soon.
     
