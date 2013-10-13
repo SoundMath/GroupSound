@@ -19,8 +19,8 @@ The aim of this project is to explore the idea of using the underlying finite gr
 
 A new webpage is at: http://soundmath.github.io/GroupSound
 
-Related Resources and Information
----------------------------------
+Related Resources
+-----------------
 GAP -- A system for computational discrete algebra. http://gap-system.org/
 
 International Symposium on Musical Acoustics (ISMA) http://isma.univ-lemans.fr/en/index.html
