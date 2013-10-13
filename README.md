@@ -18,3 +18,12 @@ Underlying many digital signal processing (dsp) algorithms, in particular those 
 The aim of this project is to explore the idea of using the underlying finite group (i.e., the index set) as an adjustable parameter of a digital audio filter. By listening to samples produced using various nonabelian groups, we try to get a sense of the "acoustical characters" of finite groups.
 
 A new webpage is at: http://soundmath.github.io/GroupSound
+
+Related Resources and Information
+---------------------------------
+GAP -- A system for computational discrete algebra. http://gap-system.org/
+
+International Symposium on Musical Acoustics (ISMA) http://isma.univ-lemans.fr/en/index.html
+
+International Computer Music Conference (ICMC) http://www.computermusic.org/page/23/
+
