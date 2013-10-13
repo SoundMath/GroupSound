@@ -8,9 +8,9 @@ Meeting Notes: Oct 13, 2013
 3.  Discussed possible conferences for disseminating results, since travel 
 to an international conference would be a big part of the budget.
 
-    a.  AMS JMM: Jan 15--18, 2014, Baltimore USA (Matt cannot attend; William will present)
-    b.  ISMA: Jul 7--14, 2014, Le Mans, FR
-    c.  ICMC: (not yet advertised)
+        a.  AMS JMM: Jan 15--18, 2014, Baltimore USA (Matt cannot attend; William will present)
+        b.  ISMA: Jul 7--14, 2014, Le Mans, FR
+        c.  ICMC: (not yet advertised)
 
 4.  Completed proposed budget.
 
