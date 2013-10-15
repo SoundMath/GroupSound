@@ -1,7 +1,7 @@
 Group Sound
 ===========
 
-This is the main repository for original research on the acoustical properties of nonabelian group filters.
+This is the main repository for original research on the acoustical properties of nonabelian group filters.  As the project has just begun (October 2013), there is not much in the repository yet.  Check back in a month or two!
 
 Research Team
 --------------
