@@ -7,9 +7,9 @@ Research Team
 --------------
 Matthew Corley -- University of South Carolina (CS major)
 
-Alyssa Todaro -- University of South Carolina (Math major)
-
 William DeMeo -- University of South Carolina (Math faculty mentor)
+
+Reginald Bain -- University of South Carolina (Music faculty mentor)
 
 Abstract
 --------
