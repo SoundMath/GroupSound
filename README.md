@@ -23,6 +23,8 @@ Related Resources
 -----------------
 GAP -- A system for computational discrete algebra. http://gap-system.org/
 
+New Interfaces for Musical Expression (NIME) http://www.nime.org/nime2014/
+
 International Symposium on Musical Acoustics (ISMA) http://isma.univ-lemans.fr/en/index.html
 
 International Computer Music Conference (ICMC) http://www.computermusic.org/page/23/
