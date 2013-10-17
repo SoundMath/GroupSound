@@ -21,12 +21,12 @@ A new webpage is at: http://soundmath.github.io/GroupSound
 
 Related Resources
 -----------------
-1.  Programming
-    [GAP](http://gap-system.org/)
-    [CSound](http://www.csounds.com/)
-    [Pure Data](http://puredata.info/)
-    [Supercollider](httpp://supercollider.sourceforge.net/)
-    [Chuck](http://chuck.cs.princeton.edu/)
+1.  Programming:
+    [GAP](http://gap-system.org/),
+    [CSound](http://www.csounds.com/),
+    [Pure Data](http://puredata.info/),
+    [Supercollider](httpp://supercollider.sourceforge.net/),
+    [Chuck](http://chuck.cs.princeton.edu/).
 
 
 2.  Books and Notes 
