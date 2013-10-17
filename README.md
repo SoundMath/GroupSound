@@ -22,24 +22,23 @@ A new webpage is at: http://soundmath.github.io/GroupSound
 Related Resources
 -----------------
 1.  Programming
-
-        [GAP](http://gap-system.org/)
-        [CSound](http://www.csounds.com/)
-        [Pure Data](http://puredata.info/)
-        [Supercollider](httpp://supercollider.sourceforge.net/)
-        [Chuck](http://chuck.cs.princeton.edu/)
+    [GAP](http://gap-system.org/)
+    [CSound](http://www.csounds.com/)
+    [Pure Data](http://puredata.info/)
+    [Supercollider](httpp://supercollider.sourceforge.net/)
+    [Chuck](http://chuck.cs.princeton.edu/)
 
 
 2.  Books and Notes 
 
-        [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
-	by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
+    [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
+    by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
 
 3.  Conferences
 
-        [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)
-        [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)
-        [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)
+    [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)
+    [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)
+    [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)
 
 
 
