@@ -21,11 +21,15 @@ A new webpage is at: http://soundmath.github.io/GroupSound
 
 Related Resources
 -----------------
-GAP -- A system for computational discrete algebra. http://gap-system.org/
+GAP -- A system for computational discrete algebra -- http://gap-system.org/
 
-New Interfaces for Musical Expression (NIME) http://www.nime.org/nime2014/
+New Interfaces for Musical Expression (NIME) -- http://www.nime.org/nime2014/
 
-International Symposium on Musical Acoustics (ISMA) http://isma.univ-lemans.fr/en/index.html
+International Symposium on Musical Acoustics (ISMA) -- http://isma.univ-lemans.fr/en/index.html
 
-International Computer Music Conference (ICMC) http://www.computermusic.org/page/23/
+International Computer Music Conference (ICMC) -- http://www.computermusic.org/page/23/
+
+Music and Computers: A Theoretical and Historical Approach -- http://music.columbia.edu/cmc/MusicAndComputers/
+by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
+
 
