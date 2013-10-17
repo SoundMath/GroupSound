@@ -35,7 +35,7 @@ Related Resources
     by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
 
 3.  Conferences
-
+    [Joint Math Meetings of the AMS: Mathematical Association of America](http://jointmathematicsmeetings.org/jmm)
     [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)
     [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)
     [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)
