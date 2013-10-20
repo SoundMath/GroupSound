@@ -1,0 +1,293 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate,amsmath,amssymb,fancyhdr,mathrsfs,amscd,stmaryrd,amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage[colorlinks=true,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
+
+\begin{document}
+\begin{center}
+{\bf What does a nonabelian group sound like?}\\
+Matthew Corley (Computer Science); William DeMeo (Math; mentor), Reg
+Bain (Music; co-mentor)
+\end{center}
+
+\noindent {\bf Background and prior work.}
+%% Your proposal should consist of the following: 
+%% 1. Background/Knowledge in the field/Literature review - Be succinct. This
+%% section should provide the information that the reviewer needs to know to
+%% understand what and why you are doing this project. Include a discussion of  the
+%% present understanding and/or state of knowledge concerning the question/problem
+%% or a discussion of the context of the scholarly or creative work. This section
+%% presents and summarizes the problem you intend to solve.  This section should
+%% include documentation, references, and a review of the literature that supports
+%% the need for your research or creative endeavor. **For questions regarding works
+%% cited, references, or bibliography, please see  8 below.
+%% If your project is part of a larger project, how should this information be
+%% included? It depends on what type of information you are including and how it
+%% applies to your project. Information can be included in the background to
+%% provide context and justification or as an introduction within the Project
+%% design/methods section (or in both sections, if appropriate). 
+In digital signal processing, the convolution function can be described as a sum
+of weighted translations.  For normal DSP algorithms, this underlying function
+is defined on the ``index set'' of the integers modulo $n$, with the group operation
+addition. 
+
+My faculty mentor, Dr.~William DeMeo (Mathematics), initiated research in this
+direction in 2004 and presented his initial findings at the International
+Symposium on Musical Acoustics. (His paper~\cite{nonabeliandsp} appeared in the
+proceedings and won the conference's ``best paper award.'')
+
+Similarly, the idea of indexing signals with nonabelian groups has been applied
+to two dimensional image data with successful results (see~\cite{Tolimieri:2003}).\\
+\\
+See also \cite{Tolimieri:1998}.\\
+\\
+TODO: add more stuff here!
+ 
+\vskip5mm
+
+\noindent {\bf Research question.}
+%% 2. Research question or statement – Very clearly state what you will be studying
+%% in 1-2 sentences. The information on why, how, importance, etc will be in other
+%% sections. Be sure that this is understandable to someone who does not know much
+%% about your field of study. To test your explanation – give this to a friend not
+%% in your major. If he/she doesn’t understand, try again! 
+If the underlying index set of a digital signal processing algorithm is modified
+to various nonabelian groups instead of the ordinary abelian groups, what
+effects will this have on the audio output? 
+
+\vskip5mm
+
+\noindent {\bf Project goals and objectives.}
+%% 3. Project Goal and Objectives - Goals and Objectives are often confused with
+%% each other. They both describe things that a person may want to achieve or
+%% attain but in relative terms may mean different things. Both are desired
+%% outcomes of work done by a person but what sets them apart is the time frame,
+%% attributes they are set for and the effect they inflict. Both terms imply the
+%% target that one's efforts is desired to accomplish. (Review Section II of this
+%% document for additional assistance with this section.)  
+%%
+%% Example: 
+%% -- Goal: Our after-school program will help children read better. 
+%% -- Objective: Our after-school remedial education program will assist 50
+%%    children in improving their reading scores by one grade level as demonstrated on
+%%    standardized reading tests administered after participating in the program for
+%%    six months.  
+%%
+%% NOTE: Sections 2 and 3 are very important. They don’t need to be long – one
+%% short paragraph should be enough – but they are critical. The rest of your
+%% proposal supports these statements and explains why you want to explore this
+%% question, how you will do it, and what it means to you. 
+\begin{itemize}
+\item {\it Goal:}
+Develop mathematical theory to give sonic characterizations to nonabelian groups.
+\item
+{\it Objective:} Find a short list of nonabelian groups that are useful for
+nonabelian group audio filters and effects processors, prove their effectiveness
+both mathematically and experimentally, and document the results.
+\item
+{\it Objective:} Implement a software program that takes audio as input and
+allows user to apply filters corresponding to specific nonabelian groups to
+acheive different effects. 
+\end{itemize}
+ 
+\vskip5mm
+
+\noindent {\bf Project significance.}
+%% 4. Project impact, significance, or purpose - Keep the statement of significance
+%% brief (2-4 sentences) - be succinct!  Some things to consider for this section:
+%% what can your research be used for in the big picture; how is your research
+%% innovative, unique or different; how will your project increase knowledge in the
+%% field (is there a void that  your project will fill); what is the bigger
+%% question that your question might help answer or how can it be used by others;
+%% is there a direct impact to the community, environment, or USC. In thinking
+%% about the significance, try to take the position of an educated newspaper
+%% reader. If she or he were to see an article about your project in the paper, how
+%% would you explain the importance or purpose of your project?  
+The proposed research introduces the novel concept of giving sonic
+characteristics to mathematical groups.  There is also a possibility of
+applications in digital audio engineering, especially if certain nonabelian
+groups are shown to produce interesting audio effects. 
+ 
+\vskip5mm
+
+\noindent {\bf Methodology.}
+%% 5. Project Design or Methods - Design and describe a work plan consistent with
+%% your academic discipline. This may include musical, creative, lab, or
+%% field-based explorations; use of population samples; experimental and control
+%% groups; statistical analysis; surveys or interviews; archival research;
+%% translating; ethnographic fieldwork; case studies; or other forms of analysis
+%% and synthesis of ideas and concepts. This section of the proposal should explain
+%% the details of the proposed plan. How will you go about exploring your research
+%% question? What are your methods? Who else will be involved and how? You can also
+%% include a brief overview of what you (or others) have already done on the
+%% project and/or what you will be doing after the project period in over, if your
+%% project is of longer duration. 
+%% 
+%% a) Remember that literature reviews and understanding the current state of
+%% knowledge in your field or topic of interest is an extremely important part of
+%% ALL research projects. 
+%% b) If your project involves people or animals, be sure to state in this section
+%% that you are submitting for Animal Use/Human Subject approval and will comply
+%% with all rules, regulations, and training requirements.   
+%% 
+%% Be specific on what you will be doing. The reasoning behind the Magellan program
+%% is to make sure that you have a meaningful experience. If the reviewer can’t
+%% tell what part of a project you will be doing, he/she can’t evaluate your
+%% experience.  
+%% 
+%% Review Section III of this document for additional assistance with this section. 
+%%
+We will replace the index set $\mathbb{Z}/n$ with various finite nonabelian
+groups, using the GAP library's SmallGroups and IsAbelian functions to find
+appropriate groups to test. For each of the groups tested, we implement the
+convolution function using the generalized (nonabelian) translation $f(xy^{-1})$
+in place of oridinary translation $f(x-y)$ used in classical convolution. (Here,
+the group multiplication is replacing the traditional addition modulo $n$ as the
+group operation.  We are simply generalizing the underlying translation
+operation, and the result is a generalized convolution.
+
+Matlab will be used for much of the initial testing and prototyping, as it
+provides easy methods for constructing WAV files "from scratch" with its
+wavwrite() function. Additionally, Myoung An (a colleague of Dr.~DeMeo)
+has made available to us the Matlab code she has developed for her work
+in image processing, in which she and Richard Tolimieri applied nonabelian group
+filters to the processing of digital images. This code will be a valuable
+resource as we seek to apply similar ideas to audio signal processing.  
+
+As the project progresses, we will likely use the JavaSound library and
+implement our generalized DSP algorithms in Java.  JavaSound provides methods
+for reading and altering wav files frequencies and sound intensity levels, which
+will prove useful when we apply our generalized DSP algorithms to more complex
+sounds. \\
+\\
+TODO: need more specifics here!
+
+
+\vskip5mm
+
+\noindent {\bf Project timeline.}\\
+%% 6. Project timeline – Provide an overview of the timing for specific steps of
+%% your project. This does not need to be a day to day list but depending on the
+%% length of your project, it may give an overview biweekly or monthly. Be sure to
+%% include time to review/synthesize your data or to reflect on the experience and
+%% time to write the final report. This section can include a pre and post grant
+%% period, if you have already started your project and/or plan to continue working
+%% on this after the grant period ends. Review Section IV of this document for
+%% additional assistance with this section. 
+{\it October 2013--December 2013:} Become more familiar with current DSP algorithms
+and gain further knowledge of group theory, and its role in classical DSP
+implementations. 
+\\[5pt]
+{\it December 2013--March 2014:} Write code to implement DSP algorithms with a
+selection of nonabelian groups and group operations.  
+\\[5pt]
+{\it January 2014--May 2014:} 
+Identify specific characteristics of groups that make them more (or less)
+useful as an index set on which to define DSP operations like convolution.
+Gather and analyze results, and write up reports.  
+\\[5pt]
+{\it June 2014--October 2014:} Submit manuscript to an academic journal.  Prepare
+for and attend conferences.
+
+\vskip5mm
+
+\noindent {\bf Anticipated results/Final Products and Dissemination.}
+%% 7. Anticipated results/Final Products and Dissemination - Describe possible
+%% forms of the final product, e.g., publishable manuscript, conference paper,
+%% invention, software, exhibit, performance, etc. Be specific about how you intend
+%% to share your results or project with others including names of possible
+%% conferences or journals. This section may also include an interpretation and
+%% explanation of results as related to your question; an analysis of the expected
+%% impact of the scholarly or creative work on the audience; or a discussion on any
+%% problems that could hinder your creative endeavor. Be sure to include your
+%% Discovery Day presentation.  
+By the end of the Spring 2014 semester, I expect to have written Matlab programs
+to test the results of the modified DSP implementations described above.  I also
+expect to have developed a Java software program which allows easy application
+of nonabelian group filters through a graphical user interface.  I hope that the
+results will prove interesting and have practical applications for computer
+music composition.  
+
+The abstract for this project has already been accepted for presentation at the
+Joint Mathematics Meetings in Baltimore in 2014.  In addition, I will submit our
+work to the International Computer Music Conference (ICMC) and International
+Symposium on Musical Accoustics (ISMA), as well as the 14th International
+Conference on New Interfaces for Musical Expression (NIME). Previous, similar
+works by my faculty mentor Dr.~DeMeo have been accepted at both ICMC and ISMA
+(see~\cite{nonabeliandsp} and~\cite{dissonance}), so we have high expectations
+for this project. Furthermore, I will send in the formal paper to several
+Mathematical and Music scholarly journals. Of course, I will also present the
+results of our work at Discovery Day 2014.    \\
+ \\
+TODO: add something about Bain's interest/collaboration!
+
+\vskip5mm
+
+\noindent {\bf Personal statement.}
+%% 8. Personal statement – This section is read carefully by the reviewers and does
+%% impact their decision. Consider addressing: why you want to do this project,
+%% what got you interested in it, your career goals, and how this project would
+%% further those goals. While it is important, please remember that it should not
+%% overpower the rest of the proposal. One-quarter of the page should be
+%% sufficient.  
+I have never had considerable ability with music, but I have always been
+fascinated by its intersection with my favorite subject, mathematics.  This
+project piqued my interest because it allows me the rare opportunity to
+contribute to both fields.  I believe that I have developed the necessary skills
+to succeed in this project through my past mathematical research projects and my
+current internship developing Java applications at a local software company.  A
+Magellan Grant would allow me the fiscal freedom to dedicate time to engaging in
+research and possibly traveling to share my findings with international
+audiences.  
+
+
+
+%% 9. **Bibliography/References/Works cited – Use the standard convention of your
+%% discipline including the author, title of article, journal title, volume, pages,
+%% and date. References are not included in (are in addition to) the 2 page max.
+
+
+%% \bibliographystyle{plainurl}
+%% \bibliography{wjd}
+\def\cprime{$'$} \def\cprime{$'$}
+  \def\ocirc#1{\ifmmode\setbox0=\hbox{$#1$}\dimen0=\ht0 \advance\dimen0
+  by1pt\rlap{\hbox to\wd0{\hss\raise\dimen0
+  \hbox{\hskip.2em$\scriptscriptstyle\circ$}\hss}}#1\else {\accent"17 #1}\fi}
+\begin{thebibliography}{1}
+
+\bibitem{dissonance}
+William DeMeo.
+\newblock Characterizing musical signals with {W}igner-{V}ille interferences.
+\newblock In {\em Proceedings of the International Computer Music Conference}.
+  ICMC, 2002.
+\newblock Available from:
+  \url{http://math.hawaii.edu/~williamdemeo/ICMC2002.pdf}.
+
+\bibitem{nonabeliandsp}
+William DeMeo.
+\newblock Topics in nonabelian harmonic analysis and {DSP} applications.
+\newblock In {\em Proceedings of the International Symposium on Musical
+  Acoustics}. ISMA, 2004.
+\newblock Available from:
+  \url{http://math.hawaii.edu/~williamdemeo/ISMA2004.pdf}.
+
+\bibitem{Tolimieri:1998}
+Richard Tolimieri and Myoung An.
+\newblock {\em Time-Frequency Representations}.
+\newblock Birkh\"{a}user, Boston, 1998.
+
+\bibitem{Tolimieri:2003}
+Richard Tolimieri and Myoung An.
+\newblock {\em Group Filters and Image Processing}.
+\newblock Kluwer Acad., 2004.
+\newblock Available from:
+  \url{http://prometheus-us.com/asi/algebra2003/papers/tolimieri.pdf}.
+
+\end{thebibliography}
+
+
+\end{document}
