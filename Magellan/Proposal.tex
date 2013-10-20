@@ -32,7 +32,7 @@ Bain (Music; co-mentor)
 %% design/methods section (or in both sections, if appropriate). 
 Underlying many digital signal processing (DSP) algorithms, in particular those
 used for digital audio filters, is the convolution operation.  This operation
-acts on a signal $f(x)$, and can be viewed as a weighted sum of translations
+acts on a signal, $f(x)$, and can be viewed as a weighted sum of translations
 $f(x-y)$. Most classical results of dsp are easily and elegantly derived if we
 define our functions on $\mathbb{Z}/n$, the abelian (or commutative) group of
 integers modulo $n$. (See, for example,~\cite{Tolimieri:1998}.)
@@ -41,12 +41,12 @@ group operation is addition (modulo $n$) which is a commutative operation (i.e.,
 $x+y = y+x$).
 
 If we replace the underlying ``index set'' with a \emph{nonabelian} (or
-noncommutative) group---where the group operation is now multiplicative, $xy$,
+noncommutative) group---where the group operation is now multiplication, $xy$,
 and where in general it is not the case that $xy = yx$---then instead of
-translation of functions $f(x-y)$, we consider a \emph{generalized translation}
-$f(xy^{-1})$.  In this setting, the resulting audio filters arising from
-convolution naturally produce different effects than those obtained with
-ordinary (abelian group) convolution. 
+translation of functions $f(x-y)$, we have a \emph{generalized translation}
+$f(xy^{-1})$.  If we carry out convolution using this generalized translation,
+the resulting audio filters will naturally produce different effects than those
+obtained with ordinary (abelian group) convolution. 
 
 
 One of the faculty mentors for the proposed project, Dr.~DeMeo
@@ -59,7 +59,7 @@ Similar ideas have been successfully applied to two dimensional image data
 as well as to other areas of
 engineering. (See, for example,~\cite{Chirikjian:2002}
 and~\cite{Tolimieri:2003}.)  However, to date the application of
-nonabelian groups to audio signal processing has yet to be explored. Thus
+nonabelian groups to audio signal processing has yet to be fully explored. Thus
 there are a number of fundamental open questions in this area that we hope to
 answer.  
  
