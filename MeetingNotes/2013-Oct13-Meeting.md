@@ -3,7 +3,7 @@ Meeting: Oct 13, 2013
 
 1.  Started Magellan Scholarship application.
 
-2.  Emailed Regi Bain in Music Department about possibly becoming a mentor.
+2.  Emailed Reg Bain in Music Department about possibly becoming a mentor.
 
 3.  Discussed possible conferences for disseminating results, since travel 
 to an international conference would be a big part of the budget.
