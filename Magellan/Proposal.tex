@@ -285,8 +285,60 @@ audiences.
 %% and date. References are not included in (are in addition to) the 2 page max.
 
 
-\bibliographystyle{plainurl}
-\bibliography{wjd}
+%% \bibliographystyle{plainurl}
+%% \bibliography{wjd}
+\def\cprime{$'$} \def\cprime{$'$}
+  \def\ocirc#1{\ifmmode\setbox0=\hbox{$#1$}\dimen0=\ht0 \advance\dimen0
+  by1pt\rlap{\hbox to\wd0{\hss\raise\dimen0
+  \hbox{\hskip.2em$\scriptscriptstyle\circ$}\hss}}#1\else {\accent"17 #1}\fi}
+\begin{thebibliography}{1}
+
+\bibitem{Chirikjian:2002}
+Gregory~S. Chirikjian and Alexander~B. Kyatkin.
+\newblock {\em Engineering Applications of Noncommutative Harmonic Analysis:
+  With Emphasis on Rotation and Motion Groups}.
+\newblock CRC Press, 2002.
+
+\bibitem{ATLAS:1986}
+J.~H. Conway, R.~T. Curtis, R.~A. Wilson, S.~P. Norton, and R.~A. Parker.
+\newblock {\em ATLAS of Finite Groups}.
+\newblock Oxford University Press, 1986.
+
+\bibitem{dissonance}
+William DeMeo.
+\newblock Characterizing musical signals with {W}igner-{V}ille interferences.
+\newblock In {\em Proceedings of the International Computer Music Conference}.
+  ICMC, 2002.
+\newblock Available from:
+  \url{http://math.hawaii.edu/~williamdemeo/ICMC2002.pdf}.
+
+\bibitem{nonabeliandsp}
+William DeMeo.
+\newblock Topics in nonabelian harmonic analysis and {DSP} applications.
+\newblock In {\em Proceedings of the International Symposium on Musical
+  Acoustics}. ISMA, 2004.
+\newblock Available from:
+  \url{http://math.hawaii.edu/~williamdemeo/ISMA2004.pdf}.
+
+\bibitem{GAP4}
+The GAP Group.
+\newblock {\em {GAP -- Groups, Algorithms, and Programming, Ver.~4.4.12}},
+  2008.
+\newblock Available from: \url{http://www.gap-system.org}.
+
+\bibitem{Tolimieri:1998}
+Richard Tolimieri and Myoung An.
+\newblock {\em Time-Frequency Representations}.
+\newblock Birkh\"{a}user, Boston, 1998.
+
+\bibitem{Tolimieri:2003}
+Richard Tolimieri and Myoung An.
+\newblock {\em Group Filters and Image Processing}.
+\newblock Kluwer Acad., 2004.
+\newblock Available from:
+  \url{http://prometheus-us.com/asi/algebra2003/papers/tolimieri.pdf}.
+
+\end{thebibliography}
 
 
 \end{document}
