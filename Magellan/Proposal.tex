@@ -33,16 +33,15 @@ Bain (Music; co-mentor)
 Underlying many digital signal processing (DSP) algorithms, in particular those
 used for digital audio filters, is the convolution operation.  This operation
 acts on a signal, $f(x)$, and can be viewed as a weighted sum of translations
-$f(x-y)$. Most classical results of dsp are easily and elegantly derived if we
+$f(x-y)$. Most classical results of DSP are easily and elegantly derived if we
 define our functions on $\mathbb{Z}/n$, the abelian (or commutative) group of
-integers modulo $n$. (See, for example,~\cite{Tolimieri:1998}.)
+integers modulo $n$. (See for example~\cite{Tolimieri:1998}.)
   The term \emph{abelian} here refers to the fact the basic
 group operation is addition (modulo $n$) which is a commutative operation (i.e.,
 $x+y = y+x$).
 
 If we replace the underlying ``index set'' with a \emph{nonabelian} (or
-noncommutative) group---where the group operation is now multiplication, $xy$,
-and where in general it is not the case that $xy = yx$---then instead of
+noncommutative) group---where the group operation is now multiplication, $xy$---then instead of
 translation of functions $f(x-y)$, we have a \emph{generalized translation}
 $f(xy^{-1})$.  If we carry out convolution using this generalized translation,
 the resulting audio filters will naturally produce different effects than those
@@ -59,7 +58,7 @@ Similar ideas have been successfully applied to two dimensional image data
 as well as to other areas of
 engineering. (See, for example,~\cite{Chirikjian:2002}
 and~\cite{Tolimieri:2003}.)  However, to date the application of
-nonabelian groups to audio signal processing has yet to be fully explored. Thus
+nonabelian groups to audio signal processing has yet to be fully explored, and
 there are a number of fundamental open questions in this area that we hope to
 answer.  
  
@@ -107,12 +106,12 @@ practitioners in audio signal processing and computer music composition.
 
 There are some basic classes of nonabelian groups that have been studied by
 mathematicians for more than 100 years.  For example, the symmetric and 
-alternating groups, semidirect product groups, solvable groups, nilpotent
-groups, etc.  These classes are now well understood and catalogued
-in~\cite{ATLAS:1986}, and billions of examples are readily available 
-from the SmallGroups library of the GAP Computer Algebra System~\cite{GAP4}.   
+alternating groups, dihedral groups, semidirect products, wreath products,
+etc.  These classes are now well understood and catalogued 
+(see, e.g.,~\cite{ATLAS:1986}), and there are billions of examples at our
+fingertips in the SmallGroups library of the GAP Computer Algebra System~\cite{GAP4}.   
 We seek to discover which mathematical features of a group can be used to
-describe how a given dsp algorithm based on that group will behave. 
+describe how a given DSP algorithm based on that group will behave. 
 
 \begin{itemize}
 \item {\it Goal:}
@@ -142,9 +141,13 @@ acheive different effects.
 %% reader. If she or he were to see an article about your project in the paper, how
 %% would you explain the importance or purpose of your project?  
 The proposed research introduces the novel concept of giving sonic
-characteristics to mathematical groups.  There is also a possibility of
-applications in digital audio engineering, especially if certain nonabelian
-groups are shown to produce interesting audio effects. 
+characteristics to mathematical groups.  This may be interesting to 
+some mathematicians, and we will present the results of our work at the Mathematical
+Association of America's Special Session, ``At the Intersection of Mathematics
+and the Arts.'' (Our  abstract has already been accepted.) 
+Of greater significance, however, will be the impact this
+research has on applications in digital audio engineering, especially if certain
+nonabelian groups are shown to produce interesting audio effects.   
  
 \vskip5mm
 
