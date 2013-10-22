@@ -16,7 +16,7 @@ concrete ways you will help the applicant develop the skills and techniques need
 
 Matt and I will meet regularly, once every two weeks or so, to discuss his progress.  At each meeting, especially at the start, I will teach him more about group theory and the basic mathematical principles underlying signal processing and harmonic analysis.  Matt, in turn, will continue to teach me about software development, and we will discuss progress he has made with both the mathematical and software development aspects of the project.  We have already met a few times to discuss some of the mathematical background and, as expected, Matt has quickly picked up some of the most the important principles needed for research in this area.
 
-Matt will also meet with the co-mentor, Dr. Reg Bain, in the Music Department, to learn the basic principles of musical acoustics, musical analysis and synthesis, and computer music composition---subjects that are integral to the proposed project. 
+Matt will also meet with the co-mentor, Professor Reginald Bain, in the Music Department, to learn the basic principles of musical acoustics, musical analysis and synthesis, and computer music composition---subjects that are integral to the proposed project. 
 
 I will coach Matt as he prepares to present his results at Discovery Day as well as other international mathematics and music conferences.  Finally, with the help of Dr. Bain, I will advise Matt about prospects for publishing his results in major academic journals in the field of computer music, musical acoustics, or applied math.  
 
