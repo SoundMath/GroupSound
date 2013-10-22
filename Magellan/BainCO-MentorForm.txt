@@ -1,0 +1,10 @@
+I was asked to serve as a co-mentor for this project because it involves synthesis. I know how to program in a wide variety of digital synthesis programming languages (including Csound, Max/MSP, and SuperCollider), and these or similar tools will be required for the project. I can also help evaluate the results of the project from a musical point of view, that is, help lead the way toward musical applications that may be a natural outcome of this line of research. As an electronic composer with a deep interest in mathematical ideas that lay at the foundation of music, I couldn't be more excited about this opportunity for interdisciplinary collaboration between the USC School of Music and Mathematics Department.
+
+Reginald Bain, Professor
+Composition & Theory
+Director of the Experimental Music Studio (xMUSE)
+USC School of Music
+
+
+I will assist Matthew with the musical side of this research. The three of us (Dr. De Meo, Matthew and myself) will meet in person as necessary and use on-line collaboration tools (like GitHub) to track the progress of the project. I will provide Matthew with appropriate readings from the synthesis theory literature, and advise him regarding software, documentation, tutorials, and audio tools that will be required to render the final audio product.
+

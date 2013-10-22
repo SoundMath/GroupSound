@@ -184,7 +184,7 @@ groups.  In the beginning, the simplest examples of nonabelian groups (such as
 semidirect product groups), will be constructed ``by hand''using GAP's {\tt
   SemidirectProduct} function.  Groups with a more complicated structure will be
 selected from GAP's vast SmallGroups library using various selection criteria.
-For each of the groups tested, we implement the
+For each of the groups tested, we will implement the
 convolution function using the generalized (nonabelian) translation $f(xy^{-1})$
 in place of oridinary translation $f(x-y)$ used in classical convolution. (Here,
 the group multiplication is replacing the traditional addition modulo $n$ as the
@@ -192,8 +192,8 @@ group operation.  We are simply generalizing the underlying translation
 operation, and the result is a generalized convolution.)
 
 Both GAP and Matlab will be used for much of the initial testing and
-prototyping. Matlab provides easy methods for constructing WAV files "from
-scratch" with its wavwrite() function. Additionally, Myoung An (a colleague of
+prototyping. Matlab provides easy methods for constructing WAV files ``from
+scratch'' with its {\tt wavwrite()} function. Additionally, Myoung An (a colleague of
 Dr.~DeMeo) has provided us with the Matlab code she and Richard Tolimieri developed for
 their work in image processing, in which they applied nonabelian group
 filters to the processing of 2D digital images. This code will be a valuable
