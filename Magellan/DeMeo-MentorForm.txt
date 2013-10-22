@@ -1,12 +1,14 @@
 Section I: Please comment briefly on the strengths and weaknesses of the applicant. Please include such factors as intellectual ability, research and writing ability, analytical skills, initiative and maturity, and level of independence (novice through advanced). 
 
-Matthew Corley is among the brightest and most talented undergraduates I have met.  Since meeting him last year, when he was a sophomore and served as my grader for an upper level math class, it has been a pleasure to work with him.  Matt has no weaknesses that I know of.
+Matthew Corley is among the brightest and most talented undergraduates I have met.  Since meeting him last year, when he was a sophomore and served as my grader for an upper level math class, it has been a pleasure to work with him.
 
-Matt and I worked on a project over the summer and have developed a very efficient and productive project workflow using robust tools like the Git version control system. This enables us to contribute simultaneously on a project and keep a detailed history of all contributions. We have set up a GitHub team for the proposed project and the associated website is at http://soundmath.github.io/GroupSound/
+Matt and I worked together on a project over the summer and we developed a very efficient and productive project workflow using robust tools like the Git revision control system. This enables us to contribute simultaneously on a project and keep a detailed history of all contributions.  We have set up a GitHub team for the proposed project, and the associated website can be found at http://soundmath.github.io/GroupSound/
 
-Matt has already taken advance mathematics classes, and has built a solid foundation, but perhaps more important for a project like this is his exceptionally high aptitude for technical subjects.  I can explain technically challenging, and sometimes deep mathematical ideas to Matt and he understands surprisingly quickly.  I have not achieved this level of communication with any other undergraduate, and only rarely with graduate students.  
+Matt has already taken advance mathematics classes, and has built a solid foundation, but perhaps more important for a project like this is his exceptionally high aptitude for technical subjects.  I can explain challenging, even deep mathematical ideas to Matt and he understands surprisingly quickly.  I have not acheived this level of communication with any other undergraduate, and only rarely with graduate students.  
 
 Matt is very motivated and ambitious, and seems eager to undertake research at a high level.  He is an independent thinker and shows strong potential for making original contributions to mathematics and computer science.  I think Matt is ideally suited for the work described in the proposal, and it will be my pleasure to be his mentor on this project.
+
+I have no doubt in Matt's ability to successfully complete this project and reach the goals and objectives he describes in the project proposal.  I expect him to make many interesting new discoveries in this relatively unexplored area.
 
 Section II: Briefly describe how you will be working with the student during this project. Please address the 
 concrete ways you will help the applicant develop the skills and techniques needed to complete project. 
@@ -18,4 +20,4 @@ Matt will also meet with the co-mentor, Dr. Reg Bain, in the Music Department, t
 
 I will coach Matt as he prepares to present his results at Discovery Day as well as other international mathematics and music conferences.  Finally, with the help of Dr. Bain, I will advise Matt about prospects for publishing his results in major academic journals in the field of computer music, musical acoustics, or applied math.  
 
-I have no doubt in Matt's ability to successfully complete this project and reach the goals and objectives he describes in the project proposal.  I expect him to make many interesting new discoveries in this relatively unexplored area.
+
