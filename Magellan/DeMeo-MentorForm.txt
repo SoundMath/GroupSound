@@ -2,11 +2,11 @@ Section I: Please comment briefly on the strengths and weaknesses of the applica
 
 Matthew Corley is among the brightest and most talented undergraduates I have met.  Since meeting him last year, when he was a sophomore and served as my grader for an upper level math class, it has been a pleasure to work with him.
 
-Matt and I worked together on a project over the summer and we developed a very efficient and productive project workflow using robust tools like the Git revision control system. This enables us to contribute simultaneously on a project and keep a detailed history of all contributions.  We have set up a GitHub team for the proposed project, and the associated website can be found at http://soundmath.github.io/GroupSound/
+Matt and I worked together on a project over the summer and we developed a very efficient and productive project workflow using robust tools like the Git revision control system. This enables us to contribute simultaneously on a project and keep a detailed history of all contributions.  We have set up a GitHub team for the project described in the proposal, and the associated website can be found at http://soundmath.github.io/GroupSound/
 
 Matt has already taken advance mathematics classes, and has built a solid foundation, but perhaps more important for a project like this is his exceptionally high aptitude for technical subjects.  I can explain challenging, even deep mathematical ideas to Matt and he understands surprisingly quickly.  I have not achieved this level of communication with any other undergraduate, and only rarely with graduate students.  
 
-Matt is very motivated and ambitious, and seems eager to undertake research at a high level.  He is an independent thinker and shows strong potential for making original contributions to mathematics and computer science.  I think Matt is ideally suited for the work described in the proposal, and it will be my pleasure to be his mentor on this project.
+Matt is very motivated and ambitious, and seems eager to undertake research at a high level.  He is an independent thinker and shows strong potential for making original contributions to mathematics and computer science.  I think Matt is ideally suited for the research outlined in his proposal, and it will be my pleasure to be his mentor on this project.
 
 I have no doubt in Matt's ability to successfully complete this project and reach the goals and objectives he describes in the project proposal.  I expect him to make many interesting new discoveries in this relatively unexplored area.
 
