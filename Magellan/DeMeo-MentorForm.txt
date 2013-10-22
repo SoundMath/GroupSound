@@ -4,7 +4,7 @@ Matthew Corley is among the brightest and most talented undergraduates I have me
 
 Matt and I worked together on a project over the summer and we developed a very efficient and productive project workflow using robust tools like the Git revision control system. This enables us to contribute simultaneously on a project and keep a detailed history of all contributions.  We have set up a GitHub team for the proposed project, and the associated website can be found at http://soundmath.github.io/GroupSound/
 
-Matt has already taken advance mathematics classes, and has built a solid foundation, but perhaps more important for a project like this is his exceptionally high aptitude for technical subjects.  I can explain challenging, even deep mathematical ideas to Matt and he understands surprisingly quickly.  I have not acheived this level of communication with any other undergraduate, and only rarely with graduate students.  
+Matt has already taken advance mathematics classes, and has built a solid foundation, but perhaps more important for a project like this is his exceptionally high aptitude for technical subjects.  I can explain challenging, even deep mathematical ideas to Matt and he understands surprisingly quickly.  I have not achieved this level of communication with any other undergraduate, and only rarely with graduate students.  
 
 Matt is very motivated and ambitious, and seems eager to undertake research at a high level.  He is an independent thinker and shows strong potential for making original contributions to mathematics and computer science.  I think Matt is ideally suited for the work described in the proposal, and it will be my pleasure to be his mentor on this project.
 
@@ -16,7 +16,7 @@ concrete ways you will help the applicant develop the skills and techniques need
 
 Matt and I will meet regularly, once every two weeks or so, to discuss his progress.  At each meeting, especially at the start, I will teach him more about group theory and the basic mathematical principles underlying signal processing and harmonic analysis.  Matt, in turn, will continue to teach me about software development, and we will discuss progress he has made with both the mathematical and software development aspects of the project.  We have already met a few times to discuss some of the mathematical background and, as expected, Matt has quickly picked up some of the most the important principles needed for research in this area.
 
-Matt will also meet with the co-mentor, Dr. Reg Bain, in the Music Department, to learn the basic principles of musical acoustics, musical analysis and sythesis, and computer music composition---subjects that are integral to the proposed project. 
+Matt will also meet with the co-mentor, Dr. Reg Bain, in the Music Department, to learn the basic principles of musical acoustics, musical analysis and synthesis, and computer music composition---subjects that are integral to the proposed project. 
 
 I will coach Matt as he prepares to present his results at Discovery Day as well as other international mathematics and music conferences.  Finally, with the help of Dr. Bain, I will advise Matt about prospects for publishing his results in major academic journals in the field of computer music, musical acoustics, or applied math.  
 
