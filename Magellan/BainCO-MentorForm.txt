@@ -6,5 +6,5 @@ Director of the Experimental Music Studio (xMUSE)
 USC School of Music
 
 
-I will assist Matthew with the musical side of this research. The three of us (Dr. De Meo, Matthew and myself) will meet in person as necessary and use on-line collaboration tools (like GitHub) to track the progress of the project. I will provide Matthew with appropriate readings from the synthesis theory literature, and advise him regarding software, documentation, tutorials, and audio tools that will be required to render the final audio product.
+I will assist Matthew with the musical side of this research. The three of us (Dr. DeMeo, Matthew and myself) will meet in person as necessary and use on-line collaboration tools (like GitHub) to track the progress of the project. I will provide Matthew with appropriate readings from the synthesis theory literature, and advise him regarding software, documentation, tutorials, and audio tools that will be required to render the final audio product.
 
