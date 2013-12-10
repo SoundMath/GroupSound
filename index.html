@@ -43,11 +43,19 @@
 
 <p>This is the main webpage for our research on the acoustical properties of nonabelian group filters.  -->
 
+<!-- <p> -->
+This page is mainly a front end for our Git repository, with some additional information and links about the project appearing below.  
+As the project only started in October 2013, there is not much in the repository yet.  Please check back in January 2014!</p>
 <p>
-Currently, this page is essentially just a front end to our Git repository.  As the project has only just begun (October 2013), there is not much in the repository yet.  Please check back in January 2014!</p>
-<p>
-<i>Latest news:</i> As of December 9, 2014, Matt Corley is a Magellan Scholar and will receive a grant for his work on this project.  Congratulations, Matt!
+<hr>
+<h2>
+<a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Abstract</h2>
 
+<p>Underlying many digital signal processing (dsp) algorithms, in particular those used for digital audio filters, is the convolution operation, which is a weighted sum of translations f(x-y). Most classical results of dsp are easily and elegantly derived if we define our functions on Z/n, the abelian group of integers modulo n. If we replace this underlying "index set" with a nonabelian group, then translation may be written f(xy^{-1}), and the resulting audio filters arising from convolution naturally produce different effects that those obtained with ordinary (abelian group) convolution. </p>
+
+<p>The aim of this project is to explore the idea of using the underlying finite group (i.e., the index set) as an adjustable parameter of a digital audio filter. By listening to samples produced using various nonabelian groups, we try to get a sense of the "acoustical characters" of finite groups.</p>
+<p>
+<hr>
 <h2>
 <a name="research-team" class="anchor" href="#research-team"><span class="octicon octicon-link"></span></a>Research Team</h2>
 
@@ -57,12 +65,14 @@ Currently, this page is essentially just a front end to our Git repository.  As 
 
 <p><a href="http://in.music.sc.edu/fs/bain/">Reginald Bain</a> -- University of South Carolina (Music faculty mentor)  <a href="https://github.com/regbain" class="user-mention">@regbain</a></p>
 
+<p>
+
+<hr>
 <h2>
-<a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Abstract</h2>
+<a name="news" class="anchor" href="#news"><span class="octicon octicon-link"></span></a>News</h2>
+<i>December 9, 2013:</i> <a href="mailto:corleymj@email.sc.edu">Matt Corley</a> is now a <a href="http://www.sc.edu/our/magellan.shtml">Magellan Scholar</a> and a grant will fund his work on this project.  Congratulations, Matt!
 
-<p>Underlying many digital signal processing (dsp) algorithms, in particular those used for digital audio filters, is the convolution operation, which is a weighted sum of translations f(x-y). Most classical results of dsp are easily and elegantly derived if we define our functions on Z/n, the abelian group of integers modulo n. If we replace this underlying "index set" with a nonabelian group, then translation may be written f(xy^{-1}), and the resulting audio filters arising from convolution naturally produce different effects that those obtained with ordinary (abelian group) convolution. </p>
-
-<p>The aim of this project is to explore the idea of using the underlying finite group (i.e., the index set) as an adjustable parameter of a digital audio filter. By listening to samples produced using various nonabelian groups, we try to get a sense of the "acoustical characters" of finite groups.</p>
+<p>
 
 <hr>
 
@@ -119,11 +129,16 @@ International Computer Music Conference (ICMC)</a>
 </ul>
 </ol>
 
-
-      </section>
-
-    </div>
+        <div id="title">
+          <!-- <h1>GroupSound</h1> -->
+          <!-- <p>original research into the acoustical properties of nonabelian group filters</p> -->
+          <hr>
+          <span class="credits right">Project maintained by <a href="https://github.com/SoundMath">SoundMath</a></span>
+          <!-- <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span> -->
+	</div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    </div>
+      </section>
     
   </body>
 </html>
