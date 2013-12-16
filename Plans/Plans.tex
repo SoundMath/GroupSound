@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{enumerate,amsmath,amssymb,fancyhdr,mathrsfs,amscd,stmaryrd,amsthm}
 \usepackage{graphicx}
@@ -12,6 +12,7 @@
 \newcommand\C{\ensuremath{\mathbb{C}}}
 \newcommand\Z{\ensuremath{\mathbb{Z}}}
 \newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\vf{\ensuremath{\mathbf{f}}}
 \newcommand\sL{\ensuremath{\mathcal{L}}}
 %linear transformations \lt should be sans-serif
 \newcommand{\lt}[1]{\ensuremath{\mathsf{#1}}}
@@ -30,38 +31,63 @@ Matthew Corley (Computer Science); William DeMeo (Math; mentor), Reg
 Bain (Music; co-mentor)
 \end{center}
 
-\noindent {\bf Short term goals/plans.}  (wjd: December 15, 2013)\\[5pt]
+\section{Short term goals}
+
+\noindent {\bf Incorporating finite groups into Scala or Java programs.}  
+(wjd: December 15, 2013)\\[5pt]
 It seems a functional programming language like Scala would be ideal
 for expressing the math that we want to implement, so I suggest we
 start with that as our primary language and use Java as a fallback. 
 
 One of our primary goals is to write a program to do convolution of signals
 defined on finite nonabelian groups, so we need to incorporate finite
-groups into our programs.  Of course, we don't want to 
-implement everything from scratch.  I suggest the following strategy:
+groups into our programs.  
+The main thing we need is the multiplication table---that is, the table that
+tells us the result of multiplying any two group elements---as well as
+a function that tells us the inverse of a given element.
+We could write programs to do all this from scratch, especially for small groups
+that are easy to represent (like semidirect products of cyclic groups) we easily
+do this from scratch. 
+However, this is unnecessary since there is plenty of code already written for
+finite groups, and we should definitely avoid reinventing this wheel.
+I suggest the following strategy instead:
 \begin{enumerate}
 \item Use the \acs{GAP} software for exploring various finite groups to
   identifying some groups we want to consider.
 \item Use my \acs{GAP} program
   \href{http://universalalgebra.wordpress.com/documentation/gap/gap-and-uacalc/}{gap2uacalc}
-  to covert the groups into general algebras, and write them to \acs{XML}
-  files. (More details about this will appear below.)
-\item To read in the resulting \acs{XML} files into our Scala or Java programs,
-  we can make use of UACalc Java classes, like AlgebraIO 
+  which writes \acs{GAP} groups to \acs{XML} files and represents them as general (universal)
+  algebras---i.e., simply a set with operations defined on the set. 
+  (More details about this and the \acs{XML} format used by 
+\href{http://universalalgebra.wordpress.com/documentation/gap/gap-and-uacalc/}{gap2uacalc}
+ will appear below.)
+\item To read the resulting \acs{XML} files into our Scala or Java programs,
+  we can use a UACalc Java class called AlgebraIO 
   (see \href{http://uacalc.org/doc/}{the UACalc javadoc}). (The
   \href{http://universalalgebra.wordpress.com/documentation/gap/gap-and-uacalc/}{gap2uacalc}
   program writes groups to a file in UACalc's \acs{XML} format.)
 \end{enumerate}
 
-The first function we will code up is convolution.  Below are some thoughts on
-how to do this in Scala, but first, here are some notes about convolution and
-the best way to view this operation mathematically (which happens to align well
-with how we can model it in a functional programming language like Scala).
+\noindent {\bf Convolution background.}  (wjd: December 15, 2013)\\[5pt]
+The main operation/function we will considering is convolution, and we should
+think about how best to view this mathematically, as well as how best to
+represent it in the computer.  In this section is some background on the
+mathematical aspects.  In the next section are some initial thoughts on how to
+code this up in Scala.
 
 Let $\C^G$ denote the set of complex valued functions defined on the group
-$G$.  That is $\C^G = \{f : G\rightarrow \C \}$.  In the books by Tolimieri and
-An (\cite{Tolimieri:1998}, \cite{Tolimieri:2003}) this set is also denoted by
-$\sL(G)$. 
+$G$.  That is 
+\[
+\C^G = \{f : G\rightarrow \C \}.
+\]
+(In the Tolimieri-An books, \cite{Tolimieri:1998} \cite{Tolimieri:2003}, this set is also denoted by
+$\sL(G)$.)  If the group has $|G| = n$ elements, say, 
+$G = \{x_0, x_1, \dots, x_{n-1}\}$, 
+then each function $f\in  \C^G$ can be represented as
+a length-$n$ vector in $\C^n$---namely, the vector of its values on $G$:
+\[
+\vf = [f(x_0), f(x_1), \dots, f(x_{n-1})].
+\]
 
 Given two functions $f$ and $g$ in $\C^G$, the \emph{convolution of
 $f$ and $g$}, denoted, $f*g$, is also function in $\C^G$ and is
@@ -70,25 +96,25 @@ defined by the values it takes at each $x\in G$ as follows:
 \label{eq:1}  
 (f*g)(x) = \sum_{y \in G} f(y) g(y^{-1}x).
 \end{equation}
-Note that this can be thought of as a weighted sum of translations of $g$.
+Note that this is a weighted sum of translations of $g$.
 Indeed, let $\T_y: \C^G\rightarrow \C^G$ denote
 the \emph{translation by $y$} operator---that is, $\T_y$ maps 
 a function $g\in \C^G$ to a translated version of itself, $\T_y(g)$, which is defined at each 
 $x \in G$ by $\T_y(g)(x) = g(y^{-1}x)$.
-Then~(\ref{eq:1}) can be written as follows:
+Then~(\ref{eq:1}) can be written as
 \begin{equation}
 \label{eq:4}  
-(f*g)(x) = \sum_{y \in G} f(y) \T_y(g)(x).
+(f*g)(x) = \sum_{y \in G} f(y) \T_y(g)(x),
 \end{equation}
-This is a sum of weighted translations of $g$ where 
+a sum of weighted translations of $g$ where 
 the coefficients $f(y)$ are the weights, and 
 $\T_y(g)$ is the function $g$ ``shifted'' by $y$. (When $G$ is the abelian
 group $\Z/n\Z$ with addition modulo $n$, we have
 $\T_y(g)(x) = g(y^{-1}x) = g(x-y)$, so in this case
 $\T_y(g)$ is literally $g$ shifted by $y$ units to the right.)
 
-Equation~(\ref{eq:4}) defines the convolution, $f * g$, by giving this
-function's value at each $x\in G$. Using the 
+Equation~(\ref{eq:4}) defines the convolution, $f * g$, by giving its
+value at each $x\in G$. Using the 
 translation operator, however, we can define convolution
  ``functionally,'' instead of element-wise, as follows:
 \begin{equation}
@@ -96,14 +122,14 @@ translation operator, however, we can define convolution
 f*g = \sum_{y \in G} f(y) \T_y(g)
 \end{equation}
 (Pause to look at the right hand side of~(\ref{eq:2}), and let it sink in that
-this is a function that takes arguments $x\in G$. Compare with the right
+this is a function that takes arguments $x\in G$; compare with the right
 hand side of~(\ref{eq:4}).)
 
- This is fine, but it would also be nice to think of~(\ref{eq:2}) as $f$ acting
-on $g$ somehow.  Indeed, on the right hand side of~(\ref{eq:2}) we have the operator 
+ This is fine, but it is also useful to think of~(\ref{eq:2}) as $f$ acting
+on $g$.  Indeed, on the right hand side of~(\ref{eq:2}) we have the operator 
 $\sum_{y \in G} f(y) \T_y$ that maps the function $g$ to the function $f*g$.  But
 on the left hand side we have a binary operation $f*g$, written in infix
-notation, which doesn't jibe well with the functional interpretation.  So,
+notation, which doesn't jibe very well with this functional interpretation.  So,
 instead of saying ``the convolution of $f$ and $g$'', and writing $f*g$, we will
 say
 %% \emph{convolution by $f$ of $g$} 
@@ -113,9 +139,10 @@ way, we have the \emph{convolution by $f$} operator:
 \label{eq:3}  
 \conv(f) = \sum_{y \in G} f(y) \T_y,
 \end{equation}
-which is a weighted sum of translation operators.  
+which is a weighted sum of translation operators.  The function $\conv(f)$ takes other
+functions, like $g$, as its argument.
 
-The functional types of the objects, as we will code them, are as follows:
+So, the functional types we have here are the following:
 \[
 \conv : \C^G \rightarrow (\C^G)^{\C^G}
 \]
@@ -127,7 +154,7 @@ Given $f\in \C^G$ and $g\in \C^G$,
 \[
 \conv(f)(g) : G \rightarrow \C
 \]
-Or, in the notational style of a functional programming language (e.g., Scala):
+Or, in the notational style of a functional programming language like Scala:
 \[
 \conv : (G \Rightarrow \C) \Rightarrow ( (G \Rightarrow \C) \Rightarrow (G \Rightarrow \C) )
 \]
@@ -140,8 +167,10 @@ Given $f\in \C^G$ and $g\in \C^G$,
 \conv(f)(g) : (G \Rightarrow \C)
 \]
 
-\vskip5mm
-\noindent {\bf Initial thoughts on implementing this in Scala.}\\[5pt]
+\newpage
+
+\noindent {\bf Initial thoughts on implementing this in Scala.}
+(wjd: December 15, 2013)\\[5pt]
 Consider functions with multiple parameter lists. If we have, say, 4
 argument lists, then in Scala we can write
 {\small
@@ -169,30 +198,37 @@ Here's what the interface to a convolution function might look like in Scala:
   
     def convolution(f: Int => Double)(g: Int => Double)(x: Int): Double = {
 
-            // insert appropriate code for convolution here
+        // insert convolution algorithm
 
     }
 \end{verbatim}}
-\noindent This enables us to expresses the mathematical view of convolution
-described above.  Given some
-function $f$, define \emph{convolution by f} as
+\noindent This expresses precisely the functional view of convolution
+described mathematically in the previous.  Given this interface, for each 
+function $f \in \C^G$ we could define \emph{convolution by $f$} as
 {\small
 \begin{verbatim}
     def Cf = convolution(f)_
 \end{verbatim}}
-\noindent and then, given another function $g$, we can do this:
+\noindent and then, given another function $g \in \C^G$, 
 {\small
 \begin{verbatim}
     def fg = Cf(g)
 \end{verbatim}
 }  
-\noindent Thus, we have convolution by $f$ of $g$ defined functionally, and we can 
-evaluate this function at various points: {\tt fg(x)}.
+\noindent Thus, we have 
+\emph{convolution by $f$ of $g$} defined functionally, rather than pointwise.
+Of course, we can evaluate this function at various points: {\tt fg(x)}.
 
-An alternative to the above approach, which might make more sense, would be to
-define the ``group algebra'' class GA and define the binary operator * for this
-class to be convolution of two GA objects.  This can also be done very simply
-and elegantly in Scala.
+Alternatively, it might make more sense to take an object oriented approach (let's
+discuss).  For example, it probably makes sense to define a ``group algebra''
+class, GA, for which we could define the binary operation * to be convolution of
+two GA objects.  This can also be done very simply and elegantly in Scala.
+Perhaps we should implement convolution both ways---I don't think it will be
+very difficult---and then use whichever seems more natural in a given context.
+
+In fact, in Tolimieri-An, there is a nice section describing these two
+alternative views mathematically---i.e., convolution as a binary
+operation versus convolution as a functional.
 
 
 
@@ -239,7 +275,7 @@ how does this change the behavior of the filter and the resulting audio output?
 
 \vskip5mm
 
-\noindent {\bf Project timeline.}\\
+\noindent {\bf Project time-line.}\\
 %% 6. Project timeline – Provide an overview of the timing for specific steps of
 %% your project. This does not need to be a day to day list but depending on the
 %% length of your project, it may give an overview biweekly or monthly. Be sure to
@@ -310,13 +346,13 @@ We will conduct controlled experiments with very simple sound signals at first
 standard convolution.  Then we will filter the original signals using a
 generalized (nonabelian) convolution, substituting the underlying index set with
 various groups from the wide variety of nonabelian groups available in 
-the SmallGroups library of GAP~\cite{GAP4}.   
+the SmallGroups library of \acs{GAP}~\cite{GAP4}.   
 
 When we replace the index set $\mathbb{Z}/n$ with various finite nonabelian
 groups, in the beginning, the simplest examples of nonabelian groups (such as
-semidirect product groups), will be constructed ``by hand''using GAP's {\tt
+semidirect product groups), will be constructed ``by hand''using \acs{GAP}'s {\tt
   SemidirectProduct} function.  Groups with a more complicated structure will be
-selected from GAP's vast SmallGroups library using various selection criteria.
+selected from \acs{GAP}'s vast SmallGroups library using various selection criteria.
 For each of the groups tested, we will implement the
 convolution function using the generalized (nonabelian) translation $f(y^{-1}x)$
 in place of ordinary translation $f(x-y)$ used in classical convolution. 
@@ -327,7 +363,7 @@ Finally, we will attempt to make a connection between the mathematical
 properties of the group and the acoustical properties of the resulting
 convolution.  
 
-Both GAP and Matlab will be used for much of the initial prototyping and
+Both \acs{GAP} and Matlab will be used for much of the initial prototyping and
 testing. Matlab provides easy methods for constructing wav files ``from 
 scratch'' with its {\tt wavwrite()} function. Additionally, Myoung An (a colleague of
 Dr.~DeMeo) has provided us with the Matlab code that she and Richard Tolimieri
