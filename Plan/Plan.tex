@@ -214,7 +214,7 @@ $x+y = y+x$).
 If we replace this ``index set'' (the set on which functions are defined) with a
 \emph{nonabelian} group---where the group operation is now multiplication,
 $xy$---then instead of the usual translation, $f(x-y)$, we have a
-\emph{generalized translation}, $f(xy^{-1})$. 
+\emph{generalized translation}, $f(y^{-1}x)$. 
 If we carry out convolution using this generalized translation, the
 resulting audio filters will naturally produce different effects than those
 obtained with ordinary (abelian group) convolution.  
@@ -318,7 +318,7 @@ semidirect product groups), will be constructed ``by hand''using GAP's {\tt
   SemidirectProduct} function.  Groups with a more complicated structure will be
 selected from GAP's vast SmallGroups library using various selection criteria.
 For each of the groups tested, we will implement the
-convolution function using the generalized (nonabelian) translation $f(xy^{-1})$
+convolution function using the generalized (nonabelian) translation $f(y^{-1}x)$
 in place of ordinary translation $f(x-y)$ used in classical convolution. 
 
 After completing these controlled experiments, we will analyze the results to
