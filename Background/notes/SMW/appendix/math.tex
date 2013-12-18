@@ -1,0 +1,408 @@
+% -*- mode: LaTeX; tex-main-file: "../notes.tex"; -*-
+%\subsection{Basic Analysis}
+\section{Math Background and Notes}
+\ifthenelse{\boolean{nofootnotes}}{\subsection{Inner Product Spaces}}
+{\subsection{Inner Product Spaces\protect\footnotemark}
+\footnotetext{Mertins~\cite{Mertins:1999}, (p.~4).}}
+The signal spaces we consider are the spaces $\Ltwo(a,b)$ and
+$\ltwo(n_1,n_2)$.  On these we can define an {\it inner product} which 
+assigns a complex number to two signals $x(t)$ and $y(t)$, or  
+$x(n)$ and $y(n)$, respectively.  Denoted 
+$\langle x,y\rangle$,
+the inner product must satisfy the following axioms:
+\begin{enumerate}
+\item $\langle x,y\rangle = \langle y,x\rangle^*$
+\item $\langle \alpha x + \beta y, z\rangle =
+  \alpha\langle x,z\rangle +\beta\langle y,z\rangle$ 
+\item $\langle x,x\rangle \geq 0, \qquad \langle x,x\rangle = 0 \Leftrightarrow x = \mathbf{0}$
+\end{enumerate}
+Here, $\alpha, \beta \in \C$ are scalars, and $\mathbf{0}$ is the null vector.
+
+Some examples of inner products that we employ in the present work are
+\begin{alignat*}{2}
+%\label{eqn:RInnerProd}
+\langle x,y\rangle &= \integral x(t)y^*(t)\,dt, && \qquad x,y\in \LtwoR \\
+\langle x,y\rangle &= \int_{a}^{b} x(t)y^*(t)\,dt, && \qquad x,y\in \Ltwo(a,b) \\
+%\label{eqn:ZInnerProd}
+\langle x,y\rangle &= \sum_{n=-\infty}^{\infty} x(n)y^*(n), && \qquad x,y\in \ltwoR \\
+\langle x,y\rangle &= \sum_{n=n_1}^{n_2} x(n)y^*(n), && \qquad x,y\in\ltwo(n_1,n_2)
+\end{alignat*}
+Each of the foregoing definitions of $\langle x,y\rangle$ corresponds to an
+associated vector space, appearing on the right, of which $x$ and $y$ are members.  Therefore,
+the meaning of $\langle x,y\rangle$ will often be clear from the space on which it is used.
+
+%\subsection{Operator Theory}
+\ifthenelse{\boolean{nofootnotes}}{\subsection{Linear Operators}}
+{\subsection{Linear Operators\protect\footnotemark}
+\footnotetext{For more details consult Teolis~\cite{Teolis:1998} or
+  Rudin~\cite{Rudin:1991}} }
+This section reviews some of the operator theory cited in this
+paper.
+
+The Banach space of bounded linear operators that map the Hilbert
+space %$\mathcal{H}_1$ 
+$\Hone$ to the Hilbert space $\Htwo$ is denoted $\Banachonetwo$.
+%$\mathcal{B}(\mathcal{H}_1,\mathcal{H}_2)$
+The \emph{norm} of an element $\T \in \Banachonetwo$ is
+\[ 
+\|\T \| = \sup_{x\in\Hone} \frac{\|\T[x]\|_{\Htwo}}{\|x\|_{\Hone}} < \infty
+\]
+Two classes of operators specifically worthy of mention are
+the self-adjoint operators and the orthogonal projection operators.
+\begin{define}{\bf Self-Adjoint. } (\cite{Teolis:1998} Fact 2.2)
+If $\T \in \Banach$ is \emph{self-adjoint} then
+\[ 
+\|\T \| = \sup_{f\in\mathcal{H}} \frac{|\langle f,\T[f] \rangle|}{\|f\|^2}.
+\]
+\end{define}
+\begin{define}{\bf Orthogonal Projection. } (\cite{Teolis:1998} Fact
+2.3)
+Let $\mathcal{X}$ be a subspace of the Hilbert space $\mathcal{H}$ and
+let $\P_{\mathcal{X}}: \mathcal{H} \mapsto \mathcal{X}$ denote the
+\emph{orthogonal projection operator} onto $\mathcal{X}$.  The operator
+$\P_{\mathcal{X}}\in \Banach$ is an orthogonal projection 
+onto $\mathcal{X}$ if and only if $\P^2_{\mathcal{X}} = \P_{\mathcal{X}}$
+and $\P_{\mathcal{X}}$ is self-adjoint.
+\end{define}
+
+Following the exposition in Teolis~\cite{Teolis:1998}, we now
+state some important properties of linear operators.
+Let $\Hone$ and $\Htwo$ be arbitrary Hilbert spaces with norms 
+$\|\cdot\|_{\Hone}$ and $\|\cdot\|_{\Htwo}$ and inner products
+$\langle \cdot,\cdot\rangle_{\Hone}$ and
+$\langle \cdot,\cdot\rangle_{\Htwo},$ respectively.
+Let $\T$ be an operator that maps a function in $\Hone$ to a function
+in $\Htwo$; that is, $\T: \Hone \mapsto \Htwo$.
+\begin{enumerate}
+\item The \emph{range} of $\T$ is 
+$\T (\Hone) \equiv \{\T[f]: f\in \Hone\}$.
+\item The \emph{kernel} (or \emph{null space}) of $\T$ is 
+$\Null(\T ) \equiv \{f \in \Hone: \T[f] = 0\}$.
+\item $\T $ is \emph{injective} (or \emph{one-to-one}) when $\T[f] = \T g$ if and
+only if $f = g$.  If $\T $ is a linear operator then $\T $ is injective if
+and only if $\Null(\T ) = \{0\}$.
+\item $\T $ is \emph{surjective} or \emph{onto} if $\T (\Hone) = \Htwo$.
+\item $\T $ is \emph{bijective} if it is both injective and surjective.
+\item $\T $ has an \emph{inverse} $\T ^{-1}: \Htwo \mapsto \Hone$ if $\T $ is
+bijective.  In this case the inverse of $\T $ is defined as $\T ^{-1}g =
+f,$ where $f$ is such that $\T[f]=g$.
+\item $\T $ is \emph{continuous} if $x_n \mapsto x$ implies $\T[x]_n \mapsto x$.
+A linear operator is bounded if and only if it is continuous.
+\item The \emph{adjoint} of $\T $ is the unique operator 
+$\T ^*:\Htwo \mapsto \Hone$ for which
+$\langle \T[f],g\rangle_{\Htwo} = \langle f,\T ^*g\rangle_{\Hone}$ holds for all
+$f\in \Hone$ and $g \in \Htwo$.  $\T $ is \emph{self-adjoint} if
+$\T ^*=\T $.
+\item $\T \in \Banachonetwo$ is a \emph{compact} operator if, for all
+sequences $\{f_n: \|f_n\| = 1\} \subseteq \Hone$, the sequence
+$\{\T[f]_n\}$ has a converging subsequence in $\Htwo$.
+\item $\T $ is a \emph{topological isomorphism} if $\T $ is bijective,
+$\T \in \Banachonetwo$, and $\T ^{-1} \in \Banachtwoone$.  Thus, both $\T $
+and $\T ^{-1}$ are continuous linear operators.
+\item $\T $ is an \emph{isometry} if for all $f \in \Hone$,
+$\|\T[f]\|_{\Htwo} = \|f\|_{\Hone}$.
+\item $\T $ is a \emph{unitary} map if it is linear, bijective, and an
+isometry.  If $\T $ is unitary then $\T ^{-1} = \T ^*$.
+\end{enumerate}
+
+\ifthenelse{\boolean{nofootnotes}}{\subsection{Integral Transforms}}
+{\subsection{Integral Transforms\protect\footnotemark}
+\footnotetext{Mertins~\cite{Mertins:1999}, (p.~22).}}
+The integral transform is one of the most important tools in signal theory.
+The best known example is the Fourier transform, which we describe in
+section~\ref{sec:Fourier}, but there are many other transforms of interest.
+
+The basic idea of an integral representation is to describe a signal $x(t)$
+via its density $\hat{x}(t)$ with respect to an arbitrary {\it kernel}, denoted
+$\phi(t,s)$.  This is done as follows:
+\begin{equation}
+\label{eqn:kernel}
+x(t) = \int_S \hat{x}(s) \phi(t,s) \,ds, \hspace{1cm} t\in T
+\end{equation}
+A {\it reciprocal kernel}, $\theta(s,t)$, may be found such that the density
+$\hat{x}(s)$ can be calculated in the form
+\begin{equation}
+\label{eqn:reciprocal}
+\hat{x}(s) = \int_T \hat{x}(t) \theta(s,t) \,dt, \hspace{1cm} s\in S
+\end{equation}
+Substituting (\ref{eqn:reciprocal}) into (\ref{eqn:kernel}) yields,
+\begin{equation}
+\label{eqn:recipkern}
+x(t) =  \int_T x(\tau) \int_S \theta(s,\tau) \phi(t,s) \,ds\,d\tau
+\end{equation}
+The {\it Dirac impulse} $\delta(t)$ satisfies such an integral equation:
+\begin{equation}
+\label{eqn:dirac}
+x(t) =  \integral \delta(t-\tau) x(\tau) \,d\tau, \hspace{1cm} x\in \LoneR
+\end{equation}
+From equation (\ref{eqn:recipkern}) and definition (\ref{eqn:dirac}), we arrive
+at the following:
+\[
+  0 = \int_T x(\tau) \left(\int_S \theta(s,\tau)\phi(t,s)\,ds -
+      \delta(t-\tau)\right) \,d\tau 
+\]
+which holds for all $x$ if and only if 
+\[
+  \int_S \theta(s,\tau)\phi(t,s)\,ds = \delta(t-\tau)
+\]
+If, instead, we substitute equation (\ref{eqn:kernel}) into
+(\ref{eqn:reciprocal}) and proceed as above, {\it mutatis mutandis}, 
+we arrive at 
+\[
+\int_T \phi(t,\xi)\theta(s,t)\,dt = \delta(s-\xi)
+\]
+\begin{define}{\bf Self-Reciprocal Kernels. } A special category is that of
+\emph{self-reciprocal kernels}.  They correspond to orthonormal bases and
+satisfy $\phi(t,s) = \theta^*(s,t)$, so that
+\begin{eqnarray}
+\label{eqn:selfreciprocal}
+\int_S \theta(t,s)\theta^*(s,\tau)\,ds&=& \int_S \theta(s,t)\phi(\tau,s)\,ds\\
+&=&\delta(t-\tau) \nonumber
+\end{eqnarray}
+\end{define}
+Transforms that contain a self-reciprocal kernel are also called {\it unitary}
+because they yield $\|\hat{x}\| = \|x\|$, by Parseval's relation, which we
+cover in the following section.
+
+\ifthenelse{\boolean{nofootnotes}}{\subsection{Parseval's Relation}}
+{\subsection{Parseval's Relation\protect\footnotemark}
+\footnotetext{Mertins~\cite{Mertins:1999}, (p.~25).}}
+\label{sec:Parseval}
+Let the signals $x(t)$ and $y(t)$ be square integrable, $x,y \in \Ltwo(T)$.
+For the densities, let
+\begin{eqnarray}
+\hat{x}(s) &=& \int_T x(t) \theta(s,t) \,dt\nonumber \\
+\label{eqn:densities}
+\hat{y}(s) &=& \int_T y(t) \theta(s,t) \,dt
+\end{eqnarray}
+where $\theta(s,t)$ is a self-reciprocal kernel satisfying
+(\ref{eqn:selfreciprocal}). 
+Now consider inner products
+\begin{eqnarray}
+  \langle x,y\rangle &= &\int_T x(t)y^*(t)\,dt\nonumber \\
+\label{eqn:innerproducts} 
+  \langle \hat{x},\hat{y}\rangle &= & \int_S \hat{x}(s)\hat{y}^*(s)\,ds 
+\end{eqnarray}
+Substituting the densities (\ref{eqn:densities}) into the the inner product
+(\ref{eqn:innerproducts}) yields
+\[ 
+  \langle \hat{x},\hat{y}\rangle =
+  \int_S \int_T \int_T x(\tau)\theta(s,\tau) y^*(t) \theta^*(s,t) \,d\tau \,dt \,ds
+\] 
+By self-reciprocity, the foregoing becomes
+\begin{eqnarray*}
+  \langle \hat{x},\hat{y}\rangle &=&
+  \int_T x(\tau)\int_T y^*(t) \delta(t-\tau) \,dt \,d\tau\\
+&=&  \int_T x(\tau) y^*(\tau) \,d\tau
+\end{eqnarray*}
+This proves {\it Parseval's relation}
+\[ 
+  \langle \hat{x},\hat{y}\rangle =   \langle x,y\rangle 
+\]
+For $y(t)=x(t)$, Parseval's relation shows that self-reciprocal
+kernels are unitary, as claimed in the preceding section:
+\[ 
+  \langle \hat{x},\hat{x}\rangle = \langle x,x\rangle 
+  \hspace{7mm} \Rightarrow \hspace{7mm} \|\hat{x}\|=\|x\|
+\]
+
+%\subsection{Spectral Analysis}
+\subsection{Fourier Transforms}
+\label{sec:Fourier}
+\begin{define}{\bf Continuous-Time Fourier Transform. } 
+% \footnote{For a more detailed development see
+% Mallat~\cite{Mallat:1998} or Teolis~\cite{Teolis:1998}.} 
+The mapping $\mathcal{F}: \LtwoR \mapsto \LtwoR$, defined for
+$x\in \LoneR \subset \LtwoR$ by
+\begin{equation}
+\label{eqn:FT}
+\mathcal{F}[x](\omega) = \hat{x}(\omega) = \integral x(t) e^{-i2\pi\omega t}\,dt
+\end{equation}
+is called the \emph{continuous-time Fourier transform}.  Throughout
+the paper, we reserve the special notation $X(\omega)$ and $Y(\omega)$
+for the Fourier transforms of $x(t)$ and $y(t)$, respectively.
+
+For $x \in \LtwoR \setminus \LoneR$, the continuous-time \FT\ is defined
+\[
+X(\omega) = 
+\lim_{n\rightarrow \infty}\int_{-n}^n x(t) e^{-i2\pi\omega t}\, dt
+\]
+In the latter case, convergence of the limit to $X$ is in the
+$\Ltwo$-sense.
+\end{define}
+The quantity $X(\omega)$ measures how much oscillation at
+frequency $\omega$ there is in the signal $x(t)$.
+If $x \in \LoneR,$ the integral in (\ref{eqn:FT}) does converge and 
+\[|X(\omega)| \leq \integral |x(t)|dt \]
+Therefore $X$ is bounded and it is a continuous function of $\omega.$
+If $X$ is also integrable, the inverse Fourier transform is 
+\begin{equation}
+\label{eqn:InvFT}
+x(t) = %\frac{1}{2\pi}
+\integral X(\omega) e^{i2\pi\omega t} \,d\omega
+\end{equation}
+which gives the decomposition of the signal $x(t)$ as a weighted sum of sinusoidals
+$\exp\{i2\pi\omega t\}$ with weights (amplitudes) given by $X(\omega)$.
+If we define the inner product of the functions $x$ and $y$ to be
+\[
+\langle x,y \rangle = \integral x(t) y^*(t)\,dt
+\]
+then $X(\omega) = \langle x,e^{i2\pi\omega} \rangle$.  This operation can
+be viewed as the projection of $x$ onto $e^{i2\pi\omega}$ since 
+%\[\langle f - X e^{i2\pi\omega}, e^{i2\pi\omega} \rangle = 0\]
+%that is, 
+the function $x - X e^{i2\pi\omega}$ is orthogonal to
+$e^{i2\pi\omega}$. 
+
+To summarize, the inverse Fourier transform (\ref{eqn:InvFT})
+represents the reconstruction of $x(t)$ as the sum of its projections
+onto the basis functions $\{e^{i2\pi\omega t}\}$.  Thus, it is simply a
+more general version of the decomposition appearing in
+equation~(\ref{eqn:sumcos}): 
+\[
+x(t) = \sum_{k=1}^K a_k \cos(\omega_k t + p_k)
+\]
+
+The sinusoidal functions $\{e^{i2\pi\omega t}\}$ are useful as building
+blocks for signals, especially those that do not change quickly over time.
+However, it is possible to find other \emph{atomic} functions that
+provide a better 
+%\marginpar{\em We must consider the criteria
+%by which we judge one basis to be better than another.}
+basis on which to project signals that have more
+dramatic stuctural variations.  
+The goal of an atomic decomposition is to provide a recipe for
+constructing a given function $x\in \mathcal{H}$ out of a set of atomic
+functions $\{\phi_n\}$.  Analysis is restricted to recipes of the form
+\begin{equation}
+\label{eqn:lincomb}
+x(t) = \sum c_n \phi_n(t) 
+\end{equation}
+where $\{c_n\}$ is a countable sequence in $\ltwoR$ and the atoms
+satisfy some fundamental properties.  For instance, the basic
+requirement is that the atoms span the space $\mathcal{H}$ -- that is,
+every element $x \in \mathcal{H}$ can be written as a linear
+combination of the atoms, as in~(\ref{eqn:lincomb}).
+
+\begin{define}{\bf Discrete-Time Fourier Transform. } Let $x(n)$ be a
+discretized version of the analog signal considered above.  If $x(n)$
+is absolutely summable, that is $\sum|x(n)| < \infty$, then its
+\emph{discrete-time Fourier transform} is given by 
+\begin{equation}
+\label{eqn:DTFT}
+\mathcal{F}[x_n](\omega) = X(\omega) = \sum_{n=-\infty}^{\infty}x(n) e^{-i2\pi\omega n}
+\end{equation}
+The \emph{inverse discrete-time Fourier transform} of $X(\omega)$ is
+given by 
+\begin{equation}
+\label{eqn:InvDTFT}
+x(n) = %\frac{1}{2\pi}
+\integral X(\omega) e^{i2\pi\omega n} \,d\omega
+\end{equation}
+\end{define}
+The operator $\mathcal{F}$ transforms a discrete signal $x(n)$ into a
+complex-valued continuous function $X(\omega)$ of the real
+variable $\omega$, which is a digital frequency measured in Hertz.
+
+If $x(n)$ is of finite duration, then Matlab can be used to compute
+$X(\omega)$ numerically at any freuqency $\omega$.  The approach
+is to implement~(\ref{eqn:DTFT}) directly.  If, in addition, we wish to
+evaluate $X(\omega)$ at the set of frequencies
+$\{\omega_1,\ldots,\omega_M\}$, then~(\ref{eqn:DTFT}) can be
+implemented as a simple matrix-vector multiplication.  For example,
+suppose $x(n)$ has $N$ samples between $n_1 \leq n \leq n_2$.  
+% and that we want to evaluate $X(\omega)$
+Then~(\ref{eqn:DTFT}) can be written as
+\begin{equation}
+\label{eqn:nDTFT}
+X(\omega_k) = 
+\sum_{\ell=1}^{N}x(n_{\ell}) e^{-i2\pi\omega_k n_{\ell}}, \; k = 1, \ldots, M
+\end{equation}
+When $\{x(n_{\ell})\}$ and $\{X(n_{\ell})\}$ are arranged as
+column vectors $\mathbf{x}$ and $\mathbf{X}$, respectively, 
+equation~\ref{eqn:nDTFT} is equivalent to 
+\[\mathbf{X} = \W \mathbf{x}\]
+where $\W$ is an $M \times N$ matrix given by 
+\[
+\W = 
+\left\{e^{-i2\pi\omega_k n_{\ell}} : n_1 \leq n \leq n_2, 1 \leq k \leq M \right\}
+\]
+If we arrange $\{\omega_k\}$ and $\{n_{\ell}\}$ as \emph{row} vectors
+$\mathbf{w}$ and $\mathbf{n}$ repsectively, then 
+\[
+\W =
+\left[\exp{(-i2\pi\mathbf{w}^t \mathbf{n})}\right] \in \C^{M\times N}
+\]
+We will make use of this direct computation of the discrete-time
+Fourier transform in the experiments of section~\ref{sec:practical}.
+
+% (begin: inserted from file energydensity.tex)
+%\protect\footnotemark}
+%\footnotetext{Mallat~\cite{Mallat:1998} (p.110)}
+\begin{define}{\bf Unitarity. }  
+The Parseval relation (\ref{sec:Parseval}) shows that the Fourier transform is
+an isometry of $\LtwoR$.  Thus, the inner product of two signals remains the
+same, no matter if we represent it in the time or frequency domain:
+$\langle X,Y\rangle = \langle x,y\rangle$.  
+It follows that the temporal and spectral energy densities,
+respectively $|x(t)|^2$ and $|X(\omega)|^2$, %/2\pi  
+satisfy the energy conservation equations
+\begin{align*}
+\|x\|^2 &= \integral |x(t)|^2\,dt  \\
+%        &=\langle x,x\rangle =\langle X,X \rangle 
+%                           \qquad \text{ (Parseval's) }\\ 
+        &=\integral |X(\omega)|^2\,d\omega = \|X\|^2
+\end{align*}
+\end{define}
+
+\emph{Moyal's formula}~\cite{Moyal:1949} proves that the \WT\ is also
+  unitary, an thus yields similar energy conservation properties.
+\begin{theorem}[Moyal\footnote{See also~\cite{Mallat:1998}, p.110, for
+  a proof.}]
+For any $x$ and $y$ in $\LtwoR$
+\begin{eqnarray}
+\left|\langle x,y\rangle\right|^2 &=& 
+\left|\integral x(t)y^*(t)dt\right|^2 \nonumber \\
+&=&%\frac{1}{2\pi}
+\iint \W_x(t,\nu)\W_y(t,\nu) \,dt \,d\nu
+\label{eqn:Moyal}
+\end{eqnarray}
+\end{theorem}
+% (end: inserted from file energydensity.tex)
+
+\ifthenelse{\boolean{nofootnotes}}{\subsection{Cohen's Class}}
+{\subsection{Cohen's Class\protect\footnotemark}
+\footnotetext{Mallat~\cite{Mallat:1998}, (p.114).}}
+Above we claimed that time-frequency energy densities,
+%$\P_x(u,\omega)$, 
+such as the spectrogram and scalogram, are time-frequency averagings
+of the \WT. To see this, reconsider the family $\{\phi_{\gamma}\}$  
+of time-frequency atoms from section~\ref{sec:atomic}, where for any
+$(u,\omega)$ there exists a unique atom $\phi_{\gamma(u,\omega)}$
+centered in time-frequency at $(u,\omega)$. The corresponding linear
+time-frequency transform of $x$ is 
+\[
+\T[x](u,\omega) =\langle x,\phi_{\gamma(u,\omega)} \rangle
+\]
+%       &&=\integral x(t)\phi^*_{\gamma}(t)\,dt \nonumber \\
+The resulting time-frequency energy density is
+\begin{eqnarray*}
+E_{T[x]}(u,\omega)&
+  =&\left|\langle x,\phi_{\gamma(u,\omega)}\rangle\right|^2 \\
+ &=& \left|\integral x(t) \phi^*_{\gamma(u,\omega)}(t)\,dt\right|^2
+\end{eqnarray*}
+Moyal's formula~(\ref{eqn:Moyal}) proves that this energy density is a
+time-frequency averaging of the \WV\ transform:
+\[
+E_{T[x]}(u,\omega)= %\frac{1}{2\pi}
+\iint \W_x(t,\nu)\W_{\phi_{\gamma(u,\omega)}}(t,\nu)\,dt\,d\nu
+\]
+The smoothing kernel is the \WV\ transform of the atoms
+\[\theta(u,t,\omega,\nu) =
+%\frac{1}{2\pi}
+\W_{\phi_{\gamma(u,\omega)}}(t,\nu)\]
+The loss of time-frequency resolution depends on the spread of the
+transform $\W_{\phi_{\gamma(u,\omega)}}(t,\nu)$ in the neighborhood of
+$(u,\omega)$. To summarize, positive time-frequency transforms totally
+remove the interference terms, but produce a loss of information.
+

@@ -1,0 +1,79 @@
+\input{header}
+\thispagestyle{empty}
+\newcommand{\HRule}{\rule{\linewidth}{1mm}}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{0mm}
+\begin{document}
+%%% BEGIN: title page
+\vspace*{\stretch{1}}
+\HRule
+  \begin{flushleft}
+        \Huge SoundMathWorks \\[5mm]
+        \Large Technical Report: \large spectral analysis of music
+  \end{flushleft}
+\HRule
+\vspace*{\stretch{2}}
+  \begin{center}
+%    \begin{tabular}{cc}
+     William J. DeMeo%& co-author's name
+%    \end{tabular}
+  \end{center}
+
+\pagebreak
+%% END: title page
+\vspace*{10mm}
+\HRule
+  \begin{flushleft}
+     \Huge SoundMathWorks\\[5mm]
+     \Large Technical Report: 
+     \large spectral analysis of music\hspace*{\stretch{1}} 23 July 2001
+  \end{flushleft}
+\HRule\\
+\begin{center}
+%\begin{tabular}{ccc}
+William J. DeMeo\\%&& co-author's name \\
+{\small {\tt william.demeo@verizon.net}}%&&{\small {\tt co-author's email}}\\
+%\end{tabular}
+\end{center}
+\vspace{10mm}
+
+% 2004.03.30: commented next five lines
+%\pagestyle{fancy}
+%\lhead{DO NOT DUPLICATE} \chead{\bfseries CONFIDENTIAL} \rhead{DO NOT DUPLICATE} 
+%\lfoot{} \cfoot{\thepage} \rfoot{}
+%%\renewcommand{\headrulewidth}{0.4pt} \renewcommand{\footrulewidth}{0.4pt} 
+%\renewcommand{\headrulewidth}{0.2pt} \renewcommand{\footrulewidth}{0pt}
+
+\tableofcontents
+\setlength{\parindent}{5mm}
+
+\include{./intro/abstract}
+\include{./intro/intro}
+\include{./theory/musical}
+\include{./theory/atoms}
+\include{./theory/energy}
+\include{./practical/practical}
+
+\pagebreak
+
+\appendix
+\begin{center}
+{\bf APPENDIX}
+\end{center}
+\input{./appendix/math}
+% The following now appears in math.tex
+% \input{\HOME/theory/Fourier}
+\input{./appendix/perception}
+\input{./appendix/music}
+\input{./appendix/numerical}
+\pagebreak
+\input{./appendix/matlab}
+\input{./appendix/source}
+
+\bibliographystyle{IEEEbib} %\bibliographystyle{ieeetr}
+%\bibliography{../ref/master}
+\bibliography{wjd}
+%\bibliographystyle{plain} \bibliographystyle{siam}
+%\bibliography{../ref/references,../ref/dsp,../ref/music,../ref/my}
+
+\end{document}

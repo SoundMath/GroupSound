@@ -1,0 +1,91 @@
+% -*- mode: LaTeX; tex-main-file: "../notes.tex"; -*-
+\section{Perception of Complex Tones}
+This section contains notes on the perception of complex tones.  In
+particular, we focus on two concepts that are related to 
+%have connections to 
+the ideas in the paper, but which are not described therein, as they
+are not immediately relevant.  This material is included here because
+it might be useful in future work. 
+%The last part of this section presents some notes on the music we use
+%in the experiments of section~\ref{sec:practical}. 
+% (begin: insert file fusion.tex)
+\subsection{Tonal Fission and Fusion} 
+In this section are some notes on tonal fusion.  First are excerpts
+from Sethares~\cite{Sethares:1997} (p. 25, 26), and then some brief notes
+from Hartmann~\cite{Hartmann:1998}. 
+
+Almost all musical sounds consist of a great many partials, whether they are
+harmonically related or not.  Using techniques such as selective damping and
+the selective excitation models, it is possible to learn to ``hear out'' these
+partials, to directly perceive the spectrum of the sound.  This kind of
+listening is called \emph{analytic} listening, as compared to \emph{holistic}
+listening in which the partials fuse together into one perceptual entity.
+
+Consider the closing chord of a string quartet.  At one extreme, is the fully
+analytic listener that ``hears out'' a large number of individual partials.
+At the other extreme is the fully holistic listener who hears the chord as one
+grand ``tone,'' all four instruments fusing into a single rich and complex
+sonic texture.  Typical listening lies somewhere in between: the partials of
+each instrument fuse, but the instruments remain individually perceptible,
+each with its own pitch, loudness, vibrato, etc.  What physical cluesmake this
+remarkable feat of perception possible?
+
+When listeners are presented with clusters of partials and asked how many
+distinct voices, notes, etc. they hear, various features of the presentation
+reliably encourage tonal fusion.  Some of these features are whether the
+partials:
+\begin{enumerate}
+\item begin at the same time (attack synchrony),
+\item have similar envelopes (amplitudes change similarly over time),
+\item are harmonically related, or
+\item have the same vibrato rate.
+\end{enumerate}
+Almost any common feature of a subgroup of partials helps them to be perceived
+together. 
+
+Hartmann~\cite{Hartmann:1998} (p. 134) states that the most important mediator of
+perceptual segregation and integration is the onset time of the tones, which
+he calls \emph{onset synchronicity} (cf. attack syncrony of Sethares).  If two
+sets of partials have different onset times, then the auditory system
+segregates them as different entities.  
+
+A study by Rasch (1978) indicates that 30ms advanced onset leads to 40dB
+increase in level perception and allows the listener to segregate while
+remaining unaware of the 30ms asynchrony.  However, research by Risset,
+Matthews (1969) and Beauchamp (1975) shows that the harmonics of high
+frequencies lag those of low frequencies by greater than 30ms\footnote{A
+  diagram of this phenomena is in the comp book at (00.07.10).}
+% (end: insert file fusion.tex)
+
+% (begin: insert file dominance.tex)
+\ifthenelse{\boolean{nofootnotes}}{\subsection{Spectral Dominance}}
+{\subsection{Spectral Dominance\protect\footnotemark }
+\footnotetext{This topic is also discussed in Hartmann
+\cite{Hartmann:1998}.}}
+A periodic complex tone has a pitch that is equal to, or slightly less
+than, the frequency of the fundamental. 
+Assuming the various overtones of a complex tone fuse together to
+create an overall pitch, just how these overtones are combined is a
+question of great interest.  In particular, if a complex tone is
+composed of pure sinusoidal partials, each having a given frequency
+and amplitude, which of these partials will be more pronounced and make a
+greater contribution to the determination of the fundamental (low) pitch of
+the complex tone?  A promising experimental approach is to mistune one
+or more partials and study the effect on the synthesized low pitch.
+Experiments by Ritsma (1967) and Moore, Glasberg, and Peters (1985)
+led to the conclusion that the partials that are most important in
+determining the low pitch are those that are resolved by the auditory
+periphery.  Retsma concluded that for fundamental frequencies between
+100 and 400 Hz, partials three, four, and five are dominant.  Terhardt
+(1974) proposed a dominant frequency range centered on 700 Hz, instead
+of particular harmonic numbers.  Moore {\it et al}.~concluded that the
+dominant partials were among the first six, but individual differences
+prevented them from being more specific.
+
+The observed importance of the resolved harmonics supports the idea
+that pitch perception takes place at high levels where excitations
+from different peripheral channels are recombined.  Pattern matching
+or template fitting models focus on this idea.  The model studied by
+Goldstein (1973) derives the low pitch from a pattern match to the
+frequencies of the higher partials.
+% (end: insert file dominance.tex)

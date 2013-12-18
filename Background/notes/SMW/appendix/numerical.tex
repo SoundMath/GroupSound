@@ -1,0 +1,183 @@
+\section{A Note on Numerical Precision}
+\subsection{Numerical Support of Gabor Atoms}
+Here we remark on some practical considerations which we may want to
+account for in future (more numerically precise) constructions of the
+Gabor dictionary. 
+
+Suppose we begin with a general gaussian function
+\[
+g(t) = e^{-\alpha t^2}, \qquad t \in \R,\; \alpha > 0
+\]
+Then we translate $g$ in time by $p$, scale it by $s$, and
+modulate it by $f$ Hz, yielding 
+\[
+g_\gamma(t) = Kg\left(\frac{t-p}{s}\right)e^{i2\pi ft} 
+= Ke^{-\alpha \left(\frac{t-p}{s}\right)^2}e^{i2\pi ft} 
+\]
+where $\gamma = (p,s,f)$ denotes the paramter vector and $K$ is chosen
+so that $\|g_\gamma\|=1$.
+
+Clearly $g > 0$ for all $t$, and $g(t)\rightarrow 0$ as $t\rightarrow
+\pm \infty$.  Thus, the \emph{theoretical support} of %both $g$ and
+$g_\gamma$ is the entire real line (minus the zeros resulting from
+the frequency modulation). However, for practical applications in
+which we are restricted to finite precision arithmetic, it is
+important to consider the \emph{numerical support} of $g_\gamma$,
+which is necessarily a finite subset of $\R$.  In other words, we must
+consider for what values of $t$ is it the case that $g_\gamma(t) \geq
+\epsilon_m$. Here $\epsilon_m$ is the \emph{machine epsilon}, defined 
+as the smallest positive number attainable by the computer.  For
+example, on our Pentium II hardware, the Matlab function {\tt eps}
+returns
+\[
+\epsilon_m \approx  2.22 \times 10^{-16}
+\]
+Clearly, when $t$ is such that $|g_\gamma(t)| < \epsilon_m$, the
+computer perceives $g_\gamma(t)$ as no different from 0, and we must
+assume that the function is not numerically supported on these values
+of $t$.
+
+Let us now find the numerical support of $g_\gamma$, for $p = 0$; that
+is, for $\gamma = (0,s,f)$.
+% (This can be generalized for $p>0$ with a
+%simple time translation.)
+\begin{eqnarray}
+|g_\gamma(t)| \geq \epsilon_m 
+&\Leftrightarrow& 
+|K e^{-\alpha \left(\frac{t}{s}\right)^2}e^{i2\pi ft}| \geq
+\epsilon_m \\ 
+&\Leftrightarrow& 
+K e^{-\alpha \left(\frac{t}{s}\right)^2} \geq \epsilon_m \\ 
+&\Leftrightarrow& 
+-\alpha \left(\frac{t}{s}\right)^2 
+\geq \log\epsilon_m - \log K \nonumber\\ 
+& \Leftrightarrow & \left(\frac{t}{s}\right)^2 \leq
+\frac{\log K -\log\epsilon_m}{\alpha}\nonumber\\ 
+\label{eqn:support}
+& \Leftrightarrow & 
+|t| \leq s\left(\frac{\log K -\log\epsilon_m}{\alpha}\right)^{1/2}
+\end{eqnarray}
+Since $\epsilon_m$ is a small positive number,
+$\log K-\log\epsilon_m$ is positive.  Thus, the square root in
+the last inequality of (\ref{eqn:support}) results in a positive real
+number, and defines the numerical support of $g_\gamma$. 
+
+It is convenient to choose $\alpha$ such that the numerical support of
+$g_\gamma$ is $[-s/2,s/2]$.  
+%$g$ is $[-1/2,1/2]$.  
+%Then scaling by $s$ results in a scaled gaussian,
+%$g_s(t) = g(t/s)$, with numerical support $[-s/2,s/2]$.  
+However, such an $\alpha$ is difficult to acheive analytically because
+the normalization constant $K$ depends on $\alpha$ and $s$.
+So, we proceed by deriving $K$ and $\alpha$ analytically as far as
+possible, and then we consider a numerical optimization 
+that will yield Gabor atoms having the desired numerical support.
+
+We seek $K$ such that $\|g_\gamma\| = 1$, where
+\[
+g_\gamma(t) = Ke^{-\alpha \left(\frac{t}{s}\right)^2}e^{i2\pi ft},
+\qquad t \in \R,\; \alpha > 0
+\]
+and
+%\begin{eqnarray*}\begin{align*}
+\[
+\|g_\gamma\|^2 = \integral g_\gamma(t)g_\gamma^*(t)\,dt
+               = K^2\integral
+        e^{-2\alpha\left(\frac{t}{s}\right)^2}\,dt\\ 
+\]
+%\end{eqnarray*}\end{align*}
+%Recall that a gaussian density integrates to 1. For a density with
+%variance $\sigma^2$, this means 
+%\begin{equation}\label{eq:gaussint}
+%\frac{1}{\sigma \sqrt{2\pi}} \integral e^{-t^2/2\sigma^2}\,dt = 1
+%\end{equation}
+%Using this fact, we derive the following
+Such a $K$ is derived as follows:
+\begin{align*}
+1 = \|g_\gamma\|^2 &= K^2\integral
+    e^{-2\alpha\left(\frac{t}{s}\right)^2}\,dt\\ 
+\Leftrightarrow \quad K^{-2} &=
+\integral e^{-2\alpha\left(\frac{t}{s}\right)^2}\,dt
+%\end{align*}
+%This holds if, and only if,
+%\begin{eqnarray*}
+\\
+\Leftrightarrow \quad K^{-2}
+&=\integral\exp\left\{-\frac{t^2}{2(s/2\sqrt{\alpha})^2}\right\}\,dt
+\end{align*}
+Letting $\sigma= \frac{s}{2\sqrt{\alpha}}$, the foregoing is
+equivalent to 
+\[%\begin{equation}\label{eq:K}
+K^{-2} = %\sigma \sqrt{2\pi} \frac{1}{\sigma \sqrt{2\pi}}
+\integral e^{\frac{-t^2}{2 \sigma^2}}\,dt\\
+       = \sigma \sqrt{2\pi}
+\]%\end{equation}
+The final equality obtains from the fact that a gaussian density integrates to 1.
+%Fact~(\ref{eq:gaussint}) 
+%Finally, equation~(\ref{eq:K}) 
+This shows that the value of $K$ resulting in atoms of unit
+norm is  
+\[
+K=(\sigma \sqrt{2\pi})^{-1/2}=\left(\frac{2\alpha}{\pi s^2}\right)^{1/4}
+\]
+Inserting this expression into equation (\ref{eqn:support}), which
+defines the numerical support, we have
+\begin{equation}
+\label{eq:alpha}
+\frac{\log K -\log\epsilon_m}{\alpha} =\frac{1}{4}
+\left(\frac{\log\alpha-2\log s - 4\log\epsilon_m+\log(2/\pi)}
+           {\alpha}\right) 
+\end{equation}
+Recall from (\ref{eqn:support}) that we seek a value of $\alpha$ such
+that the right hand side of equation~(\ref{eq:alpha}) is
+equal to 1/4.  This occurs when 
+\[
+\alpha = \log \alpha -2\log s - 4\log \epsilon_m+\log(2/\pi)
+\]
+which is nonlinear in $\alpha$.  Therefore, for given values of $s$,
+we select numerically optimal values of $\alpha$ by minimizing the
+function 
+\[
+L_s(\alpha)=
+|\alpha - \log\alpha + 2\log s + 4\log\epsilon_m-\log(2/\pi)|
+\]
+The Matlab routine {\tt fminbnd.m} accomplishes this effectively.  We
+use it as follows:
+\begin{verbatim}
+>> fn = inline('abs(x-log(x)+4*log(eps)+2*log(P1)-log(2/pi))',1);
+>> alpha = fminbnd(fn,1,200,optimset('Display','off'),S);
+\end{verbatim}
+
+%However, numerical
+%experimetation shows that the $\log \alpha$ term is well approximated
+%by a linear function of $r = \log_2 s$.  After some simulation,
+%we find that the following definition of $\alpha$ yields suitable
+%numerical supports for the scaled gaussians $g_\gamma(t)$,
+%\[
+%\alpha =  5 - 0.01 r - 2\log s - 4\log \epsilon_m + \log(2/\pi),
+%\quad \text{ where } s = 2^r.
+%\]
+
+
+
+
+
+%%% (erroneous) characteristic function derivation %%%
+%
+%&=& K^2 \integral e^{i4\pi ft} e^{-2 \alpha \left(\frac{t}{s}\right)^2}\,dt\\
+%&=& K^2 \integral 
+%    e^{i4\pi ft} \exp\left\{\frac{-t}{2 (s/2\sqrt{\alpha})^2}\right\}\,dt
+%\end{eqnarray*}
+%Now let $\sigma= \frac{s}{\sqrt{\alpha}}$, yielding
+%\begin{eqnarray*}
+%\|g_\gamma\|^2 
+%&=& K^2 \sigma \sqrt{2\pi} \frac{1}{\sigma \sqrt{2\pi}}
+%\integral e^{i4\pi ft} \exp\left\{\frac{-t^2}{2 \sigma^2}\right\}\,dt\\
+%&=& K^2 \sigma \sqrt{2\pi} \phi_X(f)\\
+%&=& K^2 \sigma \sqrt{2\pi} 
+%    \exp\left\{\frac{-\sigma^2(4\pi f)^2}{2}\right\}
+%\end{eqnarray*}
+%The last equality holds because the integral that we have labelled
+%$\phi_X(f)$ is the characteristic function of $X$, a normal random
+%variable with mean 0 and variance $\sigma^2$.
+%

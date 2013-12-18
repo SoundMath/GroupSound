@@ -1,0 +1,158 @@
+%%-----------------------------------------------------------------
+% header.tex
+% General header content for LaTeX paper: notes.tex
+% Author: William DeMeo
+% Modified: 00.11.04
+% Usage: Start document with the lines
+%           \input{header}
+%           \begin{document}
+%        Then add title with commands \title, \author, \maketitle,
+%        \tableofcontents, etc.
+%%-----------------------------------------------------------------
+%**start of header
+%\documentclass[notitlepage,12pt]{article}
+\documentclass[11pt]{article}
+%\documentclass{amsart}
+%\usepackage{spconf,amsmath,epsfig}
+\usepackage{amsmath,amssymb,amscd,epsfig}
+
+\usepackage{fullpage}
+
+\usepackage{ifthen}
+
+%% Should figures be compiled?
+\newboolean{nofigures} % initially false ==> compile with figures
+% comment out the following line to compile with figures
+%\setboolean{nofigures}{true} 
+
+%% Should citation footnotes on section headings be compiled?
+\newboolean{nofootnotes}
+% comment out the following line to include all citation foonotes.
+\setboolean{nofootnotes}{true} 
+
+%\usepackage{boxedminipage}
+\usepackage{theorem}
+{\theorembodyfont{\rmfamily} 
+ \newtheorem{definition}{Definition}[section]
+ \newtheorem{lemma}{Lemma}[section] % Lemmas are for proving theorems and facts
+ \newtheorem{prop}{Proposition}[section] % Props state any new results of this document
+ \newtheorem{fact}{Fact}[section]   % Facts are for less important, well-known results
+ \newtheorem{example}{Example}[section]   
+ \newtheorem{theorem}{Theorem}[section]  % Theorems are for important, well-known results
+ {\theoremstyle{marginbreak}  
+   \newtheorem{define}{}  % This definition style is for the glossary
+    \newtheorem{Theorem}{Theorem}[subsection]  % Theorems are for important, well-known results
+ }
+}
+\renewcommand{\thedefine}{}
+
+% THE FILE
+%   /usr/share/texmf/doc/latex/hyperref/manual.pdf
+%  documents the hyperref package
+%\usepackage{hyperref}
+
+% THE FILE
+%   /usr/share/texmf/doc/latex/general/lshort.dvi (p.12)
+%  documents the pagestyle command
+%\pagestyle{headings}
+% 2004.03.30: commented next six lines:
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\lhead{\thesection} \chead{} \rhead{\thepage} 
+%\lfoot{Do Not Duplicate} \cfoot{\bfseries CONFIDENTIAL} \rfoot{Do Not Duplicate} 
+%\renewcommand{\headrulewidth}{0pt} \renewcommand{\footrulewidth}{0.4pt}
+
+% THE FILE
+%   /usr/share/texmf/doc/pdflatex/base/example.tex
+% suggests the following:
+%\input pdfcolor.tex
+%\pdfoutput=1\relax      % turn on PDF output; otherwise output DVI file
+                         % this primitive cannot be specified  *after* shipping
+                         % out the *first* page
+%\pdfpagewidth=8.26in    % page width of PDF output
+%\pdfpageheight=11.69in  % page height of PDF output
+%\usepackage[pdftex]{graphicx}
+%\DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png}
+
+%-------------------------------------------------------------
+% Definitions.
+% ------------
+%\def\HOME{/home/moonchild/pub/research/dsp/DeMeo/Notes}
+\def\HOME{/home/sonic/pub/research/dsp/DeMeo/Notes}
+\def\R{\mathbb{R}}    % real numbers 
+\def\C{\mathbb{C}}    % complex numbers 
+\def\e{\mathrm{e}}    % exponential
+% Two notations for real part of a complex number
+   \def\Real{\mbox{Re}}  %\def\Real{\Re}
+% Two notations for integration over R
+   \def\integral{\int_{-\infty}^{\infty}}
+     %\def\integral{\int_{-\infty}^{+\infty}} 
+% Operator Theory
+   \def\A{\operatorname{A}}
+   \def\E{\operatorname{E}}
+   \def\H{\operatorname{H}}
+   \def\I{\operatorname{I}}
+   \def\P{\operatorname{P}}
+   \def\pv{\operatorname{pv}}
+   \def\S{\operatorname{S}}
+   \def\T{\operatorname{T}}
+   \def\W{\operatorname{W}}
+   \def\Hilbert{\mathcal{H}}
+   \def\Hone{\mathcal{H}_1}
+   \def\Htwo{\mathcal{H}_2}
+   \def\Banach{\mathcal{B}(\Hilbert,\Hilbert)}
+   \def\Banachonetwo{\mathcal{B}(\Hone,\Htwo)}
+   \def\Banachtwoone{\mathcal{B}(\Htwo,\Hone)}
+   \def\Lone{L^1}
+   \def\Ltwo{L^2}
+   \def\ltwo{\ell^2}
+   \def\LoneR{L^1(\mathbb{R})}
+   \def\LtwoR{L^2(\mathbb{R})}
+   \def\ltwoR{\ell^2(\mathbb{R})}
+   \def\Null{\mathcal{N}}  % nullspace
+% Signals, Time-Frequency shifts, etc.
+   \def\scale{\frac{1}{\sqrt{s}}}
+   \def\transcale{\left(\frac{t-u}{s}\right)}
+   \def\xpull{x_{\frac{\tau}{2}, -\frac{\xi}{2}}}
+   \def\xpush{x_{-\frac{\tau}{2}, \frac{\xi}{2}}}
+   \def\xpullpush{x_{\frac{\tau}{2}, \frac{\xi}{2}}}
+   \def\xpushpull{x_{-\frac{\tau}{2}, -\frac{\xi}{2}}}
+   \def\xfpull{x_{-\frac{\Delta\nu}{2}}}
+   \def\xfpush{x_{\frac{\Delta\nu}{2}}}
+   \def\apull{a_{-}}
+   \def\apush{a_{+}}
+
+   \def\ytnu{y_{t,\nu}}
+   \def\ytnut{\tilde{y}_{t,\nu}}
+   \def\half{{\scriptstyle \frac{1}{2}}}
+   \def\halftau{{\scriptstyle \frac{\tau}{2}}}
+   \def\halfxi{{\scriptstyle \frac{\xi}{2}}}
+   \def\halfnu{{\scriptstyle \frac{\nu}{2}}}
+   \def\halfDnu{{\scriptstyle \frac{\Delta\nu}{2}}}
+
+   \def\xtpull{x\left(t+\halftau\right)}
+   \def\xtpush{x\left(t-\halftau\right)}
+%   (shouldn't need this) \def\xtpullconj{x^*\left(t+\halftau\right)}
+   \def\xtpushconj{x^*\left(t-\halftau\right)}
+   \def\Xtpull{X\left(\nu+\halfxi\right)}
+   \def\Xtpush{X\left(\nu-\halfxi\right)}
+   \def\Xtpullconj{X^*\left(\nu+\halfxi\right)}
+%   (shouldn't need this) \def\Xtpushconj{X^*\left(\nu-\halfxi\right)}
+
+   \def\ytpull{y\left(t+\halftau\right)}
+   \def\ytpush{y\left(t-\halftau\right)}
+%   (shouldn't need this) \def\ytpullconj{y^*\left(t+\halftau\right)}
+   \def\ytpushconj{y^*\left(t-\halftau\right)}
+   \def\Ytpull{Y\left(\nu+\halfxi\right)}
+   \def\Ytpush{Y\left(\nu-\halfxi\right)}
+   \def\Ytpullconj{Y^*\left(\nu+\halfxi\right)}
+%   (shouldn't need this) \def\Ytpushconj{Y^*\left(\nu-\halfxi\right)}
+
+% Language
+   \def\FT{Fourier transform}
+   \def\WT{Wigner transform}
+   \def\WV{Wigner-Ville}
+
+%%-------------------------------------------------------------
+%**end of header
+%\includeonly{./theory/ambiguity,./theory/energydensity}
