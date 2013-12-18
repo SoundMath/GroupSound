@@ -1,0 +1,1345 @@
+%% LaTeX file 'Imaging.tex'
+
+%% latexfile{
+%% author = {William DeMeo},
+%% filename = {Imaging.tex},
+%% date = {2002.08.07},
+%% text = {Main latex file for Group Theory for Signals of Multiple Dimensions of dspmath book.}
+%% }
+
+%%% BEGIN FILE INSERT: image.tex
+
+%\chapter{Image Processing: atmospheric turbulence and deconvolution at Textron Hawaii Operations} 
+%\title{Image Processing: modelling atmospheric turbulence and anisoplanatism}
+\title{Digital Image Processing: atmospheric turbulence, anisoplanatism}
+%\title{Image Processing at Textron Systems}
+\titlerunning{Digital Image Processing: atmospheric turbulence, anisoplanatism}
+\author{Paul Billings\inst{1}\and William DeMeo\inst{2}}
+\institute{Textron Systems Corporation, Hawaii Operations; {\tt pbilling@systems.textron.com}\and 
+Textron Systems Corporation, Hawaii Operations; {\tt williamdemeo@yahoo.com}}
+%\authorrunning{William DeMeo, et al.}
+\maketitle
+%\setcounter{minitocdepth}{2}\dominitoc
+%\pagebreak
+
+\section{Preliminaries}
+This chapter describes an approach to {\it multi-frame blind 
+deconvolution} (MFBD), which is a method for reducing image
+degradation due to atmospheric turbulence. Section
+\ref{sec:poiss-object} is based on Paul Billing's notes on
+this topic~\cite{Billings:2001}, but the present exposition
+is set in the group theoretic framework.\footnote{See also
+  Tolimieri and An~\cite{Tolimieri:1998}, for a lucid
+  treatment of the mathematical prerequisites.}  This
+formalism not only aides general understanding of the MFBD
+algorithm, but also yields some simplifications that are
+crucial for developing fast algorithms, even as the imaging
+model grows in complexity.  Sections~\ref{sec:spat-vary-case} 
+and~\ref{sec:group-algebra-methods} support these claims
+by setting up the space-variant blur
+problem\footnote{``Space-variant blur'' (or 
+{\it spatially varying blur}, or {\it anisoplanatism}), is
+discussed in~\cite{Paxman:1994}, among other places.} 
+over finite groups, and then demonstrating how
+this set-up renders the model computationally tractable. 
+
+\subsection{Abelian Groups}
+We first collect some required notations and definitions.
+Recall that, by isomorphism, we take $\Z/N$ to denote the group
+$\{0,1,\ldots,N-1\}$, and
+\[
+\Z/N_1 \times \Z/N_2 = \{(x_1, x_2) : 0 \leq x_1 < N_1, \, 0 \leq x_2 < N_2 \}
+\]
+is a direct product group, each element of which represents a 2-dimensional
+spatial coordinate. 
+%$\Z_N^2$ denote the direct product $\Z/N \times \Z/N$. 
+%In this notation a 2-d spatial coordinate is represented by
+%$x\in \Z_N^2$. More generally, the order of each factor group in the direct
+%product may differ; \eg $x \in \Z/N_1 \times \Z/N_2$.
+% also represents a 2-d spatial coordinate.
+
+For a finite set $A$ of order $N$, let $\LA$ denote the vector space of all
+complex valued functions on $A$ with addition and scalar multiplication
+defined by 
+\[
+(f+g)(a) = f(a)+g(a), \qquad f, g \in \LA,\, a\in A,
+\]
+\[
+(\alpha f)(a) = \alpha f(a), \qquad f, g \in \LA, \, \alpha \in \C, \, a\in A.
+\]
+The space $\LA$ has dimension $N$.
+
+\subsubsection{Quotient Groups and Periodic Functions}
+Suppose $A$ is an abelian group of order $N$ and $B$ is a
+subgroup of $A$.  The vector space $\vs{L}(A/B)$ is the
+subspace of all functions in $\LA$ which are constant on the
+$B$-cosets in $A$, 
+\[
+f(a+B) = f(a), \qquad f\in \LA, \; a\in A.
+\]
+Such functions are called \emph{B-periodic}. 
+If $B$ has order $M$, where $LM = N$, and 
+$\{a_l : 0 \leq l < L\}$ is a complete system of
+$B$-coset representatives in $A$, then functions in
+$\vs{L}(A/B)$ are completely determined by their values on
+the set $\{a_l : 0 \leq l < L\}$.  
+\[
+f(a_l + b) = f(a_l), \qquad 0 \leq l < L, \, b\in B.
+\]
+Since the collection of $B$-cosets, 
+$A/B =\{a_l +B : 0 \leq l < L\}$, 
+is a partition of $A$, it determines a direct sum
+decomposition,
+\[
+\LA = \bigoplus_{l = 0}^L \vs{L}(a_l + B).
+\]
+Such decompositions underlie many divide-and-conquer
+strategies; \eg the fast Fourier transform (FFT).
+
+The following is a generic example of a periodic function in
+two variables. Such functions are useful in image processing
+applications.
+\begin{example}
+Identify $\vs{L}(\Z/N_1 \times \Z/N_2)$ with the space of
+all $N_1 \times N_2$ complex matrices $\vs{M}(N_1,N_2)$.  
+In particular, represent $f\in \vs{L}(\Z/N_1 \times \Z/N_2)$
+by the $N_1\times N_2$ matrix 
+\[
+Mat(f) = 
+\left[f(n_1,n_2) \right]_{\stackrel{0\leq n_1 < N_1}
+                                 {_{0\leq n_2 < N_2}}}
+\]
+Suppose $A = \Z/N_1 \times \Z/N_2$ and $B = L_1\Z/N_1 \times L_2\Z/N_2$,
+where $N_1 = L_1M_1$ and $N_2 = L_2M_2$.  The set  
+\[
+\{(l_1,l_2):0\leq l_1 <L_1,\,0\leq l_2 <L_2\}
+\]
+is a complete system of 
+$B$-coset representatives in $A$. %$\Z/N_1 \times \Z/N_2$. 
+Therefore, the $(L_1\Z/N_1 \times L_2\Z/N_2)$-periodic
+functions in $\vs{L}(\Z/N_1 \times \Z/N_2)$ can be
+identified with the collection of all complex 
+$N_1 \times N_2$ matrices of the form 
+\[
+\begin{pmatrix}
+M &\cdots &M\\
+\vdots &\ddots & \vdots\\
+M &\cdots &M
+\end{pmatrix}, \quad M =
+\left[f(l_1,l_2) \right]_{\stackrel{0\leq l_1 < L_1}
+                                 {_{0\leq l_2 < L_2}}}
+\]
+having block matrix structure with $M_1M_2$ identical copies
+of the matrix  $M\in\C^{L_1\times L_2}$. 
+\end{example}
+
+In image processing applications, we often work on the
+abelian group $A = \Z/N_1 \times \Z/N_2$.  The following
+definitions specialize translation and convolution
+operations for this group. Unless otherwise noted, we assume
+$A$ denotes the direct product group $\Z/N_1 \times \Z/N_2$
+throughout this section. 
+%for this direct product group. 
+\begin{definition}[Translation by $y \in A$]\\ %\Z/N_1 \times \Z/N_2$]\\
+For $A = \Z/N_1 \times \Z/N_2$ and $y \in A$, the mapping $\T(y)$ of 
+$\LA$ %$\vs{L}(\Z/N_1 \times \Z/N_2)$
+takes 
+$f \in \LA$ %$f \in \vs{L}(\Z/N_1 \times \Z/N_2)$ 
+to a function 
+$\T(y)f \in \LA$ %$\T(y)f \in \vs{L}(\Z/N_1 \times \Z/N_2)$
+having the following values
+\[
+(\T(y)f)(x) = f(x-y) = f(x_1-y_1, x_2-y_2), \qquad x \in 
+A %\Z/N_1 \times \Z/N_2
+\]
+$\T(y)$ is a linear operator on 
+$\LA$ %$\vs{L}(\Z/N_1 \times \Z/N_2)$ 
+called \emph{translation by} $y$.
+\end{definition}
+
+%We previously wrote convolution by $g\in \LA$ as follows: 
+%\[C(g) = \sum_{y\in A} g(y)\T(y)\]
+%We operate on $\vs{L}(\Z/N_1 \times \Z/N_2)$ with the following special case:
+\begin{definition}[Convolution by $g \in \LA$]\\ %\Z/N_1 \times \Z/N_2)$]\\
+Let $A = \Z/N_1 \times \Z/N_2$ and $g \in \LA$. The mapping $C(g)$ of 
+$\LA$ %$\vs{L}(\Z/N_1 \times \Z/N_2)$
+defined by 
+\[
+C(g)f = \sum_{y \in A}g(y)\T(y)f \qquad f \in \LA
+%C(g)f = \sum_{y \in \Z/N_1\times \Z/N_2}g(y)\T(y)f \qquad f \in \vs{L}(\Z/N_1 \times \Z/N_2)
+\]
+is a linear operator of 
+$\LA$ %$\vs{L}(\Z/N_1 \times \Z/N_2)$ 
+called \emph{convolution by} $g$.  Evaluated at a point,
+\[
+(C(g)f)(x) %= \sum_{y \in \Z/N_1\times \Z/N_2}g(y)\T(y)f(x)\\%, \qquad f \in \vs{L}(\Z/N_1 \times \Z/N_2), \, 
+=\sum_{y_1\in \Z/N_1}\sum_{y_2\in \Z/N_2}g(y_1,y_2)f(x_1-y_1,x_2-y_2),
+\qquad  x = (x_1,x_2) \in 
+A %\Z/N_1 \times \Z/N_2 
+\]
+\end{definition}
+
+Finally, we define the characters for our special case.
+First recall the general case. The group of all $N^{th}$ roots of unity is
+the set
+\[
+U_N = \{\E^{\I 2\pi \frac{n}{N}}: 0 \leq n < N \}
+\]
+If $\tau$ is a character of the group $A$, then $\tau$ is a group homomorphism
+from $A$ into $U_N$, where $N$ is the least common multiple of the orders of
+the elements in $A$. 
+
+%Let $N = [N_1,N_2]$ denote the least common multiple of $N_1$ and $N_2$.
+\begin{definition}[Characters of $\Z/N_1 \times \Z/N_2$]\\
+\label{def:characters}
+Let $A = \Z/N_1\times \Z/N_2$.
+For each $a  = (a_1, a_2) \in A$, the mapping
+$\tau_a: A \to U_{[N_1,N_2]}$ defined by
+\[
+\tau_a(x) = \E^{\I 2\pi \frac{x_1a_1}{N_1}}\E^{\I 2\pi \frac{x_2a_2}{N_2}}, \qquad
+x  = (x_1, x_2) \in A.
+\]
+is a \emph{character of} $A$.
+\end{definition}
+
+%Recall (\S\ \ref{sec:four-analys-over}), a
+Any isomorphism from a finite abelian
+group $A$ onto its character group $A^*$ is called a \emph{presentation} of
+$A$.  The presentation given by definition~\ref{def:characters} is called the 
+\emph{standard presentation} of $A$.
+We use this presentation exclusively, and for the remainder
+assume the identifications
+\[
+A = \Z/N_1 \times \Z/N_2 = (\Z/N_1 \times \Z/N_2)^* = A^*.
+\]
+
+\subsubsection{Cyclic Groups}
+
+%Suppose the image $f$ is a real-valued function on the abelian group
+Consider the abelian group $A$ with elements in the set
+\[
+C_N(x) \times C_N(y) = \{x^m y^n : 0 \leq m,n < N \},
+\]
+where $C_N(x) = \{x^m : 0 \leq m < N \}$ denotes a cyclic group of
+order $N$ with generator $x$ and multiplication satisfying
+$x^mx^n = x^{m+n \bmod N}$ and $x^N=1$.
+A typical point $x^my^n, 0\leq m,n < N$, is subject to the
+relations $x^N = 1 = y^N$ and $xy = yx$. Implicit are the
+standard identifications, such as $x^1y^0 = (x,1) = x$, $x^0y^1 =
+(1,y) = y$, which cause no ambiguity.
+
+Let $B$ be the subgroup of $A$ defined by
+\[
+B = gp_N(x^L) \times gp_N(y^L) = \{x^{pL} y^{qL} : 0 \leq p,q < M \}, \quad \text{ where } LM = N,
+\]
+Thus, $B$ is a direct product of cyclic groups of order $M$.
+The \emph{factor group} $A/B$ is given by
+\[
+A/B = \{x^j y^k B : 0 \leq j,k < L \}
+\]
+Each element $x^j y^k B \in A/B$ is a direct product of cyclic subgroups of $A$.
+The element $x^j y^k B$ is called the \emph{$B$-coset of $A$ with representative
+$x^j y^k$}.  The elements of a particular coset are called \emph{equivalent modulo $B$}.
+A complete set of \emph{$B$-coset representatives in $A$}  is 
+\[
+H = \{x^j y^k : 0 \leq j,k < L \} = C_L(x) \times C_L(y)
+\]
+Thus, $H$ is a direct product of cyclic groups of order $L$.
+Furthermore, any element $a\in A$ can be uniquely written
+\[
+a = hb, \qquad h\in H, b\in B
+\]
+where $h$ specifies that $a$ belongs to the coset $hB$, and $b$ identifies $a$
+within that coset. 
+We give concrete examples of $B$-cosets for a few special cases.  
+\begin{example}
+First, let $N=8$, $M=2$ and $L=4$.  Then,
+\begin{equation}\label{eq:I-9}
+A = C_8(x) \times C_8(y) = \{x^m y^n : 0 \leq m,n < 8 \}
+\end{equation}
+and
+\[
+B = gp_8(x^4) \times gp_8(y^4) = \{x^{p4} y^{q4} : 0 \leq p,q < 2 \}
+\]
+In the following figure, the numbers denote exponents $mn$ on the
+elements $x^my^n \in A$ in (\ref{eq:I-9}). 
+\[
+\begin{matrix}  
+\begin{array}{cc} & n\\
+                m & \end{array} & 0 & 1 & 2 & 3 &  & 4 & 5 & 6 & 7\\
+0 & \mathbf{00} & 01 & 02 & 03 & | & \mathbf{04} & 05 & 06 & 07\\
+1 & 10 & 11 & 12 & 13 & | & 14 & 15 & 16 & 17\\
+2 & 20 & 21 & 22 & 23 & | & 24 & 25 & 26 & 27\\
+3 & 30 & 31 & 32 & 33 & | & 34 & 35 & 36 & 37\\
+\hline
+4 & \mathbf{40} & 41 & 42 & 43 & | & \mathbf{44} & 45 & 46 & 47\\
+5 & 50 & 51 & 52 & 53 & | & 54 & 55 & 56 & 57\\
+6 & 60 & 61 & 62 & 63 & | & 64 & 65 & 66 & 67\\
+7 & 70 & 71 & 72 & 73 & | & 74 & 75 & 76 & 77
+\end{matrix}\]
+The boldface exponents comprise the $B$-coset with representative
+$x^0y^0$; that is,
+\[
+x^0y^0B = B = \begin{bmatrix} 00 & 04 \\ 40 & 44 \end{bmatrix}
+\]
+The $B$-coset with representative $x^1y^0$ is 
+\[
+x^1y^0B = xB = \begin{bmatrix}10 & 14 \\ 50 & 54 \end{bmatrix}
+\]
+A few more examples are the sets
+\[
+yB = \begin{bmatrix} 01 & 05 \\ 41 & 45 \end{bmatrix}, \quad
+xyB = \begin{bmatrix} 11 & 15 \\ 51 & 55 \end{bmatrix}
+\]
+\[
+x^2B = \begin{bmatrix} 20 & 24 \\ 60 & 64 \end{bmatrix}, \quad
+x^2yB = \begin{bmatrix} 21 & 25 \\ 61 & 65 \end{bmatrix}
+\]
+\end{example}
+which are the $B$-cosets with representatives $x^0y^1$,
+$x^1y^1$, $x^2y^0$, and $x^2y^1$, respectively.
+
+\subsection{Nonabelian Groups}
+\label{sec:group-algebra-methods}
+This section describes a few tools from nonabelian group
+theory that can be usefully applied to the space-varying
+blur problem. Some of the material merely re-iterates or
+emphasizes previously stated facts about groups and factor 
+groups so that this section is less dependent on
+those preceding it. 
+\subsubsection{Action Group}
+
+Denote by $\lt{GL}(2,\Z/N)$ the set of all $2\times 2$ invertible
+matrices with coefficients in $\Z/N$.  
+Suppose $c\in \lt{GL}(2,\Z/N)$ is such that $c^M=1$ -- the identity
+in $\lt{GL}(2,\Z/N)$ -- and consider the \emph{action group} $K_c$
+with elements
+\[
+C_M(k_c) = \{k_c^m : 0 \leq m < M\}, \quad
+c = \begin{pmatrix} c_0 & c_1 \\ c_2 & c_3 \end{pmatrix}
+\in \lt{GL}(2,\Z/N).
+\]
+The semi-direct product of $H$ and $K_c$ has elements
+\[
+H\varangle K_c = \{x^j y^k k_c^m : 0 \leq j,k < L, 0 \leq m< M\}
+\]
+and binary composition satisfying the following relations:
+\[
+x^L = y^L = k_c^M = 1,
+\]
+\[
+x^{-1} = x^{L-1}, \quad y^{-1}= y^{L-1}, \quad k_c^{-1} = k_c^{M-1},
+\]
+\[
+k_c x^j y^k = x^{c_0 j + c_1 k} y^{c_2 j + c_3 k} k_c.
+\]
+where the summands in the exponents are modulo $|H|=L$.
+
+\subsubsection{Rotation}
+%Assume $f\in \C G$, where $G = A\varangle K_c$,
+Let $A = C_N(x) \times C_N(y)$ with binary composition satisfying
+\[
+(x^my^j)(x^ny^k) = x^{m+n \bmod N}y^{j+k \bmod N},
+\]
+\[
+%x^N = (x^N,1) = (1,1) = 1, \quad y^N = (1,y^N) = (1,1) = 1
+x^N = y^N = 1, \quad x^{-1} = x^{N-1}, \quad y^{-1}= y^{N-1}.
+\]
+%\[x^{-1} = x^{N-1}, \quad y^{-1}= y^{N-1}.\]
+Consider the action group $K_c$, $c\in \lt{GL}(2,\Z/N)$,
+%\[c = \begin{pmatrix} c_0 & c_1 \\ c_2 & c_3 \end{pmatrix}.\]
+with $c^M=1$.
+%\ie $c^M = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$.
+%\ie \[\begin{pmatrix} c_0 & c_1 \\ c_2 & c_3 \end{pmatrix}^M
+%= \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}\]
+The group generated by $k_c$ is the cyclic group of order
+$M$ with elements $C_M(k_c) = \{k_c^m : 0 \leq m < M\}$.
+Now suppose
+\[
+c(\theta) = \begin{pmatrix} \cos \theta \, &  -\sin \theta \\ 
+                    \sin \theta \, & \, \cos \theta \end{pmatrix}.
+\]
+\begin{example}[Rotation by $\pi/2$]
+The action group $K_{c(\pi/2)}$ has
+\[
+c(\pi/2) = \begin{pmatrix} 0\, & -1\\ 
+                            1\, & \, 0 \end{pmatrix}.
+\]
+Since $c^4(\pi/2)$ is the identity, the group
+has order $M=4$.
+\end{example}
+
+The semi-direct product $A\varangle K_{c(\theta)}$ has elements
+$\{x^j y^k k_{c(\theta)}^m : 0 \leq j,k < N,\, 0 \leq m < M\}$,
+and binary composition satisfying
+\[
+x^N = y^N = k_{c(\theta)}^M = 1,
+\]
+\[
+x^{-1} = x^{N-1}, \quad y^{-1}= y^{N-1}, \quad k_{c(\theta)}^{-1} = k_{c(\theta)}^{M-1},
+\]
+and
+\[
+k_{c(\theta)} x^j y^k = x^{j \cos \theta - k \sin \theta} y^{j \sin
+  \theta + k \cos \theta} k_{c(\theta)},
+\]
+Additive operations in the exponents are modulo $|A|=N$.
+
+%Consider $f\in \C A\varangle K_{c(\theta)}$.
+
+%%
+%% (C_N(x) X C_N(y)) \sdp (C_M(k_c) X C_M(k_d))
+%%
+%\[K_c = C_M(k_c)\times C_M(k_d) = \{k_c^p k_d^q : 0 \leq p,q < M\}, \quad
+%c = \begin{pmatrix} c_0 & c_1 \\ c_2 & c_3 \end{pmatrix}, \;
+%d = \begin{pmatrix} d_0 & d_1 \\ d_2 & d_3 \end{pmatrix}\]
+%The semi-direct product $A\varangle K_c$ is the group with elements
+%\[A\varangle K_c = \{x^j y^k k_c^p k_d^p : 0 \leq j,k < L, 0 \leq p, q < M\}\]
+%and a binary composition satisfying the following:
+%\[x^L = y^L = k_c^M = k_d^M = 1\]
+%\[x^{-1} = x^{L-1}, \quad y^{-1}= y^{L-1}, \quad k_c^{-1} = k_c^{M-1}, \quad k_d^{-1} = k_d^{M-1}\]
+%\[k_c x^j y^k = x^{c_0 j + c_1 k} y^{c_2 j + c_3 k} k_c, \quad
+%k_d x^j y^k = x^{d_0 j + d_1 k} y^{d_2 j + d_3 k} k_d\]
+
+\subsection{Ideal Image Model}
+Assume the object of interest is $f\in \C G$, where 
+$G = H\varangle K_c$ is as defined above.  Then,
+\[ 
+f = \sum_{a\in G} f(a) a 
+  = \sum_{j,k}\sum_{m} f(x^jy^kk_c^m) x^jy^kk_c^m
+\]
+Take the function $g\in \C H$ to be some imperfect
+representation of $f$. 
+For example, a blurry image is formed by mixing the object
+with a point spread function $s \in \C H$.
+\begin{equation}\label{eq:gfs}
+g = fs = \left(\sum_{j,k}\sum_{m} f(x^jy^kk_c^m)
+x^jy^kk_c^m\right) s
+\end{equation}
+This is a superposition in which the function $s$ is
+left-multiplied by elements of $G$.  Recall that
+left-multiplication of $s \in \C H$ generalizes translation
+of $s \in \vs{L}(H)$. Thus, $fs$ in $\C G$ is a generalized
+convolution of $f$ and $s$ in $\LG$. 
+The following further elucidates. 
+
+Consider a single left-multiply of $s\in \C H$ by $hk\in
+H\varangle K_c$.
+\begin{eqnarray*}
+\lt{L}(hk) s &=& x^jy^kk_c^m s \\
+&=& \sum_{p,q} s(x^py^q)(x^jy^kk_c^m) x^py^q\\
+&=& \sum_{p,q} s((x^jy^kk_c^m)^{-1}x^py^q) x^py^q
+\end{eqnarray*}
+So, by (\ref{eq:gfs}), the function $g\in \C H$ is defined
+by the values 
+\begin{equation}\label{eq:I-8}
+g(x^py^q) = \sum_{j,k}\sum_{m} f(x^jy^kk_c^m)
+s((x^jy^kk_c^m)^{-1}x^py^q) 
+%\T(k_c^pk_d^q)s(x^{m-j}y^{n-k})
+\end{equation}
+The important thing to take from equation~(\ref{eq:I-8})
+% -- and, in fact, the whole
+%point of applying group algebra methods in this context --
+is that left-multiplying by an element of a nonabelian group
+is a linear transformation that is quite general and includes
+classical translation as a special case.
+When the operand is an element of the abelian group $H$,
+left-multiply is a simple shift operator; \eg
+\begin{equation}\label{eq:shift}
+\lt{L}(x^jy^k)s(x^py^q) = s((x^jy^k)^{-1}x^py^q) =s(x^{p-j}y^{q-k})
+\end{equation}
+where, as usual, arithmetic in exponents is performed modulo $|H|$.
+A superposition of such left-multiplies of $\C H$ is
+equivalent to classical convolution of $\vs{L}(H)$,
+\[
+(C(f)s)(x) = \sum_{y\in H} f(y)ys(x) = \sum_{y\in H} f(y)s(y^{-1}x)
+\]
+However, when the operand is an element of the action group $K_c$,
+a much richer class of transformations is available, and
+this class can be constructed to include rotations, scale
+changes, and other revealing transformations.  This is an
+important and powerful consideration since it allows us to
+apply our existing fast algorithms for the standard
+convolution to operations that are more general than simple
+spatial or temporal shifts.    
+
+
+%%% Previously we used cyclic group notation for these
+%%% indexing groups but I don't see any reason to emphasize
+%%% the cyclic property here.
+%%%\def\groupA{\ensuremath{\Z_N^2}}
+   \newcommand\groupA{\ensuremath{A}}
+%%% same for K:
+%%%\def\groupK{\ensuremath{\mathbb{Z}/K}}
+   \newcommand\groupK{\ensuremath{K}}
+%%% same for J:
+%%%\def\groupJ{\ensuremath{\mathbb{Z}/J}}
+   \newcommand\groupJ{\ensuremath{J}}
+%%%
+\section{Noisy Image Model}\label{sec:poiss-object}
+This section is based on Paul Billing's notes~\cite{Billings:2001}, but the
+present exposition is set in the algebraic framework
+described above.
+%Throughout this section, let $A = \Z/N_1 \times \Z/N_2$. 
+
+% --- PSFs and OTFs ---
+\newcommand\cPSF{\ensuremath{h}}
+\newcommand\cOTF{\ensuremath{\hat{\cPSF}}}
+\newcommand\iPSF{\ensuremath{s}}
+\newcommand\iOTF{\ensuremath{\hat{\iPSF}}}
+
+Let $f$ denote the object of interest and define
+\begin{alignat*}{2}
+%f &= \text{ object, } \qquad  &&\\
+g &= \text{ ideal (noiseless) image, } \qquad &&d = \text{ detected image, }\\
+\cOTF &= \text{ coherent OTF, } \qquad &&\iOTF = \text{ incoherent OTF. }\\
+\end{alignat*}
+%where $x\in \Z_N^2$.
+and assume $f, g, d \in \C G$, and $\cOTF \in \C G^*$; that
+is the domain of $\cOTF$ is $G^*$, the character group of
+$G$, which can be interpreted as frequency space. 
+The incoherent OTF, %{\it incoherent optical transfer function} 
+$\iOTF \in \C G^*$, is defined as the autocorrelation of the
+coherent OTF.  We denote this autocorrelation by $\cOTF
+\star \cOTF$ and define it as follows:
+\[
+\iOTF(\tau) = (\cOTF \star \cOTF)(\tau)
+    = \sum_{\lambda \in G^*}\cOTF(\lambda)\overline{\cOTF(\tau^{-1}\lambda)}, \quad \tau \in G^*.
+\]
+As an element of the group algebra $\C G^*$, $\iOTF$ is represented as
+the formal sum
+\[
+\iOTF = \sum_{\tau \in G^*} \iOTF(\tau)\tau.
+\]
+The coefficients $\iOTF(\tau)$ in this basis can be derived
+using the following identities:
+\[
+\cOTF(\lambda) = \sum_{x \in G} \cPSF(x)\lambda(x^{-1}),
+\quad \overline{\tau(x)} = \tau^{-1}(x) = \tau(x^{-1}), \quad
+%%% >>>>>>>>> VERIFY THE FOLLOWING ASSUMPTION <<<<<<<<<<  %%%
+(\tau^{-1}\lambda)(x) = \tau^{-1}(x) \lambda(x)
+\] 
+The coefficient of $\iOTF$ at $\tau \in G^*$ is now readily derived as follows:
+\begin{eqnarray*}
+\iOTF(\tau) &=& (\cOTF \star \cOTF)(\tau) 
+    = \sum_{\lambda\in G^*}\cOTF(\lambda)\overline{\cOTF(\tau^{-1}\lambda)}\\
+    &=& \sum_{\lambda\in G^*}
+     \left(\sum_{y \in G}\cPSF(y)\lambda(y^{-1})\right)
+    \overline{\left(\sum_{x \in G}\cPSF(x)(\tau^{-1}\lambda)(x^{-1})\right)}\\
+    &=&\sum_{x \in G}\sum_{y \in G}
+    \cPSF(y)\overline{\cPSF(x)}\, \overline{\tau^{-1}(x^{-1})}
+    \sum_{\lambda\in G^*}\lambda(y^{-1})\overline{\lambda(x^{-1})}\\
+    &=&\sum_{x \in G}\sum_{y \in G}
+    \cPSF(y)\overline{\cPSF(x)}\tau(x^{-1})
+    \sum_{\lambda\in G^*}\lambda(y^{-1}x)\\
+    &=&|G|\sum_{x \in G}
+    \cPSF(x)\overline{\cPSF(x)}\tau(x^{-1})
+\end{eqnarray*}
+The last equality holds by the following character formula:
+\[
+\sum_{\lambda\in G^*}\lambda(y^{-1}x)
+= \begin{cases}
+|G|, & x=y,\\
+0, & x\neq y.
+\end{cases}
+\]
+
+\pagebreak
+
+%%%
+%%% OLD POISSON/EXT OBJ SECTIONS
+%%%
+
+{\bf Poisson/Extended Object Model (old)}
+This section is based on Paul Billing's notes~\cite{Billings:2001}, but the
+present exposition is set in the algebraic framework
+described above.
+%Throughout this section, let $A = \Z/N_1 \times \Z/N_2$. 
+
+Define
+\begin{alignat*}{2}
+f &= \text{ object } \qquad  &&s= \text{ incoherent PSF }\\
+g &= \text{ noiseless image } \qquad  &&d = \text{ detected image }
+\end{alignat*}
+%where $x\in \Z_N^2$.
+and assume $f, s, g, d \in \LA$.
+By an image ``ensemble'' we mean a set of $K$ images, or frames,
+indexed by 
+$k \in \groupK = \{0, 1,2, \ldots,K-1\}$.
+For the $k^{th}$ frame in the ensemble, suppose\footnote{We previously used $g_k =t\cdot C(f)s_k$,
+where $t\in \LA$ is a truncation window, and $\cdot$ denotes point-wise
+multiplication. 
+However, since the function $t$ does not
+influence any of the derivations, it is notationally cleaner to postpone
+inclusion of the truncation factor.}
+%\[g_k = t\cdot (f * s_k), \qquad k \in \groupK\]
+\begin{equation}\label{eq:gALT}
+g_k = C(f)s_k %\qquad k \in \groupK
+\end{equation}
+
+In (\ref{eq:gALT}) $C(f)s_k$ denotes convolution by $f$ of $s_k \in
+\LA$. 
+More explicitly, for any point $x = (x_1,x_2)$ in the image plane, we have
+\[
+g_k(x) = \sum_{y_1\in \Z/N_1}\sum_{y_2\in \Z/N_2} f(y_1,y_2)s_k(x_1-y_1,x_2-y_2),
+\qquad k \in \groupK
+\]
+
+Recall the Poisson distribution with mean $\lambda$
+has a probability mass function (pmf) given by:
+\[
+p(x|\lambda) = \frac{\lambda^x \E^{-\lambda}}{x!}
+\]
+%Suppose the detected image data, $d_k$, satisfy 
+%\[d_k(x) = g_k(x) + n_k(x), \qquad k \in \Z_K, \; x\in \Z_N^2\]
+%and further s
+Suppose that, at each point $x\in \groupA$, the value $d_k(x)$ is a
+realization of a Poisson process with mean $g_k(x)$.  Then 
+\[
+p\left(d_k(x)|g_k(x)\right) = \frac{g_k(x)^{d_k(x)} \E^{-g_k(x)}}{d_k(x)!}
+\]
+
+Denote the set of all pixels in images belonging to the detected ensemble by
+\[
+\vec{d} = \left\{d_k(x)\right\}_{\stackrel{k\in \groupK}{_{x\in \groupA}}}
+\]
+Similarly, denote the set of all pixels in images from the noiseless ensemble
+by
+\[
+\vec{g} = \left\{g_k(x)\right\}_{\stackrel{k\in \groupK}{_{x\in \groupA}}}
+\]
+Assuming independence, the joint pmf for pixels in the detected ensemble is
+%\begin{align}
+\begin{equation}\label{eq:jpmfAlt}
+p\left(\vec{d}| \vec{g} \right) %&
+= \prod_{k}\prod_{x} p\left(d_k(x)|g_k(x)\right) %\nonumber\\&
+= \prod_{k}\prod_{x} \frac{g_k(x)^{d_k(x)}\; \E^{-g_k(x)}}{d_k(x)!}
+%= \prod_{k\in \Z_K}\prod_{x\in \groupA} p\left(d_k(x)|g_k(x)\right) %\nonumber\\&
+%= \prod_{k\in \Z_K}\prod_{x\in \groupA} \frac{g_k(x)^{d_k(x)}\; \E^{-g_k(x)}}{d_k(x)!}
+\end{equation}%\end{align}
+Here -- and throughout unless otherwise noted -- $k$ ranges over $\groupK$ and 
+$x$ ranges over $\groupA$.
+
+Given that we observed $\vec{d}$, we want to find the values $\vec{g}$
+which yield a joint density, $p\left(\cdot| \vec{g} \right)$, from which the observed
+data set, $\vec{d} $, is the most likely outcome.  In other words, we seek a
+maximum likelihood estimate (MLE) of $\vec{g}$. 
+
+Given the data $\vec{d} $, we maximize the right hand side 
+of~(\ref{eq:jpmfAlt}) over all values of $\vec{g} $. Therefore, it makes sense to 
+write~(\ref{eq:jpmfAlt}) as a function of $\vec{g} $ given $\vec{d} $:
+\begin{equation*}%\label{eq:likelihood}
+L\left(\vec{g} |\vec{d}  \right) 
+= \prod_{k}\prod_{x} \frac{g_k(x)^{d_k(x)}\; \E^{-g_k(x)}}{d_k(x)!}
+%= \prod_{k=1}^K \prod_{i=1}^{N^2} \frac{g_k(x_i)^{d_k(x_i)}\; \E^{-g_k(x_i)}}{d_k(x_i)!}
+\end{equation*}
+This is typically called the likelihood function. 
+It's easier, and equivalent, to maximize the natural log
+of the likelihood function, which is:
+\begin{equation}\label{eq:likelihoodALT}
+\ell\left(\vec{g} |\vec{d}  \right) 
+%= \sum_{k\in\Z_K} \sum_{x\in \groupA} d_k(x)\log g_k(x) - g_k(x) - \log
+= \sum_{k=0}^{K-1} \sum_{x} d_k(x)\log g_k(x) - g_k(x) - \log
+d_k(x)!
+\end{equation}
+The last term on the right hand side is constant, so it can be ignored for the
+purposes of maximizing the so called ``log likelihood function,'' $\ell$.
+
+Recall from~(\ref{eq:gALT}), $g_k$ is defined as $C(f)s_k$.  Here, $t$ is
+known and we are trying to estimate $f$ and $s_k$.  As a 
+consequence, we arrive at an estimate of $g_k$.  Thus,
+instead of maximizing the likelihood over values of $g_k$, we maximize over
+values of $f$ and $s_k$ simultaneously. 
+
+%\subsection{Gradient with respect to $g$}
+%Ultimately, we want to find the parameter set $\vec{g}$ which is most likely to have produced
+%the data set $\vec{d}$, in the MLE sense described above.  Thus, for each 
+%$k'\in \Z_K$ and $x'\in \groupA$, we maximize the 
+%likelihood function~(\ref{eq:likelihoodALT}) by taking its gradient with respect to
+%$g_{k'}(x')$ and finding that value of $g_{k'}(x')$ for which this gradient is 0.
+%\begin{align*}
+%\frac{\partial \ell\left(\vec{g} |\vec{d}\right) }{\partial g_{k'}(x')}   
+%&= \frac{\partial}{\partial g_{k'}(x')} \sum_{k} \sum_{x} d_k(x)\log g_k(x) - g_k(x) - \log d_k(x)!\\
+%&= \frac{\partial}{\partial g_{k'}(x')} \left[ d_{k'}(x')\log g_{k'}(x') - g_{k'}(x')\right]\\
+%&= \frac{ d_{k'}(x)}{g_{k'}(x)} - 1
+%\end{align*}
+%As noted above, maximizing the likelihood over the parameter set $\vec{g}$ is equivalent to
+%maximizing over $f$ and $s$ simultaneously.  The following sections describe
+%this correspondence by deriving the gradients necessary for simultaneously
+%maximizing $\ell$ with respect to $f$ and $s$.
+
+\subsection{Gradient with respect to $f$}
+Maximizing the log likelihood function over possible values of the
+object leads to the MLE of the object, which we denote by $\tilde{f}$.
+To derive this estimate we find that value of $f$ at which the derivative,
+%of~(\ref{eq:likelihoodALT}), 
+with respect to $f(z)$, equals 0 for each $z \in \groupA$.
+\begin{align*}
+\frac{\partial \ell\left(\vec{g} |\vec{d}\right)}{\partial f(z)} 
+&= \sum_{k=0}^{K-1} \sum_{x\in A} \frac{\partial}{\partial f(z)}\left[ d_k(x)\log g_k(x) - g_k(x)\right]\\
+&= \sum_{k=0}^{K-1} \sum_{x\in A} \frac{\partial}{\partial g_k(x)}\left[ d_k(x)\log g_k(x) - g_k(x)\right] \frac{\partial g_k(x)}{\partial f(z)}\\
+&= \sum_{k=0}^{K-1} \sum_{x\in A} \left[ \frac{ d_k(x)}{g_k(x)} - 1\right]\frac{\partial g_k(x)}{\partial f(z)} 
+\end{align*}
+and
+\[%\begin{align*}
+\frac{\partial g_k}{\partial f(z)} = \frac{\partial}{\partial f(z)} \;\sum_{y \in \groupA} f(y)\T(y)s_k
+= \T(z)s_k\]
+%\end{align*}
+Therefore, 
+\begin{equation}\label{eq:m1}
+\frac{\partial \ell\left(\vec{g} |\vec{d}\right)}{\partial f(z)} 
+= \sum_{k=0}^{K-1} \sum_{x\in A} \left[ \frac{ d_k(x)}{g_k(x)} - 1\right] \T(z)s_k(x)
+\end{equation}
+
+In simple optimization problems, the gradient is a
+function of the variable over which we optimize.  In the present
+case, the gradient is a function of $g_k$, which in turn is a function of $f$ via
+equation~(\ref{eq:gALT}).  Therefore, given a set of $K$ psf
+estimates $\{s_k\}_{0\leq k < K}$, we seek a vector $\tilde{f}$, %\,x\in \groupA$,
+which, through~(\ref{eq:gALT}), minimizes the magnitude of~(\ref{eq:m1}) for each
+$z \in \groupA$.  That is, we must find the vector $\tilde{f}$ which minimizes
+\[
+\left|
+\sum_{k=0}^{K-1} \sum_{x\in A} \left[ \frac{ d_k(x)}{g_k(x)} - 1\right]\T(z) s_k(x)
+\right|, \qquad z \in \groupA
+\]
+
+\subsection{Gradient with respect to $s_k$}
+In order to maximize the likelihood function with respect to the PSF, $s_k$, we
+could proceed by estimating $s_k$ directly, but it is often useful to 
+write $s_k$ as a function of phase-aberration, and then estimate the form of
+this function.
+%of Zernike coefficients and estimate these coefficients.  
+\subsubsection{PSF Phase Parameterization}
+There are unknown phase errors across the aperture that distort the image.
+We represent this distortion with a \emph{phase-aberration function},
+$\Phi_k$, which may vary with $k$; in other words, the phase-aberration may be
+different for each frame. 
+
+In deriving the MLE of $s_k$ using the second approach mentioned
+above, we first expand the phase-aberration function in a suitable basis.
+(Often a \emph{Zernike basis} is used.)  
+If we denote the set of basis functions by $\{\varphi_j\}_{0\leq j < J}$, then the
+phase-aberration for the $k^{th}$ frame is expanded as follows:
+\[
+%\varphi(u) = \sum_{j=1}^J \alpha_j \varphi_j(u) 
+\Phi_k = \sum_{j=0}^{J-1} \alpha_{kj} \varphi_j
+\]
+We usually take the basis functions $\varphi_j$ as given and not depending on
+$k$.  On the other hand, the coefficients $\alpha_{kj}$ must be
+estimated for each $k \in \groupK$.
+
+\begin{remark} If the choice of basis was physically motivated,
+it can help our intuition to think of $\alpha_{kj}$ as the 
+projection of $\Phi_k$ onto the basis function $\varphi_j$. In fact, when
+$\{\varphi_j\}_{0\leq j < J}$ is an orthonormal basis, the coefficients really are
+projections.  In that case, we often write the expansion as follows:
+\[ 
+\Phi_k = \sum_{j=0}^{J-1} \langle \Phi_k, \varphi_j\rangle \varphi_j 
+\]
+\end{remark}
+
+The incoherent PSF for the $k^{th}$ frame is
+\begin{equation}\label{eq:s}
+%s_k(x) = |h_k(x)|^2 %, \qquad x\in \groupA
+s_k = |h_k|^2 = h_k h_k^* %, \qquad x\in \groupA
+\end{equation}  
+where $h_k$ is the coherent PSF, which is the inverse Fourier transform of the
+coherent transfer function, or \emph{pupil function}.  
+
+Above we defined a character $\tau_a: A \to U_N$ by the mapping
+\[
+\tau_a(x) = \E^{\I 2\pi \frac{x_1a_1}{N_1}}\E^{\I 2\pi \frac{x_2a_2}{N_2}}, \qquad
+x \in \Z/N_1 \times \Z/N_2
+\]
+%\[\langle x,u\rangle = \E^{ i2\pi \frac{ux}{N_1N_2}}, \qquad x \in \groupA, u \in \groupA, \]
+Using this notation, we state some standard Fourier transform relations on
+which our model depends.
+\begin{equation}\label{eq:h}
+h_k = \frac{1}{N_1N_2} \invFT H_k = \frac{1}{N_1N_2} \sum_{u\in \groupA^*} H_k(u)\tau_u
+\end{equation}  
+The index set of the summation in (\ref{eq:h}) is $A^*$, the group of
+characters of $A$. However, as noted above, we identify the
+elements of $A^*$ with those of $A$ by the standard presentation, and simply
+write the character group as $\groupA^* = \Z/N_1 \times \Z/N_2$.    
+
+At any $x \in \groupA$, (\ref{eq:h}) evaluates to 
+\[
+h_k(x) = 
+\frac{1}{N_1N_2} \sum_{u\in \groupA^*} H_k(u)\,
+\E^{\I 2\pi \frac{x_1u_1}{N_1}}\E^{\I 2\pi \frac{x_2u_2}{N_2}}
+\]
+
+The transfer function is the Fourier transform of the point spread function.
+\begin{equation}\label{eq:Hbasic}
+H_k = \FT h_k = \sum_{x\in \groupA} h_k(x)\tau_x^*
+\end{equation}
+At any $u \in \groupA^*$, (\ref{eq:Hbasic}) evaluates to
+\[
+H_k(u) = \sum_{x \in \groupA} h_k(x)\,
+\E^{-\I 2\pi \frac{x_1u_1}{N_1}}\E^{-\I 2\pi \frac{x_2u_2}{N_2}}
+\]
+
+Again, the summations are over the group $A = \Z/N_1 \times \Z/N_2$ and its
+character group, $A^*$.  By isomorphism, the character group is the same index set,
+$A^* = \Z/N_1 \times \Z/N_2$. 
+
+The pupil function is complex-valued, and we take as its complex argument the
+phase-aberration function.  That is, 
+\begin{equation}\label{eq:H}
+H_k(u) = |H_k(u)|\,\E^{\I \Phi_k(u)} = |H_k(u)|\,\E^{\I \sum_j \alpha_{kj}\varphi_j(u)}, \qquad u\in \groupA
+\end{equation}
+
+From equations (\ref{eq:s})--(\ref{eq:H}) we can write $s_k$ as a function of $\alpha_{kj}$.
+%\[s_k(x) = |h_k(x)|^2  = h_k(x)\overline{h_k(x)}\]From (\ref{eq:h}),
+\begin{align}\label{eq:sk}
+s_k &=  h_k h_k^* \nonumber\\
+&= \left(\frac{1}{N_1N_2}\sum_{u\in A^*} H_k(u) \tau_u\right)
+\left( \frac{1}{N_1N_2}\sum_{v\in A^*}H_k^*(v)\tau_v^*\right) \nonumber\\
+&=\frac{1}{(N_1N_2)^2}\sum_{u\in A^*} \sum_{v\in A^*} H_k(u)H_k^*(v)\tau_{u}\tau_{-v}
+\end{align}
+
+\begin{center}\setlength{\fboxsep}{4mm}\begin{boxedminipage}[t]{16cm}
+\begin{remark} 
+{\small At this point, we diverge slightly to make an observation which
+simplifies equation~(\ref{eq:sk}).  Such a simplification may
+only hold when working in the \emph{group algebra} $\C(\Z/N_1 \times \Z/N_2)$
+(see \cite{An:2003}).  Therefore, we make this point to indicate the
+potential benefits of switching to the $\C(\Z/N_1 \times \Z/N_2)$ framework
+for future analysis.  Thereafter, we resume without benefit of this
+simplifying assumption.
+
+Assume the following character formula:
+\begin{equation}\label{eq:charprod}
+\tau_u\tau_v = \left\{ \begin{array}{ll} o(A)\tau_u, &\quad \tau_v = \tau_u\\
+                                         0, &\quad \text{ otherwise }
+                       \end{array}\right.
+\end{equation}
+
+Expression (\ref{eq:charprod}) holds for $\tau_u, \tau_v \in \C A$.
+Under this assumption, (\ref{eq:sk}) simplifies to
+\[
+s_k = \frac{1}{N_1N_2}\sum_{u\in A^*} H_k(u)H_k^*(-u)\tau_{u}
+\]}
+\end{remark}
+\end{boxedminipage}\end{center}
+
+%Since $\overline{H_k(u)} = |H_k(u)|\exp\{-\I \varphi_k(u)\}$, we have
+Returning to expression (\ref{eq:sk}), since $H_k^*(u) =
+|H_k(u)|\,\E^{-\I \varphi_k(u)}$, we have 
+\begin{equation}\label{eq:m7}
+s_k = 
+\frac{1}{(N_1N_2)^2} \sum_{u\in A^*} \sum_{v\in A^*} |H_k(u)||H_k(v)|
+\,\E^{ i\sum_j \alpha_{kj}[\varphi_j(u)-\varphi_j(v)]}\tau_{u-v}
+\end{equation}
+%with $u$ and $v$ each ranging over $A^* = \Z/N_1 \times \Z/N_2$.
+
+%To derive the MLE of $s_k$, we first find ML estimates of $\alpha_{kj}$, and
+%then work back through equations (\ref{eq:s})--(\ref{eq:H}) to derive corresponding estimate of $s_k$.  
+Now that we have written $s_k$ as a function of $\{\alpha_{kj}\}_{0\leq j < J}$, we can
+maximize the likelihood function~(\ref{eq:likelihoodALT}) with respect to
+$\alpha_{kj}$. For each index pair $(a,b)$, we have
+\begin{align*}
+\frac{\partial \ell\left(\vec{g} |\vec{d}\right)}{\partial \alpha_{ab}}  
+&= \sum_{k=0}^{K-1} \sum_{x\in A} \left[ \frac{ d_k(x)}{g_k(x)} - 1\right] \frac{\partial g_k(x)}{\partial \alpha_{ab}} 
+\end{align*}
+and
+\begin{equation}\label{eq:m4}
+\frac{\partial g_k}{\partial \alpha_{ab}}= \sum_{y\in A} \frac{\partial g_k}{\partial s_k(y)}
+\frac{\partial s_k(y)}{\partial \alpha_{ab}} 
+\end{equation}
+By the definition of $g_k$ and commutativity of convolution,
+%\[ g_k(x) = t(x) \sum_{x'} f(x')s_k(x - x') \]
+\[ g_k = C(f)s_k =C(s_k)f = \sum_{x\in A} s_k(x)\T(x)f \]
+Therefore,
+\begin{equation}\label{eq:m5}
+\frac{\partial g_k}{\partial s_k(y)} = \T(y)f
+\end{equation}
+
+It remains only to compute the partial of $s_k$ with respect
+$\alpha_{ab}$. From (\ref{eq:m7}),
+\[
+\frac{\partial s_k}{\partial \alpha_{ab}}  = 
+\frac{1}{(N_1N_2)^2}\sum_{u\in A^*} \sum_{v\in A^*}  |H_k(u)||H_k(v)|\,i[\varphi_b(u)-\varphi_b(v)]\delta(k-a)
+\,\E^{ i\sum_j \alpha_{kj}[\varphi_j(u)-\varphi_j(v)]} \tau_{u-v}
+\]
+
+Over the domain $(u,v) \in A^* \times A^*$, define %\footnote{The $i\pi/2$ term in the exponent accounts for $i = \E^{\I \pi/2}$.}
+\[
+\mathcal{H}_{ab}(u,v) = \frac{1}{(N_1N_2)^2}|H_a(u)||H_a(v)|\,[\varphi_b(u)-\varphi_b(v)]
+\,\E^{ i \sum_j \alpha_{aj}[\varphi_j(u)-\varphi_j(v)] + i\frac{\pi}{2}}
+\]
+%--%Over the domain $u \in A^*$, define %\footnote{The $i\pi/2$ term in the exponent accounts for $i = \E^{\I \pi/2}$.}
+%--%\[
+%--%\mathcal{H}_{ab}(u,v) = \frac{1}{N_1N_2}|H_a(u)||H_a(-u)|\,[\varphi_b(u)-\varphi_b(-u)]
+%--%\,\E^{ i \sum_j \alpha_{aj}[\varphi_j(u)-\varphi_j(-u)] + i\frac{\pi}{2}}
+%--%\]
+Then,
+\begin{equation}\label{eq:m3}
+\frac{\partial s_a}{\partial \alpha_{ab}}  = 
+\sum_{u\in A^*} \sum_{v\in A^*} \mathcal{H}_{ab}(u,v) \tau_{u-v}, \qquad
+\text{ and } \qquad \frac{\partial s_k}{\partial \alpha_{ab}}  = 0, \quad k \neq a
+\end{equation}
+Inserting equations~(\ref{eq:m5}) and~(\ref{eq:m3}) into equation~(\ref{eq:m4}) yields
+\begin{align*}
+\frac{\partial g_a}{\partial \alpha_{ab}}&= \sum_{y\in A} \sum_{u\in A^*} \sum_{v\in A^*} \mathcal{H}_{ab}(u,v) \tau_{u-v}(y)\T(y)f\\
+%&= \sum_u \sum_v t(x)\mathcal{H}_{ab}(u,v) \sum_y f(x-y) \tau_{u-v}(y)\\
+&= \sum_{u\in A^*} \sum_{v\in A^*} \mathcal{H}_{ab}(u,v) C(\tau_{u-v})f\\
+&= \sum_{u\in A^*} \sum_{v\in A^*} \mathcal{H}_{ab}(u,v) \hat{f}(u-v)\tau_{u-v}
+\end{align*}
+where
+\[
+ \hat{f}(u) = \sum_{y\in A} f(y)\tau_u(y)
+\]
+denotes the Fourier coefficient of $f$ at $u$.
+
+We can now formally express the gradient of $\ell$ with respect to $\alpha_{ab}$ as follows:
+\begin{equation}\label{eq:m6}
+\frac{\partial \ell\left(\vec{g} |\vec{d}\right)}{\partial \alpha_{ab}}  
+= \sum_{x\in A}\sum_{u\in A^*}\sum_{v\in A^*} \left[ \frac{ d_a(x)}{g_a(x)} - 1\right]\mathcal{H}_{ab}(u,v) \hat{f}(u-v)\tau_{u-v}(x)
+\end{equation}
+If we let $r_a = \frac{d_a}{g_a} - 1$,
+another Fourier coefficient in expression (\ref{eq:m6}) becomes apparent.
+\[
+ \hat{r}_a(u-v) = \sum_{x\in A} r_a(x)\tau_{u-v}(x)
+\]
+from which 
+\begin{equation}\label{eq:m60}
+\frac{\partial \ell\left(\vec{g} |\vec{d}\right)}{\partial \alpha_{ab}}  
+= \sum_{u\in A^*}\sum_{v\in A^*} \mathcal{H}_{ab}(u,v) \hat{f}(u-v)\hat{r}_a(u-v)
+\end{equation}
+
+Equation~(\ref{eq:m60}) provides a formal expression of the gradient.
+However, we require an expression which better facilitates algorithmic implementation.
+Note that 
+\[
+s_a = h_a h_a^* = \Real[h_a]^2 + \Imag[h_a]^2
+\]
+is real valued.  Therefore, we can write equation~(\ref{eq:m7}) as
+\[
+s_k(x) = \Real [s_k(x)] = \frac{1}{(N_1N_2)^2} \sum_{u,v} |H_k(u)||H_k(v)|
+\,\cos\left(\sum_j \alpha_{kj}[\varphi_j(u)-\varphi_j(v)] +
+  2\pi\frac{(u_1-v_1)x_1}{N_1}+ 2\pi\frac{(u_2-v_2)x_2}{N_2}\right)
+\]
+from which, we have
+\begin{equation}\label{eq:m8}
+\frac{\partial s_a(y)}{\partial \alpha_{ab}} %&= \sum_{u,v} \mathcal{H}_{ab}(u,v) \langle y,u-v \rangle \nonumber\\
+= \frac{1}{(N_1N_2)^2} \sum_{u,v} |H_a(u)||H_a(v)|\,[\varphi_b(u)-\varphi_b(v)]\,
+\sin \left(\sum_j \alpha_{aj}[\varphi_j(u)-\varphi_j(v)] + %2\pi\frac{(u-v)y}{N_1N_2}\right)
+  2\pi\frac{(u_1-v_1)y_1}{N_1}+ 2\pi\frac{(u_2-v_2)y_2}{N_2}\right)
+\end{equation}
+%We could have reached the same conclusion by noting that~(\ref{eq:m3}) must also be real.  That is,
+%\begin{align*}
+%\frac{\partial s_a(y)}{\partial \alpha_{ab}}  %&= \Real \frac{\partial s_a(y)}{\partial \alpha_{ab}} 
+%&= \Real \sum_{u,v} \mathcal{H}_{ab}(u,v) \langle y,u-v \rangle \\
+%&= \frac{1}{(N_1N_2)^2} \sum_{u,v} |H_a(u)||H_a(v)|\,[\varphi_b(u)-\varphi_b(v)]\,
+%\cos \left(\frac{\pi}{2} + \sum_j \alpha_{aj}[\varphi_j(u)-\varphi_j(v)] + 2\pi \frac{(u-v)y}{N_1N_2} \right)
+%\end{align*}
+
+Substituting (\ref{eq:m8}) for $\sum_{u,v}\mathcal{H}_{ab}(u,v) \tau_{u-v}$ in
+equation~(\ref{eq:m6}) yields
+\begin{align}\label{eq:m9}
+\frac{\partial \ell\left(\vec{g} |\vec{d}\right)}{\partial \alpha_{ab}}  
+= \frac{1}{(N_1N_2)^2} \sum_{x,y}\sum_{u,v} 
+      &\left[\frac{d_a(x)}{g_a(x)}-1\right]t(x)f(x-y)|H_a(u)||H_a(v)|\,[\varphi_b(u)-\varphi_b(v)] \\
+      & \quad \times \sin \left(\sum_j \alpha_{aj}[\varphi_j(u)-\varphi_j(v)] + %2\pi \frac{(u-v)y}{N_1N_2}\right)\nonumber
+  2\pi\frac{(u_1-v_1)y_1}{N_1}+ 2\pi\frac{(u_2-v_2)y_2}{N_2}\right)\nonumber
+\end{align}
+By (\ref{eq:m9}) we see that one way to find a parameter set 
+$\{\alpha_{aj}\}_j$ yielding a zero gradient is to find one which satisfies
+\begin{equation}\label{eq:m10}
+\sum_{j=0}^{J-1} \alpha_{aj}[\varphi_j(u)-\varphi_j(v)] + %2\pi \frac{(u-v)y}{N_1N_2} = n\pi, \qquad n \in \Z
+  2\pi\frac{(u_1-v_1)y_1}{N_1}+ 2\pi\frac{(u_2-v_2)y_2}{N_2} = n\pi, \qquad n \in \Z
+\end{equation}
+
+%%%
+%%%Define %$\psi_j^k\in \C^{N^2-k}$
+%%%$\psi_j^k$ to be a vector of length $N_1N_2-k$ with $m^{th}$ element given by 
+%%%\[\psi_j^k(m) = \varphi_j(m+k)-\varphi_j(m), \qquad m \in \{0,1,\ldots,N_1N_2-k-1\}\]
+%%%Also, define
+%%%\[\alpha_a = \left(
+%%%           \begin{array}{c} \alpha_{a0}\\\alpha_{a1}\\\vdots\\\alpha_{a(J-1)}\end{array}
+%%%           \right), \qquad
+%%%\Psi^k = \left(\psi_0^k\; \psi_1^k \; \cdots \; \psi_{J-1}^k\right)\]
+%%%and let $\mathbf{1} = (1\,1\,\cdots\,1)^t$ represent the column vector of $N_1N_2-k$ unit elements.
+%%%Then we can express condition (\ref{eq:m10}), for all $u,v$ such that $u-v = k$, as follows:
+%%%\[
+%%%\Psi^k\alpha_a = \sum_{j\in\groupJ}\alpha_{aj}\psi_j^k = \left(2\pi \frac{ky}{N_1N_2}- n\pi\right)\mathbf{1}, \qquad n \in \Z
+%%%  2\pi\frac{(u_1-v_1)y_1}{N_1}+ 2\pi\frac{(u_2-v_2)y_2}{N_2} = n\pi, \qquad n \in \Z
+%%%\]
+%%%and we could then estimate the parameter set via normal equations.
+%%%\begin{align}\label{eq:m11}
+%%%(\Psi^k)^*\Psi^k\alpha_a &= \left(2\pi \frac{ky}{N_1N_2}- n\pi\right)(\Psi^k)^*\mathbf{1} \nonumber\\
+%%%\Leftrightarrow \qquad \alpha_a &= \left(2\pi \frac{ky}{N_1N_2}- n\pi\right)[(\Psi^k)^*\Psi^k]^{-1}(\Psi^k)^*\mathbf{1}
+%%%\end{align}
+%%%The expression $(\Psi^k)^*\mathbf{1}$ is a telescoping sum of differences of
+%%%basis functions elements, and the right hand side of (\ref{eq:m11}) probably
+%%%simplifies quite a lot, though we have yet to write out the details to verify this.
+
+\subsection{The Spatially Varying Case}\label{sec:spat-vary-case}
+The foregoing assumes that the point spread function is spatially invariant.
+We now state the problem for the more general spatially varying case.
+Focusing at first on a single image frame, we need not involve the frame index $k$ 
+until later.  
+
+%Previously we worked with the $N_1 \times N_2$ indexing set using the group $A =
+%\Z/N_1 \times \Z/N_2$ and its character group given by the standard presentation.
+As before, identify $A = \Z/N_1 \times \Z/N_2$ with its character group by the
+standard presentation.
+\[
+A = \Z/N_1 \times \Z/N_2 = 
+(\Z/N_1 \times \Z/N_2)^* = A^*
+\]
+
+Let 
+%    $x \in A$ %$x_0$ 
+%be a spatial coordinate in the focal plane and let 
+    $y \in A$ % $x_1$ 
+be a spatial coordinate in the object plane.
+Then we model the noiseless image as the superposition, 
+\begin{equation}\label{eq:sv-g}
+g = \sum_{y \in \groupA}f(y)s_y%, \qquad x\in \groupA
+\end{equation}
+where $g,\, f, \, s_y \in \LA$.  Note that in this model our point spread
+function varies with $y$. 
+
+Assume $s_y = h_y h_y^*$, where
+\begin{equation}\label{eq:sv-h}
+h_y = \frac{1}{N_1N_2} \invFT H_y = \frac{1}{N_1N_2} \sum_{u\in \groupA^*} H_y(u)\tau_u
+\end{equation}  
+At any point $x$ in the focal plane, (\ref{eq:sv-h}) evaluates to 
+\[
+h_y(x) = 
+\frac{1}{N_1N_2} \sum_{u\in \groupA^*} H_y(u)\,\E^{\I 2\pi \frac{x_1u_1}{N_1}}\E^{\I 2\pi \frac{x_2u_2}{N_2}}, \qquad x \in \groupA
+\]
+%&=\frac{1}{N_1N_2} \sum_{u_1 = 0}^{N_1}\sum_{u_2=0}^{N_2} v^{x_1u_1 + x_2u_2}H_y(u_1,u_2),\qquadv=\E^{\I 2\pi \frac{x_1u_1}{N_1}}\E^{\I 2\pi \frac{x_2u_2}{N_2}}, \qquad x \in \groupA
+
+
+Thus far, the equations defining the psf's and transfer function are identical
+to the invariant case, with the frame index $k$ replaced by a spatial
+coordinate in the object frame.  However, a basic difference arises in the
+functional form of the coherent transfer function.
+\begin{equation}\label{eq:sv-H}
+H_y(u) = |H_y(u)|\,\E^{\I \Psi_y(u)}
+\end{equation}
+where 
+\[
+\Psi_y(u) = \sum_{\ell=0}^{L-1} \Phi_{\ell}(\beta_{\ell}y + (1-\beta_{\ell})u)
+\]
+The index $\ell$ represents locations along the elevation axis.  Thus the
+total phase-aberration for the pair $u, \, y$ takes contributions 
+from phase-aberration functions $\Phi_{\ell}$ at various altitudes, evaluated
+at a point along the line connecting $u$ and $y$.
+
+If we denote the set of basis functions by $\{\varphi_j\}_{0\leq j < J}$, then the
+phase-aberration for a point $\ell$ along the elevation axis is represented by the
+following expansion:
+\[
+%\varphi(u) = \sum_{j=1}^J \alpha_j \varphi_j(u) 
+\Phi_{\ell} = \sum_{j=0}^{J-1} \alpha_{\ell j} \varphi_j
+\]
+The basis functions $\varphi_j$ usually do not depend on
+$\ell$, whereas the coefficients $\alpha_{\ell j}$ must be
+estimated for each $\ell \in \{0, 1, \ldots, L-1\}$.
+Finally, we have 
+\begin{equation}\label{eq:sv-abberation}
+\Psi_y(u) = \sum_{\ell=0}^{L-1} \sum_{j=0}^{J-1} \alpha_{\ell j} \varphi_j(\beta_{\ell}y + (1-\beta_{\ell})u)
+\end{equation}
+
+\begin{remark}
+During implementation, we should be able to exploit periodicities of the basis
+functions.  This would facilitate, among other things, estimation of the coefficients
+$\alpha_{\ell j}$ in equation~(\ref{eq:sv-abberation}).  In particular,
+suppose $\varphi_j$ is $B$-periodic; that is,
+\begin{equation}\label{eq:sv-period}
+\varphi_j(x) = \varphi_j(x+y), \qquad y \in B
+\end{equation}
+
+If the order of $B$ divides $L$, say $M = L/o(B)$, then
+\begin{equation}\label{eq:sv-coeff}
+\sum_{\ell=0}^{L-1} \alpha_{\ell j} \varphi_j(\beta_{\ell}y +(1-\beta_{\ell})u)
+= \sum_{m=0}^{M-1} \left( \sum_{y\in B}\alpha_{(m+y) j}\right) \varphi_j(\beta_m y+(1-\beta_m) u)
+\end{equation}
+We see that, without the benefit of periodicity, there are $L$ coefficients to compute.
+Exploiting $B$-periodicity, we compute only $M = L/o(B)$ coefficients.
+
+N.B.~the form of~(\ref{eq:sv-coeff}) is probably wrong due to the form
+of the operand of $\varphi_j$.  To correct for this, we need to represent the
+periodicities of $\varphi_j$ along the line connecting $y$ and $u$, rather than
+in the simple form given by (\ref{eq:sv-period}).
+\end{remark}
+
+\subsection{Periodic PSF}
+Since $s$ is ultimately a function of the basis $\{\varphi_j\}$, it should be possible
+to exploit periodicities in $\varphi_j$ when working with $s$.
+This would greatly facilitate algorithmic implementation
+of the space-variant model.  
+%It fact, such a method is necessary if the problem is to be tractable.
+
+Suppose the group $A$ has order $N$.  Let $B$ be a subgroup of $A$ with order
+$L = o(B)$, where $L = N/M$.  Later we address the problem of writing
+$s_y$ as a periodic function.  For now, %write $s_y(x) = s(x,y)\in \vs{L}(A\times A)$ and 
+assume $s_y$ is $B$-periodic in $y$; that is, for each $x\in A$,
+\[
+s_a(x) = s_{a + b}(x), \qquad a \in A, \, b\in B
+\]
+Then, by~(\ref{eq:sv-g}),
+\begin{align*}
+g &= \sum_{y \in \groupA}f(y)s_y\\
+&= \sum_{a \in A/B}\sum_{b\in B}f(a+b)s_{a+b}\\
+&= \sum_{a \in A/B}\left(\sum_{b\in B}f(a+b)\right)s_a
+\end{align*}
+This reduces the order of spatial variance to $o(A/B) = M$.
+
+In order to find periodicities in $s_y$, consider its functional form.  By \ref{eq:sv-h}
+\begin{align*}
+s_y &=  h_y h_y^*\\
+&= \frac{1}{(N_1N_2)^2} \left(\sum_{u\in \groupA^*} H_y(u)\tau_u\right)
+\left(\sum_{v\in \groupA^*} H_y^*(v)\tau_v\right)\\
+&=\frac{1}{(N_1N_2)^2}\sum_{u\in A^*} \sum_{v\in A^*} H_y(u)H_y^*(v)\tau_{u-v}
+\end{align*}
+Thus, we must locate periodicities in 
+\[
+H_y(u) = |H_y(u)|\,\E^{\I \Psi_y(u)}
+\]
+where 
+\[
+\Psi_y(u) = \sum_{\ell=0}^{L-1} \Phi_{\ell}(\beta_{\ell}y + (1-\beta_{\ell})u)
+\]
+%%%If not, a suitable application of a periodicity operator will make it so.
+
+\pagebreak
+
+
+\subsection{Status Reports}
+\subsubsection{[2004.02.01]}
+{\bf Recap of previous status:}\\
+  I had derived the necessary formalism for incorporating 
+  non-abelian group methods into our MFBD framework. Such 
+  methods enable the current framework to incorporate some 
+  basic models of anisoplanatism in a computationally 
+  tractable way.
+
+Recall, one of our goals:
+\begin{quote}
+  -- Better synthesis of old and new theory --\\
+  The new theory is very general and, as yet, little has 
+  been done to incorporate the finer details and special 
+  properties of our application. The old theory is very 
+  specialized and highly adapted to our application.  
+  We need to bridge this gap.
+\end{quote}
+I attained this goal by deriving concrete expressions for 
+some basic transformations (translation, rotation, scaling) 
+of a point spread function (PSF). The significance of 
+deriving these in the nonabelian group context is that 
+all operations can be expressed as left-multiplications, 
+which greatly reduces computational complexity. In fact, 
+this reduction is essential to the model's implementation; 
+without them, the anisoplanatic component renders the model 
+computationally infeasible.
+
+Currently, I am implementing the aforementioned PSF trans-
+formations in the Octave language, and experimenting on 
+simulated data.  Kyle Cooper has helped me access some 
+sample FM6 data, on which I will test the new methods.
+
+\subsubsection{[2003.12.01]}
+{\bf Last Month}
+\begin{enumerate}
+\item Organized the collection of 200 Matlab routines acquired at the NATO meeting,
+   adding basic documentation to aid in sorting through and understanding it all. 
+\item Studied these subroutines to better understand the correspondence between the
+   underlying theory and its Matlab implementation.
+\item Took steps to identify a subset of the NATO code which is most relevant and
+   useful for the anisoplanatism problem.
+\end{enumerate}
+{\bf Current/Future Goals}
+\begin{enumerate}
+\item Achieve better understanding of the software, and learn how best to 
+ apply it under the imaging conditions of greatest interest to us.
+ This can be accomplished through experimentation, simulations, and
+ comparisons of results.  By relating these experiences to the underlying
+ theory, we can provide a coherent explanation of the results.  
+\item Identify and implement the necessary extensions, modifications, or
+specializations of the code in light of our immediate concerns, which include
+the following: new methods and algorithms, if they are to be included among
+existing tools, must either demonstrate clear performance advantages, or provide
+complementary information.
+\end{enumerate}
+Over the next two weeks, I will perform experiments with the new methods on
+simulated and real data.  I hope to demonstrate that performance gains are
+attainable under anisoplanatic conditions, and that complementary information is
+provided irrespective of the degree of spatial variability.
+
+\subsection{Future Work for Anisoplanatism R \& D}
+\paragraph{Overview.}  What follows is a brief, general outline of our
+immediate concerns and objectives, after which appears more specific details
+describing how we plan to address our concerns and carry out our objectives.
+\begin{enumerate}
+\item {\bf Better synthesis of old and new theory}\\
+The new theory is very general and, as yet, little has been done to
+incorporate the finer details and special properties of our application.  
+The old theory is very specialized and highly adapted to our application.  
+We need to bridge this gap.
+\item {\bf Experimentation, Simulation, Real Data}\\
+Demonstrate new capabilities and characterize performance using both simulated
+and real data. 
+\end{enumerate}
+
+\paragraph{Immediate Objectives and Action Items.} By breaking down the items
+in the foregoing section, we construct a list of more concrete goals, stated
+in terms of observable actions with measurable results. 
+\begin{enumerate}
+\item {\bf Better synthesis of old and new theory}
+\begin{enumerate}
+\item Review the following references:
+\begin{itemize}
+\item Paul Billing's handwritten notes\label{item:revref1}
+\item section~\ref{sec:poiss-object} above
+\item section~\ref{sec:spat-vary-case} above
+\end{itemize}
+\item Consider special conditions (\eg assumptions made, constraints imposed)
+  of the existing model as stated in Paul's notes and section~\ref{sec:poiss-object}.
+\item Determine which of the special conditions are not reflected in the new paradigm
+ and its corresponding model as described in section~\ref{sec:spat-vary-case}.
+\item Consider how the special conditions could be incorporated into the new
+  model and, if incorporated, what resulting improvements or advantages could
+  we expect.
+\end{enumerate}
+\item {\bf Experimentation, Simulation, Real Data}
+\begin{enumerate}
+\item Develop Matlab prototypes for experimenting with and applying the new theory and methods. 
+\begin{itemize}
+\item Work with and learn from existing MFBD matlab code in CVS repository.
+\item Work with and learn from matlab code acquired at NATO meeting.
+\item Build upon and extend these assets by developing prototype code for
+  implementing the model of section~\ref{sec:spat-vary-case} above. 
+\end{itemize}
+\item Experiment with various models of psf variation and consider what
+  transformations provide the best model for anisoplanatism. 
+\end{enumerate}
+\end{enumerate}
+
+%\begin{example}\[\begin{pmatrix}\mathbf{00} & 01 & 02 & 03 & \vdots & \mathbf{04} & 05 & 06 & 07\\
+%10 & 11 & 12 & 13 & \vdots & 14 & 15 & 16 & 17\\
+%20 & 21 & 22 & 23 & \vdots & 24 & 25 & 26 & 27\\
+%30 & 31 & 32 & 33 & \vdots & 34 & 35 & 36 & 37\\
+%& \hdotsfor{7}&\\
+%\mathbf{40} & 41 & 42 & 43 & \vdots & \mathbf{44} & 45 & 46 & 47\\
+%50 & 51 & 52 & 53 & \vdots & 54 & 55 & 56 & 57\\
+%60 & 61 & 62 & 63 & \vdots & 64 & 65 & 66 & 67\\
+%70 & 71 & 72 & 73 & \vdots & 74 & 75 & 76 & 77
+%\end{pmatrix}\]\end{example}
+%\[\begin{pmatrix}
+%\mathbf{(0, 0)} & (0, 1) & (0, 2) & (0, 3) & \mathbf{(0, 4)} & (0, 5) & (0, 6) & (0, 7)\\
+%(1, 0) & (1, 1) & (1, 2) & (1, 3) & (1, 4) & (1, 5) & (1, 6) & (1, 7)\\
+%(2, 0) & (2, 1) & (2, 2) & (2, 3) & (2, 4) & (2, 5) & (2, 6) & (2, 7)\\
+%(3, 0) & (3, 1) & (3, 2) & (3, 3) & (3, 4) & (3, 5) & (3, 6) & (3, 7)\\
+%\mathbf{(4, 0)} & (4, 1) & (4, 2) & (4, 3) & \mathbf{(4, 4)} & (4, 5) & (4, 6) & (4, 7)\\
+%(5, 0) & (5, 1) & (5, 2) & (5, 3) & (5, 4) & (5, 5) & (5, 6) & (5, 7)\\
+%(6, 0) & (6, 1) & (6, 2) & (6, 3) & (6, 4) & (6, 5) & (6, 6) & (6, 7)\\
+%(7, 0) & (7, 1) & (7, 2) & (7, 3) & (7, 4) & (7, 5) & (7, 6) & (7, 7)
+%\end{pmatrix}\]
+
+%%% OLD GROUP ALGEBRA SECTION
+%\subsection{Group Algebra Methods}
+%In this section we consider how some group theory methods could help simplify
+%the space-variant blur ({\it anisoplanatism}) problem.  
+%First we review some definitions and recall the spatially invariant set-up.
+%
+%Define
+%\begin{alignat*}{2}
+%f &= \text{ object } \qquad  &&s= \text{ incoherent  point spread function (psf)}\\
+%g &= \text{ noiseless image } \qquad  &&d = \text{ detected image }
+%\end{alignat*}
+%Previously, for the isoplanatic problem, we assumed: 
+%\begin{enumerate}
+%\item $f, s, g, d \in \vs{L}(\Z/N \times \Z/N)$. 
+%\item the action of the psf $s$ on the object $f$ is simply convolution:
+%\begin{equation}
+%g = C(f)s %\qquad k \in \groupK
+%\end{equation}
+%\end{enumerate}
+%
+%%\section{Anisoplanatism}
+%In the foregoing model, it is the assumption that the psf $s$
+%is spatially invariant which allows us to write the superposition of the object
+%and the psf as a convolution.  We now consider the more general, spatially varying
+%case in which the superposition of $f$ and $s$ is not a simple convolution.
+%
+%Let $A = C_N(x) \times C_N(y)$.  A typical point $x^my^n$ in $A$ % $x_1$ 
+%represents a 2-d spatial coordinate. In our application, $x^my^n$ is usually a
+%point in either the object plane or the image plane. We model the noiseless
+%image $g \in \C A$ as
+%the superposition,  
+%\begin{equation}\label{eq:svbg}
+%g = \sum_{m=0}^{N-1}\sum_{n=0}^{N-1} f(x^my^n)s_{m,n}
+%\end{equation}
+%%\begin{equation}\label{eq:sv-g}
+%%g = \sum_{y \in \groupA}f(y)s_y%, \qquad x\in \groupA
+%%\end{equation}
+%where $f, \, s_{m,n} \in \C A$.  
+%Note that, in this model, the psf varies
+%with $x^my^n$. That is, to each point $x^my^n$ in the \emph{object} plane corresponds a
+%distinct psf $s_{m,n}$.  
+%
+%For each point $x^ry^s$ in the \emph{image} plane, equation~(\ref{eq:svbg}) implies
+%\begin{equation}
+%g(x^ry^s) = \sum_{m=0}^{N-1}\sum_{n=0}^{N-1} f(x^my^n)s_{m,n}(x^ry^s)
+%%, \qquad x\in \groupA
+%\end{equation}
+%
+%Since $g\in \C A$, 
+%\begin{equation}
+%g= \sum_{r=0}^{N-1}\sum_{s=0}^{N-1} g(x^ry^s)x^ry^s
+%\end{equation}
+%Therefore,
+%\begin{equation}
+%g= \sum_{r=0}^{N-1}\sum_{s=0}^{N-1} \sum_{m=0}^{N-1}\sum_{n=0}^{N-1} f(x^my^n)s_{m,n}(x^ry^s)x^ry^s
+%%, \qquad x\in \groupA
+%\end{equation}
+%
+%Essentially, the foregoing model assumes the function $s$ belongs to the group algebra
+%$\C (A\times A)$.  It seems that this assumption renders the model
+%computationally intractable for any reasonable size $N$.  Perhaps a better model
+%would not assume a new psf for every single point in the object plane. Instead,
+%consider $G = A \varangle B$ and assume $s\in \C G$.  Even if we assume that the
+%psf is spatially varying, it's probably the case that it has some simplifying,
+%periodic structure. 
+%
+%We could exploit $G(\gamma)$-periodicities of $s$ as follows: 
+%borrowing from~\cite{An:2003} (p.~198), suppose $e\in
+%\Delta(G)$ and 
+%\[
+%e = \frac{1}{|\gamma|}\gamma,
+%\]
+%where $\gamma$ is a character of the subgroup $G(\gamma)$ of $G$. If 
+%\[
+%\{y_r(\gamma):1\leq r \leq R(\gamma)\}
+%\]
+%is a complete system of left $G(\gamma)$-coset representatives in $G$, then 
+%\begin{equation}\label{eq:i1}
+%\{y_r(\gamma)e:1\leq r \leq R(\gamma), e \in \Delta(G)\}
+%\end{equation}
+%is a basis for the irreducible left ideal $\C Ge$.  The key point is that
+%$G(\gamma)$ is a proper subgroup of $G$ and the basis~(\ref{eq:i1}) is supported
+%on pairwise disjoint left-cosets.  Each basis element $y_r(\gamma)e$ is
+%localized in the image domain to the left coset $y_rG(\gamma), 1\leq r\leq R(\gamma)$.
+%
+%For any $f\in \C G$, we can write 
+%\[
+%fe = \sum_{r = 1}^R \alpha_f(r)y_r(\gamma) e
+%\]
+%If $s$ is $G(\gamma)$-periodic, then 
+%\[
+%s = se = \sum_{r = 1}^R \alpha_s(r)y_r(\gamma) e
+%\]
+
+%% END INSERT FILE: image.tex
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "dspmath"
+%%% End: 

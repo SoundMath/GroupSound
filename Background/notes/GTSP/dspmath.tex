@@ -1,0 +1,75 @@
+%% LaTeX file 'dspmath.tex'
+%% latexfile{
+%% author = {William DeMeo},
+%% filename = {dspmath.tex},
+%% date = {2002.11.12},
+%% text = {main latex file for dspmath book}
+%% }
+\documentclass[openany,wjd]{tshomult}
+%\documentclass[envcountsame,envcountchap,wjd]{tshomult}
+% [SVMultDC] page 5:
+%    When options envcountsame and envcountchap are combined, environments get a
+%    common counter with a chapter prefix; but counter is reset for each chapter.  
+
+\usepackage{fullpage}
+\usepackage{ifthen}
+    %% Should figures be compiled?
+    \newboolean{nofigures}  % initially false ==> compile with figures
+    %\setboolean{nofigures}{true} % un-comment this line to compile without figures
+    \newboolean{nospecialfootnotes}%% Should citation footnotes on section headings be compiled?
+    \setboolean{nospecialfootnotes}{true} % comment this line to compile with special citation foonotes
+
+% packages suggested for svmult class
+\usepackage{makeidx}     % allows index generation
+\usepackage{multicol}    % used for the two-column index
+
+\smartqed                % puts QED symbol flush right
+
+\makeindex               % used for the subject index
+                         % please use the style sprmidx.sty with your makeindex program
+%\includeonly{Imaging-BriefStatus}
+%\includeonly{Imaging}
+
+\begin{document}
+%\title{Group Theory in Signal Processing}%:\\{\LARGE {\it algebras of sounds and images}}}
+%\author{William J. DeMeo \\ {\small {\tt williamdemeo@yahoo.com}}}
+%\maketitle
+
+\frontmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{titlepage}
+%\include{dedication}
+\include{preface}
+\tableofcontents
+
+\mainmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Theory}\label{part:theory}
+%\input{Preliminaries}
+\include{GroupTheory1D}
+\include{GroupTheoryND}
+\part{Applications}\label{part:applications}
+\include{Audio}
+\include{Imaging}
+%\include{Imaging-BriefStatus}
+
+\backmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\part{Back Matter}
+\chapter{Symbols and Acronyms}
+\include{symbols}
+\include{acronyms}
+\chapter{Mathematical Tools}
+This chapter sets down many of the notations, tools, and
+modeling conventions that we find useful for developing and
+applying mathematical and statistical theory. 
+\include{Preliminaries}
+\include{Probability}
+
+\bibliographystyle{plain} 
+\bibliography{wjd}
+\printindex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+
+% [SVMultDC]  \LaTeX2e SVMult Document Class Reference Guide for Contributed
+%             Books, 2002.11.19

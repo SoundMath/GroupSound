@@ -1,0 +1,339 @@
+\section{Probability and Statistics}
+This section is a sparse collection of results from the
+theory of probability and mathematical statistics.  The
+presentation style may seem terse and incoherent, especially
+to those without the necessary background in probability and
+statistics.  A good, comprehensive, rigorous presentation of
+the necessary background is found in the book
+\cite{Schervish:1995} Schervish, {\it Theory of Statistics}.
+
+\subsection{States of Nature, Events, and Random Variables}
+A concept which is often useful for describing natural phenomena is the
+``state of nature.''  It is common to let $\omega$ denote a
+particular state of nature.  For example, $\omega$ may be the outcome of an
+experiment, the position of the planets, etc.  The space of all possible states
+of nature is denoted $\varOmega$, and is sometimes called the ``outcome space.'' 
+
+Another useful concept is that of a measurable subset $A\subset
+\varOmega$, which we call an \emph{event}.
+Denote by $\mathcal{S}$ the collection of all measurable subsets of
+$\varOmega$.  Thus, events are elements of $\mathcal{S}$.  An event may contain
+multiple states of nature or experimental outcomes; for instance,
+\[
+A = \{\omega_{\alpha(0)}, \omega_{\alpha(1)}, \omega_{\alpha(2)}, \ldots,
+\omega_{\alpha({N-1})} \} \in \mathcal{S}
+\]
+
+\begin{exercise}\label{exercise:omega}
+For a six-sided die, the possible outcomes of a single roll is $\{1, 2, \ldots, 6\}$. 
+For the experiment that consists of rolling such a die $N$ times, identify the following:
+\begin{enumerate}
+\item the outcome space, $\varOmega$.
+\item the cardinality, $|\varOmega|$.
+\end{enumerate}
+\end{exercise}
+
+A \emph{random variable} is a function which maps $\varOmega$ into some other
+space. We usually denote such functions by capital letters.  Some common
+examples are 
+\[
+X : \varOmega \to \R, \qquad \mathbf{X} : \varOmega \to \R^n
+\]
+\[
+Y : \varOmega \to \C, \; \text{ and } \quad \mathbf{Z} : \varOmega \to \C^n.
+\]
+We use bold font to indicate that the random variable is vector-valued.
+\begin{exercise}\label{exercise:rv}
+As in exercise~\ref{exercise:omega}, a six-sided die is rolled $N$
+times.  Think of some random variables for this experiment. Write them down as
+functions $\varOmega$.  Into what spaces do they map?
+\end{exercise}
+
+\subsubsection{Recap}  As described thus far, the
+probability modeling process reduces to only a few main ideas.
+%experiments are conducted; observations are made; the consequent, observed
+%state of nature is $\omega \in \varOmega$; evaluating the 
+% function $X$ at the point $\omega$ results in a particular realization of the
+%random variable $X$; this ``sample value'' is denoted $x = X(\omega)$.
+\begin{enumerate}
+\item Conduct experiments and/or make observations; the
+  observed state of nature is $\omega \in \varOmega$. 
+\item Evaluate the function $X$ at the point $\omega$; the
+  result is a particular realization of the random 
+variable $X$, namely the \emph{random sample} $x = X(\omega)$.
+\end{enumerate}
+
+\subsection{Probability Measures, Distributions, and Parameters}
+Denote by $\varTheta$ the space of all parameters that we find interesting.
+It can be useful -- especially from a Bayesian point of view -- to adopt the
+modern convention of writing parameters in upper case;
+%\eg $\Theta_k \in \varTheta$.  
+The reason becomes apparent when we view parameters as
+random variables.  As such, they are functions on
+$\varOmega$.
+
+To each state of nature $\omega_k \in \varOmega$ is associated a 
+particular \emph{realization} of the random variable, which we denote by the
+corresponding lower case symbol.  For example, a realization of the random
+variable $\mathbf{X} : \varOmega \to \R^N$ is
+\[
+\vec{x} = (x_0, x_1, \ldots, x_{N-1}) = (X_0(\omega_k), X_1(\omega_k), \ldots,
+X_{N-1}(\omega_k)) = \vec{X}(\omega_k)
+\]
+Another example is the parameter-space analog of the
+foregoing, which we denote as follows:
+\[
+\vec{\theta} = (\theta_0, \theta_1, \ldots, \theta_{N-1}) = (\Theta_0(\omega_k), \Theta_1(\omega_k), \ldots,
+\Theta_{N-1}(\omega_k)) = \vec{\Theta}(\omega_k)
+\]
+
+A measure $\mu$ on the space $\varOmega$ is called a \emph{probability measure}
+if it satisfies the following:
+\begin{enumerate}
+\item $\mu : \varOmega \to [0, 1]$
+\item $A \subset B \Rightarrow \mu(A) \leq \mu(B)$
+\item $\mu(\varOmega) = 1$
+\end{enumerate}
+A probability measure is sometimes called a probability distribution.
+
+The first condition above can be stated equivalently as $0 \leq \mu(A)
+\leq 1, \; A \subset \varOmega$.  The second condition says
+that a probability distribution is a cumulative, or
+monotonically increasing set function.
+The final condition essentially says the probability
+that something (or nothing)\footnote{Of course, the empty set
+  $\{0\}$ is a subset of $\varOmega$.} occurs is 1. 
+%Usually, we are interested in some subset $A \subset \varOmega$ 
+%of outcomes, which we call an \emph{event}.  For example, 
+%$A = \{\omega_{\alpha(0)}, \omega_{\alpha(1)}, \ldots\}$
+%is an event, and $0 \leq P(A) \leq 1$.
+
+% To represent non-deterministic phenomena of interest, we use random variables
+% which are simply functions mapping the outcome space $\varOmega$ to the set of real
+% numbers $\R$. Consider the random variable $X:\varOmega \to \R$. 
+% A realization, or observed value of this random variable is denoted 
+% by the lower case equivalent, so that given outcome $\omega$, 
+% we observe $x = X(\omega)$.
+
+The triple $(\varOmega, \mathcal{S}, \mu)$ -- an outcome space, the
+collection of all measurable subsets, and a probability measure,
+respectively -- is called a \emph{probability space}.   
+A probability measure $\mu$ often depends on some
+parameters of interest, say $\Theta$, and it may be useful
+to make this explicit. In such cases we use $\mu_{\Theta}$
+to denote the probability measure.    
+%For example, %given $\theta = \Theta(\omega)$, 
+%the probability of event $A$ is\[\mu_{\Theta}(A)\]
+
+We often wish to compute the probability that a random variable has a
+particular realization; for example, we seek the probability that
+$X$ takes on a value in the interval $[x_0, x_1)$.  This probability
+is \emph{not} found by measuring the interval $[x_0, x_1)$.  Instead,
+we measure the set of all $\omega$ for which $X(\omega) \in [x_0, x_1)$.  That is,
+\[
+\text{Probability}\{x_0 \leq X(\omega) < x_1\} = \mu_{\Theta}\{\omega : x_0 \leq X(\omega) < x_1\}
+\]
+
+\subsection{Exponential Families}
+\begin{definition}[Exponential Family]\label{def:expfam}\\
+(Schervish~\cite{Schervish:1995}, p.~102) A parametric
+family with parameter space $\varTheta$ and density
+$f_{X|\Theta}(x|\theta)$ with respect to a measure 
+$\nu$ on $(\mathcal{X}, \mathcal{B})$ is called an
+{\it exponential family} if
+\begin{equation}\label{eq:expfam}
+f_{X|\Theta}(x|\theta) = 
+c(\theta)h(x)\exp\left[\sum_{k=0}^{K-1}\pi_k(\theta)t_k(x)\right]
+\end{equation}
+for some measurable functions $\{\pi_k\}_{0\leq k < K}$, 
+$\{t_k\}_{0\leq k < K}$, and some integer $K$.
+\end{definition}
+
+Since $f_{X|\Theta}$ in Definition~\ref{def:expfam} is a
+probability density, the function $c(\theta)$ can be written
+as
+\[
+c(\theta) = \left\{ 
+  \int_{\vs{X}}
+  h(x)\exp\left[\sum_{k=0}^{K-1}\pi_k(\theta)t_k(x)\right]
+  \, \D \nu(x)
+           \right\}^{-1} 
+\]
+so that dependence on $\theta$ is through the vector 
+$\vec{\pi}(\theta) = (\pi_0(\theta), \ldots, \pi_{K-1}(\theta))
+\in \R^K$. 
+
+\begin{example}[Gaussian]\\
+Suppose $\{X_n\}_{n=0}^\infty$ are i.i.d.~normal $\mu,
+\sigma^2$ random variables; let $\vec{\theta} = (\mu, \sigma^2)$
+and $\vec{x} = (x_0, x_1, \ldots, x_{N-1})$. Then,
+\begin{eqnarray*}
+f_{X|\Theta}(\vec{x}|\vec{\theta}) 
+&=& \left(\sigma \sqrt{2\pi} \right)^{-N}
+  \exp\left[
+     -\frac{1}{2\sigma^2}\sum_{n=0}^{N-1}(x_n-\mu)^2 
+      \right]\\
+&=& (2\pi)^{-N/2}\sigma^{-N}
+  \exp\left( -\frac{N\mu^2}{2\sigma^2} \right)
+  \exp\left(
+\frac{\mu}{\sigma^2}N\bar{\vec{x}}
+  -\frac{1}{2\sigma^2}
+  \sum_{n=0}^{N-1}x_n^2
+  \right)
+\end{eqnarray*}
+In this form it is clear that $f_{X|\Theta}$ is
+expressed in terms of equation~(\ref{eq:expfam}) with the
+following definitions:
+\[
+K=2, \quad 
+c(\vec{\theta}) = \sigma^{-N}
+   \exp\left( -\frac{N\mu^2}{2\sigma^2}\right), \quad
+h(\vec{x}) = (2\pi)^{-N/2},
+\]
+\[
+\pi_0(\vec{\theta}) = \frac{\mu}{\sigma^2}, \quad
+\pi_1(\vec{\theta})=  -\frac{1}{2\sigma^2}, \quad
+t_0(\vec{x}) = N\bar{\vec{x}}, \quad
+t_1(\vec{x}) = \sum_{n=0}^{N-1}x_n^2
+\]
+\end{example}
+\begin{example}[Poisson]\\
+Suppose $\{X_n\}_{n=0}^\infty$ are i.i.d.~Poisson $\lambda$
+random variables; let $\theta = \lambda$
+and $\vec{x} = (x_0, x_1, \ldots, x_{N-1})$. Then,
+\begin{eqnarray*}
+f_{X|\Theta}(\vec{x}|\theta) 
+&=& \prod_{n=0}^{N-1}\frac{\E^{-\theta}\theta^{x_n}}{x_n!}
+=\frac{\exp\left(-N\theta + \log \theta \cdot \sum_{n=0}^{N-1}x_n\right)}{\prod_{n=0}^{N-1} x_n!}\\
+&=&\E^{-N\theta}\left(\prod_{n=0}^{N-1} x_n!\right)^{-1}
+\exp\left(\log \theta \cdot N \bar{\vec{x}}\right)
+\end{eqnarray*}
+In this form it is clear that $K=1$,
+\[
+c(\theta) = \E^{-N\theta}, \quad 
+h(\vec{x}) = \left(\prod_{n=0}^{N-1} x_n!\right)^{-1}, \quad
+\pi_0(\theta) = \log \theta, \quad
+t_0(\vec{x}) = N\bar{\vec{x}}.
+\]
+\end{example}
+
+
+A particular exponential family of distributions has a
+fixed $K$, a defines the (vector-valued) functions{ions
+$\vec{\pi}: \varTheta \to
+\R^K$ and 
+$\vec{t}: \vs{X} \to \R^K$.
+By composition with the functions $\varTheta:\varOmega
+\to \varTheta$ and $X: \varOmega \to \vs{X}$,
+we arrive at the following functions of $\varOmega$:
+\[
+\vec{\pi}(\Theta):\varOmega \to \R^K, \quad 
+\vec{t}(X): \varOmega \to \R^K
+\]
+The inner product of the resulting vectors is a map from
+$\varOmega$ to $\R$, and the result is the value in the
+exponent of~(\ref{eq:expfam}). 
+In the statistics literature the function
+$\vec{\pi}(\Theta) = (\pi_0(\Theta), \ldots, \pi_{K-1}(\Theta))$
+is called the {\it natural parameter} and 
+\[
+\varPi = \left\{\pi \in \R^K : 
+\int_{\vs{X}}
+%  h(x)\exp\left[\sum_{k=0}^{K-1}\pi_k(\theta)t_k(x)\right]
+  h(x)\exp\left[\vec{\pi}(\theta)^{\lt{t}}\vec{t}(x)\right]
+  \, \D \nu(x) < \infty
+        \right\}
+\]
+the {\it natural parameter space}.
+The function $\vec{t}(X)$ is a {\it sufficient statistic} --
+the {\it natural sufficient statistic} -- and is usually
+denoted $T(X)$.  We adopt this notation in the sequel. 
+We make two further abuses of notation letting $t$ denote a
+particular realization of $\vec{t}(X)$ and $\theta$ a
+particular realization of $\vec{\pi}(\Theta)$. 
+
+
+\begin{lemma}\label{lem:suffStatDist}
+(Schervish~\cite{Schervish:1995}, p.~103)
+If $X$ has an exponential family distribution, then so does
+the natural sufficient statistic 
+$T(X)$ and the natural parameter space for $T$ is the same
+as that for $X$. In particular, there exists a dominating
+measure $\nu_{\vs{T}}$ such that 
+\[
+\frac{\D P_{\Theta,T}}{\D \nu_{\vs{T}}}(t) =
+c(\theta)\exp(\theta^{\lt{t}}t)
+\]
+\end{lemma}
+\begin{theorem}%\footnote{See, \eg Schervish~\cite{Schervish:1995}, p.~105.}
+\label{thm:analyticExpectation}
+\emph{(Schervish~\cite{Schervish:1995}, p.~105)}\\
+Let the density of
+$T(X)$ with respect to a measure $\nu_{\vs{T}}$ be 
+$c(\theta)\exp(\theta^{\lt{t}}t)$. 
+If $\phi:\vs{T}\to \R$ is measurable and 
+\[
+\int |\phi(t)|\exp(\theta^{\lt{t}}t) \,\D \nu_{\vs{T}}(t)
+< \infty
+\]
+then 
+\[
+f(z) = \int \phi(t)\exp(z^{\lt{t}}t) \,\D \nu_{\vs{T}}(t)
+\]
+is an analytic function of $z$  in the region where the real
+part of $z$ is interior to the natural parameter space, and 
+\[
+\frac{\partial}{\partial z_k} f(z) = 
+\int t_k \phi(t)\exp(z^{\lt{t}}t) \,\D \nu_{\vs{T}}(t)
+\]
+\end{theorem}
+Theorem~\ref{thm:analyticExpectation} allows us to calculate
+moments of sufficient statistics in exponential families by
+taking derivatives of the function $\log c(\theta)$.
+
+\begin{example} %(Schervish~\cite{Schervish:1995}, p.~106) 
+Let $\phi(t)=1$. Then,
+\begin{eqnarray*}
+\lt{E}_\Theta (T_k) 
+&=&  \int c(\theta) t_k \exp(\theta^{\lt{t}}t) \,\D \nu_{\vs{T}}(t)
+     = c(\theta)\frac{\partial}{\partial \theta_k}
+       \int \exp(\theta^{\lt{t}}t) \,\D \nu_{\vs{T}}(t)\\
+&=& c(\theta)\frac{\partial}{\partial \theta_k}
+    \frac{1}{c(\theta)} \qquad \text{ (by Lemma~\ref{lem:suffStatDist})}\\
+&=& - \frac{1}{c(\theta)}
+      \frac{\partial c(\theta)}{\partial \theta_k}
+    = -\frac{\partial}{\partial \theta_k} \log c(\theta).
+\end{eqnarray*}
+\end{example}
+
+\subsection{Maximum Likelihood Estimation}
+In exponential families, there is a simple method for
+finding MLEs in most cases.  The logarithm of the likelihood
+function will be $\log L(\theta)$
+%\subsection{Images and Objects}
+%We represent objects, atmosphere (psf's), and images using functions.  A standard 
+%model used to represent a noiseless image $g$ of an object $f$ is
+%\[
+%g(\vec{x}) = (h * f)(\vec{x})
+%\]
+%where $h$ is the point spread function, and $*$ denotes convolution.  
+
+%A point in the 2-D spatial image domain is given by the pair 
+%$\vec{x} = (x_0, x_1) \in \R \times \R$.  
+%However, we will usually work with discretized domains, in which case 
+%it is most useful to represent a point as an element of the 
+%direct product $\Z/N \times \Z/N$, where $\Z/N$ is the usual 
+%factor group of integers modulo $N$; that is,
+%\[
+%\Z/N \times \Z/N \simeq \{0, 1, \ldots, N-1\} \times \{0, 1, \ldots, N-1\}
+%\]
+%{\bf Remark}\\
+%The foregoing notation is not merely for the sake of mathematical formality.
+%Many fast algorithms which operate on $N\times N$ matrices exploit 
+%the group structure of $\Z/N \times \Z/N$; this is particularly true
+%when the algorithm must traverse the $N\times N$ lattice in varying step sizes.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "dspmath"
+%%% End: 

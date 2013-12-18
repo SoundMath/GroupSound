@@ -1,0 +1,1519 @@
+%% LaTeX file 'Preliminaries.tex'
+
+%% latexfile{
+%% author = {William DeMeo},
+%% filename = {Preliminaries.tex},
+%% date = {2002.08.07},
+%% text = {Main latex file for Preliminaries chapter of
+%% dspmath book.} 
+%% }
+
+%\title{Preliminaries}
+%% Use \titlerunning{Short Title} for an abbreviated version of
+%% your contribution title if the original one is too long
+%%\author{William DeMeo}\institute{{\tt williamdemeo@yahoo.com}}\authorrunning{ }
+%\author{}
+%\maketitle
+%%\setcounter{minitocdepth}{2}\dominitoc\pagebreak
+
+\renewcommand\sectype{section}
+
+%%% BEGIN FILE INSERT: LinearAlgebra.tex 
+\section{Vector Spaces}
+The main source of most material in this \sectype\ is Horn and Johnson,
+{\it Matrix Analysis}, \cite{HornJohnson:1985}. 
+
+\subsection{Subspace, Span, Basis}
+\label{sec:basis}
+\begin{definition}[Scalar Field]
+Underlying a vector space is the \emph{field}, or set of scalars, on which
+addition and multiplication occurs.  For our purposes, that underlying field
+will usually be the real numbers $\R$ or the complex numbers $\C$ under the usual
+addition and multiplication operations, but it could be the rational numbers $\Q$,
+the integers modulo a specified number $\Z/N\Z$, or some other field.  When the field is
+unspecified, we use the symbol $\F$.  To qualify as a field, a set of scalars
+must be closed under two specified binary operations (``addition'' and
+``multiplication'');  both operations must be associative and commutative and
+have an identity element in the set; inverses must exist in the set for all
+elements under the addition operation and for all elements except the additive
+identity (0) under the multiplication operation; the multiplication operation
+must also be distributive over the addition operation. (See
+section~\ref{sec:ringsandfields} for a more formal definition of a field.)
+\end{definition}
+\begin{definition}[Vector Space]
+A \emph{vector space} $\vs{V}$ over a field $\F$ is a set $\vs{V}$ of objects
+(``vectors'') which is closed under a binary operation (``addition'') and such
+that an identity (0) and additive inverses exist in the set $\vs{V}$.  The set is
+also closed under an associative and commutative operation of left
+multiplication of vectors by elements of the scalar field, with the following
+properties: 
+for all $\alpha, \beta \in \F$ and all $\vec{x},\vec{y}\in \vs{V}$:
+\begin{enumerate}
+\item $\alpha( \vec{x} + \vec{y} ) = \alpha \vec{x}  + \alpha \vec{y} $
+\item $(\alpha+\beta) \vec{x}  = \alpha \vec{x}  + \beta \vec{x} $
+\item $\alpha(\beta \vec{x} ) = (\alpha\beta) \vec{x} $
+\item $e \vec{x}  =  \vec{x} $, for the multiplicative identity $e\in \F$
+\end{enumerate}
+\end{definition}
+For a given field $\F$, the set $\F^n$ of $n$-tuples ($n$ a positive integer)
+with components from $\F$ forms a vector space over $\F$ under the obvious
+operations (component-wise addition in $\F^n$).  The special cases with which we
+are usually concerned are the $n$-dimensional vector spaces over the real and
+complex fields, $\R^n$ and $\C^n$, respectively.
+
+\begin{definition}[Subspace]
+A {\it subspace} $\vs{U}$ of a vector space $\vs{V}$ is a subset of $\vs{V}$ that is,
+by itself, a vector space over the same scalar field.
+\end{definition}
+
+Usually a subspace of a vector space $\vs{V}$ is defined by some relation
+that identifies particular elements of $\vs{V}$ in such a way that the
+resulting set is closed under the addition operation -- for
+example, the elements of $\R^3$ with the last component 0, denoted
+$\{(\alpha, \beta, 0) : \alpha, \beta \in \R\}$, is a subspace of $\R^3$. 
+It is in this regard that we find it useful to think of the resulting set as a 
+subspace rather than as a vector space in its own right.  In any event, the
+intersection of two subspaces is again a subspace. 
+
+\begin{definition}[Span, n.]
+If $S$ is a subset of a vector space $\vs{V}$, denoted $S \subset \vs{V}$, then
+the {\it span} of $S$ is the set 
+\[
+\Span(S) = \left\{\alpha_0 \vec{v}_0 + \cdots + \alpha_{k-1} \vec{v}_{k-1} \;|\; %\forall
+                       \alpha_0,\ldots, \alpha_{k-1} \in \F, 
+                       \vec{v}_0,\ldots, \vec{v}_{k-1} \in S, k = 1, 2, \ldots \right\}
+\]
+\end{definition}
+Notice that $\Span(S)$ is always a subspace even if $S$ is not a subspace.  
+
+The subset $S \subset \vs{V}$ is said to ``span'' the vector space
+$\vs{V}$ if $\Span(S)= \vs{V}$.  In other words, span is also a verb, defined as
+follows: 
+%\section{Basis}
+\begin{definition}[Span, v.]
+The subset $S$ %of a vector space $\vs{V}$ 
+\emph{spans} $\vs{V}$ if every element of $\vs{V}$ may
+be written as a linear combination of elements of $S$.
+\end{definition}
+For example, the set 
+\begin{equation}
+\label{span}
+\left\{
+\begin{pmatrix}1 \\ 0 \\ 0\end{pmatrix},
+\begin{pmatrix}0 \\ 1 \\ 0\end{pmatrix},
+\begin{pmatrix}0 \\ 0 \\ 1\end{pmatrix},
+\begin{pmatrix}1 \\ 1 \\ 1\end{pmatrix}
+\right\}
+\end{equation}
+spans $\R^3$.  
+\begin{definition}[Basis]
+A a linearly independent set which spans a vector space $\vs{V}$ is called
+a \emph{basis} for $\vs{V}$.
+\end{definition}
+The set (\ref{span}) does not comprise a basis since the vectors are
+linearly dependent.  However, three vectors from that set do form a basis.  
+
+The basis for $\R^n$ given by
+\begin{equation}
+\label{elementary}
+\left\{
+\begin{pmatrix}1 \\ 0 \\ \vdots \\ 0\end{pmatrix}, 
+\begin{pmatrix}0 \\ 1 \\ \vdots \\ 0\end{pmatrix}, \ldots,
+\begin{pmatrix}0 \\ \vdots \\ 0 \\ 1\end{pmatrix}
+\right\}
+\end{equation}
+is called the ``elementary basis,'' often denoted $\{\vec{e}_0, \vec{e}_1,
+\ldots, \vec{e}_{n-1}\}$.
+
+Bases are highly non-unique, but are very efficient in that each
+element of $\vs{V}$ can be represented uniquely in terms of the
+basis.  In this sense a basis is a minimal spanning set.  For example, if 
+$\basis_0 = \{\vec{v}_0, \vec{v}_1, \ldots, \vec{v}_{n-1}\}$ is a basis for $\vs{V}$,
+and $\vec{x} \in \vs{V}$, then $\vec{x}$ can be written uniquely as the linear
+combination %of the basis elements $\vec{v}_i$. 
+\begin{equation}\label{eq:P-8}
+\vec{x} = \alpha_0 \vec{v}_0 + \alpha_1 \vec{v}_1 + \cdots + \alpha_{n-1} \vec{v}_{n-1}
+\end{equation}
+\begin{exercise}
+Show that the set of coefficients describing $\vec{x}$ in terms of $\basis_0$ is unique.
+%; that is, show that, if 
+%$\vec{x} = \beta_0 \vec{v}_0 + \beta_1 \vec{v}_1 + \cdots + \beta_{n-1} \vec{v}_{n-1}$, then  
+%$\alpha_i = \beta_i, \; i = 1, 2, \ldots, n$.
+\end{exercise}
+
+Bases are important because we can represent all the objects of our
+vector space in terms of the elements of a given basis for the space.
+Thus, the choice of basis will determine how the objects under
+investigation appear, and an analysis that appears complex or intractable in
+one basis might appear simple when represented in another basis.
+
+%Further theory concerning bases and methods of changing from one
+%basis to another is described in the Appendix (section
+%\ref{sec:basis}.)  For now we will simply try to show how the theory might be
+%applied to representations of rhythms.
+
+\subsection{Linear Transformation, Similar Matrices, Change of Basis}
+Throughout, $\vs{M}(m,n,\F)$ denotes the set of all $m\times n$ matrices with
+elements in $\F$, and $\vs{M}(n, \F)$ the set of $n\times n$ matrices over $\F$.
+When the field is of no consequence, or is clear from the context, these are
+abreviated to $\vs{M}(n, m)$ and $\vs{M}(n)$.  The subset of all invertible
+elements, or \emph{units}, in $\vs{M}(n, \F)$ is denoted $GL(n, \F)$.
+
+Let $\vs{U}$ be an $n$-dimensional vector space,
+$\vs{V}$ an $m$-dimensional vector space over the same scalar field $\F$, and
+let $\basis_0$ and $\basis_1$ be bases for $\vs{U}$ and $\vs{V}$,
+respectively. Recall that, %if $\vec{x} \in \vs{U}$ is any given vector, then 
+%$\vec{x}$ can be written 
+as a linear combination of the basis elements, $\vec{u}_i \in \basis_0$,
+\begin{equation}\label{eq:P-9}
+\vec{x} = \alpha_0 \vec{u}_0 + \alpha_1 \vec{u}_1 + \cdots + \alpha_{n-1}\vec{u}_{n-1} =
+\sum_{k=0}^{n-1}\alpha_k \vec{u}_k 
+\end{equation}
+We denote the vector of coefficients by 
+$[\vec{x}]_{\basis_0} = (\alpha_0 , \alpha_1 , \ldots ,\alpha_{n-1})\in \F^n$.  
+Similarly, any vector $\vec{y} \in \vs{V}$ represented in terms of $\basis_1$ is
+denoted $[\vec{y}]_{\basis_1}$. 
+\begin{definition}
+The vector $[\vec{x}]_{\basis_0}$ is called the
+\emph{$\basis_0$-basis representation of $\vec{x}$}.
+\end{definition}
+It is sometimes helpful to let $\vec{x}(\vec{u}_k)$ denote the coefficient $\alpha_k$,
+by which equation (\ref{eq:P-9}) becomes  
+\[
+\vec{x} %= \vec{x}(\vec{u}_0)\vec{u}_0 + \vec{x}(\vec{u}_1)\vec{u}_1 + \cdots + \vec{x}(\vec{u}_{n-1}) \vec{u}_{n-1}
+= \sum_{k=0}^{n-1}\vec{x}(\vec{u}_k)\vec{u}_k
+\]
+The scalar quantities $\vec{x}(\vec{u}_k)\in \F$ are called
+the coordinates of $\vec{x}$ with respect to $\basis_0$.
+
+\paragraph{Linear Transformation}
+\begin{definition}[Linear Transformation]
+A mapping $\T$ from a vector space $\vs{U}$ to a vector space $\vs{V}$ %denoted $\T: \vs{U} \to \vs{V}$, 
+is a {\it linear transformation} %or {\it linear operator} 
+if 
+\begin{equation}\label{eq:P-10}
+\T(\alpha \vec{x}_0 + \beta \vec{x}_1) = \alpha \T \vec{x}_0 + \beta \T \vec{x}_1
+\end{equation} 
+for all vectors $\vec{x}_0, \vec{x}_1 \in \vs{U}$ and all scalars $\alpha, \beta \in \F$.
+\end{definition}
+A linear transformation $\linmap{T}{U}{V}$ always has a matrix representation,
+$A$, which satisfies the following correspondence: 
+\[
+\T\vec{x} = \vec{y} \quad \Leftrightarrow \quad A[\vec{x}]_{\basis_0}=[\vec{y}]_{\basis_1} 
+\]
+The matrix $A$ represents the linear transformation $\T$
+relative to the bases $\basis_0$ and $\basis_1$.  When we study a
+particular matrix, we are studying a linear transformation
+relative to a particular choice of bases.  Thus we see that, when
+changing the basis used to represent objects, though the appearance
+of the objects may change, some fundamental structure is preserved.
+
+\paragraph{Similar Matrices}
+The notion that two matrices have a common ``fundamental
+structure'' is an important idea in linear algebra, and it has a
+precise definition.
+\begin{definition}[Similar Matrices]
+A matrix $B \in M(n)$ is {\it similar} to a matrix $A \in M(n)$ if
+there exists a nonsingular matrix $S\in M(n)$ such that 
+\[B = S^{-1} A S\]
+\end{definition}
+The transformation $A \to S^{-1} A S$ is called a {\it
+similarity transformation} and $S$ is called the {\it similarity matrix}.  
+The relation ``$A$ and $B$ are similar'' is sometimes abbreviated $A \sim
+B$.  Similarity is an {\it equivalence relation} on $M(n)$.
+Equivalence relations are discussed further in
+section~\ref{sec:part-equiv-relat}.  The important 
+point here is that similarity, like any equivalence relation,
+partitions the set $M(n)$ into disjoint equivalence classes.  Each
+equivalence class is the set of all matrices in $M(n)$ that are similar
+to a given matrix, a representative of the class.  
+
+To summarize the foregoing, the statement that two distinct matrices
+are similar means that they are merely different basis
+representations of the same linear transformation -- they have a
+common ``fundamental structure.''  Such structure 
+partitions the set of all matrices into classes,
+thus reducing it to a subset consisting of one ``canonical''
+matrix per class.  
+
+%\ifthenelse{\boolean{nospecialfootnotes}}
+%{\subsection{Change of Basis}}
+%{\subsection{Change of Basis\protect\footnotemark}
+%\footnotetext{See~\cite{HornJohnson:1985} for more details.}}
+\paragraph{Change of Basis}
+Let $\vs{U}$ be an $n$-dimensional vector space over the field \F.  Let
+$\basis_0 = \{\vec{u}_0, \vec{u}_1, \ldots, \vec{u}_{n-1}\}$ be a basis for $\vs{U}$.  
+As remarked above,
+\[
+\vec{x} = \sum_{k=0}^{n-1} \vec{x}(\vec{u}_k) \vec{u}_k, \qquad \vec{x} \in \vs{U}
+\]
+The linear mapping
+\[
+\vec{x} \to [\vec{x}]_{\basis_0} =
+\begin{pmatrix}
+\vec{x}(\vec{u}_0) \\ \vec{x}(\vec{u}_1) \\ \vdots \\ \vec{x}(\vec{u}_{n-1})
+\end{pmatrix}
+\]
+from $\vs{U}$ to $\F^n,$ is well defined, one-to-one, and onto.  
+
+Given a linear transformation, $\linmap{T}{U}{U}$, the action
+of $\T$ on $\vec{x} \in \vs{U}$ is determined once we know $[\vec{x}]_{\basis_0}$ 
+and the $n$ vectors $\T\vec{u}_0, \T\vec{u}_1, \ldots, \T\vec{u}_{n-1}$.  This
+is clear by the linearity -- equation (\ref{eq:P-10}) -- according to which,
+\[
+\T\vec{x} = \T\left(\sum_{k=0}^{n-1}\vec{x}(\vec{u}_k) \vec{u}_k\right) 
+= \sum_{k=0}^{n-1} \vec{x}(\vec{u}_k) \T\vec{u}_k 
+\]
+
+Let $\basis_1 = \{\vec{v}_0, \vec{v}_1, \ldots, \vec{v}_{n-1}\}$ be another
+basis for $\vs{U}$. For $j = 0, 1, \ldots, n-1$, let
+\[ 
+[\T\vec{u}_j]_{\basis_1} =  
+\begin{pmatrix}
+\T\vec{u}_j(\vec{v}_0) \\ \T\vec{u}_j(\vec{v}_1) \\ \vdots \\ \T\vec{u}_j(\vec{v}_{n-1})
+\end{pmatrix}=
+\begin{pmatrix}
+t_{0j} \\ t_{1j} \\ \vdots \\ t_{{n-1}j} 
+\end{pmatrix}
+\]
+denote the $\basis_1$-basis representation of $\T\vec{u}_j$.
+Then, for $\vec{x} \in \vs{U}$,
+\begin{eqnarray}\label{eq:I-12}
+[\T\vec{x}]_{\basis_1} 
+&=&  
+\left[ \sum_{j=0}^{n-1} \vec{x}(\vec{u}_j) \T \vec{u}_j \right]_{\basis_1}
+=\sum_{j=0}^{n-1} \vec{x}(\vec{u}_j) \left[ \T \vec{u}_j \right]_{\basis_1}\nonumber\\
+&&\\
+&=&\sum_{j=0}^{n-1} \vec{x}(\vec{u}_j) \begin{pmatrix}t_{0j}\\t_{1j}\\\vdots\\t_{{n-1}j}\end{pmatrix}
+=
+\begin{pmatrix}
+        t_{00} & \cdots & t_{0{n-1}} \\ 
+        \vdots & \ddots & \vdots \\
+        t_{{n-1}0} & \cdots & t_{{n-1}{n-1}} 
+\end{pmatrix}
+\begin{pmatrix}
+        \vec{x}(\vec{u}_0) \\ \vdots \\ \vec{x}(\vec{u}_{n-1}) 
+\end{pmatrix}\nonumber
+\end{eqnarray}
+The $n$-by-$n$ array $\{t_{ij}\}_{0\leq i,j <n}$ in equation~(\ref{eq:I-12})
+depends on $\T$ and on the choice of bases $\basis_0$ and $\basis_1$, but it
+does not depend on $\vec{x}$.  The following definition generalizes this
+discussion slightly by letting $\T$ take $\vec{x}\in \vs{U}$ into another
+vector space $\vs{V}$.
+\begin{definition}\label{def:basis-rep-T}
+Given a basis $\basis_0 = \{\vec{u}_0, \vec{u}_1, \ldots, \vec{u}_{n-1}\}$ for
+$\vs{U}$, a basis $\basis_1 = \{\vec{v}_0, \vec{v}_1, \ldots, \vec{v}_{m-1}\}$ for
+$\vs{V}$, and a linear transformation $\linmap{T}{U}{V}$, the \emph{$\basis_0$-$\basis_1$-basis
+  representation of \T} is given by the $m \times n$ array
+\[
+_{\basis_1}\!\ltb{T}_{\basis_0} = 
+  \begin{pmatrix} [\T\vec{u}_0]_{\basis_1}& \cdots & [\T\vec{u}_{m-1}]_{\basis_1} \end{pmatrix}
+= \begin{pmatrix}
+    \T\vec{u}_0(\vec{v}_0) & \cdots & \T\vec{u}_{n-1}(\vec{v}_0) \\ 
+    \vdots & \ddots & \vdots \\
+    \T\vec{u}_0(\vec{v}_{m-1}) & \cdots & \T\vec{u}_{n-1}(\vec{v}_{m-1})
+  \end{pmatrix}
+\]
+\end{definition}
+By the foregoing definition and equation~(\ref{eq:I-12}),
+\begin{equation}\label{eq:P-11}
+[\T\vec{x}]_{\basis_1} = _{\basis_1}\!\ltb{T}_{\basis_0}\, [\vec{x}]_{\basis_0},\qquad \vec{x}\in \vs{U}
+\end{equation}
+In practice, the case $\basis_1=\basis_0$ is the most common one for
+presenting a basis representation of $\T$, and the array
+$_{\basis_0}\!\ltb{T}_{\basis_0}$ is called the  
+\emph{$\basis_0$-basis representation of \T.}
+
+Consider the identity transformation $\linmap{I}{U}{U}$,
+defined by $\eye\vec{x} = \vec{x}$, for all $\vec{x}\in \vs{U}$.  
+By~(\ref{eq:P-11}), 
+\[[\vec{x}]_{\basis_1} = [\, \eye\, \vec{x}]_{\basis_1} =
+_{\basis_1}\!\eyeb_{\basis_0} \, [\vec{x}]_{\basis_0}\]
+Thus, for $\vec{x}\in \vs{U}$, the $\basis_0$-$\basis_1$-basis representation
+of $\eye$ maps $[\vec{x}]_{\basis_0}$ to $[\vec{x}]_{\basis_1}$, and 
+the matrix $_{\basis_1}\!\eyeb_{\basis_0}$ is called the $\basis_0$-$\basis_1$
+{\it change of basis matrix}.  Furthermore,
+\begin{eqnarray*} 
+_{\basis_1}\!\ltb{T}_{\basis_1}\, [\vec{x}]_{\basis_1} 
+&=& [\T\vec{x}]_{\basis_1} = [\,\eye\, \T\, \eye \, \vec{x}]_{\basis_1}\\
+&=&_{\basis_1}\!\eyeb_{\basis_0} \,  _{\basis_0}\!\ltb{T}_{\basis_0} \, [\,\eye \, \vec{x}]_{\basis_0}\\
+%&=&_{\basis_1}\!\eyeb_{\basis_0} \,  _{\basis_0}\!\ltb{T}_{\basis_0}\, [\eye\vec{x}]_{\basis_0} = 
+&=&_{\basis_1}\!\eyeb_{\basis_0} \,_{\basis_0}\!\ltb{T}_{\basis_0} \,_{\basis_0}\!\eyeb_{\basis_1}\,[\vec{x}]_{\basis_1}
+\end{eqnarray*}
+Hence,
+\[
+_{\basis_1}\!\ltb{T}_{\basis_1} = _{\basis_1}\!\eyeb_{\basis_0} \,_{\basis_0}\!\ltb{T}_{\basis_0} \,_{\basis_0}\!\eyeb_{\basis_1}
+\]
+and
+\[
+_{\basis_0}\!\eyeb_{\basis_1} \,_{\basis_1}\!\ltb{T}_{\basis_1} =
+_{\basis_0}\!\ltb{T}_{\basis_0} \,_{\basis_0}\!\eyeb_{\basis_1}
+\]
+
+\begin{exercise}\label{ex:change-basis}
+Given two bases, $\basis_0 = \{\vec{u}_0, \vec{u}_1, \ldots, \vec{u}_{n-1}\}$ and
+ $\basis_1 = \{\vec{v}_0, \vec{v}_1, \ldots, \vec{v}_{m-1}\}$, let $U$ and $V$
+ be the matrices in $GL(n, \F)$ having the basis vectors as their columns; that is, 
+\[U = (\,\vec{u}_0 \; \vec{u}_1\, \cdots\, \vec{u}_{n-1}\,), \qquad
+V = (\,\vec{v}_0 \; \vec{v}_1 \,\cdots \,\vec{v}_{m-1}\,)\]
+Show that the $\basis_0$-$\basis_1$ change of basis matrix satisfies
+\begin{equation}\label{eq:I-14}
+V \, _{\basis_1}\!\eyeb_{\basis_0} = U
+\end{equation}
+%Harder version:
+% Given a basis $\basis_0 = \{\vec{u}_0, \vec{u}_1, \ldots, \vec{u}_{n-1}\}$ for
+%$\vs{U}$, a basis $\basis_1 = \{\vec{v}_0, \vec{v}_1, \ldots, \vec{v}_{m-1}\}$ for
+%$\vs{V}$, define the matrices $U \in GL(n, \F)$ and $V \in GL(n, \F)$ by, 
+%\[U = (\vec{u}_0 \, \vec{u}_1 \cdots \vec{u}_{n-1}) \qquad
+%V = (\vec{v}_0 \, \vec{v}_1 \cdots \vec{v}_{m-1})\]
+\end{exercise}
+As Excercise~\ref{ex:change-basis} shows, given two matrices, $U$ and $V$, whose
+column vectors define bases $\basis_0$ and $\basis_1$, respectively,
+it is trivial to write down the $\basis_0$-$\basis_1$ change of basis matrix in
+terms of these two matrices:
+\[
+ _{\basis_1}\!\eyeb_{\basis_0} =  V^{-1}U
+\]
+
+
+Every invertible matrix is a change-of-basis matrix, and every
+change-of-basis matrix is invertible.  Thus, if $\basis_0$ is a
+basis for vector space $\vs{U}$, if $\T$ is a linear transformation on $\vs{U}$,
+and if $A = _{\basis_0}\!\ltb{T}_{\basis_0}$ denotes the $\basis_0$-basis
+representation of $\T$, then the set of all possible basis representations of
+$\T$ is 
+\begin{equation}\label{eq:I-13} 
+\left\{ 
+   _{\basis_1}\!\eyeb_{\basis_0}\, _{\basis_0}\!\ltb{T}_{\basis_0}\, _{\basis_0}\!\eyeb_{\basis_1} : \basis_1 \text{ is a basis of } \vs{U} 
+\right\}
+=
+\left\{ S^{-1} A S : S \mbox{ is an invertible matrix } \right\}
+\end{equation}
+This is just the set of all matrices that are {\it similar} to the
+given matrix $A$.  Therefore, two distinct matrices that are similar are
+different basis representations of a single linear transformation.  We use the
+term {\it similarity transformation} when referring to the operation 
+$A \to S^{-1} A S$. 
+\begin{exercise}\footnote{\emph{Hint:} see Definition~\ref{def:basis-rep-T}, and the comment preceeding it.}
+Generalize the set in~(\ref{eq:I-13}) to include the case:
+$A = _{\basis_1}\!\ltb{T}_{\basis_0}$ is an $m\times n$ matrix representation of the
+transformation $\linmap{T}{U}{V}$.
+\end{exercise}
+
+One would expect similar matrices to share some significant properties
+-- at least, those properties that are intrinsic to the underlying
+linear transformation.  In fact, this is an important theme in linear
+algebra.  \emph{It is often useful to step back from a question about a
+matrix to a question about some intrinsic property of the unerlying linear
+transformation, of which this matrix is only one particular manifestation.}
+
+\subsection{The Four Fundamental Subspaces}
+\label{subspacetrans}
+Let $\vs{U}$ be an $n$ dimensional vector space and let $\vs{V}$ be an $m$
+ dimensional vector space.  Suppose we represent an operator 
+$\linmap{T}{U}{V}$ by the $m \times n$ matrix
+ $A \in M(m,n)$, using the elementary basis (\ref{elementary}).  That is 
+\[
+\T(\vec{x}) = \vec{y} \; \Leftrightarrow \; A\vec{x} = \vec{y} 
+\]
+Then the matrix $A$ is a linear transformation with {\it domain}
+$\vs{U}$.  The domain is one of four fundamental subspaces associated with $A$.
+Another one is the {\it range}. The range of $A$ is the subspace of $\vs{V}$ given by 
+\[
+\Range(A) = \left\{ A\vec{x} : \vec{x} \in \vs{U} \right\} \subset \vs{V}
+\]
+A third fundamental subspace is the {\it nullspace} of $A$,
+\[
+\Null(A) = \left\{\vec{x} : A\vec{x} = 0 \right\} \subset \vs{U}
+\]
+The nullspace of $A$ is sometimes called the {\it kernel} of \T.
+The range of $A$ is sometimes called the {\it column space} of $A$ because is 
+represents the space of all linear combinations of the columns of
+$A$.  Similarly, the space of all linear combinations of the rows
+of $A$ is called the {\it row space} of $A$ and is essentially the same
+space as $\Range(A^t)$ -- the column space of the transpose of $A$.
+
+%%% END FILE INSERT: LinearAlgebra.tex 
+%% __latexfile{
+%% author = {William DeMeo},
+%% filename = {AbstractAlgebra.tex},
+%% date = {2002.08.07},
+%% text = {Main latex file for Abstract Algebra chapter of dspmath book.}
+%% }
+
+%%% BEGIN FILE INSERT: Fraleigh.tex 
+\pagebreak
+%\chapter{Abstract Algebra}
+\section{Abstract Algebra}
+\label{sec:abstr-algebr} 
+\def\sectype{section}
+The main source of most material in this \sectype\ is Fraleigh, {\it A First
+  Course in Abstract Algebra},~\cite{Fraleigh:1994}.  
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+   {
+     \subsection{Partitions and Equivalence Relations}
+   }
+   {
+     \subsection{Partitions and Equivalence Relations\protect\footnotemark}
+     \footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 0.2.}
+   }
+\label{sec:part-equiv-relat}
+\begin{definition}[Partition] 
+A \emph{partition of a set} $S$ is a decomposition into nonempty
+subsets such that every element of the set is in {\it one and only
+one} of the subsets.  We call these subsets the \emph{cells} of the
+partition. 
+\end{definition}
+
+\begin{theorem}\label{thm:EquivalenceClass}
+Let $S$ be a nonempty set and let $\sim$ be a relation between
+elements of $S$ that satisfy the following properties for all 
+$a,b,c \in S$:
+\begin{enumerate}
+\item (reflexive) $a\sim a$.
+\item (symmetric) If $a\sim b$, then $b\sim a$.
+\item (transitive) If $a\sim b$ and $b\sim c$, then $a\sim c$.
+\end{enumerate}
+Then $\sim$ yields a natural partition of $S$, where
+\[
+\bar{a} = \{x\in S:x\sim a\}
+\]
+is the cell containing $a$ for all $a\in S$.  Conversely, each
+partition of $S$ gives rise to a natural relation $\sim$ satisfying
+the reflexive, symmetric, and transitive properties if $a\sim b$ is
+defined to mean $a\in \bar{b}$.
+\end{theorem}
+
+\begin{definition}[Equivalence Relation]
+A relation $\sim$ on a set $S$ satisfying the reflexive, symmetric,
+and transitive properties described in
+Theorem~\ref{thm:EquivalenceClass} is an \emph{equivalence relation
+on} $S$.  Each cell $\bar{a}$ in the natural partition given by an
+equivalence relation is an \emph{equivalence class}.
+\end{definition}
+(Notation: The symbol $\sim$ is usually reserved for an equivalence
+relation.  We will use $\rel$ for a relation between elements of a set
+$S$ which is not necessarily an equivalence relation on $S$.)
+
+\begin{definition}[Congruence Modulo $n$]\label{def:congruence}
+Let $h$ and $k$ be two integers in $\Z$ and let $n$ be any positive
+integer.  We define $h$ \emph{congruent to} $k$ \emph{modulo} $n$,
+written $h\equiv k \pmod n$, if $h - k$ is evenly divisible by $n$,
+so that $h - k = ns$ for some $s\in \Z$.
+Equivalence classes for congruence modulo $n$ are 
+\emph{residue classes modulo} $n$.
+\end{definition}
+
+\begin{definition}[Addition modulo $n$]
+Let $n$ be a fixed positive integer and let $h$ and $k$ be any
+integers.  The remainder $r$ when $h+k$ is divided by $n$ is called
+the \emph{sum of h and k modulo n}.
+\end{definition}
+
+\subsection{Groups and Subgroups}
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Binary Operations}}
+{\subsubsection{Binary Operations\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 1.1.}}
+\begin{definition}[Binary Operation]
+A \emph{binary operation $*$ on a set} $S$ is a rule that assigns to
+each ordered pair $(a,b)$ of elements of $S$ some element of $S.$
+\end{definition}
+Note that a binary operation on $S$ must assign to each ordered pair
+$(a,b)$ an element \emph{that is again in} $S.$  This requirement that
+the element be again in $S$ is known as the \emph{closure condition};
+we require that $S$ be \emph{closed} under a binary operation on $S.$
+\begin{example}
+Our usual addition operator, $+$, is \emph{not} a binary operation on
+the set $\R^+ = (0,\infty)$ of positive real numbers because
+$2 + (-2)$ is not in the set $\R^+$; that is, $\R^+$
+is not closed under $+.$
+\end{example}
+There are two important points to remember when defining a binary
+operation $*$ on a set $S.$  They are:
+\begin{enumerate}
+\item exactly one element is assigned to each possible ordered pair of
+elements of S
+\item for each ordered pair of elements of $S,$ the element assigned
+to it is again in $S.$
+\end{enumerate}
+
+\begin{definition}[Commutative Operation]
+A binary operation on a set $S$ is \emph{commutative} if 
+$a * b = b * a$ for all $a, b \in S$.
+\end{definition}
+
+\begin{definition}[Associative Operation]
+A binary operation on a set $S$ is \emph{associative} if 
+$(a * b) * c = a * (b * c)$ for all $a,b,c \in S$.
+\end{definition}
+
+\begin{theorem}[Associativity of Function Composition]
+$f \circ (g \circ h) = (f \circ g) \circ h$ whenever this
+composition is defined.
+\end{theorem}
+\begin{proof}
+If this composition is defined, then for each $x$ in the domain of
+$h$, we have
+\begin{alignat*}{2}
+(f \circ (g \circ h))(x) &=  f ((g \circ h)(x)) &&=  f (g (h(x)))\\
+&=(f \circ g)(h(x)) &&= ((f \circ g) \circ h)(x)
+\end{alignat*}
+\qed
+\end{proof}
+\begin{remark} This is important because, for some operations
+(\eg tranlation and scaling) that we use in Fourier analysis, order
+may matter. That is, the operations may not be commutative.
+However, the foregoing shows that composition of functions is always
+associative.  
+\end{remark}
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Groups}}
+{\subsubsection{Groups\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 1.2.}}
+One motive for defining a binary operation on a set is the desire to
+solve simple linear equations involving that binary operation.  For
+example, we might expect that the binary operation permits a solution
+$x$ to the equation $2 * x = 3.$  A little experimentation will show
+that such equations are solvable when there are special conditions on
+the set $S$ and the operator $*$.  A most basic set of conditions is
+given by the requirement that $\left<S,*\right>$ define a
+\emph{group}.
+\begin{definition}[Group]
+\label{def:group}
+A \emph{group} 
+$\Group$
+is a set $G,$ closed under a binary
+operation $*,$ such that the following axioms are satisfied:
+\begin{enumerate}
+\item (associativity) The binary operation $*$ is associative.
+\item (identity) There is an element $e$ in $G$ such that $e*x = x*e = x$ for all
+$x \in G.$
+\item (inverse) For each $a$ in $G,$ there is an element $a'$ in $G$
+with the property that $a*a' = a'*a = e.$
+\end{enumerate}
+\end{definition}
+\begin{theorem}[Unicity of identity and inverse]
+The identity and inverses are unique in a group.  To be precise, in a
+group $\Group$, there is only one identity $e$ such that 
+\[
+e * x = x * e = x
+\]
+for all $x\in G$. Likewise, for each $a\in G$, there is only one
+element $a'$ such that 
+\[
+a * a' = a' * a = e
+\]
+\end{theorem}
+\begin{definition}[Abelian Group]
+A group $G$ is \emph{Abelian} if its binary operation $*$ is commutative.
+\end{definition}
+
+Here are a few examples from linear algebra:
+\begin{example}
+The axioms for a vector space $\vs{V}$ pertaining just to vector addition
+can be summarized by asserting that $\vs{V}$ with the operation of vector
+addition is an Abelian group.
+\end{example}
+\begin{example}
+The set $M_{m\times n}(\R)$ of all real-valued $m \times n$ matrices
+with binary operation matrix addition is a group.  The $m \times n$ matrix with
+all entries 0 is the identity matrix.  This group is Abelian.
+\end{example}
+\begin{example}
+The set $M_n(\R)$ of all real-valued $n \times n$ matrices with
+operation matrix multiplication is \emph{not} a group.  The $n \times
+n$ matrix with all entries 0 has no inverse.
+\end{example}
+Thus far our work deals primarily with integers, so the
+following example has special relevance:
+\begin{example}
+The set of non-negative integers, $\{0, 1, 2, \ldots \},$ with
+the usual addition operation $+$ is \emph{not} a group.  There is an
+identity element 0, but no inverse for, \eg 2.
+\end{example}
+
+The last example is not intended to disparage the integers. Algebraic
+structures consisting of sets with binary operations for 
+which not all of the group axioms hold can also be useful.  Of these
+weaker structures, the \emph{semigroup}, a set with an associative binary
+operation, has perhaps had the most attention in the math literature.  Another
+example is the \emph{monoid} -- a semigroup that has an identity element for
+the binary operation. 
+%\\\\
+%{\bf Application:} the set $\{0,1\}$\\
+%Consider the set with which we began our rhythm analysis.
+%% -- namely $\{0,1\}$ -- 
+%The symbol 1 represents the generic sound event and 0
+%represents a sound event of zero gain (\ie no sound).  Suppose we
+%wish to impose a group structure on this set with some binary operator
+%$*$.  In particular, let 0 be the identity element. Thus, $x * 0 = 0
+%* x = x$ for any  for any $x \in \{0,1\}.$  In particular, for $x =
+%1$, this means that $0 * 1 = 0.$  On the other hand, since 1 must have
+%an inverse -- \ie an element $x 
+%\in \{0,1\}$ such that $x * 1 = 0$ -- and the only remaining choice
+%in the set is 1 itself, it must be the case that $1*1=0.$
+%To summarize, taking 0 as the identity element, the only
+%group structure we can impose on the set $\{0,1\}$ is given by the
+%following group table: 
+%\vspace{3mm}
+%\begin{center}
+%\begin{tabular}{c|cc}
+%$*$ & 0 & 1 \\
+%\hline
+%0 & 0 & 1 \\
+%1 & 1 & 0 
+%\end{tabular}
+%\end{center}
+%
+%The foregoing defines the \emph{cyclic group} 
+%$\langle \Z_1, * \rangle$, 
+%whose elements are the possibilities for the remainder when an integer
+%is divided by 2.  The operation $*$ is addition modulo 2, which is a
+%fairly basic operation.  Nonetheless, let us define it for the
+%general, modulo $n$ case.
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Subgroups}}
+{\subsubsection{Subgroups\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 1.3.}}
+We define a few more concepts from abstract algebra that are useful in our
+applied research.
+\begin{definition}[Subgroup]
+If a subset $H$ of a group $G$ is closed under the binary operation of
+$G$ and if $H$ itself is a group, then $H$ is a \emph{subgroup of}
+$G.$  We shall let $H \leq G$ or $G\geq H$ denote that $H$ is a
+subgroup of $G,$ and $H < G$ or $G> H$ shall mean $H \leq G$ but $H
+\neq G.$
+\end{definition}
+
+%Consider an example related to our application.  
+The elements of $\zfour = \{0, 1, 2, 3\}$ are the possibilities
+for the remainder when an integer is divided by 4.  With the operator $+$
+denoting addition modulo 4, 
+$\langle \Z_4, + \rangle$ 
+satisfies the three group properties
+given in definition (\ref{def:group}).\footnote{To simplify notation,
+when the definition of the operator $+$ is clear from the context, let
+the group  $\langle \mathcal{G}, + \rangle$ be denoted simply by
+$\mathcal{G},$ \eg we will speak of the group $\zfour,$ when
+technically we mean  $\langle \Z_4, + \rangle.$} 
+The only nontrivial proper subgroup of 
+$\zfour$ %$\langle \Z_4, + \rangle$ 
+is $\{0,2\}$  %$\langle \{0,2\}, + \rangle.$
+Note that
+$\{0,3\}$ 
+%$\langle \{0,3\}, + \rangle.$
+is \emph{not} a subgroup of $\zfour,$ since  $\{0,3\}$ is not closed
+under + (addition modulo 4).  For example, $3 + 3 = 2$ and $2 \not\in
+\{0,3\}.$  Similarly, the set $H = \{0,1,2\}$ does not satisfy the
+definition of a subgroup. For $1 + 2 = 3 \not\in H$.  
+%%%The following doesn't make sense because the pair <H,+> where + is
+%%%addition 
+%%%mod 4, is not even a group and ie not what the group zthree
+%%%represents. 
+%Therefore, the group $\zthree =
+%\{\ldots, 0, 1, 2, 0, 1,\ldots \}$ is not a subgroup of $\zfour.$
+
+If $a$ is a member of the group $\Group$ 
+%$\left< G, * \right>,$ 
+then it is not hard to show that all elements of the set 
+$\{a^n \,|\, n \in \Z\}$ are also members of $\Group$.
+%$\left< G, * \right>.$
+The box below contains the (trivial) demonstration of this fact.
+A few other propositions about the set $H \equiv \{a^n \,|\, n \in \Z\}$
+are  
+\begin{enumerate}
+\item $H$ is a subgroup of $G.$  
+\item $H$ is the smallest subgroup containing $a.$
+\item $H$ is called the \emph{cyclic subgroup of} $G$ \emph{generated by}
+  $a,$ denoted 
+$\langle a \rangle.$
+\end{enumerate}
+Also, suppose we are given a group $G$ and an element $a \in G,$ such
+that 
+\[ G \equiv \{a^n \,|\, n \in \Z\}\]
+Then $a$ is the \emph{generator} of $G$ and the group 
+$G = \langle a \rangle$ is \emph{cyclic.} 
+
+%%\begin{center}\setlength{\fboxsep}{4mm}
+%%\begin{boxedminipage}[t]{14cm}
+%%%\framebox[14cm]{
+%%\small{ 
+%% The four lines above put the following in a box.
+Notice that, if $a$ is a member of the group $\Group$
+%$\left< G, * \right>$
+then the closure property guarantees that $a*a$ is also a member of
+$G.$  Denote this element by $a^2 \equiv a*a.$  Similarly, it must be
+the case that $a^2 * a \equiv a^3 \in G.$  Proceeding by induction, it
+is clear that
+\begin{equation}
+\label{eqn:posexp}
+a\in G \Rightarrow a^n \in G, \mbox{ for } n=1,2,\ldots
+\end{equation}
+For any member $a$ of the group $\Group$
+%$\left<G,*\right>$, 
+there exists an inverse $a^{-1}$, also a member of $G.$  By an
+argument analogous to that of the preceding paragraph, it must be the
+case that $a^{-1}*a^{-1} \in G,$ and, in general,
+\begin{equation}
+\label{eqn:negexp}
+a\in G \Rightarrow a^{-n} \in G, \mbox{ for } n=1,2,\ldots 
+\end{equation}
+By convention, let $a^0 = 1.$  Then equations
+(\ref{eqn:posexp}) and (\ref{eqn:negexp}) prove that, for any
+member $a$ of the group $\Group$
+%$\left< G, * \right>$
+it must be the case that all elements of the set 
+$\{a^n \,|\, n \in \Z\}$ are also members of $\Group$
+%$\left< G, * \right>.$
+%%}
+%%\end{boxedminipage}
+%%\end{center}
+
+Below we will use the \emph{direct product of groups}.  The definition
+is made evident in the following theorem.
+\begin{theorem}
+Let $G_1, G_2, \ldots, G_n$ be groups and let $\cdot$ denote their
+respective binary operators. For
+$(a_1,a_2,\ldots,a_n)$ 
+and 
+$(b_1,b_2,\ldots,b_n)$ 
+in
+\[\prod_i G_i \equiv G_1 \times G_2 \times \cdots \times G_n \]
+define 
+$(a_1,a_2,\ldots,a_n)\cdot (b_1,b_2,\ldots,b_n) $ to be
+$(a_1\cdot b_1,a_2\cdot b_2,\ldots,a_n\cdot b_n)$.  
+Then $\prod_i G_i$ is a group, the \emph{direct product of the groups}
+$G_i$, under this binary operation.
+\end{theorem}
+%The following theorem  will also play a role in our application.
+The following theorem is a fundamental result about direct products of integer
+groups.
+\begin{theorem}
+\label{thm:cyclicProd}
+The group $\Z_m \times \Z_n$ is isomorphic to
+$\Z_{mn}$ if and only if $m$ and $n$ are relatively prime, 
+that is, if and only if the gcd of $m$ and $n$ is 1.
+\end{theorem}
+As a result, when $m$ and $n$ are relatively prime, $\Z_m \times
+\Z_n$ is cyclic of order $mn$.
+
+\subsection{More Groups and Cosets}
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Groups of Permutations}}
+{\subsubsection{Groups of Permutations\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 2.1.}}
+\begin{definition}[Permutation]
+A \emph{permutation of a set} $A$ is a function 
+$\phi: A \to A$ 
+that is both one to one and onto.  In other words, a permutation of
+$A$ is a one-to-one function from $A$ onto $A$.
+\end{definition}
+
+Function composition is a binary operation on the collection of all
+permutations of a set $A$.  We call this operation {\it permutation
+multiplication}.  Thus, if $\sigma$ and $\tau$ are both permutations
+of the set $A$, then the composite function $\tau \sigma$ is also a
+permutation of $A$.
+
+\begin{theorem}
+Let $A$ be a nonempty set, and let $S_A$ be the collection of all
+permutations of $A$.  Then $S_A$ is a group under permutation
+multiplication. 
+\end{theorem}
+
+\begin{definition}[Symmetric Group]
+Let $A$ be the finite set $\{1, 2, \ldots,n\}$.  The group of all
+permutations of $A$ is the \emph{symmetric group on} $n$
+\emph{letters}, and is denoted by $S_n$.
+\end{definition}
+Note that $S_n$ has $n!$ elements.
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Orbits, Cycles, and the Alternating Groups}}
+{\subsubsection{Orbits, Cycles, and the Alternating Groups\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 2.2.}}
+%\begin{center}{\bf Orbits}\end{center}
+\paragraph{Orbits}
+Each permutation $\sigma$ of a set $A$ determines a natural partition
+of $A$ into cells with the property that $a,b \in A$ are in the same
+cell if and only if $b = \sigma^n(a)$ for some $n\in \Z$.  We
+establish this partition using an appropriate equivalence relation:
+\begin{equation}
+\label{eq:orbit}
+\text{For } a,b \in A, \text{ let } a \sim b 
+%\Leftrightarrow 
+\text{ if and only if }
+b = \sigma^n(a) \text{ for some } n\in \Z
+\end{equation}
+\begin{definition}[Orbits of $\sigma$]
+Let $\sigma$ be a permutation of a set $A$.  The equivalence classes
+in $A$ determined by the equivalence relation~(\ref{eq:orbit}) are the
+\emph{orbits of} $\sigma$.
+\end{definition}
+%\vspace{3mm}
+%\begin{center}{\bf Cycles}\end{center}
+\paragraph{Cycles}
+\begin{definition}[Cycle]
+A permutation $\sigma \in S_n$ is a \emph{cycle} if it has at most one
+orbit containing more than one element.  The \emph{length} of a cycle
+is the number of elements in its largest orbit.
+\end{definition}
+
+\begin{theorem}
+\label{thm:permCycle}
+Every permutation of a finite set is a product of disjoint cycles.
+\end{theorem}
+%
+%\vspace{3mm}\begin{center}{\bf Even and Odd Permutations}\end{center}
+\paragraph{Even and Odd Permutations}
+\begin{definition}[Transposition]
+A cycle of length 2 is a \emph{transposition}.
+\end{definition}
+Thus, a transposition leaves all but two elements fixed.
+A computation shows that
+\[
+(a_1,a_2,\ldots,a_n) = (a_1,a_n)(a_1,a_{n-1})\cdots(a_1,a_3)(a_1,a_2)
+\]
+Therefore, any cycle is a product of transpositions.  We then have the
+following as a corollary to Theorem~\ref{thm:permCycle}.
+\begin{corollary}\label{cor:cycleTrans}
+Any permutation of a finite set of at least two elements is a product
+of transpositions.
+\end{corollary} Corollary~\ref{cor:cycleTrans} simply states that any
+rearrangement of $n$ objects can be achieved by successively
+interchanging pairs of them.
+\begin{lemma} Let $\sigma \in S_n$ and let $\tau$ be a transposition
+in $S_n$.  The number of orbits of $\sigma$ and the number of orbits
+of $\tau\sigma$ differ by 1.
+\end{lemma}
+\begin{theorem}
+No permutation can be expressed both as a product of an even number of
+transpositions and as a product of an odd number of transpositions.
+\end{theorem} 
+
+\begin{definition}[Even or Odd Permutation]
+A permutation of a finite set is \emph{even} (resp. \emph{odd}) if it
+can be expressed as a product of an even (resp. odd) number of
+transpositions.
+\end{definition}
+\begin{proposition} If $n\geq 2$, then the collection of all even
+permutations of $\{1,2,\ldots,n\}$ forms a subgroup of order $n!/2$ of
+the symmetric group $S_n$.  The same is true for the subgroup of all
+odd permutations. 
+\end{proposition}
+
+\begin{definition}[Alternating Group]
+The subgroup of $S_n$ consisting of the even permutations of $n$
+letters is the \emph{alternating group $A_n$ on $n$ letters}.
+\end{definition}
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Cosets and the Theorem of Lagrange}}
+{\subsubsection{Cosets and the Theorem of Lagrange\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 2.3.}}
+%\begin{center}{\bf Cosets}\end{center}
+\paragraph{Cosets}
+Let $H$ be a subgroup of a group $G$, which may be of finite or
+infinite order.  We exhibit two partitions of $G$ by defining two
+equivalence relations, $\sim_L$ and $\sim_R$ on $G$.
+\begin{theorem}
+Let $H$ be a subgroup of $G$.  Let the relation $\sim_L$ be defined on
+$G$ by 
+\[
+a \sim_L b \; \Leftrightarrow \; a^{-1}b \in H
+\]
+Let $\sim_R$ be defined by 
+\[
+a \sim_R b \; \Leftrightarrow \; ab^{-1} \in H
+\]
+Then $\sim_L$ and $\sim_R$ are both equivalence relations on $G$.
+\end{theorem}
+
+\begin{definition}[Cosets]
+Let $H$ be a subgroup of a group $G$.  The subset 
+$aH = \{ah : h\in H\}$ 
+of $G$ is the \emph{left coset} of $H$ containing $a$, while
+$Ha = \{ha : h\in H\}$
+is the \emph{right coset} of $H$ containing $a$.
+\end{definition}
+
+\begin{proposition} For an abelian subgroup $H$ of $G$, the partition of $G$
+into left cosets of $H$ and the partition into right cosets are the same.
+\end{proposition}
+%
+%\vspace{3mm}\begin{center}{\bf The Theorem of Lagrange}\end{center}
+\paragraph{The Theorem of Lagrange}
+\begin{proposition} Every coset (left or right) of a subgroup $H$ has the
+same number of elements as $H$.
+\end{proposition}
+\begin{theorem}[Theorem of Lagrange]
+\label{thm:lagrange}
+Let $H$ be a subgroup of a finite group $G$.  Then the order of $H$ is
+a divisor of the order of $G$.
+\end{theorem}
+\begin{proof} Let $n$ be the order of $G$ and let $m$ be the order of
+$H$.  By the preceding proposition, every coset of $H$ has $m$ elements.  Let
+$r$ be the number of cells in the partition of $G$ into cosets of
+$H$.  Then $n=rm$, so $m$ is indeed a divisor of $n$. \qed
+\end{proof}
+\begin{corollary} Every group of prime order is cyclic 
+\end{corollary}
+\begin{proof} Let $G$ be of prime order $p$ and let $a$ be an element
+of $G$ different from the identity.  Then the cyclic subgroup 
+$\langle a \rangle$ of $G$ generated by $a$ has at least two elements,
+$a$ and $e$.  But by Theorem~\ref{thm:lagrange}, the order $m\geq 2$
+of $\langle a \rangle$ must divide the prime number $p$.  Thus, we
+must have $m=p$ and $\langle a \rangle = G$, so $G$ is cyclic. \qed
+\end{proof}
+\begin{theorem} The order of an element of a finite group divides the
+order of the group.
+\end{theorem}
+\begin{proof} Recalling that the order of an element is the same as
+the order of the cyclic group generated by that element, we see that
+the theorem follows directly from Theorem~\ref{thm:lagrange}. \qed
+\end{proof}
+\begin{definition}[Index of $H$ in $G$]
+Let $H$ be a subgroup of a group $G$.  The number of left cosets of
+$H$ in $G$ is the \emph{index $(G:H)$ of $H$ in $G$}.
+\end{definition}
+The index may be finite or infinite.  If $G$ is finite, then $(G:H)$
+is finite and 
+\[ (G:H) = |G|/|H|\]
+since every coset of $H$ contains $|H|$ elements.
+\begin{theorem}
+Suppose $H$ and $K$ are subgroups of a group $G$ such that 
+$K \leq H \leq G$, and suppose $(H:K)$ and $(G:H)$ are both
+finite. Then $(G:K)$ is finite and $(G:K) = (G:H)(H:K)$.
+\end{theorem}
+
+\subsection{Homomorphisms and Factor Groups}
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Homomorphisms}}
+{\subsubsection{Homomorphisms\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 3.1.}}
+%\begin{center}{\bf Structure-Relating Maps}\end{center}
+\paragraph{Structure-Relating Maps}
+Let $G$ and $G'$ be groups.  We are interested in a map
+$\phi:G\to G'$ that relates the group structure of $G$ to the
+group structure of $G'$.  Such a map often gives us information about
+the structure of $G'$ from known structural properties of $G$, or
+information about the structure of $G$ from known structural
+properties of $G'$.  Now \emph{group structure is completely
+determined by the binary operation on the group}.  We define such a
+structure-relating map for groups, and then point out how the binary
+operations of $G$ and $G'$ are related by such a map.
+
+\begin{definition}[Homomorphism]
+A map $\phi$ of a group $G$ into a group $G'$ is a \emph{homomorphism}
+if
+\begin{equation}\label{eq:homo}
+ \phi(ab) = \phi(a) \phi(b)
+\end{equation}
+for all $a,b\in G$.
+\end{definition}
+In equation~(\ref{eq:homo}), the product $ab$ on the left-hand side
+takes place in $G$ while the product $\phi(a)\phi(b)$ on the right
+takes place in $G'$.  Thus $\phi$ gives a relation between the two
+binary operations, and hence between the two group structures.
+
+\begin{example}[Reduction Modulo n]\label{ex:modn}
+Let $\gamma$ be the natural map of $\Z$ into $\Z_n$ given by
+$\gamma(m) = r$ where $r$ is the remainder when $m$ is divided by
+$n$.  Then $\gamma$ is a homomorphism.
+\end{example}
+In more familiar notation, this example implies that, for all $s,t\in
+\Z$,
+\[ 
+(s+t)(\bmod n) = s(\bmod n) + t(\bmod n)
+\]
+{\bf Remember:} the addition on the right hand side takes place in
+$\Z_n$, thus it is addition modulo $n$.  For instance, if we were to
+implement this example in Matlab, where the syntax {\tt mod(s,n)}
+yields $s(\bmod n)$, we would observe the following:
+\begin{verbatim}
+
+>> mod((s+t),n) == mod(s,n) + mod(t,n)
+
+ans:   0
+
+>> mod((s+t),n) == mod(mod(s,n)+mod(t,n),n)
+
+ans:   1
+\end{verbatim}
+In the first line of code, we used the standard $\Z$ addition
+operator on the right hand side, which does not yield the desired
+equality.  The second line uses the appropriate addition  modulo $n$
+operator.
+%\vspace{3mm}\begin{center}{\bf Properties of Homomorphisms}\end{center}
+\paragraph{Properties of Homomorphisms}
+We turn to structural features of $G$ and $G'$ that are preserved by a
+homomorphism $\phi:G\to G'$.  We first give a set-theoretic
+definition.  Note the use of square brackets when we apply a function
+to a \emph{subset} of its domain.
+
+\begin{definition}[Image and Inverse Image]
+Let $\phi$ be a mapping of a set $X$ into a set $Y$, and let $A\subseteq
+X$ and $B\subseteq Y$. The \emph{image} $\phi[A]$ \emph{of $A$ in $Y$
+under} $\phi$ is $\{\phi(a):a\in A\}$.  The set $\phi[X]$ is sometimes
+called the \emph{range of} $\phi$.  The \emph{inverse image}
+$\phi^{-1}[B]$ \emph{of $B$ in} $X$ is $\{x\in X: \phi(x) \in B\}$.
+\end{definition}
+
+\begin{theorem}\label{thm:homoPreservation}
+Let $\phi$ be a homeomorphism of a group $G$ into a group $G'$.
+\begin{enumerate}
+\item If $e$ is the identity in $G$, then $\phi(e)$ is the identity in
+$G'$. 
+\item If $a\in G$, then $\phi(a^{-1}) = \phi(a)^{-1}$.
+\item If $H$ is a subgroup of $G$, then $\phi[H]$ is a subgroup of
+$G'$.
+\item If $K'$ is a subgroup of $G'$, then $\phi^{-1}[K']$ is a
+subgroup of $G$. 
+\end{enumerate}
+\end{theorem}
+Loosely speaking, the theorem states that a homomorphism preserves the
+identity, inverses, and subgroups.
+\begin{definition}[Fibre]
+Let $\phi:G\to G'$ be a group homomorphism.  For each $a' \in
+G'$ the inverse image $\phi^{-1}[\{a'\}]$ is the \emph{fibre over}
+$a'$ \emph{under} $\phi$.
+\end{definition}
+When the argument of a set function is a singleton, \eg $\{a'\}$, we
+will omit the curly braces in order to simplify notation.  Thus,
+$\phi^{-1}[\{a'\}]$ will appear as $\phi^{-1}[a']$.  
+\begin{definition}[Kernel]
+Let $\phi:G\to G'$ be a group homomorphism.  The subgroup
+$\phi^{-1}[e'] = \{x\in G: \phi(x) = e'\}$ is the \emph{kernel of}
+$\phi$, denoted by $\ker(\phi)$.
+\end{definition}
+
+\begin{theorem}\label{thm:kernelCoset}
+Let $\phi: G\to G'$ be a group homomorphism, and let $H =
+\ker(\phi)$. For $a\in G$, the set 
+\[
+\phi^{-1}[\phi(a)] = \{x\in G: \phi(x) = \phi(a)\}
+\]
+is the left coset $aH$ of $H$, and is also the right coset $Ha$ of
+$H$.  Consequently, the two partitions of $G$ into left cosets and
+into right cosets are the same.
+\end{theorem}
+\begin{corollary}
+A group homomorphism $\phi:G\to G'$ is a one-to-one map if and
+only if $\ker(\phi) = \{e\}$.
+\end{corollary}
+
+\begin{definition}[Normal Subgroup] 
+A subgroup $H$ of a group $G$ is \emph{normal} if its left and right
+cosets coincide, that is, if $gH = Hg$ for all $g\in G$.
+\end{definition}
+Note that all subgroups of abelian groups are normal.  Also,
+Theorem~\ref{thm:kernelCoset} shows that the kernel of a homomorphism
+$\phi: G \to G'$ is a normal subgroup of $G$.
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Isomorphism and Cayley's Theorem}}
+{\subsubsection{Isomorphism and Cayley's Theorem\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 3.2.}}
+%\begin{center}{\bf Definition and Elementary Properties}\end{center}
+\paragraph{Definition and Elementary Properties}
+\begin{definition}[Isomorphism]
+An \emph{isomorphisms} $\phi:G\to G'$ is a homomorphism that is
+one-to-one and onto $G'$.  The relation $G \simeq G'$ denotes the
+existence of an isomorphism from $G$ onto $G'$, in which case we call
+$G$ and $G'$ \emph{isomorphic}.
+\end{definition}
+
+\begin{theorem}
+Let $\mathcal{G}$ 
+be any collection of groups, and define $G\simeq G'$ for $G$ and $G'$
+in $\mathcal{G}$ if there exists an isomorphism $\phi:G\to
+G'$.  Then $\simeq$ is an equivalence relation.
+\end{theorem}
+\begin{theorem}[Cayley's Theorem]
+Every group is isomorphic to a group of permutations.
+\end{theorem}
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Factor Groups}}
+{\subsubsection{Factor Groups\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 3.3.}}
+%\begin{center}{\bf Factor Groups from Homomorphisms}\end{center}
+\paragraph{Factor Groups from Homomorphisms}
+Theorem~\ref{thm:kernelCoset} shows that for each $a\in G$, the fibre
+$\phi^{-1}[\phi(a)] = \{x \in G : \phi(x) = \phi(a)\}$ is the left
+coset $aH$ of $H$ and is also the right coset $Ha$ of $H$.  Since
+these left and right cosets coincide, we will simply refer to them as
+the cosets of $H$.
+
+Now $\phi[G]$ is a group by Theorem~\ref{thm:homoPreservation}.  We
+associate with each $\phi(a) = a'\in \phi[G]$ the coset
+$\phi^{-1}[a']$ (the fibre over $a'$ under $\phi$).
+%= \{x\in G: \phi(x) = a'\}$.  
+By renaming $a'\in \phi[G]$ by the name of the associated coset, 
+% that is, by 
+$\phi^{-1}[a']$, we can consider the cosets to form a group.
+This group of cosets will be isomorphic to the group $\phi[G]$ since
+its elements are just the elements of $\phi[G]$ renamed. 
+
+In summary, the cosets of the kernel of a group homomorphism
+$\phi:G\to G'$ form a group isomorphic to the subgroup
+$\phi[G]$ of $G$.  The binary operation on the cosets can be computed
+in terms of the group operation of $G'$.  This group of cosets is the
+\emph{factor group of $G$ modulo} $H$, and is denoted by $G/H$.
+
+\begin{theorem}\label{thm:factorGroup}
+Let $\phi: G\to G'$ be a group homomorphism with kernel $H$.
+Then the cosets of $H$ form a group, $G/H$, whose binary operation
+defines the product $(aH)(bH)$ of two cosets by choosing elements $a$
+and $b$ from the cosets, and letting $(aH)(bH) = (ab)H$.  Also, the
+map $\mu: G/H \to \phi[G]$ defined by $\mu(aH) = \phi(a)$ is
+an isomorphism.
+\end{theorem}
+
+\begin{example}
+Example~\ref{ex:modn} considered the map $\gamma:\Z\to \Z_n$
+where $\gamma(m)$ is the remainder when $m$ is divided by $n$.  We
+know that $\gamma$ is a homomorphism and, of course, 
+$\ker(\gamma) = n\Z$.  By Theorem~\ref{thm:factorGroup}, we see that
+the factor group $\Z/n\Z$ is isomorphic to $\Z_n$.  The cosets of
+$n\Z$ are the \emph{residue classes modulo n} described in
+Definition~\ref{def:congruence}.  For example, taking $n=12$, we see
+the cosets of $12\Z$ are 
+\begin{alignat*}{1}
+12\Z &= \{\ldots,-24,-12,0,12,24,\ldots\}\\
+1+12\Z &= \{\ldots,-23,-11,1,13,25,\ldots\}\\
+2+12\Z &= \{\ldots,-22,-10,2,14,26,\ldots\}\\
+&\vdots\\
+11+12\Z &= \{\ldots,-13,-1,11,23,35,\ldots\}
+\end{alignat*}
+Note that the isomorphism $\mu:\Z/12\Z \to \Z_{12}$ of
+Theorem~\ref{thm:factorGroup} assigns to each coset of $12\Z$ its
+smallest nonnegative element.  That is, 
+$\mu(12\Z) = 0,\;\mu(1+12\Z) = 1$, etc.
+\end{example}
+The factor group $\Z/n\Z$ in the preceding example is classic.
+Recall that we refer to the cosets of $n\Z$ as \emph{residue classes
+modulo n}.  Two integers in the same coset are \emph{congruent modulo
+n}.  This terminology is carried over to other factor groups.  A
+factor group $G/H$ is called the \emph{factor group of G modulo
+H}.  Elements in the same coset of $H$ are called
+\emph{congruent modulo H}.  By abuse of notation, we may sometimes
+write $\Z/n\Z = \Z_n$ and think of $\Z_n$ as the additive group of
+residue classes of $\Z$ modulo $\langle n\rangle$, or abusing notation
+further, modulo $n$.
+%\vspace{3mm}\begin{center}{\bf Factor Groups from Normal Subgroups}\end{center}
+\paragraph{Factor Groups from Normal Subgroups}
+So far, we have obtained factor groups only from homomorphisms.  The
+following theorem again takes $H$ to be a subgroup of $G$, but it 
+does not assume that $H$ is the kernel of a homomorphism.
+\begin{theorem}
+Let $H$ be a subgroup of a group $G$.  Then left coset multiplication
+is well defined by the equation
+\[
+(aH)(bH)=(ab)H
+\]
+if and only if left and right cosets coincide, so that $aH = Ha$ for
+all $a\in G$.
+\end{theorem}
+\begin{corollary}
+Let $H$ be a subgroup of a group $G$ whose left and right cosets
+coincide.  Then the cosets of $H$ form a group $G/H$ under the binary
+operation $(aH)(bH) = (ab)H$.
+\end{corollary}
+\begin{definition}[Factor Group]
+The group $G/H$ in the preceding corollary is the \emph{factor group}
+(or \emph{quotient group}) of $G$ modulo $H$.
+\end{definition}
+In summary, if $H$ is a normal subgroup of $G$, then the cosets of $H$
+form the factor group, $G/H$.  Recalling that the kernel of a
+homomorphism $\phi:G\to G'$ is a normal subgroup of G, we see
+again that $G/\ker(\phi)$ is a group.
+
+The following three conditions are equivalent characterizations for a
+normal subgroup $H$ of a group $G$.
+\begin{enumerate}
+\item $ghg^{-1}\in H$ for all $g\in G$ and $h\in H$.
+\item\label{item:1} $gHg^{-1}= H$ for all $g\in G$.
+\item $gH= Hg$ for all $g\in G$.
+\end{enumerate}
+Condition~\ref{item:1} is often taken as the definition of a normal
+subgroup of $H$ of a group $G$.
+
+The map $i_g:G\to G$ defined by $i_g(x) = gxg^{-1}$ is a
+homomorphism of $G$ into itself.  Clearly 
+\[
+i_g(a)= gag^{-1} = gbg^{-1} = i_g(b)
+\]
+if and only if $a=b$, so $i_g$ is one-to-one.  Since
+$g(g^{-1}yg)g^{-1} = y$, we see that $i_g$ is onto $G$, so it is an
+isomorphism of $G$ with itself.
+\begin{definition}[Automorphism]
+An isomorphism $\phi: G\to G$ is an \emph{automorphism} of
+$G$. The automorphism $i_g:G\to G$ where $i_g(x) = gxg^{-1}$
+is the \emph{inner automorphism of $G$ by $g$}.
+\end{definition}
+
+The equivalence of conditions 2. and 3. states that $gH=Hg$ for all
+$g\in G$ if and only if $i_g[H]=H$ for all $g\in G$; that is, if and
+only if $H$ is \emph{invariant} under all inner automorphisms of $G$.
+It is important to realize that $i_g[H]=H$ is an equation in sets; we
+need not have $i_g(h)=h$ for all $h\in H$.  That is, $i_g$ may perform
+a nontrivial permutation of the set $H$.  Thus, we see that the normal
+subgroups of a group $G$ are precisely those that are invariant under
+all inner automorphisms.
+%\vspace{3mm}\begin{center}{\bf Fundamental Homomorphism Theorem}\end{center}
+\paragraph{Fundamental Homomorphism Theorem}
+We have seen that every homomorphism $\phi:G\to G'$ gives rise
+to a natural factor group, namely $G/Ker(\phi)$.  We now show that
+each factor group $G/H$ gives rise to a natural homomorphism having
+$H$ as kernel.
+\begin{theorem}\label{thm:naturalHomomorphism}
+Let $H$ be a normal subgroup of $G$.  Then $\gamma:G\to G/H$
+given by $\gamma(x)=xH$ is a homomorphism with kernel $H$.
+\end{theorem}
+We have seen in Theorem~\ref{thm:factorGroup} that if
+$\phi:G\to G'$ is a homomorphism with kernel $H$, then
+$\mu:G/H\to \phi[G]$ where $\mu(gH)=\phi(g)$ is an
+isomorphism.  Theorem~\ref{thm:naturalHomomorphism} shows that
+$\gamma:G\to G/H$ defined by $\gamma(g)=gH$ is a
+homomorphism.  Thus, we see that the homomorphism $\phi$ can be
+\emph{factored}, $\phi=\mu\gamma$, where $\gamma$ is a homomorphism
+and $\mu$ is a one-to-one homomorphism with image $\phi[G]$.  We state
+this as a theorem.
+\begin{theorem}[Fundamental Homomorphism Thoerem]
+Let $\phi:G\to G'$ be a group homomorphism with kernel $H$.
+Then:
+\begin{enumerate}
+\item $\phi[G]$ is a group,
+\item the map $\mu:G/H\to \phi[G]$ given by $\mu(gH) =
+\phi(g)$ is an isomorphism,
+\item the map $\gamma:G\to G/H$ given by $\gamma(g)=gH$ is a
+homomorphism,
+\item for each $g\in G$ we have $\phi(g) = \mu\gamma(g)$.
+\end{enumerate}
+\end{theorem}
+
+The isomorphism $\mu$ is sometimes called the \emph{natural} or
+\emph{canonical} isomorphism, and the same adjectives are used to
+describe the homomorphism $\gamma$.
+
+To summarize the foregoing, every homomorphism with domain $G$ and
+kernel $H$ gives rise to a factor group $G/H$, and every factor group
+gives rise to a homomorphism $\gamma: G \to G/H$. 
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Factor-Group Computations and Simple Groups}}
+{\subsubsection{Factor-Group Computations and Simple Groups\protect\footnotemark} 
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 3.4.}}
+Let $N$ be a normal subgroup of $G$.  In the factor group $G/N$, the
+subgroup $N$ acts as the identity element.  We may regard $N$ as being
+collapsed to a single element, either to 0 in additive notation or to
+$e$ in multiplicative notation.  This collapsing of $N$ together with
+the algebraic structure of $G$ require that other subsets of $G$,
+namely the cosets of $N$, also collapse into a single element in the
+factor group.
+\begin{theorem}
+Let $G=H\times K$ be the direct product of groups $H$
+and $K$.  Then $\bar{H} = \{(h,e):h\in H\}$ is a normal subgroup of
+$G$, and $G/\bar{H} \simeq K$.  Also, $\bar{K} = \{(e,k):k\in K\}$ is a
+normal subgroup of $G$, and $G/\bar{K} \simeq H$.
+\end{theorem}
+\begin{example}
+Let $G=\Z_3\times \Z_4$ and let $\bar{H} = \langle(1,0)\rangle =
+\{(0,0),(1,0),(2,0)\} \simeq \Z_3$.  Then the factor group 
+%of $G$ modulo $\bar{H}$ -- that is 
+$G/\bar{H} = (\Z_3\times \Z_4)/\langle(1,0)\rangle$
+is the collection of cosets
+$\{(0,0)+\bar{H},\;(0,1)+\bar{H},\;(0,2)+\bar{H},\;(0,3)+\bar{H}\}$.
+Since we can compute in the factor group by choosing representative
+elements $\{(0,0),\;(0,1),\;(0,2),\;(0,3)\}$ from the cosets, it is
+clear that the factor group is isomorphic to $\Z_4$.
+Thus,
+\[
+(\Z_3\times \Z_4)/\langle(1,0)\rangle \simeq \Z_4
+\]
+as predicted by the preceding theorem.
+Similarly, letting $\bar{K} = \langle(0,1)\rangle =
+\{(0,0),(0,1),(0,2),(0,3)\} \simeq \Z_4$, we see that
+\[
+G/\bar{K} = (\Z_3\times \Z_4)/\langle(0,1)\rangle \simeq \Z_3
+\]
+\end{example}
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsubsection{Series of Groups}}
+{\subsubsection{Series of Groups\protect\footnotemark} 
+\footnotetext{op.~cit.~\cite{Fraleigh:1994}, \S\ 3.5.}}
+%\begin{center}{\bf Subnormal and Normal Series}\end{center}
+\paragraph{Subnormal and Normal Series}
+\begin{definition}[Subnormal Series] A \emph{subnormal} (or
+\emph{subinvariant}) \emph{series of a group} $G$ is a finite sequence
+$\{H_k\}_{k=0}^n$ of subgroups of $G$ such that $H_k < H_{k+1}$ and
+$H_k$ is a normal subgroup of $H_{k+1}$ with $H_0=\{e\}$ and $H_n=G$.
+\end{definition}
+\begin{definition}[Normal Series] A \emph{normal} (or
+\emph{invariant}) \emph{series of a group} $G$ is a finite sequence
+$\{H_k\}_{k=0}^n$ of normal subgroups of $G$ such that $H_k < H_{k+1}$
+with $H_0=\{e\}$ and $H_n=G$. 
+\end{definition}
+%\begin{definition}[{\bf}]
+%\end{definition}
+%\begin{definition}[{\bf}]
+%\end{definition}
+%\begin{definition}[{\bf}]
+%\end{definition}
+
+%\section{Introduction to Rings and Fields}
+\subsection{Rings and Fields}
+\label{sec:ringsandfields}
+\begin{definition}[Ring]
+A ring $\Ring$ is a set $R$ together with two binary operations $+$ and
+$\cdot$ that satisfy the following three conditions:
+\begin{enumerate}
+\item $\langle R, + \rangle$ is an Abelian group.
+\item The operator $\cdot $ is associative.
+\item For all $a,b,c \in R$ the following left and right distributive
+laws hold:
+\[
+    a\cdot(b+c) = a\cdot b + a \cdot c
+\]
+\[
+    (a + b)\cdot c = a\cdot c + b \cdot c
+\]
+\end{enumerate}
+\end{definition}
+We refer to $\langle R, + \rangle$ as the 
+\emph{additive group of the ring}. 
+
+\begin{example}
+Consider the cyclic group $\langle \Z_n, + \rangle.$  For any
+$a, b \in \Z_n,$ define multiplication, $a \cdot b,$ to be the 
+remainder when the usual product, $ab,$ is divided by $n.$  Then 
+$\langle \Z_n, +, \cdot \rangle$ is a ring.  For instance,
+on $\Z_{10},$ we have $3\cdot 7 = 1.$
+Thus defined, the operator $\cdot$ is called ``multiplication modulo
+$n$.'' 
+\end{example}
+
+\begin{definition}[Ring Homomorphism]
+Let $R$ and $R'$ be rings.  A map $\phi:R\to R'$ is a
+\emph{homomorphism} if the following hold for all $a,b \in R$:
+\begin{enumerate}
+\item $\phi(a + b) = \phi(a) + \phi(b) $
+\item $\phi(a \cdot b) = \phi(a) \cdot \phi(b) $
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Ring Isomorphism]
+\label{def:isomorphism}
+An \emph{isomorphism} $\phi: R \to R'$ from ring $R$ to ring
+$R'$ is a homomorphism that is one-to-one and onto.  The rings $R$ and
+$R'$ are then \emph{isomorphic}.
+\end{definition}
+
+\begin{definition}[Commutative Ring]
+A ring in which multiplication is commutative is a \emph{commutative
+ring}.  
+\end{definition}
+\begin{definition}[Ring with Unity]
+A ring with a multiplicative identity is a \emph{ring with
+unity}. A multiplicative identity is called \emph{unity}. 
+\end{definition}
+(In a ring with unity it is standard to let the symbol 1 denote that
+element representing unity.)
+\begin{example}
+\label{ex:isomorph}
+Denote the greatest common divisor of two integers $r, s \in
+\Z,$  by $\mbox{gcd}(r,s)$. For integers $r, s \in
+\Z,$ where  $\mbox{gcd}(r,s) = 1,$ the cyclic rings
+$\Z_{rs}$ and  $ \Z_r \times \Z_s $
+are isomorphic.
+\end{example}
+\begin{definition}[Multiplicative Inverse]
+A \emph{multiplicative inverse} of an element $a$ in a ring $R$ is an
+element $a^{-1} \in R$ such that $a^{-1} \cdot a = a \cdot a^{-1} = 1$ 
+\end{definition}
+Finally, we arrive at a precise definition of a
+\emph{field}.
+
+\begin{definition}[Unit, Division Ring, Field, Skew Field]
+Let $R$ be a ring with unity.  An element $u \in R$ is a \emph{unit}
+if it has a multiplicative inverse in $R.$  If every non-zero element
+of $R$ is a unit, then $R$ is a \emph{division ring}.  A \emph{field}
+is a commutative division ring.  A non-commutative division ring is a
+\emph{skew field}.
+\end{definition}
+\begin{example}
+The ring 
+$\Z_{12} $ is isomorphic to 
+$\Z_3 \times \Z_4$ (see Example~\ref{ex:isomorph}).
+The elements of $\Z_{12}$ are $\{0, 1, 2, \ldots, 11\}.$  Let
+us find the units.  Of course 1 is a units.  Since $7^2$ is
+49, in the modulo 12 arithmetic of the ring $\Z_{12},$ $7
+\cdot 7 = 1.$  Therefore, 7 is its own inverse and is a unit.  The
+other units are 5 and 11.  It is clear, however, that the remaining
+members of $\Z_{12}$ are not units.  We conclude that
+$\Z_{12}$ is not a division ring (hence, not a field).
+\end{example}
+In general, the units of 
+$\Z_n$ 
+are those $m \in \Z_n$ satisfying
+$\mbox{gcd}(m,n) = 1$.  An equivalent statement is that $m$ is a unit
+of $\Z_n$ if and only if $m$ and $n$ are 
+\emph{relatively prime}. 
+This fact makes it easy to check whether 
+$\Z_n$ is a division ring.
+Since multiplication on this ring is always commutative, 
+$\Z_n$ is a field if and only if it is a division ring.
+\begin{example}
+\label{ex:notafield}
+The previous example showed that not all non-zero elements of
+$\Z_{12}$ 
+are units and, thus, $\Z_{12}$ is not a field.  
+The ring $\Z_{12}$ is isomorphic to the ring $\Z_3
+\times \Z_4.$
+%Since the two rings of the direct product are useful for our study of
+%pitch, let us consider them individually.
+The members of $\Z_3$ are $\{0,1,2\}.$  Clearly 1 is a unit.
+Since $2 \cdot 2 = 1,$ the element 2 is also a unit.  Therefore, all
+non-zero members of $\Z_3$ are units, and it follows that
+$\Z_3$ is a field. On the other hand, $\Z_4$ is
+\emph{not} a field since, for example, 2 does not have a multiplicative inverse in
+this ring. 
+\end{example}
+
+To conclude the general discussion in the paragraph above
+example~\ref{ex:notafield}, let $+$ and $\cdot$ represent addition
+modulo $n$ and multiplication modulo $n,$ respectively.
+That is, $a \cdot b$ is equal to the remainder when the usual product,
+$ab,$ is divided by $n.$  Let 0 be the additive identity, and $-a$ the
+additive inverse of $a,$ and 1 the multiplicative identity.  To determine
+that $\Z_n$ is \emph{not} a field, it is sufficient to find
+one non-zero member that does not have a multiplicative inverse
+(\ie a member that is not a unit). This is equivalent to finding a
+member $a$ of $\Z_n$ such that $a$ and $n$ are not relatively
+prime.   
+
+\begin{example}
+Suppose $n = 32$ so that the elements of 
+$\Z_n$ % \equiv \Z_{32}$ 
+are $\{0,1,2,\ldots, 31\}$.
+In this case it is easy to find members of this ring %$\Z_{32}$ 
+-- \eg $2, 4, 6,\ldots$ -- that are not relative primes of 32.  
+%That is, there is no element $a \in \Z_{32}$ such that $a \cdot 2 = 2 \cdot a = 1.$    
+%Recall that, in general, any element $a \in \Z_{32}$ will have an inverse iff 
+%$a$ and 32 are relatively prime; \ie $\mbox{gcd}(a,32) = 1.$
+That there exists a member with no multiplicative inverse 
+proves $\Z_{32}$ is not a field.
+\end{example}
+
+%%% END FILE INSERT: Fraleigh.tex 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "dspmath"
+%%% End: 

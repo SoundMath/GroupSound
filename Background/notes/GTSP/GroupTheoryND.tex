@@ -1,0 +1,463 @@
+%% LaTeX file 'GroupTheoryND.tex'
+
+%% latexfile{
+%% author = {William DeMeo},
+%% filename = {GroupTheoryND.tex},
+%% date = {2002.08.07},
+%% text = {Main latex file for Group Theory for Signals of Multiple Dimensions of dspmath book.}
+%% }
+
+%%% BEGIN FILE INSERT: GFIP.tex
+
+\title{Nonabelian Groups and Multivariate DSP}
+\titlerunning{Nonabelian Groups \& Multivariate DSP}
+\author{Myoung An\inst{1}\and Richard Tolimieri \and William DeMeo\inst{2}}
+\institute{{\tt psypher@tiac.net} \and {\tt williamdemeo@yahoo.com}}
+\authorrunning{An, Tolimieri, DeMeo}
+\maketitle
+%\setcounter{minitocdepth}{2}\dominitoc %\pagebreak
+
+%The main source of most material in this chapter is An and Tolimieri,
+%{\it Group Filters and Image Processing}~\cite{An:2003}.
+
+\section{Preliminaries}
+We first recall some useful notations and definitions.
+See~\cite{An:2003} for elaboration.  Throughout, $\C$ denotes complex
+numbers, $G$ is an arbitrary (nonabelian) group, %of order $N$, 
+and $\LG$ denotes the collection of complex valued functions on $G$.
+
+\subsection{Translations}
+For $y\in G$, the mapping $\T(y)$ of $\LG$ defined by 
+\[
+(\T(y)f)(x) = f(y^{-1}x), \qquad x \in G
+\]
+is a linear operator of $\LG$ called \emph{left translation by} $y$.  The
+collection of all left translations of $\LG$ is
+\[
+\vs{T}(G) = \left\{\T(y) : y \in G \right\}.
+\]
+The mapping $\T:G \to \vs{T}(G)$ satisfies
+\[
+\T(yz) = \T(y)\T(z), \qquad y, z \in G,
+\]
+\[
+\T(y^{-1}) = \T(y)^{-1}, \qquad y \in G.
+\]
+These formulae imply that $\vs{T}(G)$ is a group under operator composition and $\T$
+is a group isomorphism of $G$ onto $\vs{T}(G)$.
+
+If $G$ has order $N$, then $y^N = 1$ and 
+\[
+\T(y)^N = \T(y^N) = \T(1) = I, \qquad y \in G.
+\]
+
+For $y\in G$, define $e_y\in \LG$ as the function whose value is 1 at $y$ and
+0 otherwise.  The set $\{e_y : y\in G\}$ is a basis called the \emph{canonical
+  basis} of $\LG$.  Left translations permute the elements in the canonical
+basis.
+\[
+\T(y)e_z = e_{yz}, \qquad y, z \in G
+\]
+
+For $f\in \LG$, the mapping $\lt{C}(f)$ of $\LG$ defined by 
+\[
+\lt{C}(f) = \sum_{y\in G} f(y) \T(y)
+\]
+is a linear operator of $\LG$ called \emph{left convolution by} $f$.  By
+definition,
+\[
+(\lt{C}(f)g)(x) = \sum_{y\in G} f(y) g(y^{-1}x), \qquad g \in \LG,\; x\in G
+\]
+The collection of all left convolutions of $\LG$ is $\vs{C}(G) = \left\{\lt{C}(f) : f \in G \right\}$.
+
+The mapping $\lt{C}: \vs{L}(G) \to \vs{C}(G)$ satisfies 
+\[
+\lt{C}(f+g) = \lt{C}(f) + \lt{C}(g), \qquad f, g \in \LG,
+\]
+\[
+\lt{C}(\alpha f) = \alpha \lt{C}(f), \qquad \alpha \in \C,\; f \in \LG.
+\]
+These properties imply that $\vs{C}(G)$ is a vector space under addition and scalar
+multiplication of operators and $\lt{C}$ is a linear isomorphism from $\LG$ onto
+$\vs{C}(G)$.  Furthermore, since $\T(y) = \lt{C}(e_y),\; y\in G,$
+\[
+\vs{T}(G) \subset \vs{C}(G)
+\]
+
+For $f, g \in \LG$,
+\[
+\lt{C}(f)\lt{C}(g) = \sum_{y\in G}\sum_{z\in G} f(y)g(z)\T(y)\T(z) = \sum_{y\in
+  G}\sum_{z\in G} f(y)g(z)\T(yz).
+\]
+By the change of variables $u = yz$,
+\begin{equation}\label{eq:GFIP-1}
+\lt{C}(f)\lt{C}(g) = \sum_{u\in G}\left(\sum_{y\in G} f(y)g(y^{-1}u)\right)\T(y).
+\end{equation}
+The inner summation is a function in $\LG$, so $\vs{C}(G)$ is closed under
+composition and is a subalgebra of the algebra of all linear operators on
+$\LG$. 
+
+For $f, g \in \LG$, define the \emph{convolution product}, denoted $*$, as
+follows: 
+\[
+f * g  = \lt{C}(f)g.
+\]
+By~(\ref{eq:GFIP-1}),
+\[
+\lt{C}(f)\lt{C}(g) = \lt{C}(f*g).
+\]
+The vector space $\LG$ paired with the convolution product is an algebra,
+the \emph{convolution algebra over} $G$.
+\begin{theorem}
+The mapping $\lt{C}: \vs{L}(G) \to \vs{C}(G)$ is an algebra isomorphism of the
+convolution algebra $\LG$ onto the algebra of left convolutions of $\LG$.
+\end{theorem}
+
+Note that for the general case in which $G$ is nonabelian, the convolution
+product is noncommutative.  For, by the change of variables $y = z^{-1}x$, it
+is clear that
+\[
+(g * f)(x) = \sum_{z\in G} g(z)f(z^{-1}x) = \sum_{y\in G} f(y) g(xy^{-1}), \qquad f, g \in \LG,\;
+x\in G.
+\]
+Since $G$ is nonabelian, $xy^{-1} \neq y^{-1}x$ for some $x, y
+\in G$. Thus convolution is not a commuting product.
+
+\subsection{The Group Algebra $\CG$} 
+\label{sec:groupalgebra}
+The \emph{group algebra} $\CG$ is the space of all formal sums
+\[
+f = \sum_{x\in G} f(x) x, \qquad f(x) \in \C
+\]
+with the following operations:
+\[
+f+g = \sum_{x\in G} (f(x) + g(x))x, \qquad f, g \in \CG,
+\]
+\[
+\alpha f = \sum_{x\in G} (\alpha f(x)) x, \qquad \alpha \in \C, f \in \CG,
+\]
+and
+\[ %\begin{equation}\label{eq:GFIP-1}
+fg = \sum_{x\in G}\left(\sum_{y\in G} f(y)g(y^{-1}x)\right)x, \qquad f, g \in \CG.
+\] %\end{equation}
+The adds and multiplies inside the parentheses are the familiar operations in $\C$.
+
+$\CG$ is an algebra and the mapping $\varTheta: \LG \to \CG$ defined by
+\[
+\varTheta(f) = \sum_{x\in G} f(x) x, \qquad f\in \LG
+\]
+is an algebra isomorphism of the convolution algebra $\LG$ onto the group
+algebra $\CG$.  Thus we are free to denote $\varTheta(f)$ by $f$, using 
+context to decide whether $f$ symbolizes a function in $\LG$
+or a formal sum in $\CG$. 
+
+\begin{remark}\label{rem:group-algebra-basis}
+For $y\in G$, the formal sum consisting of a single nonzero term $y$ will be
+denoted by $y$.  We can view $G$ as a subset of $\CG$.  For $x, y \in G$, the
+product $xy$ in $G$ is equal to the product $xy \in \CG$, and the identity
+element 1  of $G$ is the identity element in the group algebra $\CG$.  Thus
+$G$ is a basis of the space \CG\ corresponding to the canonical basis $\{e_y :
+y\in G \}$ of $\LG$.
+\end{remark}
+
+\begin{remark}
+Keep in mind that multiplication in $\CG$ corresponds to convolution in $\LG$
+and, as such, does not behave like simple multiplication over $\R$ or $\C$.
+In particular, the group algebra can have \emph{zero divisors}.  This means
+that there exist $f, g \in \CG$ such that $fg = 0$, but $f\neq 0$ and $g \neq 0$.
+\end{remark}
+
+\subsection{Left Ideal Decompositions}
+For $g\in \CG$, the mapping $\lt{L}(g)$ of $\CG$ defined by 
+\[
+\lt{L}(g)f = gf, \qquad f\in \CG
+\]
+is a linear operator on the space $\CG$ called \emph{left multiplication by}
+$g$.  
+
+Recall remark~\ref{rem:group-algebra-basis} which identifies $u \in G$ with $u\in
+\CG$.  The mapping $\lt{L}$ defined above can be thought of as an ``overloaded''
+operator in the sense that it represents translation or 
+convolution depending on its argument.  More precisely, left translation by
+$u\in G$ corresponds to the left multiplication $\lt{L}(u)$, whereas 
+left convolution by $g \in \LG$ corresponds to the left multiplication $\lt{L}(g)$.
+
+Denote by $L(G)$ the collection of all left multiplications $\lt{L}(y),\; y\in G$.
+Since 
+\[
+\lt{L}(yz) = \lt{L}(y)\lt{L}(z), \qquad y, z \in G,
+\]
+\[
+\lt{L}(y^{-1}) = \lt{L}(y)^{-1}, \qquad y \in G,
+\]
+$L(G)$ is a group under operator composition and the mapping $\lt{L}: G\to
+L(G)$ is a group isomorphism from $G$ onto $L(G)$.  $L(G)$ is a noncommuting
+family of linear operators of $\CG$ and, consequently, there cannot exist an
+$L(G)$-eigenvector basis.  
+
+A subspace $\vs{V}$ of the space $\CG$ is called a \emph{left ideal} if
+\[
+u\vs{V} = \{uf : f \in \vs{V}\} \subset \vs{V}, \qquad u \in G. 
+\]
+A left ideal of $\CG$ corresponds to a subspace of $\LG$ invariant under all
+left translations.  If $\vs{V}$ is a left ideal, then, by linearity,
+\[
+g\vs{V} \subset \vs{V}, \qquad g \in \CG.
+\]
+For $g\in \CG$, the set $\CG g$ defined by 
+\[
+\CG g = \{fg : f \in \CG\}
+\]
+is a left ideal of $\CG$ called \emph{the left ideal generated by} $g$ in $\CG$.
+$\CG g = \CG$ if and only if $g$ is an invertible element in $\CG$.
+
+A left ideal $\vs{V}$ of $\CG$ is called \emph{irreducible} if the only left ideals
+of $\CG$ contained in $\vs{V}$ are $\{0\}$ and $\vs{V}$. The sum of two distinct,
+irreducible left ideals is always a direct sum (\cite{An:2003}, p.~129).
+
+For an abelian group, $A$, a direct sum decomposition of $\C A$
+into ideals is constructed from the character basis
+$A^*$. In the abelian case, these irreducible ideals are one-dimensional.
+Direct sum decompositions of $\CG$ into left ideals play the same
+role with respect to left translations defined by $G$ (\ie $\lt{L}(u), \;u \in G$)
+as direct sum decompositions of $\C A$ into ideals play with respect to
+classical translations.   However, \emph{a potential advantage in using
+  nonabelian groups as data indexing sets is the wide scope and complexity of
+  nonabelian group translations.}  
+Projections of data into these left ideals
+can usually reveal more complicated partitions and structures in the data as
+compared with the Fourier components in the abelian group case.
+
+\section{Fourier Analysis on Finite Nonabelian Groups}
+A \emph{character} of $G$ is a group homomorphism of $G$ into $\C^{\times}$,
+where $\C^{\times}$ denotes the non-zero complex numbers.
+In other words, a mapping $\varrho: G \to \C^{\times}$ is a character of
+$G$ if it satisfies 
+\[
+\varrho(xy) = \varrho(x)\varrho(y), \qquad x, y \in G
+\]
+Denote the collection of all characters of $G$ by $G^*$.  Under the usual
+identification between $\LG$ and $\CG$, we can view a character $\varrho \in G^*$
+as a formal sum in $\CG$, 
+\begin{equation}\label{eq:GFIP-formal-sum}
+\varrho = \sum_{x\in G}\varrho(x)x,
+\end{equation}
+and $G^*$ is a subset of \CG.
+
+There always exists at least one character in $G^*$ -- namely, the \emph{trivial character} of
+$G$, which takes on the value 1 for all $y\in G$.
+
+Characters of nonabelian groups share many properties with abelian group
+characters.
+\begin{theorem}
+If $G$ has a nontrivial character $\varrho$, then
+\[
+\frac{1}{N} \sum_{x\in G} \varrho(x) = 0
+\]
+\end{theorem}
+\begin{proof}
+%Let $y\in G$ be such that $\varrho(y) \neq 0$, and $\varrho(y) \neq 1$.  (If no
+%such $y$ exists, the result is obvious.)
+For any $y\in G$, by a change of variables,
+\[
+\varrho(y) \sum_{x\in G} \varrho(x) = \sum_{x\in G} \varrho(yx) = \sum_{x\in G} \varrho(x)
+\]
+Therefore, either (a) $\varrho(y)=1, \forall y\in G$ or (b) $\sum_{x\in G} \varrho(x) = 0$.
+Since (a) contradicts the assumption that $G$ has a nontrivial
+character, (b) must be true. \qed
+\end{proof}
+
+\begin{theorem}\label{thm:char-action}
+Suppose $\varrho$ is a character of $G$.  If $y\in G$, 
+\[
+y\varrho = \varrho y = \varrho(y^{-1})\varrho
+\]
+\end{theorem}
+\begin{proof}
+Exercise.\\
+Hint: a straight-forward, two-line proof follows from the standard machine (\ie write
+$\varrho$ as the formal sum~(\ref{eq:GFIP-formal-sum}) and change variables;
+\cite{An:2003}, p.131). 
+\end{proof}
+
+\begin{corollary}
+Suppose $\varrho$ is a character of $G$.  If $f\in \CG$, then
+\[
+f\varrho = \varrho f = \hat{f}(\varrho)\varrho
+\]
+where $\hat{f}(\varrho) = \sum_{y\in G} f(y) \varrho(y^{-1})$.
+\end{corollary}
+\begin{proof}
+By Theorem~\ref{thm:char-action},
+\[
+f\varrho = \sum_{y\in G} f(y) y\varrho = \left( \sum_{y\in G} f(y)\varrho(y^{-1})\right) \varrho
+\]
+and
+\[
+\varrho f = \sum_{y\in G} f(y) \varrho y = \left( \sum_{y\in G} f(y)\varrho(y^{-1})\right) \varrho.
+\]
+\qed
+\end{proof}
+
+%%% LEFT OFF with notes on p. 132 %%%
+
+\subsection{Abelian by Abelian Semidirect Products}
+In order to determine whether a particular group is useful for a DSP application, we must
+specify exactly how this group represents the data and decide whether the resulting 
+indexing scheme is helpful in some way.  For example, the group representation
+may (or may not) reduce computational complexity, or it may simply allow us to
+more easily state, understand, or model the given problem.
+
+In this section we describe procedures for specifying and studying a simple
+class of nonabelian groups that have proven useful in applications -- the
+\emph{abelian by abelian semidirect products}.
+These are groups of the form $G = A \varangle B$, where $A$ and $B$ are abelian groups,
+are they perhaps the simplest generalizations of abelian groups.  Not surprisingly,
+DSP over such groups closely resembles that of abelian groups.  However, the
+resulting processing tools can have vastly different characteristics.  
+
+%%% LEFT OFF HERE --> resume from top of page 109
+
+\subsection{Examples}
+
+\begin{example}[Semidirect Product, $G_4 = A \varangle C_2(k_c)$]\\
+(An and Tolimieri~\cite{An:2003}, p.198)
+\begin{itemize}
+\item $G_4 = A \varangle C_2(k_c)$, where $A = C_N(x) \times C_N(y)$,
+\[
+c =  \begin{pmatrix}
+      \,1 \,& \,0\, \\
+      \,1\, &\, -1\,
+     \end{pmatrix}
+\]
+\item Group multiplication
+\[
+x^N = y^N = k_c^2 = 1, \quad xy = yx,\quad k_c x^m y^n = x^m y^{m-n}k_c.
+\]
+%\item Group actions on characters
+\end{itemize}
+A function $f\in \C G_4$ is given by the formal sum
+\[ 
+ f = \sum_{l=0}^1 \sum_{m=0}^{N-1} \sum_{n=0}^{N-1}
+      f(x^m y^n k_c^l)x^m y^n k_c^l
+\]
+Specifying an ordering of elements in $G_4$ by the index array,
+\[
+\begin{pmatrix}
+\, 1\, \\
+\, k_c\,
+\end{pmatrix}
+                                \otimes 
+\begin{pmatrix}
+\left\{ x^m y^n \right\}_{m,n}
+\end{pmatrix} 
+\begin{pmatrix}
+1      & y  &  \ldots & y^{N-1} \\
+x      & xy &         & \\
+\vdots &    & \ddots  &  \\
+x^{N-1}&    &         &  x^{N-1} y^{N-1}\\
+\multicolumn{4}{c}{ \text{ ----------- } } \\
+k_c    & yk_c  & \ldots & y^{N-1}k_c \\
+xk_c   & xyk_c &         & \\
+\vdots &       & \ddots  &  \\
+x^{N-1}k_c&    &         &  x^{N-1} y^{N-1}k_c 
+\end{pmatrix}
+\]
+uniquely specifies a $2N \times N$ matrix representation of $f$ given by the coefficients,
+\[
+\mathbf{f} = 
+\begin{pmatrix}
+         \left\{ f(x^m y^n)\right\}_{m,n} \\
+\text{ -------- }\\
+         \left\{ f(x^m y^n k_c)\right\}_{m,n} \\
+\end{pmatrix}
+\]
+\end{example}
+%\left(
+%\begin{array}{c}
+%\begin{matrix}
+%            f(x^0 y^0 k_c^0) & f(x^0 y^1 k_c^0) & \cdots & f(x^0 y^{N-1}k_c^0)\\
+%            f(x^1 y^0k_c^0) & f(x^1 y^1k_c^0) & & \\
+%            \vdots &  & \ddots & \\
+%            f(x^{N-1} y^0k_c^0) & & & f(x^{N-1} y^{N-1}k_c^0)\\
+%\end{matrix}
+%\\
+%--
+%\\
+%\begin{matrix}
+%            f(x^0 y^0 k_c^1) & f(x^0 y^1 k_c^1) & \cdots & f(x^0 y^{N-1} k_c^1)\\
+%            f(x^1 y^0 k_c^1) & f(x^1 y^1 k_c^1) && \\
+%            \vdots &  & \ddots & \\
+%            f(x^{N-1} y^0 k_c^1) & & & f(x^{N-1} y^{N-1} k_c^1)
+%\end{matrix}
+%\end{array}
+%\right)
+%\]
+%These are the coefficients corresponding to the index matrix
+%\[\begin{pmatrix}\, 1\, \\\, k_c\,\end{pmatrix}\otimes \left[ x^m y^n \right]_{0\leq m,n<N}\]
+
+\begin{example}[Semidirect Product, $G_5 = A \varangle C_6(k_d)$]\\
+(An and Tolimieri~\cite{An:2003}, p.204)
+\begin{itemize}
+\item $G_5 = A \varangle C_6(k_d)$, where $A = C_N(x) \times C_N(y)$,
+$N = 3 \times 2^K$ for an integer $K\geq 2$, and 
+\[
+d =
+\begin{pmatrix}
+\,-1 \,& \,2^K+1\, \\
+\,2^K-1 \,& \,2^K\,
+\end{pmatrix}
+\]
+\item Group multiplication\\
+Let $M = 2^K$.  Since $N=3 \times 2^K$, this yields the mod
+$N$ relations
+\[
+M^2 \equiv 
+  \begin{cases}
+    M, & \text{if $K$ is even}, \\
+    2M,& \text{if $K$ is odd}.
+  \end{cases} 
+\]
+Consider $K$ even, in which case,
+\[
+M^2 \equiv M, \quad (M+1)^2 \equiv 1, \quad (2M-1)^2 \equiv 1
+\]
+Therefore, 
+\[
+d = \begin{pmatrix}
+     \,-1 \,& \,M+1\, \\
+     \,M-1 \,& \,M\,
+    \end{pmatrix},\quad
+d^2 =\begin{pmatrix}
+     \,M \,& \,M-1\, \\
+     \,2M+1 \,& \,2M-1\,
+    \end{pmatrix},\quad
+d^3 =\begin{pmatrix}
+     \,M+1 \,& \,2M\, \\
+     \,0 \,& \,1\,
+    \end{pmatrix}
+\]
+\[
+d^4 =\begin{pmatrix}
+     \,2M-1 \,& \,2M+1\, \\
+     \,M-1 \,& \,M\,
+    \end{pmatrix}, \quad
+d^5 =\begin{pmatrix}
+     \,2M \,& \,-1\, \\
+     \,2M+1 \,& \,2M-1\,
+    \end{pmatrix}, \quad
+d^6 = 1.
+\]
+and group multiplication satisfies the following relations:
+\[
+x^N = y^N = k_d^6 = 1,\quad xy = yx,\quad k_d x^m y^n = x^{-m+(M+1)n} y^{(M-1)m+Mn}k_d.
+\]
+%\item Group actions on characters
+\end{itemize}
+A function $f\in \C G_5$ is given by the formal sum
+\[ 
+ f = \sum_{l=0}^5 \sum_{m=0}^{N-1} \sum_{n=0}^{N-1}
+      f(x^m y^n k_d^l)x^m y^n k_d^l
+\]
+\end{example}
+%%% END FILE INSERT: GFIP.tex

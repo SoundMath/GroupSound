@@ -1,0 +1,1008 @@
+%% LaTeX file 'GroupTheory1D.tex'
+
+%% latexfile{
+%% author = {William DeMeo},
+%% filename = {GroupTheory1D.tex},
+%% date = {2002.08.07},
+%% text = {Main latex file for Group Theory for One-dimensional Signals chapter of dspmath book.}
+%% }
+
+%%% BEGIN FILE INSERT: TFR.tex
+
+\title{Abelian Groups and Univariate DSP}
+\titlerunning{Abelian Groups \& Univariate DSP}
+\author{Richard Tolimieri \and Myoung An\inst{1}\and William DeMeo\inst{2}}
+\institute{{\tt psypher@tiac.net} \and {\tt williamdemeo@yahoo.com}}
+\authorrunning{Tolimieri, An, DeMeo}
+\maketitle
+
+\newcommand\sectype{chapter}
+\newcommand\chznz{\ensuremath{(\mathbb{Z} / N )^*}}
+
+%The main source of most material in this \sectype\ is
+%Tolimieri and An, {\it Time Frequency Representations},\cite{Tolimieri:1998}.
+
+Although this \sectype\ assumes some basic group theory,
+such as that reviewed in Chapter~\ref{sec:abstr-algebr}, the
+following section reviews those prerequisites that arise
+most frequently in our application of the theory. Further
+details can be found in \cite{Fraleigh:1994}, and Chapters~1
+and~2 of~\cite{Tolimieri:1998}. 
+
+\section{Preliminaries}
+
+Throughout, unless otherwise stated, $A$ denotes an abelian group and
+$\LA$ is the space of all complex valued functions on $A$.
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Translation and Convolution}}
+{\subsection{Translation and Convolution\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 3.7 and \cite{An:2003},\S\ 1.1.}}
+\label{sec:trans-conv}
+%%% left off here %%%
+\begin{definition}[Unitary Transform, Isometry]\\
+A linear mapping $\T: \LA \to \LA$ is called \emph{unitary} if, for all
+$f, g \in \LA$,
+\[
+(\T f,\T g) = (f,g)
+\]
+More generally, a linear mapping $\tau: \vs{L}(A_1) \to \vs{L}(A_2)$ is called
+an \emph{isometry} if, for all $f, g \in \vs{L}(A_1)$, 
+\[
+(\tau f,\tau g) = (f,g)
+\]
+where the inner product $(f,g)$ is taken in $\vs{L}(A_1)$ and the inner product
+$(\tau f,\tau g)$ is taken in $\vs{L}(A_2)$.
+\end{definition}
+Many important linear mappings are isometries.
+\begin{theorem}\label{thm:unitary}
+A linear mapping $\T$ is unitary if and only if $\T$ maps an orthonormal basis
+onto an orthonormal basis.
+\end{theorem}
+
+\begin{definition}[Translation]\label{def:translation}\\
+For $y\in A$, the mapping $\T(y)$ of $\LA$ defined by
+%For $f\in \LA$ and $y\in A$, the mapping $\T_y: \LA \to \LA$ defined by 
+\[
+(\T(y)f)(x) = f(y^{-1}x), \qquad f \in \LA, x \in A
+\]
+is a linear operator of $\LA$ called \emph{translation by} $y$.  
+\end{definition}
+In the interest of generality, Definition~\ref{def:translation} denotes the 
+inverse of $y\in A$ by $y^{-1}$.  Often translation defined for the special,
+additive inverse case, $y^{-1}x = x-y$.
+
+Denote the collection of all translations of $\LA$ by 
+$\T(A) = \{\T(y) : y\in A\}$.  The mapping $\T :A \to \T(A)$
+satisfies 
+\[
+\T(x+y) = \T(x)\T(y), \qquad x,y \in A,
+\]
+\[
+\T(y)^{-1} = \T(y^{-1}), \qquad y \in A
+\]
+%where $y^{-1}$ is interpreted here as additive inverse.  
+The collection $\T(A)$ is closed under operator composition and operator inverse.  
+%Since addition modulo $N$ is commutative, 
+Since $A$ is abelian, and addition commutative, 
+$\T(A)$ is a {\it commuting family of linear operators}.
+%; that is,\[\T(x)\T(y) = \T(y)\T(x)\]
+Since $A$ is finite, $y\in A$ implies $Ny = 0$, and
+\[
+\T(y)^N =  \T(Ny) =  \T(0) = \eye
+\]
+where $\eye$ is the identity operator of $\LA$.
+
+\begin{definition}[Convolution]\\
+For $g \in \LA$, the mapping $\lt{C}(g)$ of $\LA$ defined by 
+\begin{equation}\label{eq:convolution}
+\lt{C}(g) = \sum_{y\in A} g(y)\T(y)
+\end{equation}
+is a linear operator of $\LA$ called \emph{convolution by} $g$.  
+\end{definition}
+The summation~(\ref{eq:convolution}) is a linear combination of translations of
+$\LA$ using operator scalar multiplication and operator addition. 
+
+Often the convolution $\lt{C}(g)f$ is written as a binary operation, $f*g$, called
+the \emph{convolution product} on \LA.  By definition, 
+the convolution product of $f$ and $g$, evaluated at $x\in A$, is 
+\begin{align*}
+(\lt{C}(f)g)(x) = (f * g)(x) &= \sum_{y\in A} f(y)g(y^{-1}x)\\
+&=\sum_{y\in A} g(y)f(xy^{-1})\qquad (\text{change of variables})\\
+&=(\lt{C}(g)f)(x) = (g * f)(x)\qquad (\because \; A\text{ is abelian})\\
+\end{align*}
+\begin{theorem} Convolution is a commutative algebra product on \LA.
+\end{theorem}
+\begin{definition}[Convolution Algebra over $A$]\\
+The algebra formed by \LA paired with the convolution product is called the
+\emph{convolution algebra over $A$}.
+\end{definition}
+
+\subsection{Factor Groups}
+Many of our examples will focus on the group
+\[
+N\Z = \{\ldots,-2N, -N,0,N,2N,\ldots\}, \qquad N \in \Z
+\]
+as well as the {\it factor group},
+\begin{equation}\label{eq:5}
+\Z/N\Z = \{0+N\Z, \, 1+N\Z, \ldots,\,(N-1)+N\Z \}
+\end{equation}
+The notation $k+N\Z$ in~(\ref{eq:5}) denotes the group
+\[
+k+N\Z = \{\ldots,k-2N,\, k-N,\, k,\, k+N,\, k+2N \ldots\}
+\]
+Thus a factor group, such as $\Z/N\Z$, is really a ``group of groups'', or
+a group of {\it equivalence classes}. 
+By choosing one element from each equivalence class as a {\it representative}
+of that class, we arrive at an isomorphism between the factor group and the
+group of all equivalence class representatives:
+\begin{equation}\label{eq:T8}
+\Z/N\Z \simeq \{0, 1, 2, \ldots, (N-1)\}
+\end{equation}
+The right hand side of (\ref{eq:T8}) is often denoted by $\Z_N$, and the left
+hand side by $\Z/N$. In the sequel, we abuse this notation and simply refer
+to the equivalence as $\Z/N = \{0, 1, 2, \ldots, (N-1)\}$.
+
+We also make heavy use of the group $L\Z/N\Z$, where $L$ is a divisor of $N$,
+say $LM=N, \; M \in \Z$.  
+%%%% CHECK THIS FACT:  %%%%
+%This implies that $N\Z$ is a subgroup of $L\Z$, sometimes denoted $N\Z < L\Z$.  
+Recall that, for such an $L$, the factor group $L\Z/N\Z$ is
+\begin{align}\label{eqn:LZNZ}
+L\Z/N\Z &= \{0+N\Z,\,L+N\Z,\,2L+N\Z,\ldots,\,(M-1)L+N\Z\}\nonumber \\
+        &\simeq \{0,\,L,\,2L,\ldots,(M-1)L\}, \\
+        &\simeq \{0, 1, 2,\ldots,(M-1)\} = \Z_M \nonumber 
+\end{align}
+Again, abusing notation, we will write equivalence (\ref{eqn:LZNZ}) as 
+$L\Z/N = \{0,\,L,\,2L,\ldots,(M-1)L\}$.
+
+Finally, recall that
+\begin{equation}\label{eqn:ZL}
+(\Z/N)/(L\Z/N) \simeq  \Z/L \simeq \{0,1, \ldots, (L-1)\}
+\end{equation}
+which we also write $\Z/L = \{0,1, \ldots, (L-1)\}$, as remarked above.
+
+\begin{example} \label{ex:factor-groups}
+Consider the group
+\[
+L\Z/N \simeq \{0,L,2L,\ldots,(M-1)L\}, \quad \text{ for } LM = N,
+\]
+and suppose $f\in \vs{L}(\Z/N)$ is $L\Z/N$-periodic.
+Then a vector representation of $f$ is
+\[
+\vec{f} = 
+\begin{pmatrix}%\left(\begin{array}{c}
+\vec{f}^{(0)}\\
+\vec{f}^{(0)}\\
+\vdots\\
+\vec{f}^{(0)}
+\end{pmatrix},%\end{array}\right),
+ \quad \text{ where } \quad
+\vec{f}^{(0)} =
+\begin{pmatrix}%\left(\begin{array}{c}
+f(0)\\
+f(1)\\
+\vdots\\
+f(L-1)
+\end{pmatrix}%\end{array}\right)
+\]
+That is $\vec{f}\in \C^N$ is a vector containing $M = N/L$ sub-vectors,
+$\vec{f}^{(0)}\in \C^L$.
+\end{example}
+
+\begin{remark}
+The group $\Z/N_1 \times \Z/N_2$ is useful for image processing
+applications.  Note that the foregoing definitions of translation and
+convolution are general enough to apply to functions in 
+$\vs{L}(\Z/N_1 \times \Z/N_2)$, so long as we have a suitable definition for
+addition and additive inverse on $\Z/N_1 \times \Z/N_2$.  
+\end{remark}
+%\begin{example}
+%For $y\in \Z/N$, and $g,f \in \vs{L}(\Z/N)$,
+%\[(T(y)f)(x) = f(x-y), \qquad x \in \Z/N\]\[\lt{C}(g) = \sum_{y\in \Z/N} g(y)T(y)\]
+%and, evaluated at any particular $x \in \Z/N$, the convolution by $g$ of $f$ is 
+%\[(\lt{C}(g)f)(x) = \sum_{y\in \Z/N} g(y)f(x-y), \qquad \]
+%\end{example}
+
+\begin{definition}[Canonical Basis]\\
+For $y\in \Z/N$, define $e_y \in \vs{L}(\Z/N)$ as the function whose value is 1 at
+$y$ and 0 otherwise.  The set $\{ e_y : y\in \Z/N\}$ is called the
+\emph{canonical basis}.
+\end{definition}
+Translations permute the elements of the canonical basis by the equation
+$\T(y)e_x = e_{y+x}$, where $y+x$ is taken modulo $N$.  
+In particular, $\T(y)$ maps the evaluation basis onto the
+evaluation basis.  As such, by Theorem~\ref{thm:unitary}, translations
+are unitary operators.
+
+\section{Fourier Analysis on Finite Abelian Groups}
+\label{sec:four-analys-over}
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Character Groups}}
+{\subsection{Character Groups\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 3.2.}}
+Suppose $A$ is a finite abelian group of order $N$.  Denote by $U$ the
+multiplicative group of all complex numbers of absolute value 1.
+\begin{definition}[Character]
+A mapping $a^*: A \to U$ is called a \emph{character} of $A$ if it is
+a homomorphism; that is, if the mapping satisfies, 
+\[
+a^*(a+b) = a^*(a)a^*(b), \qquad a, b \in A.
+\]
+\end{definition}
+We often denote $a^*(a)$ by $\langle a, a^* \rangle$.
+Every character of $A$ maps $A$ into the subgroup $U_N$ of all
+$N$-complex roots of unity.
+Denote by $A^*$ the set of all characters of $A$.  The set $A^*$ is an abelian
+group, called the \emph{character group} of $A$, under the composition law,
+\[
+\langle a, a^* + b^* \rangle = \langle a, a^* \rangle \langle a, b^* \rangle,
+\qquad a \in A, \; a^*, b^* \in A^*
+\]
+The mapping $0^*$ of $A^*$ defined by
+\[ 
+0^*(a) = \langle a, 0^* \rangle = 1, \qquad a \in A,
+\]
+is the \emph{zero} element in the group $A^*$.  
+Since, for any $a^*\in A^*$,
+\[
+\langle a, a^* \rangle \overline{\langle a, a^* \rangle}= 1, \qquad a\in A,
+\]
+the additive inverse of $a^*$ in $A^*$ is given by 
+\[
+\langle a, -a^* \rangle  = \overline{\langle a, a^* \rangle}, \qquad a\in A.
+\]
+
+
+\begin{example}\label{ex:std-pres}
+Consider the pairing
+\[ 
+\langle a, c \rangle = \exp(\I 2\pi \frac{ca}{N}), \qquad a,c \in \Z /N
+\]
+For $c\in \Z /N$, we define the mapping $\chi(c): \Z /N \to U_N$
+by the following equivalent expressions
+\begin{equation}\label{eq:2}
+\chi(c)(a) = \langle a, \chi(c)\rangle = \langle a, c \rangle 
+= \exp(\I 2\pi \frac{ca}{N})
+\end{equation}
+Thus, for all $c\in \Z/N$, the mapping $\chi(c)$ is a character of $\Z /N$,
+and the mapping $\chi: \Z /N \to (\Z /N )^*$ is an isomorphism
+of $\Z /N$ onto its character group $(\Z /N )^*$.
+\end{example}
+
+Any isomorphism from a finite abelian group $A$ onto its character group $A^*$
+is called a \emph{presentation} of $A$.  The presentation defined in
+example~\ref{ex:std-pres} is called the \emph{standard presentation} of
+$\Z/N$. 
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Character Formulas}}
+{\subsection{Character Formulas\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 3.3.}}
+\label{sec:char-form}
+\begin{example}
+Suppose $A = \Z/N$ and $N$ is even.  Then the $N$-roots of unity contain $-1$
+and are written as
+\[
+1, v, \ldots, v^{M-1}, -1, -v,\ldots, -v^{M-1}, \qquad N=2M, \; v=\exp(\frac{\I 2\pi}{N})
+\]
+implying that the sum of the $N$-roots of unity vanishes for $N$ even.  For
+$N$ odd, this fact is still true but harder to show.
+\end{example}
+
+\begin{theorem}\label{thm:SumOfCharacters}
+For $a^*\in A^*$,
+\[
+\sum_{a\in A} \langle a,a^*\rangle 
+= \left\{ \begin{array}{ll}
+N, & \quad a^* = 0^*,\\
+0, & \quad \text{otherwise}.
+\end{array} \right.
+\]
+\end{theorem}
+\begin{proof}
+If $a^* = 0^*$, then $\langle a, a^* \rangle=1$ for all $a\in A$, so the
+result is obvious.  Suppose $a^* \neq 0^*$.  Then there exists an $a_0 \in A$
+such that $\langle a_0, a^* \rangle \neq 1$.  Also, since $A$ is a group,
+summing over all $a\in A$ is the same as summing over all $a+a_0 \in A$.
+Therefore,
+\begin{align*} 
+\sum_{a \in A}\langle a, a^* \rangle &= \sum_{a \in A}\langle a + a_0, a^* \rangle \\
+&=\langle a_0, a^* \rangle \sum_{a \in A}\langle a, a^* \rangle
+\end{align*}
+Since $\langle a_0, a^* \rangle \neq 1$, the sum must be 0. \qed
+\end{proof}
+Theorem~\ref{thm:SumOfCharacters} implies, for example, that the
+$N$-complex roots of unity sum to 0.
+\begin{theorem}\label{thm:SumOfCharacters-dual}
+For $a\in A$,
+\[
+\sum_{a^*\in A^*} \langle a,a^*\rangle 
+= \left\{ \begin{array}{ll}
+N, & \quad a = 0,\\
+0, & \quad \text{otherwise}.
+\end{array} \right.
+\]
+\end{theorem}
+The proof of Theorem~\ref{thm:SumOfCharacters-dual} is the same as that for
+Theorem~\ref{thm:SumOfCharacters}, {\it mutatis mutandis}.  A simple but
+important corollary is 
+\begin{corollary}\label{cor:zeroElement}
+For $a\in A$, if for all $a^*\in A^*$,
+\[
+\langle a, a^* \rangle = 1
+\]
+then $a=0$.
+\end{corollary}
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Duality Theory}}
+{\subsection{Duality Theory\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 3.4.}}
+Denote by $A^{**}$ the character group of $A^*$.  The groups $A$ and
+$A^{**}$ are canonically isomorphic, and this permits $A^{**}$ to be
+replaced by $A$ in all discussions and results.  We call this replacement
+\emph{duality}. 
+%\begin{definition}[Character]
+For $a\in A$, the mapping 
+\[
+\varTheta(a): A^* \to U
+\]
+defined by 
+\[
+\varTheta(a)(a^*) = \overline{\langle a, a^* \rangle}, \qquad a^* \in A^*,
+\]
+is a character of $A^*$.
+%\end{definition}
+\begin{theorem}
+The mapping 
+\[
+\varTheta: A \to A^{**}
+\] 
+is an isomorphism of $A$ onto $A^{**}$.
+\end{theorem}
+\begin{proof} If $\varTheta(a)$ is the trivial character of $A^*$, then
+\[
+\langle a, a^* \rangle = 1, \text{  for all } a^* \in A^*,
+\]
+So, by Corollary \ref{cor:zeroElement}, $a = 0$. \qed
+\end{proof}
+
+We identify $A$ with $A^{**}$ by the canonical isomorphism $\varTheta$ and denote
+by $a$ the character $\varTheta(a)$ of $A^*$, for $a\in A$.  It will be clear
+from context whether $a$ is being viewed as an element of $A$ or an element of
+$A^{**}$.
+
+\begin{definition}[Dual]\\
+For a subgroup $B$ of $A$, the set
+\[
+B_* = \{ a^* \in A^* : \langle b, a^* \rangle =1, \text{ for all } b \in B\}
+\]
+is a subgroup of $A^*$ called the \emph{dual} of $B$.  
+\end{definition}
+The subgroup $B_*$ of $A^*$ is the set of all characters of $A$ that act
+trivially on $B$.  For $y^* \in B_*, a\in A$, and $b\in B$,
+\[
+y^*(a+b) = \langle a+b, y^* \rangle = 
+\langle a, y^* \rangle  \langle b, y^* \rangle =
+\langle a, y^* \rangle  
+\]
+Therefore, $y^*$ defines a character of $ A/B = \{a + B: a\in A\}$.
+We denote this character by $\utheta(y^*)\in (A/B)^*$.  It is defined by the
+formula,
+\[
+\utheta(y^*)(a+B) = \langle a+B, \utheta(y^*) \rangle = 
+\langle a, y^* \rangle, \qquad a \in A
+\]
+\begin{exercise}
+Consider the subgroup $L\Z/N$, of $\Z/N$, for $N = LM$.
+Identifying $\Z/N$ with $(\Z/N)^*$ by the standard
+presentation, show 
+that\footnote{cf.~typo on page 32 of \cite{Tolimieri:1998}.} 
+\[
+(L\Z/N)_* = (M\Z/N)^*
+\]
+That is, show that the \emph{dual} of $L\Z/N$ is 
+$(M\Z/N)^*$.
+Or, to put it another way, show that (the standard presentation of) the set of
+characters that act trivially on $L\Z/N$ is 
+\[
+M\Z/N = \{0,\,M,\,2M,\ldots,(L-1)M\}
+\]
+\end{exercise}
+\begin{solution}
+Recall from (\ref{eqn:LZNZ}),
+\begin{equation}\label{eq:1}
+L\Z/N  %=\left\{\{0+N\},\,\{L+N\},\,\{2L+N\},\ldots,\{(M-1)L+N\}\right\}
+= \{0,\,L,\,2L,\ldots,(M-1)L\}%\\&\simeq \{0,\,1,\,2,\ldots,(M-1)\}\nonumber
+\end{equation}
+Also, recall the definition of the dual; \ie the set of characters that act
+trivially on $L\Z/N$:
+\[
+(L\Z/N)_* = \{a^*\in (\Z/N)^* : \langle b, a^* \rangle =1, \text{ for all }
+b \in L\Z/N \}
+\]
+Expression~(\ref{eq:1}) makes clear that any element $b\in L\Z/N$ can be
+written $yL$ for some  
+$y \in \{0, 1, 2, \ldots, (M-1)\}$.  Thus,
+\[
+\langle b, a^* \rangle = \exp(\I 2\pi\frac{ayL}{N})
+= \exp(\I 2\pi\frac{ay}{M}), \qquad b \in L\Z/N
+\]
+Now suppose $a^* \in (M\Z/N)^*$, so that $a^* = xM$, for some 
+$x \in \{0,1,2,\ldots,(L-1)\}$.  Then 
+\[
+\langle b, a^* \rangle = \exp(\I 2\pi xy) = 1, \qquad b \in L\Z/N
+\]
+Therefore, the elements of $(M\Z/N)^*$ act trivially on $L\Z/N$.  
+
+Next suppose $a^* \notin (M\Z/N)^*$, so that $a^*$ is not a multiple of $M$, and let
+$b = L$.  Then, 
+\[
+\langle b, a^* \rangle 
+= \exp(\I 2\pi\frac{a}{M}) \neq 1
+\]
+We have thus shown that $a^* \in (L\Z/N)_*$ if and only if $a^* \in
+(M\Z/N)^*$, {\it q.e.d.}
+\end{solution}
+
+%% [2002.09.02] more new stuff (p.32 of Tolimieri) %%
+\begin{theorem}
+The mapping 
+\[
+\utheta: B_* \to (A/B)^*
+\]
+is a canonical isomorphism of $B_*$ onto $(A/B)^*$.
+\end{theorem}
+For proof, see \cite{Tolimieri:1998}, page 32.
+
+The identification of $B_*$ with $(A/B)^*$, and $B$ with $(A^*/B_*)^*$ results
+in the following refinements of the character formulas.
+\begin{corollary}\label{cor:char1}
+For $x\in A$,
+\[
+\sum_{x^*\in B_*} \langle x, x^* \rangle = 
+\left\{\begin{array}{ll}
+o(B_*),& \quad x \in B,\\
+0,& \quad \text{otherwise}
+\end{array}
+\right.
+\]
+\end{corollary}
+\begin{corollary}\label{cor:char2}
+For $x^*\in A^*$,
+\[
+\sum_{x\in B} \langle x, x^* \rangle = 
+\left\{\begin{array}{ll}
+o(B),& \quad x^* \in B_*,\\
+0,& \quad \text{otherwise}
+\end{array}
+\right.
+\]
+\end{corollary}
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Character Group Basis}}
+{\subsection{Character Group Basis\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 3.5.}}
+Consider the character group $A^*$ as a subset of $\LA$, the space of all
+complex valued functions on $A$.  In this section we show that $A^*$ is an
+orthogonal basis of $\LA$.
+\begin{example}
+Consider the group $\Z/N$ and the standard presentation $\chi$.  Recalling the
+defining equation~(\ref{eq:2}), the inner product  in $\vs{L}(\Z/N)$ of two
+characters $\chi(a)$ and $\chi(b)$ is given by  
+%\begin{align*}
+\[
+%(\chi(b),\chi(c)) &= \sum_{a\in A} \chi(b)(a) \overline{\chi(c)(a)} \\
+(\chi(b),\chi(c)) = \sum_{a\in A} \langle a,\chi(b) \rangle \overline{\langle a,\chi(c) \rangle}
+= \sum_{a\in A} \exp (2\pi \I \frac{a(b-c)}{N}),
+\qquad b,\, c \in \Z/N
+%\end{align*}
+\]
+The sum vanishes unless $b=c$, in which case the sum is equal to $N$.  
+\end{example}
+In general, we have the following result:
+\begin{theorem}
+$A^*$ is an orthogonal basis of $\LA$.
+\end{theorem}
+\begin{proof}
+Orthogonality follows from Theorem~\ref{thm:SumOfCharacters} and 
+\[
+(a^*,c^*) = \sum_{a \in A} \langle a, a^* \rangle \overline{\langle a, c^*
+  \rangle}
+= \sum_{a \in A} \langle a, a^* - c^* \rangle, \qquad a^*,\, c^* \in A^*
+\]
+Arguing by dimension completes the proof. \qed
+\end{proof}
+\begin{corollary}
+\[
+\frac{1}{\sqrt{N}} A^*
+\]
+is an orthonormal basis of $\LA$. 
+\end{corollary}
+Technically, $A^*$ is a basis only if some ordering is placed on $A^*$.
+In Fourier theory the distinction is significant since there is no canonical
+ordering on $A^*$.  For the development of the theory, we use summation
+notation and order is no problem. However, in order to represent algorithms in
+terms of matrix factorization, some order must be taken, usually by
+realization.  The form of the realization can affect the size and dimension of
+the algorithm. 
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Fourier Transform}}
+{\subsection{Fourier Transform\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 3.6.}}
+\begin{definition}[Fourier Expansion, Fourier Coefficient Set]\\
+Suppose $f\in \LA$. The expansion of $f$ over the character group basis
+$A^*$ given by
+\begin{equation}\label{eq:FE}
+f = \sum_{a^*\in A^*} \alpha(a^*)a^*
+\end{equation}
+is called the \emph{Fourier expansion} of $f$ and the coefficient set 
+\[
+\alpha \in \vs{L}(A^*)
+\]
+is called the \emph{Fourier coefficient set}.
+\end{definition}
+Note that expression~(\ref{eq:FE}), evaluated at a point $a\in A$, is
+\begin{equation}\label{eq:FEpt}
+f(a) = \sum_{a^*\in A^*} \alpha(a^*)a^*(a)
+= \sum_{a^*\in A^*} \alpha(a^*)\langle a,a^*\rangle 
+\end{equation}
+\begin{theorem}\label{thm:Fcoef}
+If $f\in \LA$ has Fourier coefficient set $\alpha \in \vs{L}(A^*)$, then for all
+$a^*\in A^*$,
+\begin{equation}\label{eq:Fcoef}
+\alpha(a^*) = \frac{1}{N} (f,a^*)
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $c^* \in A^*$,
+\begin{align*}
+(f,c^*)&= \sum_{a\in A}f(a)\overline{\langle a,c^*\rangle} \\
+&= \sum_{a\in A}\sum_{a^*\in A^*} \alpha(a^*)\langle a,a^*\rangle
+\overline{\langle a,c^*\rangle}, \quad
+\text{ by equation~(\ref{eq:FEpt})}\\
+&= \sum_{a^*\in A^*} \alpha(a^*)\sum_{a\in A} \langle a,a^*-c^*\rangle\\
+&= \alpha(c^*)N
+\end{align*}
+The final equality holds because, recall,
+\[
+\sum_{a\in A} \langle a,a^*-c^*\rangle = 
+\left\{\begin{array}{ll}
+N,&\quad \text{ for } a^* - c^* = 0^*\\
+0,&\quad \text{otherwise}
+\end{array}\right .
+\]
+\qed
+\end{proof}
+Note that expression~(\ref{eq:Fcoef}) is equivalent to 
+%, evaluated at a point $a^*\in A^*$, is
+\[
+\alpha(a^*) = \frac{1}{N}\sum_{a\in A} f(a)\overline{\langle a,a^*\rangle},
+\]
+%\def\caoN{{\scriptstyle \frac{ca}{N}}}
+\begin{example}\label{ex:FT}
+Consider the group $\Z/N$ identified with its character group by the standard
+presentation.  If $f\in \vs{L}(\Z/N)$ has Fourier coefficient set $\alpha \in
+\vs{L}(\Z/N)$, then 
+\[
+\alpha(c) = \frac{1}{N}\sum_{a=0}^{N-1} f(a)
+\exp(-2\pi \I \frac{ca}{N}),\qquad c\in \Z/N
+\]
+Denoting by $\vec{f} \in \C^N$ the vector representation of $f$ and by
+$F(N)$ the $N$-point Fourier transform matrix,
+\[
+%F(N) = \left\{ \exp(-2\pi \I \frac{ca}{N}),\qquad c\in \Z/N
+F(N) = \left\{ \exp(-2\pi \I \frac{ca}{N}) \right\}_{0\leq c,a < N}
+\]
+the Fourier coefficient set $\alpha(c), c\in \Z/N$, is given by the matrix
+product
+\[
+\alpha = \frac{1}{N} F(N) \vec{f}
+\]
+\end{example}
+
+\begin{example}\label{ex:FT2}
+Consider the group $\Z/N_1 \times \Z/N_2$ identified with its character group
+by the standard presentation.  If 
+\[
+f\in \vs{L}(\Z/N_1 \times \Z/N_2), \qquad N = N_1 N_2,
+\]
+has Fourier coefficient set $\alpha \in \vs{L}(\Z/N_1 \times \Z/N_2)$, then for all
+$c = (c_1,c_2) \in \Z/N_1 \times \Z/N_2$, 
+\[
+\alpha(c) = \frac{1}{N}\sum_{a_1=0}^{N_1-1} 
+\sum_{a_2=0}^{N_2-1} f(a_1,a_2)
+\exp(-2\pi \I \frac{c_1a_1}{N_1})
+\exp(-2\pi \I \frac{c_2a_2}{N_2})
+\]
+Denote the matrices
+\[
+\left[f(a_1,a_2) \right]_{\stackrel{0\leq a_1 < N_1}{_{0\leq a_2 < N_2}}} 
+\quad \text{ and }\quad
+\left[\alpha(c_1,c_2) \right]_{\stackrel{0\leq c_1 < N_1}{_{0\leq c_2 < N_2}}}
+\]
+by $Mat(f)$ and $Mat(\alpha)$, respectively.
+Then the relationship between $f$ and $\alpha$ can be written as 
+\[
+Mat(\alpha) = \frac{1}{N} F(N_1) Mat(f) F(N_2)
+\]
+\end{example}
+
+\begin{definition}[Fourier Transform]\\
+The \emph{Fourier transform} $F_A$ over $A$ is the linear mapping
+$F_A : \LA \to \vs{L}(A^*)$
+defined by
+\[
+F_A f(a^*) = (f,a^*) = \sum_{a\in A}f(a)\overline{\langle a, a^* \rangle},
+\qquad f \in \LA, \;a^*\in A^*
+\]
+\end{definition}
+The mapping $F_A$, up to a scalar factor $1/N$, maps $f$ onto the coefficient
+set of its Fourier expansion over $A$.  
+
+By duality,  the Fourier transform
+$F_{A^*}$ over $A^*$ is the linear mapping $F_{A^*} :  \vs{L}(A^*) \to \LA$
+defined by
+\[
+F_{A^*}\alpha(a) = \sum_{a^* \in A^*}\alpha(a^*)\langle a, a^*\rangle,
+\qquad \alpha \in \vs{L}(A^*), \; a\in A
+\]
+The composition $F_{A^*}F_A$ is a linear mapping from $\LA$ to $\LA$.
+\begin{theorem}
+\[
+F_{A^*}F_A = N I_A
+\]
+where $I_A$ is the identity mapping on $\LA$.
+\end{theorem}
+\begin{proof}
+The line of argument is the same as that of Theorem~\ref{thm:Fcoef}, {\it mutatis mutandis}.
+For $a \in A$,
+\begin{align*}
+F_{A^*}F_A f(a)&= \sum_{a^*\in A^*}F_A f(a^*)\langle a,a^*\rangle \\
+&= \sum_{a^*\in A^*}\sum_{c\in A} f(c)
+\overline{\langle c,a^*\rangle}\langle a,a^*\rangle\\
+&= \sum_{c\in A} f(c)\sum_{a^*\in A^*}
+\overline{\langle c-a,a^*\rangle}\\
+&= f(a)N
+\end{align*}
+\qed
+\end{proof}
+
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\section{Poisson Summation Formula}}
+{\section{Poisson Summation Formula\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, Chapter 4.}}
+The Poisson summation (PS) formula describes the fundamental duality between
+periodization and decimation operators under the Fourier transform.  In this
+section, the finite abelian group version of the PS formula is derived as a
+simple application of the character formulas of Section~\ref{sec:char-form}.
+
+In sampling applications, the main use for the PS formula is to provide a
+procedure for preprocessing a signal for the Fourier transform and other
+computations by establishing a Nyquist sampling rate.  In FFT algorithm
+design, it is the first step in a divide-and-conquer strategy.
+
+The text~\cite{Tolimieri:1998} -- the source for these notes -- uses
+the PS formula to unify basic algorithmic procedures in time-frequency
+processing and to derive closed form formulas that play a significant role in
+\emph{Weyl-Heisenberg duality theory}, which is the subject of Chapter 13
+of~\cite{Tolimieri:1998}. 
+
+\ifthenelse{\boolean{nospecialfootnotes}}
+{\subsection{Statement and proof}}
+{\subsection{Statement and proof\protect\footnotemark}
+\footnotetext{op.~cit.~\cite{Tolimieri:1998}, \S\ 4.2.}}
+Assume $B$ is a subgroup of a finite abelian group $A$ and $f\in \LA$.
+Denote the orders of $A$ and $B$ by $N$ and $M$, respectively, with $N = LM$.
+Consider the Fourier expansion of $f$,
+\[
+f = \sum_{a^*\in A^*} \alpha(a^*)a^*
+\]
+with coefficient set
+\[
+\alpha \in \vs{L}(A^*)
+\]
+\begin{definition}[Periodic]\\
+The function $f\in \LA$ is called \emph{B-periodic} if, for all $a\in A$ and
+$b\in B$, 
+\[
+f(a+b) = f(a)
+\]
+and $\alpha \in \vs{L}(A^*)$ is called $B_*$\emph{-decimated} if $\alpha$ vanishes
+off of $B_*$.
+\end{definition}
+
+\begin{example}
+Suppose $f\in \vs{L}(\Z/N)$ is $L\Z/N$-periodic. Recall,
+\[
+L\Z/N \simeq \{0,L,2L,\ldots,(M-1)L\}, \qquad \text{ for } LM = N
+\]
+and the vector representation of $f$ can be written
+$\vec{f} = (\vec{f}^{(0)},\,\vec{f}^{(0)},\ldots,\vec{f}^{(0)})^t$,
+%\[\vec{f} = 
+%\left(\begin{array}{c}\vec{f}^{(0)}\\\vec{f}^{(0)}\\\vdots\\\vec{f}^{(0)}\end{array}\right), 
+%\quad \text{ where } \quad \vec{f}^{(0)} =
+%\left(\begin{array}{c}f(0)\\f(1)\\\vdots\\f(L-1)\end{array}\right)\]
+That is $\vec{f}\in \C^N$ is a vector containing $M = N/L$ sub-vectors,
+$\vec{f}^{(0)}\in \C^L$.
+Identifying $\Z/N$ with its character group by the standard presentation, the
+Fourier coefficient set $\alpha \in \vs{L}(\Z/N)$ of $f$ is given by
+\[
+\alpha = \frac{1}{N} F(N) \vec{f}
+\]
+
+Consider the value of $\alpha$ at $a^*\in (\Z/N)^*$.
+\begin{align}\label{eq:decimation}
+\alpha(a^*) &= \frac{1}{N} \sum_{n=0}^{N-1}f(n)\overline{\langle n,a^*\rangle}\nonumber\\
+&= \frac{1}{N} \sum_{a\in \Z/L}\sum_{b\in L\Z/N}f(a+b)\overline{\langle a+b,a^*\rangle}\nonumber\\
+&= \frac{1}{N} \sum_{a\in \Z/L}f(a)\overline{\langle a,a^*\rangle}\sum_{b\in L\Z/N}\overline{\langle b,a^*\rangle}
+\end{align}
+Corollary~\ref{cor:char2} implies, for $a^*\in (\Z/N)^*$,
+\[
+\sum_{b\in L\Z/N} \overline{\langle b, a^* \rangle} = 
+\left\{\begin{array}{ll}
+o(L\Z/N),& \quad a^* \in (L\Z/N)_*,\\
+0,& \quad \text{otherwise}
+\end{array}
+\right.
+\]
+Recall that $M\Z/N = (L\Z/N)_*$, the dual of $L\Z/N$.  
+Therefore, since $o(L\Z/N) = M$, (\ref{eq:decimation}) becomes
+\[
+\alpha(a^*) =
+\left\{\begin{array}{ll}
+\frac{1}{L} \sum_{a\in \Z/L}f(a)\overline{\langle a,a^*\rangle},& \quad a^* \in M\Z/N,\\
+0,& \quad \text{otherwise}
+\end{array}
+\right.
+\]
+Thus we have shown that, for any $a^* \notin M\Z/N$, the value of $\alpha(a^*)$ vanishes.
+So we say that $\alpha$ is $(L\Z/N)_*$-decimated. 
+
+Before stating this result more generally as
+Theorem~\ref{thm:periodic-decimated}, let's consider a more concrete example. 
+%, let $v = \exp(2\pi i/N)$, and consider the
+The value of $\alpha$ at 1 is
+\begin{align*}
+\alpha(1) &= \frac{1}{N} \sum_{n=0}^{N-1}f(n)\overline{\langle n,1\rangle}\\
+&= \frac{1}{N} \sum_{a=0}^{L-1}\sum_{y = 0}^{M-1}f(a+yL)\overline{\langle a+yL,1\rangle}\\
+&= \frac{1}{N} \sum_{a=0}^{L-1}f(a)\overline{\langle a,1\rangle}\sum_{y = 0}^{M-1}\exp(-\I2\pi\frac{yL}{N})
+\end{align*}
+which vanishes since
+\[
+\sum_{y = 0}^{M-1}\exp(-\I2\pi\frac{yL}{N})=\sum_{y = 0}^{M-1}\exp(-\I2\pi\frac{y}{M}) = 0
+\]
+%&= \frac{1}{N} \left(\sum_{n=0}^{M-1}v^{-nL}\right)\left(\sum_{l=0}^{L-1}v^{l}f_l\right),
+%\sum_{n=0}^{M-1}v^{-nL} = 0
+\end{example}
+The foregoing is a special case of the following result:
+\begin{theorem}\label{thm:periodic-decimated} 
+If $f\in \LA$ has Fourier coefficient set $\alpha$, then $f$
+  is $B$-periodic if and only if $\alpha$ is $B_*$-decimated.
+\end{theorem}
+\begin{proof}
+Recall that
+\begin{equation}\label{eq:3}
+f(a) = \sum_{x^*\in A^*} \alpha(x^*) \langle a, x^* \rangle
+\end{equation}
+and
+\begin{equation}\label{eq:4}
+f(a+b) = \sum_{x^*\in A^*} \alpha(x^*) \langle b, x^* \rangle 
+                                       \langle a, x^* \rangle
+\end{equation}
+So $f$ is $B$-periodic if and only if equations~(\ref{eq:3}) and~(\ref{eq:4})
+are equal; that is, if and only if,
+\[
+\alpha(x^*) = \alpha(x^*) \langle b, x^* \rangle
+\]
+This occurs if and only if $\alpha(x^*)=0 $ whenever 
+$\langle b, x^* \rangle \neq 1$ for all $b\in B$; that is, whenever
+$x^*\notin B_*$. \qed
+\end{proof}
+
+\begin{definition}[Evaluation Function]\\
+For any subset $X\subset A$, the \emph{evaluation function}
+  of $X$ is the function $e_X \in \LA$ which is equal to 1 on $X$ and
+  vanishes elsewhere.
+\end{definition}
+%%% LEFT OFF HERE %%%
+%%% new stuff starts here %%%
+
+%% Next write up Corollary 4.1 p.49 and write EX 4.3 as an exercise %%
+\begin{corollary}\label{cor:evalfun}
+As usual, assume $A$ is a group of order $N$, and $B$ is a subgroup of $A$
+having order $M = N/L$; \eg $A = \Z/N$ and $B=L\Z/N$. If $f \in \LA$ is the
+evaluation function on $B$ and 
+$\alpha \in \vs{L}(A^*)$ is the Fourier coefficient set of $f$, then $L\alpha$ is
+the evaluation function on the dual subgroup $B_*$.
+\end{corollary}
+\begin{exercise}  Suppose $f \in \vs{L}(\Z/6)$ is the evaluation function on the
+  subgroup $2\Z/6$ with Fourier coefficient set $\alpha$.  Show that
+  $2\alpha$ is the evaluation function on the dual $3\Z/6$, as implied by
+  corollary~\ref{cor:evalfun}.
+\end{exercise} 
+\begin{solution}
+Recall,
+%\[ 
+%6\Z = \{\ldots,-6,0,6,\ldots\}, \quad \text{and}\quad 2\Z = \{\ldots,-2,0,2,\ldots\}
+%\]
+%So,
+\[ 
+\Z/6 \simeq \{0,1,2,3,4,5\},\quad 2\Z/6 \simeq \{0,2,4\},
+\quad \text{and} \quad (2\Z/6)_* = 3\Z/6 \simeq \{0,3\}
+\]
+In terms of the foregoing discussion, this is the special case in which
+$N=6$, $L=2$, and $M=3$. If $f$ is the evaluation function on  $2\Z/6$, then
+\[
+f(k) = \left\{ \begin{array}{ll}
+1, & \quad k\in \{0,2,4\}\\
+0, & \quad k\in \{1,3,5\}
+\end{array}
+\right.
+\]
+Therefore, $f$ is $2\Z/6$-periodic and, by
+Theorem~\ref{thm:periodic-decimated}, $\alpha$ is $(2\Z/6)_*$-decimated;
+that is, it is zero off of $3\Z/6$.  More precisely,
+\begin{align*}
+\alpha(a) & = \frac{1}{6}(f,a)= \frac{1}{6} \sum_{j=0}^5 f(j)\overline{\langle j,a\rangle} \\
+&= \frac{1}{6} \sum_{j\in\{0,2,4\}}\E^{-\I 2 \pi \frac{ja}{6}}
+= \frac{1}{6} \sum_{j=0}^2 v^{ja}\\
+&= \frac{1}{6} \left( v^{0a} +  v^{a} +  v^{2a} \right), \qquad \text{ where } v = \E^{-\I 2 \pi/3}
+\end{align*}
+For example, $\alpha(1) = 0$, since $v^0 = 1$ and $v^1 = v^2 = -1/2$.
+We still must show that $2\alpha$ is 1 on $3\Z/6 = \{0,3\}$. Obviously,
+$\alpha(0) =1/2$.  Also, $\alpha(3) = (1 +  \E^{-\I 2 \pi} + \E^{-\I 4 \pi})/6 =
+1/2$, {\it q.e.d.}
+\end{solution}
+
+\begin{definition}[Periodization]\\
+Define $\Per_B f\in \LA$ by the formula 
+\[
+\Per_B f(a) = \sum_{x\in B} f(a+x), \qquad a\in A
+\]
+and call $\Per_B f$ the \emph{periodization of} $f$ \emph{over} $B$.  The function 
+$\Per_B f$ is $B$-periodic.
+\end{definition}
+
+\begin{example}
+For $f\in \vs{L}(\Z/6)$, the periodization of $f$ over $3\Z/6$ is given by 
+\begin{alignat*}{2}
+\Per_{3\Z/6} f(0) &= f(0) &+ f(3)\\
+\Per_{3\Z/6} f(1) &= f(1) &+ f(4)\\
+\Per_{3\Z/6} f(2) &= f(2) &+ f(5)
+\end{alignat*}
+with the remaining values given by periodicity.
+\end{example}
+
+In matrix form, the essential values of the periodization of $f$ over $3\Z/6$
+can be given by
+\[
+\begin{pmatrix}%\left(\begin{array}{cccccc}
+1&0&0&1&0&0\\
+0&1&0&0&1&0\\
+0&0&1&0&0&1
+%\end{array}\right)
+\end{pmatrix}\vec{f}
+\]
+\begin{example}
+For $f\in \vs{L}(\Z/N)$, the periodization of $f$ over the subgroup $L\Z/N$, for
+$N= LM$, is given by 
+\[
+\Per_{L\Z/N} f(a) = \sum_{m=0}^{M-1} f(a+mL), \qquad 0 \leq l < N
+\]
+In matrix form the periodization of $f$ over $L\Z/N$ is given by 
+\[
+\left( I_L\; I_L\; \cdots I_L \right) \vec{f}
+\]
+The matrix pre-multiplying $\vec{f}$ consists of $M$ copies of the 
+$L\times L$ identity matrix $I_L$. 
+\end{example}
+
+The \emph{Poisson summation formula} describes the Fourier expansion of
+$\Per_B f$.
+\begin{theorem}[Poisson Summation Formula]\label{thm:poissonsummation}
+Suppose $A$ is a finite abelian group of order $N$, and $B$ is a subgroup of
+order $M$, where $N = LM$.  If $f\in \LA$ has Fourier expansion 
+\[
+f = \sum_{x^* \in A^*} \alpha(a^*) x^*
+\]
+then $\Per_B f$ has Fourier expansion
+\[
+\Per_B f = M \sum_{x^* \in B^*} \alpha(a^*) x^*
+\]
+\end{theorem}
+\begin{proof}
+For $a \in A$,
+\begin{align*}
+\Per_B f(x) 
+&= \sum_{b \in B}\sum_{a^* \in A^*} \alpha(a^*) \langle x,a^*\rangle \langle b,a^*\rangle\\
+&= \sum_{a^* \in A^*} \alpha(a^*) \langle x,a^*\rangle \sum_{b \in B}\langle b,a^*\rangle
+\end{align*}
+Recall that $\sum_{b \in B}\langle b,a^*\rangle$ vanishes unless $a^* \in B_*$,
+in which case the sum equals $M$. \qed
+\end{proof}
+%This theorem applies to the examples above, \eg $A = \Z/N$, $B = L\Z/N$,
+%and $B_* = M\Z/N$. 
+\begin{example}
+For $0\leq m < M, 0 \leq l < L$, 
+\begin{align*}
+f(l+mL) &= \sum_{b^* \in B^*} \alpha(b^*) \langle l, x^*\rangle \langle mL, x^*\rangle\\
+        &= \sum_{b = 0}^{N-1} \alpha(b) \exp(2\pi \I \frac{lb}{N})\exp(2\pi \I \frac{mb}{M})
+\end{align*}
+Therefore,
+\[
+\Per_{L\Z/N} f(l)= \sum_{b = 0}^{N-1} \alpha(b) \exp(2\pi \I \frac{lb}{N})\sum_{m = 0}^{M-1} \exp(2\pi \I \frac{mb}{M})
+\]
+Let
+\[
+b = b_1 + b_2M, \qquad 0\leq b_1 < M, 0\leq b_2 < L
+\]
+so that each $b$ for which $b_1 = 0$ is an element of $M\Z/N = (L\Z/N)_*$.  Then,
+%; \ie \[b_1=0 \Rightarrow b = b_2M \in \{0,M,2M,\ldots,(L-1)M\} = M\Z/N  = (L\Z/N)_*\]
+\begin{align*}
+\Per_{L\Z/N} f(l)&= 
+\sum_{b_1 = 0}^{M-1}\sum_{b_2 = 0}^{L-1} \alpha(b_1+b_2M) 
+\exp\{2\pi \I \frac{l(b_1+b_2M)}{N}\}\sum_{m = 0}^{M-1} \exp\{2\pi \I \frac{m(b_1+b_2M)}{M}\}\\
+&= M \sum_{b_2 = 0}^{L-1} \alpha(b_2M) 
+\exp(2\pi \I \frac{lb_2}{L})
+\end{align*}
+The last equality follows from the argument given in the proof of Theorem~\ref{thm:poissonsummation}.
+\end{example}
+By duality, we have identified $A$ with the character group basis of
+$\vs{L}(A^*)$.  An element $a\in A$ determines the character of $A^*$.
+\[
+\varTheta(a):a^* \to \overline{\langle a,a^* \rangle}, \qquad a^*\in A^*
+\]
+
+Suppose $f \in \LA$ has Fourier coefficient  set $\alpha$. For $a^* \in A^*$,
+\[
+\alpha(a^*) = \frac{1}{N} (f,a^*)
+\]
+implying that the expansion of $\alpha$ over the character group basis $A$ of
+$\vs{L}(A^*)$ is given by 
+\begin{equation}\label{eq:6}
+\alpha = \frac{1}{N} \sum_{a\in A}f(a)a
+\end{equation}
+(This is Tolimieri's notation, but the point is clearer
+if we write~(\ref{eq:6}) as follows:
+\[
+\alpha = \frac{1}{N} \sum_{a\in A}f(a)\varTheta(a)
+\]
+This emphasizes that the role of $a$ here is that of a character.)
+
+For $\alpha \in \vs{L}(A^*)$, define $\Per_{B_*}(\alpha)\in \vs{L}(A^*)$
+by the formula
+\[
+\Per_{B_*}\alpha(a^*) = \sum_{x^*\in B_*} \alpha(a^*+x^*), \qquad a^*\in A^*
+\]
+\begin{theorem}
+If $f\in \LA$ has Fourier coefficient set $\alpha\in \vs{L}(A^*)$, then 
+\begin{equation}\label{eq:7}
+\Per_{B_*}\alpha(a^*) = \frac{1}{M}\sum_{x\in B} f(x)x
+\end{equation}
+\end{theorem}
+(Again, we might express the summand in~(\ref{eq:7}) as $f(x) \varTheta(x)$.)
+\begin{proof}
+For $a^* \in A^*$,
+\begin{align*}
+\Per_{B_*}\alpha(a^*) 
+&= \frac{1}{N}\sum_{x^*\in B_*}\sum_{x\in A} f(x)\varTheta(x)(a^*+x^*)\\
+&= \frac{1}{N}\sum_{x\in A} f(x)\overline{\langle x,a^*\rangle}
+\sum_{x^*\in B_*}\overline{\langle x,x^*\rangle}
+\end{align*}
+By Corollary~\ref{cor:char1}, the sum
+\[
+\sum_{x^*\in B_*}\overline{\langle x,x^*\rangle}
+\]
+vanishes unless $x\in B$, in which case the sum is equal to $o(B_*) = N/M$. \qed
+\end{proof}
+
+%---- LEFT OFF HERE: next -- Section 4.3 of TFR ----%
+
+%\begin{theorem}\label{thm:EquivalenceClass}
+
+%%% END FILE INSERT: TFR.tex

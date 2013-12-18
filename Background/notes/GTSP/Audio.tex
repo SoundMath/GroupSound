@@ -1,0 +1,401 @@
+% This is the file named 'Audio.tex'
+%% @LaTeX-file{
+%% author = {William DeMeo},
+%% filename = {'Audio.tex'}
+%% date = {2004/02/18},
+%% text = {main latex file for my recent audio algebra research}
+%% }
+\title{Digital Audio Processing: group filters}
+\titlerunning{Digital Audio Processing: group filters}
+\author{William DeMeo}\institute{{\tt williamdemeo@yahoo.com}}\authorrunning{ }
+\maketitle
+%\setcounter{minitocdepth}{2}\dominitoc
+%\pagebreak
+
+\section{Introduction}
+The translation-invariance of most classical signal
+processing transforms and filtering operations is largely
+responsible for their widespread use, and is crucial for
+efficient algorithmic implementation and interpretation 
+of results. Underlying most digital signal processing (DSP)
+algorithms is the group $\Z/N$ of integers modulo $N$, which
+serves as the data indexing set.  Translations are defined
+using addition modulo $N$, and basic operations, including
+convolutions and Fourier expansions, are developed relative
+to these translations.
+
+DSP on finite abelian groups such as $\Z/N$ is
+well-understood and has great practical utility.  Recently,
+however, interest in the practical utility of nonabelian
+groups has grown significantly. Although the theoretical
+foundations of finite nonabelian groups is well established,
+application of the theory to DSP has yet to  become
+common-place; cf.~the NATO ASI ``Computational
+Non-commutative Algebras,'' Italy, 2003. Another notable
+exception is~\cite{An:2003}, which develops theory and
+algorithms for indexing data with nonabelian
+groups, defining translations with a (non-commutative) group
+multiply operation, and performing typical DSP operations
+relative to these translations. The work of An and Tolimieri
+demonstrates that including nonabelian groups among the
+possible data indexing strategies significantly broadens the
+range of useful signal processing techniques.
+
+The present work demonstrates the use of nonabelian groups
+for indexing audio signals, and discusses the insights gained
+from this approach computational advantages can be gained. 
+For a standard noise reduction problem, we show
+how the new framework simplifies the algorithm, while
+simultaneously generalizing it to handle more complex noise
+reduction tasks. Numerical results are provided along with
+the Matlab source code for reproducing them. 
+%-----------------------------------------------------------------------------
+
+\section{Nonabelian group DSP}
+\subsection{Two distinctions of consequence}
+Abelian group DSP can be completely described in terms of a
+special class of signals called the \emph{characters} of the
+group. (For $\Z/N$, the characters are simply the exponentials.)
+Each character of an abelian group represents a one-dimensional
+translation-invariant subspace, and the set of all characters
+spans the space of signals indexed by the group; any such
+signal can be uniquely expanded as a linear combination over
+the characters.
+
+In contrast, the characters of a nonabelian group $G$, %on the other hand,
+do not determine a basis for expanding signals indexed by
+$G$.  However, a basis can be constructed by extending the
+characters of an abelian subgroup $A$ of $G$, and then taking
+certain translations of these extensions.  Some of the
+characters of $A$ cannot be extended to characters of $G$,
+but only to proper subgroups of $G$.  This presents some
+difficulties involving the underlying translation-invariant
+subspaces, some of which are now multi-dimensional.
+However, it also presents opportunities for alternative
+views of local signal domain information on these
+translation-invariant subspaces. 
+
+The other abelian/nonabelian distinction of primary importance 
+concerns translations defined on the group.  In the abelian group
+case, translations represent simple linear shifts in space or time.
+When nonabelian groups index the data, however, translations are no
+longer so narrowly defined. 
+
+%-----------------------------------------------------------------------------
+%-----------------------------------------------------------------------------
+\subsection{Basic notations and definitions}
+This section quickly summarizes the notations,
+definitions and important facts needed below.
+(See~\cite{An:2003} for elaboration.)  Throughout, $\C$ denotes complex
+numbers, $G$ an arbitrary (nonabelian) group, %of order $N$, 
+and $\LG$ the collection of complex valued functions on $G$.
+  
+%-----------------------------------------------------------------------------
+\subsubsection{Translations}
+For $y\in G$, the mapping $\T(y)$ of $\LG$ defined by 
+\[
+(\T(y)f)(x) = f(y^{-1}x), \quad x \in G
+\]
+is a linear operator of $\LG$ called 
+\emph{left translation by} $y$.
+The mapping $\lt{C}(f)$ of $\LG$ defined by 
+\[
+\lt{C}(f) = \sum_{y\in G} f(y) \T(y), \quad f\in \LG
+\]
+is a linear operator of $\LG$ called 
+\emph{left convolution by} $f$.  By definition, 
+\[
+(\lt{C}(f)g)(x) = \sum_{y\in G} f(y) g(y^{-1}x), \quad g \in \LG,\; x\in G
+\]
+%The collection of all left convolutions of $\LG$ is
+%$\vs{C}(G) = \left\{\lt{C}(f) : f \in G \right\}$.
+For $f, g \in \LG$, the composition
+\[
+f * g  = \lt{C}(f)g
+\]
+is called the \emph{convolution product}.
+The vector space $\LG$ paired with the convolution product
+is an algebra, the \emph{convolution algebra over} $G$.
+
+%-----------------------------------------------------------------------------
+\subsubsection{The group algebra}
+\label{sec:groupalgebraA}
+The \emph{group algebra} $\CG$ is the space of all formal sums
+\[
+f = \sum_{x\in G} f(x) x, \quad f(x) \in \C
+\]
+with the following operations:
+\[
+f+g = \sum_{x\in G} (f(x) + g(x))x, \quad f, g \in \CG,
+\]
+\[
+\alpha f = \sum_{x\in G} (\alpha f(x)) x, \quad \alpha \in \C, f \in \CG,
+\]
+\[ %\begin{equation}\label{eq:GFIP-1}
+fg = \sum_{x\in G}\left(\sum_{y\in G} f(y)g(y^{-1}x)\right)x, \quad f, g \in \CG.
+\] %\end{equation}
+%The adds and multiplies inside the parentheses are the familiar operations in $\C$.
+
+For $g\in \CG$, the mapping $\lt{L}(g)$ of $\CG$ defined by 
+\[
+\lt{L}(g)f = gf, \quad f\in \CG
+\]
+is a linear operator on the space $\CG$ called 
+\emph{left multiplication by} $g$.  
+
+Since $y\in G$ can be identified with the formal
+sum $e_y \in \CG$ consisting of a single nonzero term,
+\begin{equation}\label{eq:leftmult}
+yf = \lt{L}(e_y)f = \sum_{x\in G}f(y^{-1}x) x
+\end{equation}
+In relation to translation of $\LG$, (\ref{eq:leftmult}) is the
+$\CG$ analog. 
+
+The mapping $\varTheta: \LG \to \CG$ defined by
+\[
+\varTheta(f) = \sum_{x\in G} f(x) x, \quad f\in \LG
+\]
+is an algebra isomorphism of the convolution algebra $\LG$
+onto the group algebra $\CG$.  Thus we can identify
+$\varTheta(f)$ with $f$, using  context to decide whether
+$f$ refers to the function in $\LG$ or the formal sum in
+$\CG$.  
+
+%\begin{remark} \label{rem:group-algebra-basis}
+%For $y\in G$, the formal sum consisting of a single nonzero term $y$ will be
+%denoted by $y$.  We can view $G$ as a subset of $\CG$.  For $x, y \in G$, the
+%product $xy$ in $G$ is equal to the product $xy \in \CG$, and the identity
+%element 1  of $G$ is the identity element in the group algebra $\CG$.  Thus
+%$G$ is a basis of the space \CG\ corresponding to the canonical basis $\{e_y :
+%y\in G \}$ of $\LG$.
+%\end{remark}
+An important aspect of the foregoing isomorphism is the
+correspondence between the translations of the spaces.
+Translation of $\LG$ by $y\in G$ %$\T(y)$ 
+corresponds to left multiplication of $\CG$ by $y\in G$.
+%$\lt{L}(y)$ 
+Convolution of $\LG$ by $f\in \LG$ corresponds to
+left multiplication of $\CG$ by $f\in \CG$. To put it
+symbolically,
+\begin{eqnarray*}
+      \LG & \leftrightarrow & \CG \\
+\lt{T}(y) & \leftrightarrow & \lt{L}(y)\\
+\lt{C}(f) & \leftrightarrow & \lt{L}(f)
+\end{eqnarray*}
+
+%-----------------------------------------------------------------------------
+
+\subsubsection{Left ideals}
+A subspace $\vs{V}$ of the space $\CG$ is called a
+\emph{left ideal} if 
+\[
+u\vs{V} = \{uf : f \in \vs{V}\} \subset \vs{V}, \quad u \in G. 
+\]
+A left ideal of $\CG$ corresponds to a subspace of $\LG$
+invariant under all left translations.  If $\vs{V}$ is a
+left ideal, then, by linearity, 
+$g\vs{V} \subset \vs{V}, \, g \in \CG$.
+
+For $g\in \CG$, the set $\CG g$ defined by 
+$\{fg : f \in \CG\}$ is %a left ideal of $\CG$ 
+called 
+\emph{the left ideal generated by} $g$ in $\CG$. 
+%$\CG g = \CG$ if and only if $g$ is an invertible element in
+%$\CG$. 
+
+A left ideal $\vs{V}$ of $\CG$ is called \emph{irreducible} if the only left ideals
+of $\CG$ contained in $\vs{V}$ are $\{0\}$ and $\vs{V}$. The sum of two distinct,
+irreducible left ideals is always a direct sum.
+% (\cite{An:2003}, p.~129).
+
+For an abelian group $A$, the group algebra $\C A$ is
+decomposed into a direct sum of irreducible ideals.  The
+ideals are one-dimensional translation-invariant subspaces.  
+
+%into irreducible ideals is constructed from the character basis
+%$A^*$. In the abelian case, the result is a 
+
+Similarly, for a nonabelian group $G$, the group algebra
+$\CG$ is decomposed into a direct sum of left ideals.
+Again, the ideals are translation-invariant
+subspaces, but some of them must now be multi-dimensional,
+and herein lies the potential advantage of using nonabelian
+groups for indexing the data. The left translations
+are more general and represent a broader class of 
+transformations. Therefore, projections of data into the
+resulting left ideals can reveal more complicated partitions
+and structures as compared with the Fourier components in
+the abelian group case. 
+
+%----------------------------------------------------------------------------
+%-----------------------------------------------------------------------------
+
+\subsection{Fourier analysis on finite nonabelian groups}
+A \emph{character} of $G$ is a group homomorphism of $G$
+into $\C^{\times}$, where $\C^{\times} = \C \setminus \{0\}$.
+In other words, the mapping $\varrho: G \to \C^{\times}$ is a character of
+$G$ if it satisfies $\varrho(xy) = \varrho(x)\varrho(y), \, x, y \in G$.
+
+By the aforementioned identification between $\LG$ and
+$\CG$, a character $\varrho \in G^*$ can be viewed as a formal sum,
+\begin{equation}\label{eq:GFIP-formal-sumA}
+\varrho = \sum_{x\in G}\varrho(x)x,
+\end{equation}
+and therefore $G^* \subset \CG$.
+
+%There always exists at least one character in $G^*$ -- namely, the \emph{trivial character} of
+%$G$, which takes on the value 1 for all $y\in G$.
+%
+%Characters of nonabelian groups share many properties with abelian group
+%characters.
+\begin{theorem}
+If $G$ has a nontrivial character $\varrho$, then
+\[
+\frac{1}{N} \sum_{x\in G} \varrho(x) = 0
+\]
+\end{theorem}
+\begin{proof}
+%Let $y\in G$ be such that $\varrho(y) \neq 0$, and $\varrho(y) \neq 1$.  (If no
+%such $y$ exists, the result is obvious.)
+For any $y\in G$, by a change of variables,
+\[
+\varrho(y) \sum_{x\in G} \varrho(x) = \sum_{x\in G} \varrho(yx) = \sum_{x\in G} \varrho(x)
+\]
+Therefore, either (a) $\varrho(y)=1, \forall y\in G$, or (b) $\sum \varrho(x)=0$.
+Since (a) contradicts the hypothesis, (b) must be true. \qed
+\end{proof}
+
+\begin{theorem}\label{thm:char-actionA}
+Suppose $\varrho$ is a character of $G$.  If $y\in G$, 
+\[
+y\varrho = \varrho y = \varrho(y^{-1})\varrho
+\]
+\end{theorem}
+\begin{proof}
+As above, write $\varrho$ as a formal sum and change variables.
+\end{proof}
+
+\newcommand\cor{\corollary}
+%\begin{corollary}
+\begin{cor}
+Suppose $\varrho$ is a character of $G$.  If $f\in \CG$, then
+\[
+f\varrho = \varrho f = \hat{f}(\varrho)\varrho
+\]
+where $\hat{f}(\varrho) = \sum_{y\in G} f(y) \varrho(y^{-1})$.
+%\end{corollary}
+\end{cor}
+\begin{proof}
+By Theorem~\ref{thm:char-actionA},
+\[
+f\varrho = \sum_{y\in G} f(y) y\varrho = \left( \sum_{y\in G} f(y)\varrho(y^{-1})\right) \varrho
+\]
+Similarly for $\varrho f$, mutatis mutandis.
+\qed
+\end{proof}
+
+%%% LEFT OFF with notes on p. 132 %%%
+
+%-----------------------------------------------------------------------------
+%-----------------------------------------------------------------------------
+\subsection{Abelian by abelian semidirect products}
+To determine whether a particular group is useful for a DSP
+application, we must specify exactly how this group
+represents the data.
+The group representation may reduce computational
+complexity, or it may simply make it easier to state,
+understand, or model a given problem.
+
+In this section we describe procedures for specifying and
+studying a simple class of nonabelian groups that have
+proven useful in applications -- the 
+\emph{abelian by abelian semidirect products}. These are
+perhaps the simplest extension of abelian groups
+% case, these are
+%groups of the form $G = A \varangle B$, where $A$ and $B$
+%are abelian groups. Not surprisingly, 
+and DSP over such groups closely resembles that over abelian
+groups.  However, the resulting processing tools can have
+vastly different characteristics. 
+
+%%% LEFT OFF HERE --> resume from top of page 109
+\subsubsection{Semidirect product}
+Let $G$ be a finite group of order $N$, $K$ a subgroup of $G$,
+and $H$ a normal subgroup of $G$. If $G = HK$ and $H \cap
+K = \{1\}$, then we say that $G$ is the 
+\emph{internal semidirect product} $G = H \varangle K$. 
+It can be shown that $G = H \varangle K$ if and only if every $x \in
+G$ has a \emph{unique representation} of the form $x = yz, \; y\in H,
+z\in K$.
+
+%% By definition, $K$ is a normal subgroup of $G$ if
+%% \[y^{-1}Ky = K\]
+%% for all $y\in G$.  In that case, $[H, K] = \{1\}$, and $G$ is simply
+%% the usual direct product $H \times K$.  What is new about the internal
+%% semidirect product is the possibility that members of $K$ act
+%% non-trivially on $H$.
+
+The mapping $\Psi: K \to Aut(H)$, defined by 
+\[
+\Psi_z(x) = zxz^{-1}, \quad z\in K, x\in H
+\]
+is a group homomorphism. 
+Define the binary composition in $G$
+%relative to the representation $G= H\varangle K$
+in terms of $\Psi$ as follows:
+%\begin{eqnarray*}
+\[
+x_1x_2 = (y_1z_1)(y_2z_2)= y_1\Psi_{z_1}(y_2)z_1z_2,
+\]
+\[y_1, y_2 \in H,\; z_1, z_2 \in K. \]
+%\end{eqnarray*}
+
+If $G = H\varangle K$ and $K$ is a normal subgroup of $G$,
+then $G$ is the ``usual'' direct product (\ie the
+cartesian product $H\times K$ along with component-wise
+multiplication). What is new in the semidirect product is
+the possibility that $K$ acts nontrivially on $H$.
+
+\subsubsection{Cyclic groups}
+Denote by $C_N(x)$ the cyclic group of order $N$ having
+generator $x$, $\{ x^n : 0 \leq n < N\}$, and define binary
+composition by $x^m x^n = x^{m+n}$, $0\leq m, n < N$, where
+$m+n$ is addition modulo $N$.  
+
+For an integer $L$, $ 0\leq L < N$, denote by $gp_N(x^L)$
+the subgroup generated by $x^L$ in $C_N(x)$. If $L$ divides
+$N$, then  
+\[
+gp_N(x^L) = \{x^mL : 0\leq m < M\}, \quad LM = N
+\]
+and $gp_N(x^L)$ is a cyclic group of order $M$.
+
+\subsubsection{Group of units}
+Multiplication modulo $N$ is a ring product on the group of
+integers $\Z/N$. An element $m\in \Z/N$ is called a unit if
+there exists an $n\in \Z/N$ such that $mn = 1$.  The set
+$U(N)$ of all units in $\Z/N$ is a group with respect to
+multiplication modulo $N$, and is called the 
+\emph{unit group} of $\Z/N$. 
+
+The unit group $U(N)$ can be characterized as the
+set of all integers $0<m<N$ such that $m$ and $N$ are
+relatively prime.  For example, $U(8) = \{1, 3, 5, 7\}$.
+
+\subsubsection{Semidirect product example}
+%\begin{theorem}
+The mapping $\Psi: U(N) \to Aut(C_N(x))$ is a group
+isomorphism.
+%\end{theorem}
+Under this identification, we can form $C_N(x)\varangle K$
+for any subgroup $K$ of $U(N)$.  A typical point in 
+$C_N(x)\varangle K$ is denoted 
+$(x^n, u), \, 0\leq n<N,\, u\in K$ with multiplication given
+by  
+\[
+(x^m, u)(x^n, v) = (x^{m+un},uv), \quad 
+0\leq m, n < N,\, u, v \in K
+\]
+where $m+un$ is taken modulo $N$.
+%-----------------------------------------------------------------------------
+%-----------------------------------------------------------------------------
