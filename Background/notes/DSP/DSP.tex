@@ -1,0 +1,216 @@
+% This is the file named 'DSP.tex'
+% @LaTeX-file{
+% author = {William DeMeo},
+% filename = {'DSP.tex'}
+% date = {2004/01/08},
+% text = {main latex file for collection DSP research paper inputs}
+% }
+
+
+% As per Reed's instructions:
+\documentclass[10pt, twocolumn, twoside]{IEEEtran}
+
+%
+%%
+%%% >>-- BEGIN: MY DEFS --<<
+%%
+%
+\usepackage{amsmath, amssymb, wasysym}
+\usepackage{color,times}
+\input{wjd.def}
+\usepackage{theorem}
+%%
+%% Some theorems not defined by IEEEtran.
+%%
+{\theorembodyfont{\rmfamily}
+ \newtheorem{corollary}{Corollary}
+ \newtheorem{example}{Example}
+ \newtheorem{theorem}{Theorem}
+}
+%
+%%
+%%% >>-- END: MY DEFS --<<
+%%
+%
+
+%% -- ISMA2004 customizations -------------------------------------------------
+%\documentclass[boldvectors]{wjdarticle}
+%%\usepackage{icmc}
+\usepackage{epsfig}
+%\usepackage{fullpage}
+%\usepackage{ifthen}
+%    %% Should figures be compiled?
+%    \newboolean{nofigures}  % initially false ==> compile with figures
+%    %\setboolean{nofigures}{true} % un-comment this line to compile without figures
+%    \newboolean{nospecialfootnotes}%% Should citation footnotes on section headings be compiled?
+%    \setboolean{nospecialfootnotes}{true} % comment this line to compile with special citation foonotes
+
+%\setcounter{page}{1}
+%\sloppy         % better line breaks
+%%\tenpt
+%%SM below a registered trademark definition
+%\newcommand\reg{{\rm\ooalign{\hfil
+%     \raise.07ex\hbox{\scriptsize R}\hfil\crcr\mathhexbox20D}}}
+%% \newcommand{\reg}{\textsuperscript{\textcircled{\textsc r}}}
+%%-----------------------------------------------------------------------------
+
+
+%\usepackage{amsmath,amssymb, wasysym}
+%\usepackage{color,boxedminipage,acronym,times}
+%%\usepackage{boxedminipage, acronym}
+%%\usepackage[pdftex]{color}
+
+%\input{wjd.def}
+%\input{wjdthms.def}
+%%\smartqed
+%%%-------------------------------------------------------------
+
+%\title{Topics in Nonabelian Harmonic \\ Analysis and DSP Applications}
+\title{Harmonic Analysis on Finite Groups \\ and DSP Applications}
+
+% icmc author command:
+%\oneauthor
+%{William J.~DeMeo} 
+%{Textron Systems Corporation \\ 
+%{\small \tt williamdemeo@yahoo.com}}
+\author{William J.~DeMeo\\ 
+{\small \tt williamdemeo@yahoo.com}}
+
+\begin{document}
+% -- ISMA2004 customizations -------------------------------------------------
+%  \thispagestyle{isma}
+  \maketitle
+%-----------------------------------------------------------------------------
+
+%--ABSTRACTS---------------------------------------------------------------------------
+\begin{abstract}
+
+%\verb!\input{DSP/isma2004-abstract-short}!
+%\input{DSP/isma2004-abstract-short}
+
+%\verb!\input{DSP/isma2004-abstract-long}!
+%\input{DSP/isma2004-abstract-long}
+
+\verb!\input{DSP/UHEE616-abstract}!
+\input{DSP/UHEE616-abstract}
+\end{abstract}
+
+%--INTROS---------------------------------------------------------------------------
+%\verb!\input{DSP/isma2004-intro-short}!
+%\input{DSP/isma2004-intro-short}
+
+%\verb!\input{DSP/isma2004-intro-long}!
+%\input{DSP/isma2004-intro-long}
+
+\verb!\input{DSP/UHEE616-intro}!
+\input{DSP/UHEE616-intro}
+
+%--CYCLIC---------------------------------------------------------------------------
+%\verb!\input{DSP/cyclic}!
+%\input{DSP/cyclic}
+%\verb!\input{DSP/cyclic-long}!
+%\input{DSP/cyclic-long}
+%\verb!\input{DSP/hafg-prelim}!
+%\input{DSP/hafg-prelim}
+
+\verb!\input{DSP/UHEE616-cyclic}!
+\input{DSP/UHEE616-cyclic}
+
+%--TRANS---------------------------------------------------------------------------
+%\verb!\input{DSP/trans}!
+%\input{DSP/trans}
+%\verb!\input{DSP/trans-long}!
+%\input{DSP/trans-long}
+%\verb!\input{DSP/hafg-trans}!
+%\input{DSP/hafg-trans}
+
+\verb!\input{DSP/UHEE616-trans}!
+\input{DSP/UHEE616-trans}
+
+%--GA---------------------------------------------------------------------------
+%\verb!\input{DSP/ga}!
+%\input{DSP/ga}
+%\verb!\input{DSP/ga-long}!
+%\input{DSP/ga-long}
+%\verb!\input{DSP/hafg-ga}!
+%\input{DSP/hafg-ga}
+
+\verb!\input{DSP/UHEE616-ga}!
+\input{DSP/UHEE616-ga}
+
+%--IDEALS---------------------------------------------------------------------------
+\verb!\input{DSP/ideals}!
+\input{DSP/ideals}
+
+%%=======================================================================
+%\ismasec{Abelian Group DSP}
+%%=======================================================================
+%\verb!\input{DSP/abelianTranslation}!
+%\input{DSP/abelianTranslation}
+%\verb!\input{DSP/abelianDSP}!
+%\input{DSP/abelianDSP}
+
+%=======================================================================
+\ismasec{Nonabelian Group DSP}
+%=======================================================================
+This section presents some basic theory of digital 
+signal processing (DSP), but relies on a more general 
+mathematical formalism than that employed by the 
+standard textbooks on the subject.\footnote{A few notable
+  exceptions are 
+  \cite{{An:2003}, {Tolimieri:1998}}, {Chirikjian:2002}.}
+%\cite{{An:2003},{Chirikjian:2001},{Tolimieri:1998},{Tolimieri:1997}}}.
+%the book by Chirikjian and Kyatkin~  %and the books by Tolimieri and An
+
+%--NONABELIAN---------------------------------------------------------------------------
+%\verb!\input{DSP/nonabelianDSP}!
+%\input{DSP/nonabelianDSP}
+%\verb!\input{DSP/nonabelianDSP-long}!
+%\input{DSP/nonabelianDSP-long}
+%\verb!\input{DSP/hafg-nonabelian}!
+%\input{DSP/hafg-nonabelianDSP}
+
+\verb!\input{DSP/UHEE616-nonabelianDSP}!
+\input{DSP/UHEE616-nonabelianDSP}
+
+%--THEOREMS----------------------------------------------------------------------
+%\verb!\input{DSP/ngdsp-theorems}!
+%\input{DSP/ngdsp-theorems}
+
+%--SDP---------------------------------------------------------------------------
+\verb!\input{DSP/SDP}!
+\input{DSP/SDP}
+
+%=======================================================================
+\ismasec{Examples}
+%=======================================================================
+As seen above, when varying group structures are placed on indexing sets,
+and products in the resulting group algebra are computed, 
+interesting signal transforms obtain.  In this section,
+we elucidate the nature of these operations by
+examining some simple concrete examples in detail.
+
+%--EXAMPLES-----------------------------------------------------------------
+\verb!\input{DSP/Examples}!
+\input{DSP/Examples}
+
+%--SUMMARY-----------------------------------------------------------------
+%\verb!\input{DSP/isma2004-summary}!
+%\input{DSP/isma2004-summary}
+
+%\verb!\input{DSP/isma2004-summary-long}!
+%\input{DSP/isma2004-summary-long}
+
+\verb!\input{DSP/UHEE616-summary}!
+\input{DSP/UHEE616-summary}
+
+%-----------------------------------------------------------------------------
+\bibliographystyle{IEEEtran}
+%\bibliographystyle{ieeetr}
+%\begin{thebibliography}{10}
+\bibliography{wjd}
+%\bibitem[1]{An:2003} An, M. and Tolimieri, R, ``Group Filters and Image
+%Processing,'' Psypher Press, 2003. $<$http://www.psypher.net$>$.
+%\end{thebibliography}
+%-----------------------------------------------------------------------------
+\end{document}

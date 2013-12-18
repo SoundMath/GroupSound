@@ -1,0 +1,175 @@
+
+%=======================================================================
+\section{Nonabelian Group DSP}
+%=======================================================================
+This section presents some basic principles of
+DSP, but relies on a more general mathematical formalism
+than that commonly found in textbooks on the subject.\footnote{A few notable
+  exceptions are~\cite{An:2003, Tolimieri:2003, Tolimieri:1998, Chirikjian:2002}.}
+%\cite{{An:2003},{Chirikjian:2001},{Tolimieri:1998},{Tolimieri:1997}}}.
+%the book by Chirikjian and Kyatkin~  %and the books by Tolimieri and An
+
+%------------------------------------------------------------------------
+\subsection{The Group of Characters: Main Theorems}
+%------------------------------------------------------------------------
+A \emph{character} of $G$ is a group homomorphism of $G$
+into $\C^{\times}$, where $\C^{\times} = \C \setminus \{0\}$.
+In other words, the mapping $\varrho: G \to \C^{\times}$ is 
+a character of $G$ if it satisfies 
+$\varrho(xy) = \varrho(x)\varrho(y), \, x, y \in G$.
+%There is always at least one character, the 
+%\emph{trivial character}, which is 1 for all $y\in G$. 
+Let $G^*$ denote the set of all characters of $G$.
+
+By the identification~(\ref{eq:iso}) between $\LG$ and
+$\CG$, a character $\varrho \in G^*$ can be viewed as
+a formal sum,
+\begin{equation}
+\varrho = \sum_{x\in G}\varrho(x)x.
+\end{equation}
+Therefore, $G^* \subset \CG$. 
+Expressing the characters as formal sums 
+leads to simple proofs of important DSP results.
+%%%
+%%% T-1
+%%%
+\begin{theorem}\label{thm:char-action}     
+If $\varrho$ is a character of $G$, then
+\begin{equation}
+y\varrho = \varrho y = \varrho(y^{-1})\varrho, \quad y\in G.
+\end{equation}
+\end{theorem}
+\begin{proof}
+%%%
+%%% P-1
+%%%
+By a change of variables,
+\[
+\varrho y = \sum_{x\in G}\varrho(x)xy = \sum_{x\in G}\varrho(xy^{-1})x, \quad y\in G.
+\]
+By homomorphism property, $\varrho(xy^{-1}) =
+\varrho(x)\varrho(y^{-1})$.  Therefore, 
+\[
+\varrho y %=\sum_{x\in G}\varrho(xy^{-1})x 
+= \sum_{x\in G}\varrho(x)\varrho(y^{-1})x
+= \varrho(y^{-1})\varrho, \quad y\in G.
+\]
+A similar change of variables argument shows
+\[
+y\varrho %= \sum_{x\in G}\varrho(x)yx
+= \sum_{x\in G}\varrho(y^{-1}x)x
+= \varrho(y^{-1})\varrho, \quad y\in G.
+\]
+%As above, write $\varrho$ as a formal sum and change
+%variables.
+%% \qed
+\end{proof}
+%\begin{proof}By a change of variables,\begin{equation}
+%\varrho y = \sum_{x\in G}\varrho(x)xy = \sum_{x\in G}\varrho(xy^{-1})x, \quad y\in G.
+%\end{equation}By homomorphism property, $\varrho(xy^{-1}) =
+%\varrho(x)\varrho(y^{-1})$.  Therefore, $\varrho y = \varrho(y^{-1})\varrho$, for all $\quad y\in G$.
+%The same change of variables argument works for $y\varrho$.\qed\end{proof}
+%%%
+%%% T-2
+%%%
+\begin{theorem}\label{thm:eigenvector}             
+%If $\varrho\in G^*$ is a nontrivial character of $G$, then
+For $\varrho\in G^*$,
+\begin{equation}
+\frac{1}{|G|} \sum_{x\in G} \varrho(x) = 
+\begin{cases}  1, & \varrho(x)=1, \forall x\in G,\\
+0, & \text{otherwise.}
+\end{cases}
+\end{equation}
+\end{theorem}
+where $|G|$ is the order of $G$.
+%%%
+%%% P-2
+%%%
+\begin{proof}
+%%Let $y\in G$ be such that $\varrho(y) \neq 0$, and $\varrho(y) \neq 1$.  (If no
+%%such $y$ exists, the result is obvious.)
+By a change of variables,
+\begin{equation}
+\varrho(y) \sum_{x\in G} \varrho(x) = \sum_{x\in G}
+\varrho(yx) = \sum_{x\in G} \varrho(x), \quad y\in G.
+\end{equation}
+Thus, either $\varrho(x)=1, \forall x\in G$, 
+or $\sum \varrho(x)=0$.
+\end{proof}
+%\qed 
+
+Theorem~\ref{thm:char-action} shows that every character is
+an eigenvector of left-multiplication by elements of the
+group $G$, so we call them $\lt{L}(G)$-eigenvectors.
+Therefore, by linearity, the characters are eigenvectors
+of left-multiplication by $f\in \CG$ (convolution by
+$f\in \LG$).  This is re-stated more formally as the following
+formula for the $G$-\emph{spectral components} of $f$:
+\begin{corollary}\label{cor:FT}
+If $\varrho\in G^*$ and $f\in \CG$, then
+\begin{equation}\label{eq:FT}
+f\varrho = \varrho f = \hat{f}(\varrho)\varrho,
+\end{equation}
+where $\hat{f}(\varrho) = \sum_{y\in G} f(y) \varrho(y^{-1})$.
+%\end{cor}
+\end{corollary}
+\begin{proof}
+By Theorem~\ref{thm:char-action},
+\begin{equation}
+f\varrho = \sum_{y\in G} f(y) y\varrho =  \sum_{y\in G} f(y)\varrho(y^{-1}) \varrho
+\end{equation}
+Similarly for $\varrho f$, mutatis mutandis.
+%\qed
+\end{proof}
+
+The functions which make up the standard Fourier basis
+% -- the exponential functions -- 
+are eigenvectors of standard convolution.  
+As seen in the foregoing proofs, % of~\ref{thm:eigenvector}, 
+this is merely a consequence of the fact that the
+exponential functions are %satisfy properties which allow usto call them 
+characters.  \emph{The notion of a character basis
+generalizes the Fourier basis to include bases which
+can diagonalize any linear combination of 
+left group multiplications.}
+%%% LEFT OFF with notes on p. 132 %%%
+\begin{corollary}\label{cor:idemp}
+If $\lambda, \tau \in G^*$, then
+\begin{equation}
+\lambda \tau = 
+\begin{cases}  |G|\lambda, & \tau=\lambda,\\
+0, & \tau\neq\lambda.
+\end{cases}
+\end{equation}
+\end{corollary}
+\begin{proof}
+Suppose $\tau = \lambda$; then,
+%\begin{eqnarray*}
+\[\lambda \tau %= \lambda\lambda &=& \sum_{x\in G} \tau(x)x\tau\\
+= \sum_{x\in G} \lambda(x)\lambda(x^{-1})\lambda
+= \sum_{x\in G} \lambda(1)\lambda = |G|\lambda
+\]%\end{eqnarray*}
+Suppose $\tau \neq \lambda$. By definition,
+\begin{equation}
+\hat{\lambda}(\tau) = \sum_{x\in G}\lambda(x)\tau(x^{-1}) =
+\sum_{y\in G}\lambda(y^{-1})\tau(y) = \hat{\tau}(\lambda)
+\end{equation}
+By~(\ref{eq:FT}), 
+$\hat{\lambda}(\tau)\tau = \lambda\tau = \tau\lambda =\hat{\tau}(\lambda)\lambda $.  
+Since $\hat{\lambda}(\tau) = \hat{\tau}(\lambda)$ and $\tau
+\neq \lambda$, it must be the case that
+$\hat{\tau} = 0$ and $\lambda\tau = 0$.
+%\qed
+\end{proof}
+Corollary~\ref{cor:idemp} can be expressed in the language
+of \emph{idempotent theory}.  A nonzero element $e \in \CG$
+is called an \emph{idempotent} if $e^2 = e$. Two idempotents
+$e_1$ and $e_2$ are called orthogonal if
+$e_1e_2 = e_2e_1 = 0$.
+Corollary~\ref{cor:idemp} says that 
+\[
+\left\{\frac{1}{|G|}\rho : \rho \in G^* \right\}
+\]
+is a set of pairwise orthogonal idempotents.
+

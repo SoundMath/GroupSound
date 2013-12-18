@@ -1,0 +1,76 @@
+
+%======================================================================
+\section{Translation Invariance}
+%======================================================================
+%-----------------------------------------------------------------------
+\subsection{Generalized Translation and Convolution}
+%-----------------------------------------------------------------------
+%\ismasubsubsec{General definition of translation}
+For $y\in G$, the mapping $\lt{T}(y)$ of $\LG$ defined by 
+\begin{equation}\label{eq:trans}
+(\lt{T}(y)f)(x) = f(y^{-1}x), \quad x \in G,
+\end{equation}
+is a linear operator of $\LG$ called 
+\emph{left translation by} $y$.
+
+%---
+%\ismasubsubsec{General definition of convolution}
+%---
+The mapping $\lt{C}(f)$ of $\LG$ defined by 
+\begin{equation}
+\lt{C}(f) = \sum_{y\in G} f(y) \lt{T}(y), \quad f\in \LG,
+\end{equation}
+is a linear operator of $\LG$ called 
+\emph{left convolution by} $f$.  By definition, for $x\in G$,
+\begin{equation}\label{eq:conv}
+(\lt{C}(f)g)(x) = \sum_{y\in G} f(y) g(y^{-1}x), \quad g \in \LG.
+\end{equation}
+%The collection of all left convolutions of $\LG$ is
+%$\vs{C}(G) = \left\{\lt{C}(f) : f \in G \right\}$.
+
+For $f, g \in \LG$, the composition
+$f * g  = \lt{C}(f)g$
+is called the \emph{convolution product}.
+The vector space $\LG$ paired with the convolution product
+is an algebra, the \emph{convolution algebra over} $G$.
+
+To gain some familiarity with the general 
+definitions of translation %~(\ref{eq:trans}) 
+and convolution, %~(\ref{eq:conv}), 
+it helps to verify 
+that these definitions agree with what we expect 
+when $G$ is a familiar abelian group. 
+%---
+\begin{example}
+%---
+If $G=\Z/N$, then~(\ref{eq:trans}) becomes
+%translation of $\LG$ by $y\in G$ is defined by 
+\begin{equation}
+(\lt{T}(y)f)(x) = f(x-y),  \qquad x \in G,
+\end{equation}
+and~(\ref{eq:conv}) becomes
+%convolution of $\LG$ by $g\in \LG$ is defined by
+%\begin{equation}
+%\lt{C}(g)f = \sum_{y \in G}g(y)\lt{T}(y)f, \qquad f \in \LG,
+%\end{equation}
+%which, at $x \in G$, is
+\begin{equation}
+(\lt{C}(g)f)(x) =\sum_{y \in G} g(y)f(x-y).
+\end{equation}
+\end{example}
+\begin{example}
+%Consider the translation and convolution operations for the special case
+If $G = \Z/M \times \Z/N$, then translation of $\LG$ by
+$y\in G$ is given by 
+\[
+(\T(y)f)(x) = f(x_1-y_1, x_2-y_2), \qquad x \in G.
+\]
+while convolution of $\LG$ by $g\in \LG$ is given by
+\[
+\lt{C}(g)f = \sum_{y \in G}g(y)\T(y)f, \qquad f \in \LG.
+\]
+Evaluated at a point $x = (x_1,x_2) \in G$,
+\[
+(\lt{C}(g)f)(x) =\sum_{y_1 = 0}^{M-1}\sum_{y_2=0}^{N-1}g(y_1,y_2)f(x_1-y_1,x_2-y_2).
+\]
+\end{example}

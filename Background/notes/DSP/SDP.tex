@@ -1,0 +1,177 @@
+% This is the master sdp.tex file -- the most
+% up-to-date -- the one on which all others are based.
+
+% UHEE616-sdp.tex integrated on 2005.03.16
+
+%----------------------------------------------------------------------
+\subsection{Semidirect Product Groups}
+%----------------------------------------------------------------------
+To determine whether a particular group is useful for a DSP
+application, we must specify exactly how this group
+represents the data.
+The group representation may reduce computational
+complexity, or it may simply make it easier to state,
+understand, or model a given signal processing task.
+
+This section describes %procedures for specifying and studying 
+a simple class of nonabelian groups that have
+proven useful in applications -- 
+\emph{abelian by abelian semidirect products}. 
+%These are
+%perhaps the simplest extension of abelian groups
+%% case, these are
+%%groups of the form $G = A \sdp B$, where $A$ and $B$
+%%are abelian groups. Not surprisingly, 
+%and DSP over such groups closely resembles that over abelian
+%groups.  However, the resulting processing tools can have
+%vastly different characteristics. 
+
+%%% LEFT OFF HERE --> resume from top of page 109
+%%% LEFT OFF with notes on p. 132 %%%
+
+%-----------------------------------------------------------------------
+%\ismasubsec{Action Group}
+%-----------------------------------------------------------------------
+Let $G$ be a finite group of order $N$, $K$ a subgroup of $G$,
+and $H$ a normal subgroup of $G$. If $G = HK$ and $H \cap
+K = \{1\}$, then we say that $G$ is the 
+%\emph{internal semidirect product}
+\emph{semidirect product} $G = H \sdp K$. 
+It can be shown that $G = H \sdp K$ if and only if every $x \in
+G$ has a unique representation of the form $x = yz, \; y\in H,
+z\in K$.
+
+Denote by $Aut(H)$ the set of all \emph{automorphisms} of
+$H$. The mapping $\Psi:K\rightarrow Aut(H)$ defined by  
+\begin{equation}\label{eq:homo}
+\Psi_z(x) = zxz^{-1}, \quad z\in K, x\in H
+\end{equation}
+is a group homomorphism. 
+Define the binary composition in $G$
+%relative to the representation $G= H\sdp K$
+in terms of $\Psi$ as follows:
+\begin{equation}\label{eq:PsiProd}
+x_1x_2 = (y_1z_1)(y_2z_2)= y_1\Psi_{z_1}(y_2)z_1z_2,
+\end{equation}
+\[
+y_1, y_2 \in H,\; z_1, z_2 \in K. 
+\]
+
+If $K$ is a normal subgroup of $G$,
+then $y^{-1}Ky = K$ for all $y\in G$, 
+%(by definition of \emph{normal subgroup}) in which case, %$[H, K] = \{1\}$, 
+and $G$ is simply the cartesian product $H\times K$ 
+with component-wise multiplication. 
+What is new in the semidirect product is
+the possibility that $K$ acts nontrivially on $H$. 
+For this reason, $K$ is sometimes called the ``action group.''
+
+%-----------------------------------------------------------------------
+\subsubsection{Simplest Nonabelian Example}
+%-----------------------------------------------------------------------
+If the mapping $\Psi$ given in~(\ref{eq:homo}) is defined over
+$K=U(N)$, then $\Psi$ is a group isomorphism.
+Under this identification, we can form the semidirect
+product $G = H\sdp K$, with $H = C_N(x)$ and $K$ a
+subgroup of $U(N)$.  Throughout this section, $G$ will
+denote such a semidirect product group.
+
+The elements $u\in K$ are integers. However, following~\cite{An:2003} we
+denote by $k_u$ the element $u\in K$, as this avoids confusion that can arise 
+on occasion. This notation is especially useful when $K$ 
+is a cyclic group with generator $u$.  If  we denote elements of $K$ by $k_u^j$, instead of 
+by $u^j$, it is easier to distinguish them from elements of the abelian group $C_N(x)$.
+
+Suppose the action group $K$ is a cyclic group of order $J = |K|$ with generator
+$u$. We identify each element of $K$ with an index, and denote 
+the set of elements by $K = \{k_u^j: 0\leq j < J\}$.
+Thus, to each $k_v \in K$, there corresponds a $j\in \Z$ 
+such that $k_u^j=k_v$.
+We use $x^n k_v$ and $x^n k_u^j$ to denote  
+typical points of $G=C_N(x)\sdp K$.
+
+Given two points in $G$, say $z = x^m k_u$
+and $y=x^n k_v$, define multiplication %on $G$ 
+according
+to~(\ref{eq:PsiProd}) as follows:
+\begin{equation}\label{eq:prod}
+  zy = (x^m k_u)(x^n k_v) = x^{m+u n} k_u k_v,
+\end{equation}
+where %In~(\ref{eq:prod}), 
+$m+ u n$ is taken modulo $N$.
+Since $k_v=k_u^j$ for some $j\in \Z$, then 
+$k_u k_v = k_u^{1+j}$, and $zy = x^{m+u n} k_u^{j+1}$.
+
+Let $z = x^m k_v$ and suppose $k_w$ is the inverse 
+of $k_v$ in $K$.  Then the inverse of $z$ must be
+$z^{-1}=x^{N-wm} k_w$, since this satisfies
+%\begin{equation}\label{eq:inv}z^{-1}=x^{N-wm} k_w.\end{equation}
+$\inverse{z}z \equiv 1$.
+
+Suppose $K \subset U(N)$ has order $|K|=J$, 
+and consider the semidirect product group
+with elements
+\begin{equation}
+  G   = \{x^n k_u^j : 0 \leq n < N, 0 \leq j < J\}.\label{eq:sdp}
+\end{equation}
+%\ismasubsec{Translations on Semidirect Product Groups}
+For $f\in \CG$, %the formal sum can be expressed in the following ways:
+\begin{equation}
+  f = \sum_{y\in G} f(y)y= \sum_{n,j} f(x^n k_u^j)x^n k_u^j,
+\end{equation}
+%where $0\leq n <N$ and $0\leq j < J$.
+
+As above, translations of $\CG$ are defined as
+left multiplication by elements of $G$.  
+For semidirect product~(\ref{eq:sdp}) 
+there is a simple dichotomy of translation types that arise
+from left-multiplication by elements of $G$.  %Translations of the
+First, the familiar ``abelian translates'' 
+are obtained upon left-multiplication by powers of $x$
+(Fig.~\ref{fig:cyclicshift}).  
+By change of variables, 
+\begin{equation}\label{eq:1}
+x^mf = \sum_{n,j} f(x^{n-m} k_u^j)x^n k_u^j,
+\end{equation}
+which is simply a right shift of $f$ by $m$ units.
+Similarly, left-multiplication by powers of
+$x^{-1}$ effects left shift of $f$. 
+(Recall, $x^{-1} \equiv x^{N-1}$
+and $x^{-m} \equiv x^{N-m}$.)  
+
+Of the second type are the ``nonabelian translates,'' 
+obtained upon left-multiplication by $k_v \in K$.
+\begin{equation}
+  k_vf %&=& \sum_{n,j} f(x^n k_u^j)k_v x^n k_u^j\nonumber\\
+  = \sum_{n,j} f(k_v^{-1}x^n k_u^j)x^n k_u^j.
+\end{equation}
+Suppose $k_w = k_u^\ell$ is the inverse of $k_v$ in $K$.  Then,
+\begin{equation}
+  k_vf %  &=& \sum_{n,j} f(k_w x^{n}k_u^j)x^n k_u^j\nonumber\\
+  = \sum_{n,j} f(x^{wn}k_u^{\ell + j})x^n k_u^j\label{eq:nonabtrans}
+\end{equation}
+%As usual, summation is over $0\leq n <N$ and $0\leq j < J$.
+From equation~(\ref{eq:nonabtrans}) it is clear that $k_vf$ 
+results in a more complex transformation than that of 
+$x^m f$ as given by~(\ref{eq:1}).
+
+%\newcommand{\zmv}{\ensuremath{x^m k_v}}
+%\newcommand{\zmvInv}{\ensuremath{x^{N-wm} k_w}}
+
+For the general element $z = \zmv \in G$ with 
+inverse $z^{-1}=\zmvInv$ %(equation~(\ref{eq:inv})), 
+we derive rules for generalized translations.
+% with respect to $z$ and $z^{-1}$.
+\begin{equation*}
+  zf = \sum_{y\in G} f(z^{-1}y)y= \sum_{n,j} f(x^{N-w(m-n)} k_w k_u^j)x^n k_u^j
+%  &=& \sum_{y\in G} f(y)zy = \sum_{y\in G} f(z^{-1}y)y\nonumber \\  
+%  &=& \sum_{n,j} f(\zmvInv \, x^n k_u^j) x^n k_u^j\nonumber\\
+%  &=& \sum_{n,j} f(x^{N-w(m-n)} k_w k_u^j)x^n k_u^j
+\end{equation*}
+\begin{equation*}
+  z^{-1}f = \sum_{y\in G} f(zy)y= \sum_{n,j} f(x^{m+vn} k_vk_u^j)x^n k_u^j
+%  &=& \sum_{y\in G} f(y)z^{-1}y = \sum_{y\in G} f(zy)y\nonumber \\  
+%  &=& \sum_{n,j} f(\zmv x^n k_u^j)x^n k_u^j\nonumber\\
+%  &=& \sum_{n,j} f(x^{m+vn} k_vk_u^j)x^n k_u^j
+\end{equation*}
+
