@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of scenexy</title>
+  <meta name="keywords" content="scenexy">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; scenexy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>scenexy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function yy=scene(m,nx,ny) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="p4.html" class="code" title="function y=p4(n,dt);">p4</a>	</li><li><a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>	</li><li><a href="trsl.html" class="code" title="function f=trsl(f1,n2,t1,t2)">trsl</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="even6.html" class="code" title="">even6</a>	</li><li><a href="even6_alt0.html" class="code" title="">even6_alt0</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function yy=scene(m,nx,ny)</a>
+0002 ln=zeros(nx,ny);
+0003 crc=zeros(nx,ny);
+0004 chk=rand(nx,ny);
+0005 <span class="comment">%</span>
+0006 <span class="keyword">if</span> (m == 1)
+0007 <span class="comment">%   for k1=1:nx/2</span>
+0008 <span class="comment">%      kk1=2*k1;</span>
+0009 <span class="comment">%      for k2=1:ny/2</span>
+0010 <span class="comment">%         kk2=2*k2;</span>
+0011 <span class="comment">%         kk=k1*k2;</span>
+0012 <span class="comment">%         chk(kk1-1,kk2-1)=kk+chk(kk1-1,kk2-1);</span>
+0013 <span class="comment">%         chk(kk1,kk2-1)=2*(kk+chk(kk1,kk2-1));</span>
+0014 <span class="comment">%         chk(kk1-1,kk2)=3*(kk+chk(kk1-1,kk2));</span>
+0015 <span class="comment">%         chk(kk1,kk2)=4*(kk+chk(kk1,kk2));</span>
+0016 <span class="comment">%      end</span>
+0017 <span class="comment">%   end</span>
+0018    mm=max(max(chk));
+0019    ln=zeros(nx,ny);
+0020    yy=zeros(nx,ny);
+0021 <span class="comment">%   nn=max(nx,ny);</span>
+0022 <span class="comment">%   for k=1:floor(nn/7)-1</span>
+0023 <span class="comment">%      ln(k,nn-7*k+1)=max(max(chk));</span>
+0024 <span class="comment">%   end</span>
+0025 <span class="comment">%   yy=ln+chk;</span>
+0026    n=36;
+0027    x=linspace(0,n-1,n);
+0028    x7=mod(7*x,nx)+1;
+0029    <span class="keyword">for</span> k=1:n
+0030       yy(x7(k),n-x(k)+1)=.8*mm;
+0031    <span class="keyword">end</span>  
+0032    <span class="keyword">for</span> k=1:n
+0033       yy(k,k)=.5*mm;
+0034    <span class="keyword">end</span>   
+0035 <span class="comment">%   yy=yy+chk;</span>
+0036 <span class="comment">%   yy(1:n,1+n:2*n)=yy(1:n,1:n);</span>
+0037 <span class="comment">%   yy(1:n,1+2*n:3*n)=yy(1:n,1:n);</span>
+0038 <span class="comment">%   yy(1+n:2*n,1:n)=yy(1:n,1:n);</span>
+0039 <span class="comment">%   yy(1+n:2*n,1+n:2*n)=yy(1:n,1:n);</span>
+0040 <span class="comment">%   yy(1+n:2*n,1+2*n:3*n)=yy(1:n,1:n);</span>
+0041 <span class="keyword">end</span>   
+0042 <span class="comment">%</span>
+0043 <span class="comment">%if (m==2)</span>
+0044 <span class="comment">%   d=[512,512];</span>
+0045 <span class="comment">%   fid=fopen('grass.tiff', 'r' , 'ieee-be');</span>
+0046 <span class="comment">%   if fid == -1</span>
+0047 <span class="comment">%      error('Help')</span>
+0048 <span class="comment">%   end</span>
+0049 <span class="comment">%   h = fread(fid, 42, 'uchar');</span>
+0050 <span class="comment">%   grs= fread(fid, prod(d), 'uint8');</span>
+0051 <span class="comment">%   grs=reshape(grs, d)';</span>
+0052 <span class="comment">%   gg(1:n2,1:n2)=grs(1:n2,1:n2);</span>
+0053 <span class="comment">%</span>
+0054 <span class="comment">%   ln=zeros(n2,n2);</span>
+0055 <span class="comment">%   rd=rand(n2,n2);</span>
+0056 <span class="comment">%   for k=n/8:n2</span>
+0057 <span class="comment">%      ln(k-n/8+1,k)=50;</span>
+0058 <span class="comment">%      ln(n-n/8,k)=35;</span>
+0059 <span class="comment">%      ln(k,n+n/8)=35;</span>
+0060 <span class="comment">%   end</span>
+0061 <span class="comment">%   yy=gg+ln;</span>
+0062 <span class="comment">%end</span>
+0063 <span class="comment">%</span>
+0064 <span class="keyword">if</span> (m==3)
+0065    <span class="keyword">for</span> k1=1:nx/2
+0066       kk1=2*k1;
+0067       <span class="keyword">for</span> k2=1:ny/2
+0068          kk2=2*k2;
+0069          kk=k1*k2;
+0070          chk(kk1-1,kk2-1)=kk+chk(kk1-1,kk2-1);
+0071          chk(kk1,kk2-1)=2*(kk+chk(kk1,kk2-1));
+0072          chk(kk1-1,kk2)=3*(kk+chk(kk1-1,kk2));
+0073          chk(kk1,kk2)=4*(kk+chk(kk1,kk2));
+0074       <span class="keyword">end</span>
+0075    <span class="keyword">end</span>
+0076 <span class="keyword">end</span>
+0077 <span class="comment">%</span>
+0078 <span class="keyword">if</span> (m==4)
+0079    ln=zeros(n2,n2);
+0080    <span class="keyword">for</span> k=1:n2
+0081       ln(k,k)=2*abs(n-.5*k);
+0082    <span class="keyword">end</span>   
+0083    ns=n*rand(n2,n2);
+0084    spk=zeros(n2,n2);
+0085    <span class="keyword">for</span> k1=1:n
+0086       kk1=2*k1;
+0087       <span class="keyword">for</span> k2=1:n
+0088          kk2=2*k2;
+0089          chk(kk1-1,kk2)=.5*kk1;
+0090          chk(kk1,kk2-1)=.5*kk2;
+0091       <span class="keyword">end</span>
+0092    <span class="keyword">end</span>
+0093    <span class="keyword">for</span> k=0:45
+0094       spk=spk+<a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>(ln,n2,8*k);
+0095    <span class="keyword">end</span>
+0096    yy=chk+spk+ns;
+0097 <span class="keyword">end</span>
+0098 <span class="comment">%</span>
+0099 <span class="keyword">if</span> (m==5)
+0100    <span class="keyword">for</span> k=n/8:n2
+0101       ln(k-n/8+1,k)=30;
+0102       ln(n-n/8,k)=30;
+0103       ln(k,n+n/8)=30;
+0104    <span class="keyword">end</span>
+0105    <span class="keyword">for</span> k=1:n
+0106       ln(2*k,n2-k+1-n/4)=30;
+0107    <span class="keyword">end</span>   
+0108    <span class="keyword">for</span> k=1:n2
+0109       ln(n2-k+1,k)=30;
+0110    <span class="keyword">end</span>
+0111    crc=zeros(n2,n2);
+0112    crc(n-n/4,n-n/8)=25;
+0113    crc(n-n/4,n-n/8+1)=25;
+0114    crc(n-n/4,n-n/8+2)=25;
+0115    <span class="keyword">for</span> k=1:7
+0116       crc=crc+<a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>(crc,n2,2^k);
+0117    <span class="keyword">end</span>   
+0118    crc=<a href="p4.html" class="code" title="function y=p4(n,dt);">p4</a>(n2,crc);
+0119 <span class="comment">%   ns=100*rand(n2,n2);</span>
+0120    crc=crc+<a href="trsl.html" class="code" title="function f=trsl(f1,n2,t1,t2)">trsl</a>(crc,n2,n/8,n/4);
+0121 <span class="comment">%   yy=crc+ns+ln;</span>
+0122    yy=crc+ln;
+0123 <span class="keyword">end</span>   
+0124 <span class="comment">%</span>
+0125 <span class="keyword">if</span> (m==6)
+0126    ln=zeros(n2,n2);
+0127 <span class="comment">%   for k1=1:n</span>
+0128 <span class="comment">%      kk1=2*k1;</span>
+0129 <span class="comment">%      for k2=1:n</span>
+0130 <span class="comment">%         kk2=2*k2;</span>
+0131 <span class="comment">%         kk=.04*k1*k2;</span>
+0132 <span class="comment">%         kk=20;</span>
+0133 <span class="comment">%         chk(kk1-1,kk2-1)=.1*(kk+chk(kk1-1,kk2-1));</span>
+0134 <span class="comment">%         chk(kk1,kk2-1)=.2*(kk+chk(kk1,kk2-1));</span>
+0135 <span class="comment">%         chk(kk1-1,kk2)=.3*(kk+chk(kk1-1,kk2));</span>
+0136 <span class="comment">%         chk(kk1,kk2)=.4*(kk+chk(kk1,kk2));</span>
+0137 <span class="comment">%         chk(kk1-1,kk2-1)=.1*(kk);</span>
+0138 <span class="comment">%         chk(kk1,kk2-1)=.2*(kk);</span>
+0139 <span class="comment">%         chk(kk1-1,kk2)=.3*(kk);</span>
+0140 <span class="comment">%         chk(kk1,kk2)=.4*(kk);</span>
+0141 <span class="comment">%      end</span>
+0142 <span class="comment">%   end</span>
+0143 <span class="comment">%   ln(n-n/8,1:n+n/2)=5;</span>
+0144 <span class="comment">%   ln(n+n/4,n/4:n2)=5;</span>
+0145 <span class="comment">%   for k=1:n</span>
+0146 <span class="comment">%      ln(2*k,n2-k+1-n/2)=5;</span>
+0147 <span class="comment">%   end</span>
+0148 <span class="comment">%   for k=1:n2</span>
+0149 <span class="comment">%      ln(n2-k+1,k)=5;</span>
+0150 <span class="comment">%      ln(k,k)=5;</span>
+0151 <span class="comment">%      ln(k,n/2)=5;</span>
+0152 <span class="comment">%   end</span>
+0153 <span class="comment">%   for k=1:n</span>
+0154 <span class="comment">%      ln(n2-k+1-n+n/4,2*k)=5;</span>
+0155 <span class="comment">%      ln(2*k,n2-k+1-n+n/2-3)=5;</span>
+0156 <span class="comment">%      ln(n2-k+1-n,2*k)=5;</span>
+0157 <span class="comment">%      ln(2*k,n2-k+1-n)=5;</span>
+0158 <span class="comment">%      ln(2*k,k+n/4)=5;</span>
+0159 <span class="comment">%      ln(k+n/2-3,2*k)=5;</span>
+0160 <span class="comment">%   end</span>
+0161    <span class="keyword">for</span> k=1:n2
+0162       ln(k,k)=5;
+0163       ln(n2-k+1,k)=5;
+0164 <span class="comment">%      ln(k,k)=5;</span>
+0165 <span class="comment">%      ln(k,n2-k+1)=5;</span>
+0166    <span class="keyword">end</span>   
+0167 <span class="comment">%   for k1=1:n2</span>
+0168 <span class="comment">%      for k2=1:n2</span>
+0169 <span class="comment">%         if (ln(k1,k2) &gt; 5)</span>
+0170 <span class="comment">%            ln(k1,k2)=5;</span>
+0171 <span class="comment">%         end</span>
+0172 <span class="comment">%      end</span>
+0173 <span class="comment">%   end</span>
+0174 <span class="comment">%   for k=1:n+n/2</span>
+0175 <span class="comment">%      ln(k+n/2,k)=5;</span>
+0176 <span class="comment">%      ln(k+n/4+3,n2-k)=5;</span>
+0177 <span class="comment">%   end</span>
+0178 <span class="comment">%   for k=1:n2-7</span>
+0179 <span class="comment">%      ln(k+7,k)=5;</span>
+0180 <span class="comment">%      ln(n2-k-6,k)=5;</span>
+0181 <span class="comment">%   end</span>
+0182 <span class="comment">%   for k=1:n</span>
+0183 <span class="comment">%      ln(k+n,k)=5;</span>
+0184 <span class="comment">%   end</span>
+0185 <span class="comment">%   ns=70*rand(n2,n2);</span>
+0186    yy=ln;
+0187 <span class="keyword">end</span>   
+0188 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

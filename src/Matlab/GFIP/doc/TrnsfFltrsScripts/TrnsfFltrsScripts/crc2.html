@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of crc2</title>
+  <meta name="keywords" content="crc2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; crc2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>crc2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 m=n/2;
+0004 g=zeros(n,n);
+0005 <span class="keyword">for</span> k=1:n
+0006    g(k,k)=1;
+0007 <span class="keyword">end</span> 
+0008 fg=fft(g);
+0009 subplot(2,2,1),imagesc(real(fg))
+0010 ifg=ifft(real(fg));
+0011 crc=zeros(n,n);
+0012 <span class="keyword">for</span> k1=1:n
+0013    <span class="keyword">for</span> k2=1:n
+0014       kk=sqrt((k1-1-m)*(k1-1-m)+(k2-1-m)*(k2-1-m));
+0015       <span class="keyword">if</span> ( (kk&gt;m-3) &amp; (kk&lt;m-1) )
+0016          crc(k1,k2)=1;
+0017       <span class="keyword">end</span>   
+0018    <span class="keyword">end</span>
+0019 <span class="keyword">end</span>   
+0020 subplot(2,2,2),imagesc(real(crc))
+0021 tcr(1:m,1:n)=crc(1+m:n,1:n);
+0022 tcr(1+m:n,1:n)=crc(1:m,1:n);
+0023 subplot(2,2,3),imagesc(real(tcr))
+0024 <span class="comment">%</span>
+0025 ic=ifft(crc);
+0026 <span class="comment">%subplot(2,2,3),imagesc(real(ifg))</span>
+0027 <span class="comment">%subplot(2,2,4),imagesc(imag(ifg))</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

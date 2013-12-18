@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of lct8</title>
+  <meta name="keywords" content="lct8">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; lct8.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>lct8
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ox,oy]=lct8(y1,tr); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ox,oy]=lct8(y1,tr);</a>
+0002 [n4,tem]=size(y1);
+0003 n=n4/4;
+0004 n2=n+n;
+0005 n3=n2+n;
+0006 tr2=tr/2;
+0007 nn(1)=max(max(y1(1:n,1:n)));
+0008 nn(2)=max(max(y1(1+n:n2,1:n)));
+0009 nn(3)=max(max(y1(1+n2:n3,1:n)));
+0010 nn(4)=max(max(y1(1+n3:n4,1:n)));
+0011 nn(5)=max(max(y1(1:n,1+n:n2)));
+0012 nn(6)=max(max(y1(1+n:n2,1+n:n2)));
+0013 nn(7)=max(max(y1(1+n2:n3,1+n:n2)));
+0014 nn(8)=max(max(y1(1+n3:n4,1+n:n2)));
+0015 ss=sum(nn);
+0016 kk=nn/ss;
+0017 ll=zeros(4,1);
+0018 <span class="keyword">for</span> k=1:4
+0019    <span class="keyword">if</span> (kk(k) &gt; .25)
+0020       ll(k)=1;
+0021    <span class="keyword">end</span>
+0022 <span class="keyword">end</span>   
+0023 ox=n2;
+0024 oy=n2;
+0025 flg=0;
+0026 tr2=tr/2;
+0027 lll=ll(1)+ll(2)+ll(3)+ll(4);
+0028 <span class="keyword">if</span> (lll==1)
+0029    <span class="keyword">if</span> (ll(1)==1)
+0030       ox=0;
+0031       oy=0;
+0032    <span class="keyword">else</span>
+0033       <span class="keyword">if</span> (ll(2)==1)
+0034          ox=tr;
+0035          oy=0;
+0036       <span class="keyword">else</span>
+0037          <span class="keyword">if</span> (ll(3)==1)
+0038             ox=0;
+0039             oy=tr;
+0040          <span class="keyword">else</span>
+0041             ox=tr;
+0042             oy=tr;
+0043          <span class="keyword">end</span>
+0044       <span class="keyword">end</span>
+0045    <span class="keyword">end</span>
+0046 <span class="keyword">end</span>
+0047 <span class="comment">%</span>
+0048 <span class="keyword">if</span> (lll==3)
+0049    <span class="keyword">if</span> (ll(1)==0)
+0050       ox=tr;
+0051       oy=tr;
+0052    <span class="keyword">else</span>
+0053       <span class="keyword">if</span> (ll(2)==0)
+0054          ox=0;
+0055          oy=tr;
+0056       <span class="keyword">else</span>
+0057          <span class="keyword">if</span> (ll(3)==0)
+0058             ox=tr;
+0059             oy=0;
+0060          <span class="keyword">else</span>
+0061             ox=0;
+0062             oy=0;
+0063          <span class="keyword">end</span>
+0064       <span class="keyword">end</span>
+0065    <span class="keyword">end</span>
+0066 <span class="keyword">end</span>
+0067 <span class="comment">%</span>
+0068 <span class="keyword">if</span> (lll==2 &amp; kk(1) &gt; .25)
+0069    <span class="keyword">if</span> (kk(2) &gt; .25)
+0070       oy=0;
+0071       <span class="keyword">if</span> (abs(kk(1)-kk(2)) &lt; .01)
+0072          ox=tr2;
+0073       <span class="keyword">else</span>
+0074          <span class="keyword">if</span> (kk(1) &gt; kk(2))
+0075             ox=0;   
+0076          <span class="keyword">else</span>
+0077             ox=tr;
+0078          <span class="keyword">end</span>
+0079       <span class="keyword">end</span>
+0080    <span class="keyword">end</span>
+0081    <span class="keyword">if</span> (kk(3) &gt; .25)
+0082       ox=0;
+0083       <span class="keyword">if</span> (abs(kk(1)-kk(3)) &lt; .01)
+0084          oy=tr2;
+0085       <span class="keyword">else</span>
+0086          <span class="keyword">if</span> (kk(1) &gt; kk(3))
+0087             oy=0;
+0088          <span class="keyword">else</span>
+0089             oy=tr;
+0090          <span class="keyword">end</span>
+0091       <span class="keyword">end</span>
+0092    <span class="keyword">end</span>
+0093    <span class="keyword">if</span> (kk(4) &gt; .25)
+0094       <span class="keyword">if</span> (abs(kk(1)-kk(4)) &lt; .01)
+0095          ox=tr2;
+0096          oy=tr2;
+0097       <span class="keyword">else</span>
+0098          <span class="keyword">if</span> (kk(1) &gt; kk(4))
+0099             ox=0;
+0100             oy=0;
+0101          <span class="keyword">else</span>
+0102             ox=tr;
+0103             oy=tr;
+0104          <span class="keyword">end</span>   
+0105       <span class="keyword">end</span>   
+0106    <span class="keyword">end</span>   
+0107 <span class="keyword">end</span>
+0108 <span class="comment">%</span>
+0109 <span class="keyword">if</span> (lll==2 &amp; kk(1) &lt; .25)
+0110    <span class="keyword">if</span> (kk(2) &gt; .25)
+0111       <span class="keyword">if</span> (kk(3) &gt; .25)
+0112          ox=tr2;
+0113          oy=tr2;
+0114       <span class="keyword">else</span>
+0115          ox=tr;
+0116          <span class="keyword">if</span> (abs(kk(2)-kk(4)) &lt; .01)
+0117             oy=tr2;
+0118          <span class="keyword">else</span>
+0119             <span class="keyword">if</span> (kk(2) &gt; kk(4))
+0120                oy=0;
+0121             <span class="keyword">else</span>
+0122                oy=tr;
+0123             <span class="keyword">end</span>   
+0124          <span class="keyword">end</span>   
+0125       <span class="keyword">end</span>   
+0126    <span class="keyword">else</span>
+0127       oy=tr;
+0128       <span class="keyword">if</span> (abs(kk(3)-kk(4)) &lt; .01)
+0129          ox=tr2;
+0130       <span class="keyword">else</span>
+0131          <span class="keyword">if</span> (kk(3) &gt; kk(4))
+0132             ox=0;
+0133          <span class="keyword">else</span>
+0134             ox=tr;
+0135          <span class="keyword">end</span>
+0136       <span class="keyword">end</span>   
+0137    <span class="keyword">end</span>   
+0138 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

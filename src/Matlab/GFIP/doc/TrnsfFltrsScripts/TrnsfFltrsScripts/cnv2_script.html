@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cnv2_script</title>
+  <meta name="keywords" content="cnv2_script">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cnv2_script.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cnv2_script
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="cnvmt.html" class="code" title="function y=cnvmt(x)">cnvmt</a>	return convolution matrix for 1d input signal x</li><li><a href="tr_2.html" class="code" title="function y=tr_2(x,n)">tr_2</a>	</li><li><a href="tr_2mtx.html" class="code" title="function y=tr_2mtx(n)">tr_2mtx</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=8;
+0003 m=n/2;
+0004 n2=n*2;
+0005 u=rand(n2,1);
+0006 v=rand(n2,1);
+0007 <span class="comment">%</span>
+0008 u1=<a href="cnvmt.html" class="code" title="function y=cnvmt(x)">cnvmt</a>(u(1:n,1));
+0009 v1=<a href="cnvmt.html" class="code" title="function y=cnvmt(x)">cnvmt</a>(u(1+n:n2,1));
+0010 nn=linspace(0,n-1,n);
+0011 gp=1;
+0012 <span class="keyword">if</span> (gp==1) <span class="comment">% x --&gt; x^-1</span>
+0013    rn=mod(n-nn,n)+1;
+0014    <span class="keyword">for</span> k1=1:n
+0015       <span class="keyword">for</span> k2=1:n
+0016          v2(k1,k2)=v1(k1,rn(k2));
+0017       <span class="keyword">end</span>   
+0018    <span class="keyword">end</span>   
+0019 <span class="keyword">end</span>
+0020 uu=[u1 v2;v2 u1];
+0021 y=<a href="tr_2mtx.html" class="code" title="function y=tr_2mtx(n)">tr_2mtx</a>(n);
+0022 yu=y*uu;
+0023 yuy=yu*y';
+0024 <span class="comment">%</span>
+0025 yy=zeros(n2,n2);
+0026 d1=sqrt(n)*<a href="tr_2.html" class="code" title="function y=tr_2(x,n)">tr_2</a>(uu(:,1),n);
+0027 <span class="keyword">for</span> k=2:m
+0028    yy(k,k)=d1(k,1);
+0029    yy(k,n2-k+2)=d1(n+k,1);
+0030    yy(k+m,k+m)=d1(k+m,1);
+0031    yy(k+m,n2-(k+m)+2)=d1(k+m+n,1);
+0032    yy(k+n,k+n)=d1(k,1);
+0033    yy(k+n,n-k+2)=d1(k+n,1);
+0034    yy(k+m+n,k+m+n)=d1(k+m,1);
+0035    yy(k+m+n,n-(k+m)+2)=d1(k+m+n,1);
+0036 <span class="keyword">end</span>   
+0037 yy(1,1)=sqrt(2)*d1(1,1);
+0038 yy(1+m,1+m)=sqrt(2)*d1(1+m,1);
+0039 yy(1+n,1+n)=sqrt(2)*d1(1+n,1);
+0040 yy(1+m+n,1+m+n)=sqrt(2)*d1(1+m+n,1);</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

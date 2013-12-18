@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ee_4_2</title>
+  <meta name="keywords" content="ee_4_2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ee_4_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ee_4_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>	</li><li><a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>	</li><li><a href="nn_4_2.html" class="code" title="function [y1,y21,y22,y41,y42,y43,y44,y8]=nn_4_2(x,gp)">nn_4_2</a>	</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 n2=n+n;
+0004 n3=n2+n;
+0005 n4=n3+n;
+0006 gp=1;
+0007 s2=input(<span class="string">'input the scene   '</span>)
+0008 sz=input(<span class="string">'input the strip size  '</span>)
+0009 hh=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(s2,sz,n2);
+0010 gg(1:n4,1:n2)=hh(1:n4,1:n2);
+0011 <span class="comment">%m=n/2;</span>
+0012 <span class="comment">%hh=obj(0,n);</span>
+0013 <span class="comment">%[a,b]=size(hh);</span>
+0014 <span class="comment">%gg=zeros(n4,n2);</span>
+0015 gg(1:n4,1:n2)=hh(1:n4,1:n2);
+0016 <span class="comment">%</span>
+0017 <span class="comment">%hh=imread('c:\windows\desktop\data\projects\sttr\pictures\wall.tif');</span>
+0018 <span class="comment">%gg(1:n4,1:n2)=double(hh(1:n4,1:n2));</span>
+0019 mm=max(max(gg));
+0020 mn=0;
+0021 lvl=input(<span class="string">'input the noise level     '</span>)
+0022 sdv=lvl*mm;
+0023 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n4,n2,mn,sdv);
+0024 ngg=gg+ns;
+0025 <span class="comment">%</span>
+0026 [x1,x21,x22,x41,x42,x43,x44,x8]=<a href="nn_4_2.html" class="code" title="function [y1,y21,y22,y41,y42,y43,y44,y8]=nn_4_2(x,gp)">nn_4_2</a>(ngg,gp);
+0027 y1=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x1,gp));
+0028 y21=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x21,gp));
+0029 y22=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x22,gp));
+0030 y41=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x41,gp));
+0031 y42=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x42,gp));
+0032 y43=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x43,gp));
+0033 y44=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x44,gp));
+0034 y8=real(<a href="inn_4_2.html" class="code" title="function y=inn_4_2(x,gp)">inn_4_2</a>(x8,gp));
+0035 <span class="comment">%</span>
+0036 figure(1)
+0037 subplot(3,3,1),imagesc(ngg)
+0038 subplot(3,3,2),imagesc(y1)
+0039 subplot(3,3,3),imagesc(y21)
+0040 subplot(3,3,4),imagesc(y22)
+0041 subplot(3,3,5),imagesc(y41)
+0042 subplot(3,3,6),imagesc(y42)
+0043 subplot(3,3,7),imagesc(y43)
+0044 subplot(3,3,8),imagesc(y44)
+0045 subplot(3,3,9),imagesc(y8)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of iscl2_16</title>
+  <meta name="keywords" content="iscl2_16">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; iscl2_16.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>iscl2_16
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=iscl2_16(x,n); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+ (C_n x C_n) sdp C_16 
+ n must be a power of 2, and at least 64.
+ (a,b)^t = (sa,sb), s=n/16-1</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="twos16.html" class="code" title="">twos16</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=iscl2_16(x,n);</a>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% (C_n x C_n) sdp C_16</span>
+0004 <span class="comment">% n must be a power of 2, and at least 64.</span>
+0005 <span class="comment">% (a,b)^t = (sa,sb), s=n/16-1</span>
+0006 <span class="comment">%</span>
+0007 n2=2*n;
+0008 n3=3*n;
+0009 n4=4*n;
+0010 m=n/2;
+0011 mm=n/16;
+0012 rt2=sqrt(2);
+0013 t4=zeros(4,1);
+0014 t8=zeros(8,1);
+0015 t16=zeros(16,1);
+0016 <span class="comment">%x=rand(n4,n4);</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%</span>
+0019 <span class="keyword">for</span> k2=0:n/4-1
+0020    kk2=1+4*k2;
+0021    <span class="keyword">for</span> k1=0:n/4-1
+0022       kk1=1+4*k1;
+0023       t1=x(2+kk1,kk2)+x(2+kk1,kk2+n2);   
+0024       t2=x(2+kk1,kk2)-x(2+kk1,kk2+n2);   
+0025       x(2+kk1,kk2)=rt2*t1;
+0026       x(2+kk1,kk2+n2)=rt2*(t2);
+0027       t1=x(kk1,2+kk2)+x(kk1,2+kk2+n2);   
+0028       t2=x(kk1,2+kk2)-x(kk1,2+kk2+n2);   
+0029       x(kk1,2+kk2)=rt2*t1;
+0030       x(kk1,2+kk2+n2)=rt2*(t2);
+0031       t1=x(2+kk1,2+kk2)+x(2+kk1,2+kk2+n2);   
+0032       t2=x(2+kk1,2+kk2)-x(2+kk1,2+kk2+n2);   
+0033       x(2+kk1,2+kk2)=rt2*t1;
+0034       x(2+kk1,2+kk2+n2)=rt2*(t2);
+0035    <span class="keyword">end</span>
+0036 <span class="keyword">end</span>   
+0037 <span class="keyword">for</span> k2=0:n/8-1
+0038    kk2=1+8*k2;
+0039    <span class="keyword">for</span> k1=0:n/8-1
+0040       kk1=1+8*k1;
+0041       <span class="keyword">for</span> l=0:3
+0042          t(1+l)=x(4+kk1,kk2+l*n);
+0043       <span class="keyword">end</span>
+0044       t=.5*fft(t);
+0045       <span class="keyword">for</span> l=0:3
+0046          x(4+kk1,kk2+l*n)=t(1+l);
+0047       <span class="keyword">end</span>
+0048       <span class="keyword">for</span> l=0:3
+0049          t(1+l)=x(kk1,4+kk2+l*n);
+0050       <span class="keyword">end</span>
+0051       t=.5*fft(t);
+0052       <span class="keyword">for</span> l=0:3
+0053          x(kk1,4+kk2+l*n)=t(1+l);
+0054       <span class="keyword">end</span>
+0055       <span class="keyword">for</span> l=0:3
+0056          t(1+l)=x(4+kk1,4+kk2+l*n);
+0057       <span class="keyword">end</span>
+0058       t=.5*fft(t);
+0059       <span class="keyword">for</span> l=0:3
+0060          x(4+kk1,4+kk2+l*n)=t(1+l);
+0061       <span class="keyword">end</span>
+0062    <span class="keyword">end</span>
+0063 <span class="keyword">end</span>   
+0064 <span class="keyword">for</span> k2=0:n/8-1
+0065    kk2=1+8*k2;
+0066    <span class="keyword">for</span> k1=0:n/8-1
+0067       kk1=1+8*k1;
+0068       t8(1)=x(kk1,   kk2);
+0069       t8(2)=x(kk1+n2,kk2);
+0070       t8(3)=x(kk1,   kk2+n);
+0071       t8(4)=x(kk1+n2,kk2+n);
+0072       t8(5)=x(kk1,   kk2+n2);
+0073       t8(6)=x(kk1+n2,kk2+n2);
+0074       t8(7)=x(kk1,   kk2+n3);
+0075       t8(8)=x(kk1+n2,kk2+n3);
+0076       t8=(1/sqrt(8))*fft(t8);
+0077       x(kk1,   kk2)=t8(1);
+0078       x(kk1+n2,kk2)=t8(2);
+0079       x(kk1,   kk2+n)=t8(3);
+0080       x(kk1+n2,kk2+n)=t8(4);
+0081       x(kk1,   kk2+n2)=t8(5);
+0082       x(kk1+n2,kk2+n2)=t8(6);
+0083       x(kk1,   kk2+n3)=t8(7);
+0084       x(kk1+n2,kk2+n3)=t8(8);
+0085    <span class="keyword">end</span>
+0086 <span class="keyword">end</span>   
+0087 <span class="keyword">for</span> k2=0:1
+0088    kk2=m*k2;
+0089    <span class="keyword">for</span> k1=0:1
+0090       kk1=m*k1;
+0091       <span class="keyword">for</span> l2=0:3
+0092          ll2=kk2+n*l2;
+0093          <span class="keyword">for</span> l1=0:3
+0094             ll1=kk1+n*l1;
+0095             t(1+l1+4*l2)=x(1+ll1,1+ll2);
+0096          <span class="keyword">end</span>   
+0097       <span class="keyword">end</span>   
+0098       t=.25*fft(t);
+0099       <span class="keyword">for</span> l2=0:3
+0100          ll2=kk2+n*l2;
+0101          <span class="keyword">for</span> l1=0:3
+0102             ll1=kk1+n*l1;
+0103             x(1+ll1,1+ll2)=t(1+l1+4*l2);
+0104          <span class="keyword">end</span>   
+0105       <span class="keyword">end</span>   
+0106    <span class="keyword">end</span>   
+0107 <span class="keyword">end</span>
+0108 <span class="keyword">for</span> k2=0:3
+0109    <span class="keyword">for</span> k1=0:3
+0110       y(1+k1*n:(k1+1)*n,1+k2*n:(k2+1)*n)=1/n*fft2(x(1+k1*n:(k1+1)*n,1+k2*n:(k2+1)*n));
+0111    <span class="keyword">end</span>
+0112 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

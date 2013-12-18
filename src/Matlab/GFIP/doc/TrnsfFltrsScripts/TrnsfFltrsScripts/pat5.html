@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of pat5</title>
+  <meta name="keywords" content="pat5">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; pat5.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>pat5
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>	</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li><li><a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 n2=n*2;
+0004 nd2=n/2;
+0005 gg1=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(2,4,n);
+0006 gg2=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(1,4,n);
+0007 gg=gg1+gg2;
+0008 gp1=11;
+0009 mm=max(max(gg));
+0010 mn=0;
+0011 lvl=input(<span class="string">'input the noise level     '</span>);
+0012 sdv=lvl*mm;
+0013 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n2,n2,mn,sdv);
+0014 ngg=gg+ns;
+0015 figure(2)
+0016 clf
+0017 subplot(2,2,1),imagesc(gg)
+0018 axis image
+0019 subplot(2,2,2),imagesc(ngg)
+0020 axis image
+0021 axis off
+0022 pause
+0023 <span class="comment">%</span>
+0024 xx22=real(<a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>(ngg,gp1,22));
+0025 xx23=real(<a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>(ngg,gp1,23));
+0026 subplot(2,2,3),imagesc(xx22+xx23)
+0027 axis image
+0028 axis off</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

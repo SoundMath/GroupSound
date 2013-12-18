@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of im_4n_2</title>
+  <meta name="keywords" content="im_4n_2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; im_4n_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>im_4n_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=im_4n_2(x) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+ s2_4xn2_2 
+ Use this for 2^n x 2M</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="e_4f_2.html" class="code" title="">e_4f_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=im_4n_2(x)</a>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% s2_4xn2_2</span>
+0004 <span class="comment">% Use this for 2^n x 2M</span>
+0005 <span class="comment">%</span>
+0006 [nx4,ny2]=size(x);
+0007 nx=nx4/4;
+0008 nx2=nx+nx;
+0009 nx3=nx2+nx;
+0010 ny=ny2/2;
+0011 m=ny/2;
+0012 rt2=1/sqrt(2);
+0013 <span class="comment">%</span>
+0014 m2=nx/2;
+0015 m4=nx/4;
+0016 <span class="comment">%</span>
+0017 <span class="keyword">for</span> ky=1:ny2
+0018    <span class="keyword">for</span> k=1:m4-1
+0019       k2=1+2*k;
+0020       t1=x(k2,ky)+x(k2+nx2,ky);
+0021       t2=x(k2,ky)-x(k2+nx2,ky);
+0022       s1=x(k2+nx,ky)+x(k2+nx3,ky);
+0023       s2=x(k2+nx,ky)-x(k2+nx3,ky);
+0024       x(k2,ky)=rt2*t1;
+0025       x(k2+nx2,ky)=rt2*t2;
+0026       x(k2+nx,ky)=rt2*s1;
+0027       x(k2+nx3,ky)=rt2*s2;
+0028       t1=x(k2+m2,ky)+x(k2+m2+nx2,ky);
+0029       t2=x(k2+m2,ky)-x(k2+m2+nx2,ky);
+0030       s1=x(k2+m2+nx,ky)+x(k2+m2+nx3,ky);
+0031       s2=x(k2+m2+nx,ky)-x(k2+m2+nx3,ky);
+0032       x(k2+m2,ky)=rt2*t1;
+0033       x(k2+m2+nx2,ky)=rt2*t2;
+0034       x(k2+m2+nx,ky)=rt2*s1;
+0035       x(k2+m2+nx3,ky)=rt2*s2;
+0036    <span class="keyword">end</span>   
+0037    t1=x(1,ky)+x(1+nx2,ky);
+0038    t2=x(1,ky)-x(1+nx2,ky);
+0039    t3=x(1+nx,ky)+x(1+nx3,ky);
+0040    t4=-i*(x(1+nx,ky)-x(1+nx3,ky));
+0041    x(1,ky) =.5*(t1+t3);
+0042    x(1+nx,ky) =.5*(t2+t4);
+0043    x(1+nx2,ky)=.5*(t1-t3);
+0044    x(1+nx3,ky)=.5*(t2-t4);
+0045 <span class="comment">%</span>
+0046    t1=x(1+m2,ky)  +x(1+m2+nx2,ky);
+0047    t2=x(1+m2,ky)  -x(1+m2+nx2,ky);
+0048    t3=x(1+m2+nx,ky)+x(1+m2+nx3,ky);
+0049    t4=-i*(x(1+m2+nx,ky)-x(1+m2+nx3,ky));
+0050    x(1+m2,ky)   =.5*(t1+t3);
+0051    x(1+m2+nx,ky) =.5*(t2+t4);
+0052    x(1+m2+nx2,ky)=.5*(t1-t3);
+0053    x(1+m2+nx3,ky)=.5*(t2-t4);
+0054 <span class="keyword">end</span>
+0055 <span class="comment">%</span>
+0056 x(1:nx,1:ny2)=1/sqrt(nx)*fft(x(1:nx,1:ny2));
+0057 x(1+nx:nx2,1:ny2)=1/sqrt(nx)*fft(x(1+nx:nx2,1:ny2));
+0058 x(1+nx2:nx3,1:ny2)=1/sqrt(nx)*fft(x(1+nx2:nx3,1:ny2));
+0059 x(1+nx3:nx4,1:ny2)=1/sqrt(nx)*fft(x(1+nx3:nx4,1:ny2));
+0060 <span class="comment">%</span>
+0061 tx=x.';
+0062 <span class="comment">%</span>
+0063 <span class="keyword">for</span> kx=1:nx4
+0064    t1=tx(1,kx);
+0065    t2=tx(1+ny,kx);
+0066    tx(1,kx)=rt2*(t1+t2);
+0067    tx(1+ny,kx)=rt2*(t1-t2);
+0068    t1=tx(1+m,kx);
+0069    t2=tx(1+m+ny,kx);
+0070    tx(1+m,kx)=rt2*(t1+t2);
+0071    tx(1+m+ny,kx)=rt2*(t1-t2);
+0072 <span class="keyword">end</span>   
+0073 tx(1:ny,:)=   1/sqrt(ny)*fft(tx(1:ny,:));
+0074 tx(ny+1:ny2,:)=1/sqrt(ny)*fft(tx(ny+1:ny2,:));
+0075 <span class="comment">%</span>
+0076 y=tx.';</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

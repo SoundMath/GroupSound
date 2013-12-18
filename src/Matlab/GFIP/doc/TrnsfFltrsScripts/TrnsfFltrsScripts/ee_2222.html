@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ee_2222</title>
+  <meta name="keywords" content="ee_2222">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ee_2222.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ee_2222
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=64;
+0003 n2=n+n;
+0004 n3=n2+n;
+0005 n4=n3+n;
+0006 gg=zeros(n4,n4);
+0007 <span class="comment">%S=imread('c:\my documents\my pictures\sar.tif');</span>
+0008 <span class="comment">%gg=double(S(1:256,1:256));</span>
+0009 tr=0;
+0010 x_off=235;
+0011 gg(x_off,1+tr:64+tr)=1;
+0012 sdv=input(<span class="string">'noise level = ?     '</span>);
+0013 <span class="comment">%ns=noise(n4,n4,0,sdv);</span>
+0014 ns=sdv*randn(n4,n4);
+0015 <span class="keyword">for</span> k1=1:n4
+0016    <span class="keyword">for</span> k2=1:n4
+0017       ns(k1,k2)=ns(k1,k2)*(1-k1/n4)*(1-k2/n4);
+0018    <span class="keyword">end</span>
+0019 <span class="keyword">end</span>   
+0020 ngg=gg+ns;
+0021 ngg=(n4/norm(ngg,1))*ngg;
+0022 gp=1;
+0023 x1=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,1));
+0024 x21=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,21));
+0025 x22=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,22));
+0026 x23=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,23));
+0027 x41=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,41));
+0028 x42=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,42));
+0029 x43=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,43));
+0030 x44=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,44));
+0031 x45=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,45));
+0032 x8=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,gp,8));
+0033 x16=gg-x1-x21-x22-x23-x41-x42-x43-x44-x45-x8;
+0034 <span class="comment">%</span>
+0035 <span class="comment">%figure(2)</span>
+0036 subplot(2,2,1),imagesc(gg)
+0037 subplot(2,2,2),imagesc(ngg)
+0038 subplot(2,2,3),imagesc(x23+x42)
+0039 subplot(2,2,4),imagesc(x1+x23+x42)
+0040 <span class="comment">%mm(1)=max(max(x1));</span>
+0041 <span class="comment">%mm(2)=max(max(x21));</span>
+0042 <span class="comment">%mm(3)=max(max(x22));</span>
+0043 <span class="comment">%mm(4)=max(max(x23));</span>
+0044 <span class="comment">%mm(5)=max(max(x41));</span>
+0045 <span class="comment">%mm(6)=max(max(x42));</span>
+0046 <span class="comment">%mm(7)=max(max(x43));</span>
+0047 <span class="comment">%mm(8)=max(max(x44));</span>
+0048 <span class="comment">%mm(9)=max(max(x45));</span>
+0049 <span class="comment">%mm(10)=max(max(x8));</span>
+0050 <span class="comment">%mm(11)=max(max(x16));</span>
+0051 <span class="comment">%kk=linspace(1,11,11);</span>
+0052 <span class="comment">%[kk',mm']</span>
+0053 xx=x42+x23+x1;
+0054 <span class="comment">%xx=x23;</span>
+0055 [mm,xx_off]=max(max(x23'+x42'));
+0056 [xx(xx_off,1) xx(xx_off,n+1) xx(xx_off,n2+1) xx(xx_off,n3+1)]
+0057 <span class="comment">%ss=xx(5,1)+xx(5,n+1)+xx(5,n2+1)+xx(5,n3+1);</span>
+0058 ss=xx(xx_off,1)+xx(xx_off,n+1);
+0059 off_set=ss/64;
+0060 off1=(ss-xx(xx_off,1))/off_set;
+0061 [tr off1;x_off xx_off]</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

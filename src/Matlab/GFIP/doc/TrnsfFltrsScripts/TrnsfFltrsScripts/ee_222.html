@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ee_222</title>
+  <meta name="keywords" content="ee_222">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ee_222.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ee_222
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=64;
+0003 <span class="comment">%gg=zeros(n2,n2);</span>
+0004 S=imread(<span class="string">'c:\my documents\my pictures\sar.tif'</span>);
+0005 gg=double(S(1:256,1:128));
+0006 n2=n+n;
+0007 n3=n2+n;
+0008 n4=n3+n;
+0009 gp=2;
+0010 <span class="comment">%</span>
+0011 <span class="comment">%</span>
+0012 y1=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,1));
+0013 y21=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,21));
+0014 y22=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,22));
+0015 y23=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,23));
+0016 y41=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,41));
+0017 y42=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,42));
+0018 y43=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,43));
+0019 y44=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,44));
+0020 y45=real(<a href="ww_222.html" class="code" title="function y=ww_222(x,gp,prj)">ww_222</a>(gg,gp,45));
+0021 y8=gg-y1-y21-y22-y23-y41-y42-y43-y44-y45;
+0022 <span class="comment">%</span>
+0023 mm(1)=max(max(y1));
+0024 mm(2)=max(max(y21));
+0025 mm(3)=max(max(y22));
+0026 mm(4)=max(max(y23));
+0027 mm(5)=max(max(y41));
+0028 mm(6)=max(max(y42));
+0029 mm(7)=max(max(y43));
+0030 mm(8)=max(max(y44));
+0031 mm(9)=max(max(y45));
+0032 mm(10)=max(max(y8));
+0033 kk=linspace(1,10,10);
+0034 [kk',mm']</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

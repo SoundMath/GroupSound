@@ -1,0 +1,90 @@
+clear;
+% Use this for even n
+% n2 sdp c2
+% 
+n=32;
+n2=n*2;
+m=n/2;
+rt2=1/sqrt(2);
+rtn=sqrt(n);
+a=sqrt(n)*ifft(eye(n));
+%
+%b=zeros(n2,n2);
+%b(1:n,1:n)=a;
+%b(n+1:n2,n+1:n2)=a;
+%b(1,1:n)=rt2*a(1,1:n);
+%b(1,1+n:n2)=rt2*a(1,1:n);
+%b(m+1,1:n)=rt2*a(m+1,1:n);
+%b(m+1,n+1:n2)=rt2*a(m+1,1:n);
+%b(n+1,1:n)=rt2*a(1,1:n);
+%b(n+1,n+1:n2)=-rt2*a(1,1:n);
+%b(n+m+1,1:n)=rt2*a(m+1,1:n);
+%b(n+m+1,n+1:n2)=-rt2*a(m+1,1:n);
+%
+%c=zeros(n2,n2);
+%c(1:n,1:n)=a';
+%c(n+1:n2,n+1:n2)=a';
+%c(1:n,1)=rt2*a(1:n,1);
+%c(1+n:n2,1)=rt2*a(1:n,1);
+%c(1:n,m+1)=rt2*a(1:n,m+1);
+%c(n+1:n2,m+1)=rt2*a(1:n,m+1);
+%c(1:n,n+1)=rt2*a(1:n,1);
+%c(n+1:n2,n+1)=-rt2*a(1:n,1);
+%c(1:n,n+m+1)=rt2*a(1:n,m+1);
+%c(n+1:n2,n+m+1)=-rt2*a(1:n,m+1);
+% generate some images here
+f=rand(n2,1);
+%for k=1:n
+%   f(2*k-1)=1;
+%end   
+f(m/2:n-4)=1;
+x=linspace(-pi,pi,n2);
+f=sin(2*(x.*x))';
+%
+%bf=b*f;
+%
+bf(1:n)=rtn*ifft(f(1:n));
+bf(n+1:n2)=rtn*ifft(f(n+1:n2));
+bf(1)=rt2*(bf(1)+a(1,1:n)*f(1+n:n2));
+bf(m+1)=rt2*(bf(m+1)+a(m+1,1:n)*f(n+1:n2));
+bf(n+1)=rt2*(a(1,1:n)*f(1:n)-bf(n+1));
+bf(n+m+1)=rt2*(a(m+1,1:n)*f(1:n)-bf(n+m+1));
+bf=bf.';
+%
+id1=zeros(n2,1);
+id2=zeros(n2,1);
+id1(1)=bf(1);
+id1(m+1)=bf(m+1);
+id1(n+1)=bf(n+1);
+id1(n+m+1)=bf(n+m+1);
+id2=bf-id1;
+for k=1:n2
+   if (abs(real(id2(k))) < .2)
+      id2(k)=i*imag(id2(k));
+   end   
+   if (abs(imag(id2(k))) < .2)
+      id2(k)=real(id2(k));
+   end      
+end   
+%
+%rb1=c*id1;
+rb1=zeros(n2,1);
+rb1(1:n)=1/sqrt(n)*fft(id1(1:n));
+rb1(1:n)=rb1(1:n)-id1(1)*a(1:n,1)-id1(m+1)*a(1:n,m+1);
+rb1(1:n)=rb1(1:n)+rt2*(id1(1)+id1(n+1))*a(1:n,1);
+rb1(1:n)=rb1(1:n)+rt2*(id1(m+1)+id1(n+m+1))*a(1:n,m+1);
+rb1(n+1:n2)=1/sqrt(n)*fft(id1(n+1:n2));
+rb1(1+n:n2)=rb1(1+n:n2)-id1(n+1)*a(1:n,1)-id1(n+m+1)*a(1:n,m+1);
+rb1(1+n:n2)=rb1(n+1:n2)+rt2*(id1(1)-id1(n+1))*a(1:n,1);
+rb1(1+n:n2)=rb1(1+n:n2)+rt2*(id1(m+1)-id1(n+m+1))*a(1:n,m+1);
+%
+%rb2=c*id2;
+rb2=zeros(n2,1);
+rb2(1:n)=1/sqrt(n)*fft(id2(1:n));
+rb2(1:n)=rb2(1:n)-id2(1)*a(1:n,1)-id2(m+1)*a(1:n,m+1);
+rb2(1:n)=rb2(1:n)+rt2*(id2(1)+id2(n+1))*a(1:n,1);
+rb2(1:n)=rb2(1:n)+rt2*(id2(m+1)+id2(n+m+1))*a(1:n,m+1);
+rb2(1+n:n2)=1/sqrt(n)*fft(id2(1+n:n2));
+rb2(1+n:n2)=rb2(1+n:n2)-id2(n+1)*a(1:n,1)-id2(n+m+1)*a(1:n,m+1);
+rb2(1+n:n2)=rb2(n+1:n2)+rt2*(id2(1)-id2(n+1))*a(1:n,1);
+rb2(1+n:n2)=rb2(1+n:n2)+rt2*(id2(m+1)-id2(n+m+1))*a(1:n,m+1);

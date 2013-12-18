@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ikk4</title>
+  <meta name="keywords" content="ikk4">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ikk4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ikk4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=ikk4(x,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ee4.html" class="code" title="">ee4</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=ikk4(x,gp)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 [n2,tem]=size(x);
+0004 n=n2/2;
+0005 nn=n*n;
+0006 nn2=nn+nn;
+0007 n2=n+n;
+0008 m=n/2;
+0009 l=n/4;
+0010 rt2=1/sqrt(2);
+0011 <span class="comment">%</span>
+0012 <span class="keyword">if</span> (gp==101) <span class="comment">% sdp T_0</span>
+0013    d1=n;                        <span class="comment">%(k,(m-1)k)</span>
+0014    c1(1,1:n)=linspace(1,n,n);
+0015    c1(2,1:n)=rem((m-1)*(c1(1,:)-1),n)+1;
+0016    d2=n*m;
+0017    ev=linspace(0,n-2,m)+1;
+0018    od=linspace(1,n-1,m)+1;
+0019    c2(1,1:m*m)=repmat(ev,1,m);
+0020    c2(2,1:m*m)=kron(ev,ones(1,m));
+0021    c2(1,1+m*m:n*m)=repmat(od,1,m);
+0022    c2(2,1+m*m:n*m)=kron(od,ones(1,m));
+0023 <span class="keyword">end</span>
+0024 <span class="comment">%</span>
+0025 <span class="keyword">if</span> (gp==102)                    <span class="comment">%[m l+1;l+1 0]</span>
+0026    d1=n;                        <span class="comment">%(k,(l+1)k)</span>
+0027    c1(1,1:n)=linspace(1,n,n);
+0028    c1(2,1:n)=rem((l+1)*(c1(1,:)-1),n)+1;
+0029    d2=n*m;
+0030    ev=linspace(0,n-2,m)+1;
+0031    od=linspace(1,n-1,m)+1;
+0032    c2(1,1:m*m)=repmat(ev,1,m);
+0033    c2(2,1:m*m)=kron(ev,ones(1,m));
+0034    c2(1,1+m*m:n*m)=repmat(od,1,m);
+0035    c2(2,1+m*m:n*m)=kron(od,ones(1,m));
+0036 <span class="keyword">end</span>   
+0037 <span class="comment">%</span>
+0038 <span class="keyword">if</span> (gp==103)                    <span class="comment">%[m l-1;l-1 0]</span>
+0039    d1=n;                        <span class="comment">%(k,(l-1)k)</span>
+0040    c1(1,1:n)=linspace(1,n,n);
+0041    c1(2,1:n)=rem((l-1)*(c1(1,:)-1),n)+1;
+0042    d2=n*m;
+0043    ev=linspace(0,n-2,m)+1;
+0044    od=linspace(1,n-1,m)+1;
+0045    c2(1,1:m*m)=repmat(ev,1,m);
+0046    c2(2,1:m*m)=kron(ev,ones(1,m));
+0047    c2(1,1+m*m:n*m)=repmat(od,1,m);
+0048    c2(2,1+m*m:n*m)=kron(od,ones(1,m));
+0049 <span class="keyword">end</span>   
+0050 <span class="comment">%</span>
+0051 <span class="comment">%</span>
+0052 <span class="comment">%</span>
+0053 <span class="keyword">for</span> k=1:d1
+0054    t1(1,k)=x(c1(1,k),c1(2,k));
+0055    t1(2,k)=x(c1(1,k)+n,c1(2,k));
+0056    t1(3,k)=x(c1(1,k),c1(2,k)+n);
+0057    t1(4,k)=x(c1(1,k)+n,c1(2,k)+n);
+0058 <span class="keyword">end</span>   
+0059 t1=.5*fft(t1);
+0060 <span class="keyword">for</span> k=1:d2
+0061    t2(1,k)=x(c2(1,k),c2(2,k));
+0062    t2(2,k)=x(c2(1,k),c2(2,k)+n);
+0063    s2(1,k)=x(c2(1,k)+n,c2(2,k));
+0064    s2(2,k)=x(c2(1,k)+n,c2(2,k)+n);
+0065 <span class="keyword">end</span>   
+0066 t2=(1/sqrt(2))*fft(t2);
+0067 s2=(1/sqrt(2))*fft(s2);
+0068 <span class="keyword">for</span> k=1:d2
+0069    k1=c2(1,k);
+0070    k2=c2(2,k);
+0071    x(k1,k2)=t2(1,k);
+0072    x(k1,k2+n)=t2(2,k);
+0073    x(k1+n,k2)=s2(1,k);
+0074    x(k1+n,k2+n)=s2(2,k);
+0075 <span class="keyword">end</span>
+0076 <span class="keyword">for</span> k=1:d1
+0077    x(c1(1,k),c1(2,k))=t1(1,k);
+0078    x(c1(1,k)+n,c1(2,k))=t1(2,k);
+0079    x(c1(1,k),c1(2,k)+n)=t1(3,k);
+0080    x(c1(1,k)+n,c1(2,k)+n)=t1(4,k);
+0081 <span class="keyword">end</span>   
+0082 <span class="comment">%</span>
+0083 y(1:n,1:n)=(1/n)*fft2(x(1:n,1:n));
+0084 y(n+1:n2,1:n)=(1/n)*fft2(x(1+n:n2,1:n));
+0085 y(1:n,1+n:n2)=(1/n)*fft2(x(1:n,1+n:n2));
+0086 y(1+n:n2,1+n:n2)=(1/n)*fft2(x(1+n:n2,1+n:n2));</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

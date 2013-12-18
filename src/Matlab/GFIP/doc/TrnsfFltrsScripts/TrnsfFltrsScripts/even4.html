@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of even4</title>
+  <meta name="keywords" content="even4">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; even4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>even4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>	n must be a multiple of 4</li><li><a href="scene.html" class="code" title="function yyy=scene(m,n,orgn)">scene</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 n2=n*2;
+0004 n3=n*3;
+0005 orgn=1;
+0006 <span class="comment">% gp; 1,2,3,11,12,21,22,23,24</span>
+0007 <span class="comment">%gg=r_fence(180,180); %n=80;</span>
+0008 <span class="comment">%ff=r_basket;</span>
+0009 ff=<a href="scene.html" class="code" title="function yyy=scene(m,n,orgn)">scene</a>(4,n,orgn);
+0010 <span class="comment">%ff=r_fence(128,128);</span>
+0011 <span class="comment">%ns=75*rand(128,128);</span>
+0012 <span class="comment">%ff=ff+ns;</span>
+0013 <span class="comment">%</span>
+0014 gp=1;
+0015 [v1,v2,v4]=<a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>(ff,n,gp);
+0016 vv1=real(inn2_4(v1,n,gp));
+0017 vv2=real(inn2_4(v2,n,gp));
+0018 vv4=real(inn2_4(v4,n,gp));
+0019 <span class="comment">%</span>
+0020 gp=23;
+0021 [y1,y2,y4]=<a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>(vv4,n,gp);
+0022 yy1=real(inn2_4(y1,n,gp));
+0023 yy2=real(inn2_4(y2,n,gp));
+0024 yy4=real(inn2_4(y4,n,gp));
+0025 <span class="comment">%</span>
+0026 gp=24;
+0027 [u1,u2,u4]=<a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>(vv4,n,gp);
+0028 uu1=real(inn2_4(u1,n,gp));
+0029 uu2=real(inn2_4(u2,n,gp));
+0030 uu4=real(inn2_4(u4,n,gp));
+0031 <span class="comment">%</span>
+0032 subplot(2,2,1),imagesc(ff)
+0033 subplot(2,2,2),imagesc(vv1)
+0034 subplot(2,2,3),imagesc(vv2)
+0035 subplot(2,2,4),imagesc(vv4)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

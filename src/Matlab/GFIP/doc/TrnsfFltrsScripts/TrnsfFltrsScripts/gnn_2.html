@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gnn_2</title>
+  <meta name="keywords" content="gnn_2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; gnn_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>gnn_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=gnn_2(u,gp); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="cnv2mt.html" class="code" title="function y=cnv2mt(x);">cnv2mt</a>	return convolution matrix for 2d input signal x</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=gnn_2(u,gp);</a>
+0002 <span class="comment">%</span>
+0003 [n,tem]=size(u);
+0004 m=n/2;
+0005 n2=n+n;
+0006 nn=linspace(0,n-1,n);
+0007 <span class="keyword">if</span> (gp==1) <span class="comment">% (y,x)</span>
+0008    <span class="keyword">for</span> k2=0:n-1
+0009       <span class="keyword">for</span> k1=0:n-1
+0010          act(k1+1+n*k2)=k2+1+n*k1;
+0011       <span class="keyword">end</span>
+0012    <span class="keyword">end</span>   
+0013 <span class="keyword">end</span>
+0014 <span class="comment">%</span>
+0015 <span class="keyword">if</span> (gp==2) <span class="comment">% (x+y,-y)</span>
+0016    <span class="keyword">for</span> k2=0:n-1
+0017       ak2=mod(n-k2,n);
+0018       <span class="keyword">for</span> k1=0:n-1
+0019          ak1=mod(k1+k2,n);
+0020          act(k1+1+n*k2)=ak1+1+n*ak2;
+0021       <span class="keyword">end</span>
+0022    <span class="keyword">end</span>   
+0023 <span class="keyword">end</span>
+0024 <span class="comment">%</span>
+0025 <span class="keyword">if</span> (gp==3) <span class="comment">% (-x-y,y)</span>
+0026    <span class="keyword">for</span> k2=0:n-1
+0027       <span class="keyword">for</span> k1=0:n-1
+0028          ak1=mod(n-k1-k2,n);
+0029          act(k1+1+n*k2)=ak1+1+n*k2;
+0030       <span class="keyword">end</span>
+0031    <span class="keyword">end</span>   
+0032 <span class="keyword">end</span>
+0033 <span class="comment">%</span>
+0034 <span class="keyword">if</span> (gp==4) <span class="comment">% (x,x-y)</span>
+0035    <span class="keyword">for</span> k2=0:n-1
+0036       <span class="keyword">for</span> k1=0:n-1
+0037          ak2=mod(k1-k2,n);
+0038          act(k1+1+n*k2)=k1+1+n*ak2;
+0039       <span class="keyword">end</span>
+0040    <span class="keyword">end</span>   
+0041 <span class="keyword">end</span>
+0042 <span class="comment">%</span>
+0043 <span class="comment">%</span>
+0044 <span class="comment">%</span>
+0045 u1=<a href="cnv2mt.html" class="code" title="function y=cnv2mt(x);">cnv2mt</a>(u(1:n,1:n));
+0046 u2=<a href="cnv2mt.html" class="code" title="function y=cnv2mt(x);">cnv2mt</a>(u(1:n,1+n:n2));
+0047 <span class="keyword">for</span> k2=0:n-1
+0048    <span class="keyword">for</span> k1=0:n-1
+0049       kk=k1+1+n*k2;
+0050       ak=act(kk);
+0051       <span class="keyword">for</span> l2=0:n-1
+0052          <span class="keyword">for</span> l1=0:n-1
+0053             ll=l1+1+n*l2;
+0054             al=act(ll);
+0055             ur(al,ak)=u2(ll,kk);      
+0056          <span class="keyword">end</span>
+0057       <span class="keyword">end</span>   
+0058    <span class="keyword">end</span>
+0059 <span class="keyword">end</span>   
+0060 y=[u1 ur;ur u1];
+0061</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

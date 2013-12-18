@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cnv2mt</title>
+  <meta name="keywords" content="cnv2mt">
+  <meta name="description" content="return convolution matrix for 2d input signal x">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cnv2mt.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cnv2mt
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>return convolution matrix for 2d input signal x</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=cnv2mt(x); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> return convolution matrix for 2d input signal x</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="gmn_2.html" class="code" title="function y=gmn_2(u,gp);">gmn_2</a>	</li><li><a href="gnn_2.html" class="code" title="function y=gnn_2(u,gp);">gnn_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=cnv2mt(x);</a>
+0002 <span class="comment">% return convolution matrix for 2d input signal x</span>
+0003 [nx,ny]=size(x);
+0004 fd=fft2(x);
+0005 ffd=reshape(fd,nx*ny,1);
+0006 <span class="keyword">for</span> k=1:nx*ny
+0007    tt(k,k)=ffd(k,1);
+0008 <span class="keyword">end</span>
+0009 <span class="keyword">for</span> k=1:nx*ny
+0010    tt1=reshape(tt(:,k),nx,ny,1);
+0011    tt1=ifft2(tt1);
+0012    tt2(:,k)=reshape(tt1,nx*ny,1);
+0013 <span class="keyword">end</span>   
+0014 tt3=tt2.';
+0015 <span class="keyword">for</span> k=1:nx*ny
+0016    tt4=reshape(tt3(:,k),nx,ny,1);
+0017    tt4=fft2(tt4);
+0018    y(:,k)=reshape(tt4,nx*ny,1);
+0019 <span class="keyword">end</span>
+0020 y=y.';</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

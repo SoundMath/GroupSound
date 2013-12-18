@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of comute22</title>
+  <meta name="keywords" content="comute22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; comute22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>comute22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>	</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li><li><a href="tem22.html" class="code" title="">tem22</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 n2=n*2;
+0004 orgn=1;
+0005 <span class="comment">%</span>
+0006 pp=1;
+0007 gg1=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(2,8,n);
+0008 gg2=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(4,8,n);
+0009 gg=gg1+gg2;
+0010 mm=max(max(gg));
+0011 sc=128/mm;
+0012 lvl=input(<span class="string">'input noise level as a multiple of max intensity    '</span>)
+0013 sdv=lvl*mm;
+0014 mn=0;
+0015 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n2,n2,mn,sdv);
+0016 ngg=gg+ns;
+0017 <span class="comment">%</span>
+0018 gp1=11;
+0019 gp2=104;
+0020 <span class="comment">%</span>
+0021 figure(1)
+0022 [x1,x21,x22,x23,x4]=nn2_22(ngg,n,gp1,orgn);
+0023 ff1=real(inn2_22(x1,n,gp1,orgn));
+0024 ff2=real(inn2_22(x21,n,gp1,orgn));
+0025 xx22=real(inn2_22(x22,n,gp1,orgn));
+0026 [tem1,x22y21,<a href="tem22.html" class="code" title="">tem22</a>,tem23,x22y4]=nn2_22(xx22,n,gp2,orgn);
+0027 ff3=real(inn2_22(x22y21,n,gp2,orgn));
+0028 ff4=real(inn2_22(x22y4,n,gp2,orgn));
+0029 xx23=real(inn2_22(x23,n,gp1,orgn));
+0030 [x23y1,tem21,x23y22,tem23,tem4]=nn2_22(xx23,n,gp2,orgn);
+0031 ff5=real(inn2_22(x23y1,n,gp2,orgn));
+0032 ff6=real(inn2_22(x23y22,n,gp2,orgn));
+0033 xx4=real(inn2_22(x4,n,gp1,orgn));
+0034 [tem1,x4y21,<a href="tem22.html" class="code" title="">tem22</a>,x4y23,x4y4]=nn2_22(xx4,n,gp2,orgn);
+0035 ff7=real(inn2_22(x4y21,n,gp2,orgn));
+0036 ff8=real(inn2_22(x4y23,n,gp2,orgn));
+0037 ff9=real(inn2_22(x4y4,n,gp2,orgn));
+0038 subplot(3,4,1),imagesc(gg)
+0039 subplot(3,4,2),imagesc(ngg)
+0040 subplot(3,4,3),imagesc(ff1)
+0041 subplot(3,4,4),imagesc(ff2)
+0042 subplot(3,4,5),imagesc(ff3)
+0043 subplot(3,4,6),imagesc(ff4)
+0044 subplot(3,4,7),imagesc(ff5)
+0045 subplot(3,4,8),imagesc(ff6)
+0046 subplot(3,4,9),imagesc(ff7)
+0047 subplot(3,4,10),imagesc(ff8)
+0048 subplot(3,4,11),imagesc(ff9)
+0049 subplot(3,4,12),imagesc(ff2+ff3+ff5+ff7)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

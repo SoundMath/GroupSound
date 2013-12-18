@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ee_4</title>
+  <meta name="keywords" content="ee_4">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ee_4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ee_4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="inn_4.html" class="code" title="function y=inn_4(x,gp)">inn_4</a>	Use this for even n:</li><li><a href="nn_4.html" class="code" title="function [y1,y2,y4]=nn_4(x,gp)">nn_4</a>	n must be a multiple of 4</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 <span class="comment">%q_sls</span>
+0003 n=64;
+0004 n2=n*2;
+0005 <span class="comment">%ox=[1 117 234 351 468 585];</span>
+0006 <span class="comment">%oy=[1 128 255 380]</span>
+0007 <span class="comment">%</span>
+0008 [1 2 3 11 12 21 22]
+0009 gp=input(<span class="string">'the group number    '</span>);
+0010 <span class="comment">%for k1=1:6</span>
+0011 <span class="comment">%   for k2=1:4</span>
+0012 <span class="comment">%      gg(1:n2,1:n2)=qdata(ox(k1):ox(k1)+127,oy(k2):oy(k2)+127);</span>
+0013 <span class="comment">%      x1=real(ww_4(gg,gp,1));</span>
+0014 <span class="comment">%      x2=real(ww_4(gg,gp,2));</span>
+0015 <span class="comment">%      qq1(ox(k1):ox(k1)+127,oy(k2):oy(k2)+127)=x1;</span>
+0016 <span class="comment">%      qq2(ox(k1):ox(k1)+127,oy(k2):oy(k2)+127)=x2;</span>
+0017 <span class="comment">%   end</span>
+0018 <span class="comment">%end</span>
+0019 <span class="comment">%figure(1)</span>
+0020 <span class="comment">%imagesc(qdata)</span>
+0021 <span class="comment">%colormap(gray)</span>
+0022 gg=zeros(n2,n2);
+0023 <span class="keyword">for</span> k=1:n
+0024    gg(k,2*k)=1;
+0025 <span class="keyword">end</span>
+0026 sdv=input(<span class="string">'noise level?   '</span>);
+0027 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n2,n2,0,sdv);
+0028 ngg=gg+ns;
+0029 [x1,x2,x4]=<a href="nn_4.html" class="code" title="function [y1,y2,y4]=nn_4(x,gp)">nn_4</a>(ngg,gp);
+0030 xx1=real(<a href="inn_4.html" class="code" title="function y=inn_4(x,gp)">inn_4</a>(x1,gp));
+0031 xx2=real(<a href="inn_4.html" class="code" title="function y=inn_4(x,gp)">inn_4</a>(x2,gp));
+0032 xx4=real(<a href="inn_4.html" class="code" title="function y=inn_4(x,gp)">inn_4</a>(x4,gp));
+0033 u4=zeros(n2,n2);
+0034 <span class="keyword">for</span> k=1:n-1
+0035    u4(mod(-2*k,n)+1,k+1)=x4(mod(-2*k,n)+1,k+1);
+0036 <span class="keyword">end</span>   
+0037 figure(1)
+0038 colormap(gray)
+0039 subplot(2,2,1),imagesc(gg)
+0040 subplot(2,2,2),imagesc(xx1)
+0041 subplot(2,2,3),imagesc(xx2)
+0042 subplot(2,2,4),imagesc(xx4)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

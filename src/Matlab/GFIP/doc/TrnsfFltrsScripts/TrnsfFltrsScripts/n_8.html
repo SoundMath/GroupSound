@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of n_8</title>
+  <meta name="keywords" content="n_8">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; n_8.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>n_8
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [y1,y2,y4,y8]=n_8(x,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [y1,y2,y4,y8]=n_8(x,gp)</a>
+0002 [n8,tem]=size(x);
+0003 n=n8/8;
+0004 <span class="comment">%</span>
+0005 <span class="comment">% Use this routine for even n.</span>
+0006 <span class="comment">% C_n sdp C_2</span>
+0007 <span class="comment">%</span>
+0008 m=n/2;
+0009 rt2=1/sqrt(2);
+0010 y1=zeros(n8,1);
+0011 y2=zeros(n8,1);
+0012 y4=zeros(n8,1);
+0013 y8=zeros(n8,1);
+0014 <span class="comment">%</span>
+0015 xx=reshape(x,n,8);
+0016 fxx=sqrt(n)*ifft(xx);
+0017 bf=reshape(fxx,n8,1);
+0018 <span class="comment">%</span>
+0019 <span class="keyword">if</span> (gp==1) <span class="comment">% x --&gt; x^(n/8+1)</span>
+0020    d1=n/8;
+0021    d2=n/8;
+0022    d4=n/4;
+0023    <span class="keyword">for</span> k=0:n/8-1
+0024       kk=8*k;
+0025       c1(k+1)=1+kk;
+0026       c2(k+1)=5+kk;
+0027       c4(2*k+1)=3+kk;
+0028       c4(2*k+2)=7+kk;
+0029    <span class="keyword">end</span>   
+0030 <span class="keyword">end</span>   
+0031 <span class="comment">%</span>
+0032 <span class="comment">%</span>
+0033 <span class="keyword">for</span> k=1:d1
+0034    <span class="keyword">for</span> kk=1:8
+0035       t1(kk,k)=bf(c1(k)+(kk-1)*n,1);
+0036    <span class="keyword">end</span>   
+0037 <span class="keyword">end</span>
+0038 t1=sqrt(8)*ifft(t1);
+0039 <span class="keyword">for</span> k=1:d1
+0040    <span class="keyword">for</span> kk=1:8
+0041       bf(c1(k)+(kk-1)*n,1)=t1(kk,k);
+0042    <span class="keyword">end</span>   
+0043 <span class="keyword">end</span>
+0044 y8=bf-y1-y2-y4;
+0045</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

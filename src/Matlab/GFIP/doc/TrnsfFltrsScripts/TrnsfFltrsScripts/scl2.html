@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of scl2</title>
+  <meta name="keywords" content="scl2">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; scl2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>scl2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [y1,y21,y22,y4]=scl2(x,n,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [y1,y21,y22,y4]=scl2(x,n,gp)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 n2=n+n;
+0004 m=n/2;
+0005 l=n/4;
+0006 rt2=sqrt(2);
+0007 y1=zeros(n2,n2);
+0008 y21=zeros(n2,n2);
+0009 y22=zeros(n2,n2);
+0010 y4=zeros(n2,n2);
+0011 <span class="comment">%</span>
+0012 bf(1:n,1:n)=n*ifft2(x(1:n,1:n));
+0013 bf(1+n:n2,1:n)=n*ifft2(x(1+n:n2,1:n));
+0014 bf(1:n,1+n:n2)=n*ifft2(x(1:n,1+n:n2));
+0015 bf(1+n:n2,1+n:n2)=n*ifft2(x(1+n:n2,1+n:n2));
+0016 <span class="comment">%</span>
+0017 <span class="keyword">if</span> (gp==1) <span class="comment">%[-1 0;0 1],[1 0;0 -1]</span>
+0018    d1=4;
+0019    c1(1,1)=1;
+0020    c1(2,1)=1;
+0021    c1(1,2)=1+m;
+0022    c1(2,2)=1;
+0023    c1(1,3)=1+m;
+0024    c1(2,3)=1;
+0025    c1(1,4)=1+m;
+0026    c1(2,4)=1+m;
+0027    d21=2*n-4;
+0028    <span class="keyword">for</span> k=2:m
+0029       c21(1,k-1)=k;
+0030       c21(2,k-1)=1;
+0031       c21(1,k-2+m)=k+m;
+0032       c21(2,k-2+m)=1;
+0033       c21(1,k-3+n)=k;
+0034       c21(2,k-3+n)=1+m;
+0035       c21(1,k-4+m+n)=k+m;
+0036       c21(2,k-4+m+n)=1+m;
+0037    <span class="keyword">end</span>   
+0038    d22=2*n-4;
+0039    <span class="keyword">for</span> k=2:m
+0040       c22(1,k-1)=1;
+0041       c22(2,k-1)=k;
+0042       c22(1,k-2+m)=1;
+0043       c22(2,k-2+m)=k+m;
+0044       c22(1,k-3+n)=1+m;
+0045       c22(2,k-3+n)=k;
+0046       c22(1,k-4+m+n)=1+m;
+0047       c22(2,k-4+m+n)=k+m;
+0048    <span class="keyword">end</span>   
+0049 <span class="keyword">end</span>   
+0050 <span class="comment">%</span>
+0051 <span class="keyword">if</span> (gp==2) <span class="comment">%[n/2+1 0;0 1],[1 0;0 n/2+1]</span>
+0052    d1=m*m;
+0053    d21=m*m;
+0054    d22=m*m;
+0055    <span class="keyword">for</span> k1=0:m-1
+0056       <span class="keyword">for</span> k2=0:m-1
+0057          c1(1,k1+m*k2+1)=2*k1+1;   
+0058          c1(2,k1+m*k2+1)=2*k2+1;
+0059          c21(1,k1+m*k2+1)=2*k1+1;   
+0060          c21(2,k1+m*k2+1)=2*k2+2;
+0061          c22(1,k1+m*k2+1)=2*k1+2;   
+0062          c22(2,k1+m*k2+1)=2*k2+1;
+0063       <span class="keyword">end</span>
+0064    <span class="keyword">end</span>   
+0065 <span class="keyword">end</span>   
+0066 <span class="comment">%</span>
+0067 <span class="comment">%</span>
+0068 <span class="comment">%</span>
+0069 <span class="comment">%</span>
+0070 <span class="keyword">for</span> k=1:d1
+0071    t1(1,k)=bf(c1(1,k),c1(2,k));
+0072    t1(3,k)=bf(c1(1,k),c1(2,k)+n);
+0073    t1(2,k)=bf(c1(1,k)+n,c1(2,k));
+0074    t1(4,k)=bf(c1(1,k)+n,c1(2,k)+n);
+0075 <span class="keyword">end</span>      
+0076 t1=f22(t1,d1);
+0077 <span class="keyword">for</span> k=1:d1
+0078    bf(c1(1,k),c1(2,k))=t1(1,k);
+0079    bf(c1(1,k),c1(2,k)+n)=t1(3,k);
+0080    bf(c1(1,k)+n,c1(2,k))=t1(2,k);
+0081    bf(c1(1,k)+n,c1(2,k)+n)=t1(4,k);
+0082    y1(c1(1,k),c1(2,k))=t1(1,k);
+0083    y1(c1(1,k),c1(2,k)+n)=t1(3,k);
+0084    y1(c1(1,k)+n,c1(2,k))=t1(2,k);
+0085    y1(c1(1,k)+n,c1(2,k)+n)=t1(4,k);
+0086 <span class="keyword">end</span>
+0087 <span class="keyword">for</span> k=1:d21
+0088    t21(1,k)=bf(c21(1,k),c21(2,k));
+0089    t21(2,k)=bf(c21(1,k)+n,c21(2,k));
+0090 <span class="keyword">end</span>   
+0091 t21=rt2*ifft(t21);
+0092 <span class="keyword">for</span> k=1:d21
+0093    k1=c21(1,k);
+0094    k2=c21(2,k);
+0095    bf(k1,k2)=t21(1,k);
+0096    bf(k1+n,k2)=t21(2,k);
+0097    y21(k1,k2)=bf(k1,k2);
+0098    y21(k1+n,k2)=bf(k1+n,k2);
+0099    y21(k1,k2+n)=bf(k1,k2+n);
+0100    y21(k1+n,k2+n)=bf(k1+n,k2+n);
+0101 <span class="keyword">end</span>
+0102 <span class="keyword">for</span> k=1:d22
+0103    t22(1,k)=bf(c22(1,k),c22(2,k));
+0104    t22(2,k)=bf(c22(1,k),c22(2,k)+n);
+0105 <span class="keyword">end</span>   
+0106 t22=rt2*ifft(t22);
+0107 <span class="keyword">for</span> k=1:d22
+0108    k1=c22(1,k);
+0109    k2=c22(2,k);
+0110    bf(k1,k2)=t22(1,k);
+0111    bf(k1,k2+n)=t22(2,k);
+0112    y22(k1,k2)=bf(k1,k2);
+0113    y22(k1+n,k2)=bf(k1+n,k2);
+0114    y22(k1,k2+n)=bf(k1,k2+n);
+0115    y22(k1+n,k2+n)=bf(k1+n,k2+n);
+0116 <span class="keyword">end</span>
+0117 y4=bf-y1-y21-y22;</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

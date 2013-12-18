@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of in_2</title>
+  <meta name="keywords" content="in_2">
+  <meta name="description" content="Inverse semidirect product transform.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; in_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>in_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Inverse semidirect product transform.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function f=in_2(y,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Inverse semidirect product transform.
+
+ INPUT
+   y &amp; expansion coefficients of a signal wrt semidirect product group
+       $C_N \sdp C_2$.
+   gp &amp; (int) indicates action group to use for $C_2$.
+
+ OUTPUT
+   f &amp; signal for which y holds expansion coefficients wrt $C_N \sdp C_2$.
+
+ REMARKS
+   o  Computes the inverse transform coefficients of a 1D signal 
+      with respect to the semidirect product group $C_N \sdp C_2$.
+      In other words, output f is the signal for which input y is 
+      the set of expansion coefficients wrt the sdp group.
+   o  Use this for abelian by abelian semidirect product groups 
+      of the form $C_N \sdp C_2$, where N is even and $C_2 = \{1, k\}$.
+   o  Signals are indexed by the elements of $C_N \sdp C_2$,
+      ordered as follows:
+      \[ 
+        C_N \sdp C_2 = \{1,x,\ldots,x^{N-1}, k,xk,\ldots,x^{N-1}k\} 
+      \]
+   o  The argument gp specifies the &quot;action&quot; group to which 
+      $C_2 = \{1, k\}$ corresponds. Possible group actions are: 
+                gp=1:  x --&gt; x^{-1}
+                gp=2:  x^k --&gt; x^{(m+1)k}
+                gp=3:  x^k --&gt; x^{(m-1)k}
+
+ See also: <a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>.m
+
+
+ HISTORY
+   2001.04.02 &amp; Myoung An &amp; original program (in_2.m)
+   2004.03.23 &amp; William DeMeo &amp; comments, minor mods/additions</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="cn_2.html" class="code" title="function y=cn_2(u,v,gp)">cn_2</a>	Semidirect product convolution of 1-dimensional signals.</li><li><a href="cn_2_alt0.html" class="code" title="function y=cn_2(u,v,gp);">cn_2_alt0</a>	file/fctn name mismatch: was file cn_2.m</li><li><a href="even2.html" class="code" title="">even2</a>	</li><li><a href="tn_2.html" class="code" title="">tn_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function f=in_2(y,gp)</a>
+0002 <span class="comment">% Inverse semidirect product transform.</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% INPUT</span>
+0005 <span class="comment">%   y &amp; expansion coefficients of a signal wrt semidirect product group</span>
+0006 <span class="comment">%       $C_N \sdp C_2$.</span>
+0007 <span class="comment">%   gp &amp; (int) indicates action group to use for $C_2$.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% OUTPUT</span>
+0010 <span class="comment">%   f &amp; signal for which y holds expansion coefficients wrt $C_N \sdp C_2$.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% REMARKS</span>
+0013 <span class="comment">%   o  Computes the inverse transform coefficients of a 1D signal</span>
+0014 <span class="comment">%      with respect to the semidirect product group $C_N \sdp C_2$.</span>
+0015 <span class="comment">%      In other words, output f is the signal for which input y is</span>
+0016 <span class="comment">%      the set of expansion coefficients wrt the sdp group.</span>
+0017 <span class="comment">%   o  Use this for abelian by abelian semidirect product groups</span>
+0018 <span class="comment">%      of the form $C_N \sdp C_2$, where N is even and $C_2 = \{1, k\}$.</span>
+0019 <span class="comment">%   o  Signals are indexed by the elements of $C_N \sdp C_2$,</span>
+0020 <span class="comment">%      ordered as follows:</span>
+0021 <span class="comment">%      \[</span>
+0022 <span class="comment">%        C_N \sdp C_2 = \{1,x,\ldots,x^{N-1}, k,xk,\ldots,x^{N-1}k\}</span>
+0023 <span class="comment">%      \]</span>
+0024 <span class="comment">%   o  The argument gp specifies the &quot;action&quot; group to which</span>
+0025 <span class="comment">%      $C_2 = \{1, k\}$ corresponds. Possible group actions are:</span>
+0026 <span class="comment">%                gp=1:  x --&gt; x^{-1}</span>
+0027 <span class="comment">%                gp=2:  x^k --&gt; x^{(m+1)k}</span>
+0028 <span class="comment">%                gp=3:  x^k --&gt; x^{(m-1)k}</span>
+0029 <span class="comment">%</span>
+0030 <span class="comment">% See also: n_2.m</span>
+0031 <span class="comment">%</span>
+0032 <span class="comment">%</span>
+0033 <span class="comment">% HISTORY</span>
+0034 <span class="comment">%   2001.04.02 &amp; Myoung An &amp; original program (in_2.m)</span>
+0035 <span class="comment">%   2004.03.23 &amp; William DeMeo &amp; comments, minor mods/additions</span>
+0036 n2 = length(y);        <span class="comment">% $2N$ : signal length</span>
+0037 n=n2/2;                <span class="comment">% $N$ : signal half-length</span>
+0038 m=n/2;                 <span class="comment">% $N/2$ : signal quarter-length</span>
+0039 nn=(0:n-1);            <span class="comment">% $\{0,1,\ldots,N-1\}$</span>
+0040 rt2=1/sqrt(2);
+0041 <span class="keyword">if</span> (gp==1) <span class="comment">% $x \mapsto x^{-1}$</span>
+0042    d1 = 2;
+0043    c1 = [1 m+1];
+0044 <span class="keyword">end</span>   
+0045 <span class="keyword">if</span> (gp==2) <span class="comment">% $x^k \mapsto x^{(m+1)k}$</span>
+0046    d1 = m;
+0047    c1 = 2*(1:m)-1;
+0048 <span class="keyword">end</span>
+0049 <span class="keyword">if</span> (gp==3) <span class="comment">% $x^k \mapsto x^{(m-1)k}$</span>
+0050    d1 = 2;
+0051    c1 = [1 m-1];
+0052 <span class="keyword">end</span>
+0053 
+0054 <span class="keyword">for</span> k=1:d1
+0055    t1=y(c1(k))+y(c1(k)+n);
+0056    t2=y(c1(k))-y(c1(k)+n);
+0057    y(c1(k))=rt2*t1;
+0058    y(c1(k)+n)=rt2*t2;
+0059 <span class="keyword">end</span>
+0060 
+0061 f(1:n)=(1/sqrt(n))*fft(y(1:n));
+0062 f(1+n:n2)=(1/sqrt(n))*fft(y(1+n:n2));</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

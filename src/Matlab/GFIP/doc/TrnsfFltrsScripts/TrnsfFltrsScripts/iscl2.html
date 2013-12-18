@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of iscl2</title>
+  <meta name="keywords" content="iscl2">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; iscl2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>iscl2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=iscl2(x,n,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=iscl2(x,n,gp)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 n2=n+n;
+0004 m=n/2;
+0005 l=n/4;
+0006 rt2=1/sqrt(2);
+0007 <span class="comment">%</span>
+0008 <span class="keyword">if</span> (gp==1) <span class="comment">%[-1 0;0 1],[1 0;0 -1]</span>
+0009    d1=4;
+0010    c1(1,1)=1;
+0011    c1(2,1)=1;
+0012    c1(1,2)=1+m;
+0013    c1(2,2)=1;
+0014    c1(1,3)=1+m;
+0015    c1(2,3)=1;
+0016    c1(1,4)=1+m;
+0017    c1(2,4)=1+m;
+0018    d21=2*n-4;
+0019    <span class="keyword">for</span> k=2:m
+0020       c21(1,k-1)=k;
+0021       c21(2,k-1)=1;
+0022       c21(1,k-2+m)=k+m;
+0023       c21(2,k-2+m)=1;
+0024       c21(1,k-3+n)=k;
+0025       c21(2,k-3+n)=1+m;
+0026       c21(1,k-4+m+n)=k+m;
+0027       c21(2,k-4+m+n)=1+m;
+0028    <span class="keyword">end</span>   
+0029    d22=2*n-4;
+0030    <span class="keyword">for</span> k=2:m
+0031       c22(1,k-1)=1;
+0032       c22(2,k-1)=k;
+0033       c22(1,k-2+m)=1;
+0034       c22(2,k-2+m)=k+m;
+0035       c22(1,k-3+n)=1+m;
+0036       c22(2,k-3+n)=k;
+0037       c22(1,k-4+m+n)=1+m;
+0038       c22(2,k-4+m+n)=k+m;
+0039    <span class="keyword">end</span>   
+0040 <span class="keyword">end</span>   
+0041 <span class="comment">%</span>
+0042 <span class="keyword">if</span> (gp==2) <span class="comment">%[n/2+1 0;0 1],[1 0;0 n/2+1]</span>
+0043    d1=m*m;
+0044    d21=m*m;
+0045    d22=m*m;
+0046    <span class="keyword">for</span> k1=0:m-1
+0047       <span class="keyword">for</span> k2=0:m-1
+0048          c1(1,k1+m*k2+1)=2*k1+1;   
+0049          c1(2,k1+m*k2+1)=2*k2+1;
+0050          c21(1,k1+m*k2+1)=2*k1+1;   
+0051          c21(2,k1+m*k2+1)=2*k2+2;
+0052          c22(1,k1+m*k2+1)=2*k1+2;   
+0053          c22(2,k1+m*k2+1)=2*k2+1;
+0054       <span class="keyword">end</span>
+0055    <span class="keyword">end</span>   
+0056 <span class="keyword">end</span>   
+0057 <span class="comment">%</span>
+0058 <span class="comment">%</span>
+0059 <span class="comment">%</span>
+0060 <span class="keyword">for</span> k=1:d1
+0061    t1(1,k)=x(c1(1,k),c1(2,k));
+0062    t1(3,k)=x(c1(1,k),c1(2,k)+n);
+0063    t1(2,k)=x(c1(1,k)+n,c1(2,k));
+0064    t1(4,k)=x(c1(1,k)+n,c1(2,k)+n);
+0065 <span class="keyword">end</span>      
+0066 t1=f22(t1,d1);
+0067 <span class="keyword">for</span> k=1:d1
+0068    x(c1(1,k),c1(2,k))=t1(1,k);
+0069    x(c1(1,k),c1(2,k)+n)=t1(3,k);
+0070    x(c1(1,k)+n,c1(2,k))=t1(2,k);
+0071    x(c1(1,k)+n,c1(2,k)+n)=t1(4,k);
+0072 <span class="keyword">end</span>
+0073 <span class="keyword">for</span> k=1:d21
+0074    t21(1,k)=x(c21(1,k),c21(2,k));
+0075    t21(2,k)=x(c21(1,k)+n,c21(2,k));
+0076 <span class="keyword">end</span>   
+0077 t21=rt2*fft(t21);
+0078 <span class="keyword">for</span> k=1:d21
+0079    x(c21(1,k),c21(2,k))=t21(1,k);
+0080    x(c21(1,k)+n,c21(2,k))=t21(2,k);
+0081 <span class="keyword">end</span>
+0082 <span class="keyword">for</span> k=1:d22
+0083    t22(1,k)=x(c22(1,k),c22(2,k));
+0084    t22(2,k)=x(c22(1,k),c22(2,k)+n);
+0085 <span class="keyword">end</span>   
+0086 t22=rt2*fft(t22);
+0087 <span class="keyword">for</span> k=1:d22
+0088    x(c22(1,k),c22(2,k))=t22(1,k);
+0089    x(c22(1,k),c22(2,k)+n)=t22(2,k);
+0090 <span class="keyword">end</span>
+0091 <span class="comment">%</span>
+0092 y(1:n,1:n)=(1/n)*fft2(x(1:n,1:n));
+0093 y(1+n:n2,1:n)=(1/n)*fft2(x(1+n:n2,1:n));
+0094 y(1:n,1+n:n2)=(1/n)*fft2(x(1:n,1+n:n2));
+0095 y(1+n:n2,1+n:n2)=(1/n)*fft2(x(1+n:n2,1+n:n2));</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

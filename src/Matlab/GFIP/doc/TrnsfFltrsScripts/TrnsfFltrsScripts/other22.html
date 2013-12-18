@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of other22</title>
+  <meta name="keywords" content="other22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; other22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>other22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>	</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 nd2=n/2;
+0004 n2=n*2;
+0005 orgn=1;
+0006 <span class="comment">%</span>
+0007 <span class="comment">% nn2_22</span>
+0008 <span class="comment">%s2=1;</span>
+0009 s2=input(<span class="string">'input the scene number 0--6     '</span>)
+0010 sz=input(<span class="string">'input the strip size 1--32    '</span>)
+0011 gg1=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(s2,sz,nd2);
+0012 <span class="comment">%</span>
+0013 [11 12 13 14 15 18 19 23 29 31]
+0014 [103 104 201 202 203]
+0015 gp1=input(<span class="string">'input the group number    '</span>)
+0016 mm=max(max(gg1));
+0017 mn=0;
+0018 lvl=input(<span class="string">'input the noise level     '</span>)
+0019 sdv=lvl*mm;
+0020 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n,n,mn,sdv);
+0021 ngg1=gg1+ns;
+0022 ngg=fill22(ngg1,n,gp1);
+0023 <span class="comment">%</span>
+0024 <span class="comment">%pg=imread('fx1.tif');</span>
+0025 <span class="comment">%spg=pg(1341:1596,1157:1412);</span>
+0026 <span class="comment">%spg=double(spg);</span>
+0027 <span class="comment">%</span>
+0028 <span class="comment">%gp2=104;</span>
+0029 <span class="comment">%[y1,y21,y22,y23,y4]=mm2_22(spg,n,gp2);</span>
+0030 <span class="comment">%yy1=real(imm2_22(y1,n,gp2));</span>
+0031 <span class="comment">%yy21=real(imm2_22(y21,n,gp2));</span>
+0032 <span class="comment">%yy22=real(imm2_22(y22,n,gp2));</span>
+0033 <span class="comment">%yy23=real(imm2_22(y23,n,gp2));</span>
+0034 <span class="comment">%yy4=real(imm2_22(y4,n,gp2));</span>
+0035 <span class="comment">%</span>
+0036 [x1,x21,x22,x23,x4]=nn2_22(ngg,n,gp1,orgn);
+0037 xx1=real(inn2_22(x1,n,gp1,orgn));
+0038 xx21=real(inn2_22(x21,n,gp1,orgn));
+0039 xx22=real(inn2_22(x22,n,gp1,orgn));
+0040 xx23=real(inn2_22(x23,n,gp1,orgn));
+0041 xx4=real(inn2_22(x4,n,gp1,orgn));
+0042 <span class="comment">%</span>
+0043 figure(1)
+0044 subplot(3,2,1),imagesc(ngg1)
+0045 subplot(3,2,2),imagesc(xx1(1:n,1:n))
+0046 subplot(3,2,3),imagesc(xx21(1:n,1:n))
+0047 subplot(3,2,4),imagesc(xx22(1:n,1:n))
+0048 subplot(3,2,5),imagesc(xx23(1:n,1:n))
+0049 subplot(3,2,6),imagesc(xx4(1:n,1:n))
+0050 figure(2)
+0051 subplot(3,2,1),imagesc(ngg)
+0052 subplot(3,2,2),imagesc(xx1)
+0053 subplot(3,2,3),imagesc(xx21)
+0054 subplot(3,2,4),imagesc(xx22)
+0055 subplot(3,2,5),imagesc(xx23)
+0056 subplot(3,2,6),imagesc(xx4)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

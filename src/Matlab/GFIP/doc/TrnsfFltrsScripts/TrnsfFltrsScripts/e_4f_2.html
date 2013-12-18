@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of e_4f_2</title>
+  <meta name="keywords" content="e_4f_2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; e_4f_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>e_4f_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>	</li><li><a href="m_4n_2.html" class="code" title="function [y1,y21,y22,y41,y42,y8]=m_4n_2(x)">m_4n_2</a>	</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 m=16;
+0003 n=16;
+0004 m2=m+m;
+0005 m4=m2+m2;
+0006 n2=n+n;
+0007 gg(1:m4,1:n2)=zeros(m4,n2);
+0008 xr=floor((m4-2)*rand);
+0009 yr=floor((n2-n/2)*rand);
+0010 gg(xr+1:xr+2,1+yr:n/2+yr)=ones(2,n/2);
+0011 mn=1;
+0012 sdv=0;
+0013 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(m4,n2,mn,sdv);
+0014 ngg=gg+ns;
+0015 [y1,y21,y22,y41,y42,y8]=<a href="m_4n_2.html" class="code" title="function [y1,y21,y22,y41,y42,y8]=m_4n_2(x)">m_4n_2</a>(ngg);
+0016 yy1=real(<a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>(y1));
+0017 yy21=real(<a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>(y21));
+0018 yy22=real(<a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>(y22));
+0019 yy41=real(<a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>(y41));
+0020 yy42=real(<a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>(y42));
+0021 yy8=real(<a href="im_4n_2.html" class="code" title="function y=im_4n_2(x)">im_4n_2</a>(y8));
+0022 subplot(2,4,1),imagesc(gg)
+0023 subplot(2,4,2),imagesc(ngg)
+0024 subplot(2,4,3),imagesc(yy1)
+0025 subplot(2,4,4),imagesc(yy21)
+0026 subplot(2,4,5),imagesc(yy22)
+0027 subplot(2,4,6),imagesc(yy41)
+0028 subplot(2,4,7),imagesc(yy42)
+0029 subplot(2,4,8),imagesc(yy8)
+0030 m(1)=max(max(ngg));
+0031 m(2)=max(max(yy1));
+0032 m(3)=max(max(yy21));
+0033 m(4)=max(max(yy22));
+0034 m(5)=max(max(yy41));
+0035 m(6)=max(max(yy42));
+0036 m(7)=max(max(yy8));
+0037 m'</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

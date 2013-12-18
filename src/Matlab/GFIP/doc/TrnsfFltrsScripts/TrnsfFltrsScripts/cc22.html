@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cc22</title>
+  <meta name="keywords" content="cc22">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cc22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cc22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function g=cc22(x,y,gp,prj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function g=cc22(x,y,gp,prj)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 [n2,tem]=size(x);
+0004 g=zeros(n2,n2);
+0005 n=n2/2;
+0006 m=n/2;
+0007 <span class="comment">%</span>
+0008 <span class="comment">%</span>
+0009 [a,b]=find(y(1:n,1:n));
+0010 [K,tem]=size(a);
+0011 <span class="keyword">if</span> (gp==11) <span class="comment">% (-x,-y), (y,x)</span>
+0012    <span class="keyword">for</span> k=1:K
+0013       tr(1,k)=a(k);
+0014       tr(2,k)=b(k);
+0015       tr(3,k)=mod(n-a(k)+1,n)+1;
+0016       tr(4,k)=mod(n-b(k)+1,n)+1;
+0017       tr(5,k)=b(k);
+0018       tr(6,k)=a(k);
+0019       tr(7,k)=tr(4,k);
+0020       tr(8,k)=tr(3,k);
+0021       <span class="comment">%hr(1,k)=tr(3,k);</span>
+0022       <span class="comment">%hr(2,k)=tr(4,k);</span>
+0023       <span class="comment">%hr(3,k)=tr(1,k);</span>
+0024       <span class="comment">%hr(4,k)=tr(2,k);</span>
+0025       <span class="comment">%hr(5,k)=tr(7,k);</span>
+0026       <span class="comment">%hr(6,k)=tr(8,k);</span>
+0027       <span class="comment">%hr(7,k)=tr(5,k);</span>
+0028       <span class="comment">%hr(8,k)=tr(6,k);</span>
+0029       hr(1:8,k)=mod(n-tr(1:8,k)+1,n)+1;
+0030    <span class="keyword">end</span>   
+0031 <span class="keyword">end</span>   
+0032 <span class="comment">%</span>
+0033 <span class="keyword">if</span> (gp==12) <span class="comment">% [0 1;1 0], [0 m+1;m+1 0],[m+1 0;0 m+1]</span>
+0034    <span class="keyword">for</span> k=1:K
+0035       tr(1,k)=a(k);
+0036       tr(2,k)=b(k);
+0037       tr(3,k)=b(k);
+0038       tr(4,k)=a(k);
+0039       tr(5,k)=mod(n/2+b(k)-1,n)+1;
+0040       tr(6,k)=mod(n/2+a(k)-1,n)+1;
+0041       tr(7,k)=tr(6,k);
+0042       tr(8,k)=tr(5,k);
+0043       hr(1:8,k)=mod(n-tr(1:8,k)+1,n)+1;
+0044    <span class="keyword">end</span>   
+0045 <span class="keyword">end</span>   
+0046 <span class="keyword">if</span> (prj==4)
+0047    <span class="keyword">for</span> k=1:K
+0048       g(tr(1,k),tr(2,k))    =x(tr(1,k),tr(2,k));
+0049       g(tr(3,k),tr(4,k)+n)  =x(tr(3,k),tr(4,k)+n);
+0050       g(tr(5,k)+n,tr(6,k))  =x(tr(5,k)+n,tr(6,k));
+0051       g(tr(7,k)+n,tr(8,k)+n)=x(tr(7,k)+n,tr(8,k)+n);
+0052       g(hr(1,k),hr(2,k))    =x(hr(1,k),hr(2,k));
+0053       g(hr(3,k),hr(4,k)+n)  =x(hr(3,k),hr(4,k)+n);
+0054       g(hr(5,k)+n,hr(6,k))  =x(hr(5,k)+n,hr(6,k));
+0055       g(hr(7,k)+n,hr(8,k)+n)=x(hr(7,k)+n,hr(8,k)+n);
+0056       <span class="comment">%</span>
+0057       g(tr(1,k),tr(2,k)+n)  =x(tr(1,k),tr(2,k)+n);
+0058       g(tr(3,k),tr(4,k))    =x(tr(3,k),tr(4,k));
+0059       g(tr(5,k)+n,tr(6,k)+n)=x(tr(5,k)+n,tr(6,k)+n);
+0060       g(tr(7,k)+n,tr(8,k))  =x(tr(7,k)+n,tr(8,k));
+0061       g(hr(1,k),hr(2,k)+n)  =x(hr(1,k),hr(2,k)+n);
+0062       g(hr(3,k),hr(4,k))    =x(hr(3,k),hr(4,k));
+0063       g(hr(5,k)+n,hr(6,k)+n)=x(hr(5,k)+n,hr(6,k)+n);
+0064       g(hr(7,k)+n,hr(8,k))  =x(hr(7,k)+n,hr(8,k));
+0065       <span class="comment">%</span>
+0066       g(tr(1,k)+n,tr(2,k))  =x(tr(1,k)+n,tr(2,k));
+0067       g(tr(3,k)+n,tr(4,k)+n)=x(tr(3,k)+n,tr(4,k)+n);
+0068       g(tr(5,k),tr(6,k))    =x(tr(5,k),tr(6,k));
+0069       g(tr(7,k),tr(8,k)+n)  =x(tr(7,k),tr(8,k)+n);
+0070       g(hr(1,k)+n,hr(2,k))  =x(hr(1,k)+n,hr(2,k));
+0071       g(hr(3,k)+n,hr(4,k)+n)=x(hr(3,k)+n,hr(4,k)+n);
+0072       g(hr(5,k),hr(6,k))    =x(hr(5,k),hr(6,k));
+0073       g(hr(7,k),hr(8,k)+n)  =x(hr(7,k),hr(8,k)+n);
+0074       <span class="comment">%</span>
+0075       g(tr(1,k)+n,tr(2,k)+n)=x(tr(1,k)+n,tr(2,k)+n);
+0076       g(tr(3,k)+n,tr(4,k))  =x(tr(3,k)+n,tr(4,k));
+0077       g(tr(5,k),tr(6,k)+n)  =x(tr(5,k),tr(6,k)+n);
+0078       g(tr(7,k),tr(8,k))    =x(tr(7,k),tr(8,k));
+0079       g(hr(1,k)+n,hr(2,k)+n)=x(hr(1,k)+n,hr(2,k)+n);
+0080       g(hr(3,k)+n,hr(4,k))  =x(hr(3,k)+n,hr(4,k));
+0081       g(hr(5,k),hr(6,k)+n)  =x(hr(5,k),hr(6,k)+n);
+0082       g(hr(7,k),hr(8,k))    =x(hr(7,k),hr(8,k));
+0083    <span class="keyword">end</span>   
+0084 <span class="keyword">end</span>
+0085 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

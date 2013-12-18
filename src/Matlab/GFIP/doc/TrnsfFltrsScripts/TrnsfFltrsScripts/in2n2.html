@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of in2n2</title>
+  <meta name="keywords" content="in2n2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; in2n2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>in2n2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=in2n2(ff,nx,ny,gx,gy) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="dsum22.html" class="code" title="">dsum22</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=in2n2(ff,nx,ny,gx,gy)</a>
+0002 <span class="comment">%</span>
+0003 nx2=nx*2;
+0004 mx=nx/2;
+0005 ny2=ny*2;
+0006 my=ny/2;
+0007 <span class="comment">%</span>
+0008 <span class="keyword">if</span> (gx==1)
+0009    d1x=2;
+0010    c1x(1)=1;
+0011    c1x(2)=1+mx;
+0012 <span class="keyword">end</span>
+0013 <span class="comment">%</span>
+0014 <span class="keyword">if</span> (gx==2)
+0015    d1x=mx;
+0016    <span class="keyword">for</span> k=1:mx
+0017       c1x(k)=2*k-1;
+0018    <span class="keyword">end</span>   
+0019 <span class="keyword">end</span>
+0020 <span class="comment">%</span>
+0021 <span class="keyword">if</span> (gy==1)
+0022    d1y=2;
+0023    c1y(1)=1;
+0024    c1y(2)=1+my;
+0025 <span class="keyword">end</span>
+0026 <span class="comment">%</span>
+0027 <span class="keyword">if</span> (gy==2)
+0028    d1y=my;
+0029    <span class="keyword">for</span> k=1:my
+0030       c1y(k)=2*k-1;
+0031    <span class="keyword">end</span>   
+0032 <span class="keyword">end</span>
+0033 <span class="comment">%</span>
+0034 <span class="keyword">for</span> k=1:ny2
+0035    <span class="keyword">for</span> k1=1:d1x
+0036       tx(1,k1)=ff(c1x(k1),k);
+0037       tx(2,k1)=ff(c1x(k1)+nx,k);
+0038    <span class="keyword">end</span>
+0039    tx=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(tx,d1x);
+0040    <span class="keyword">for</span> k1=1:d1x
+0041       ff(c1x(k1),k)=tx(1,k1);
+0042       ff(c1x(k1)+nx,k)=tx(2,k1);
+0043    <span class="keyword">end</span>
+0044 <span class="keyword">end</span>   
+0045 <span class="comment">%</span>
+0046 ff(1:nx,:)=fft(ff(1:nx,:));
+0047 ff(1+nx:nx2,:)=fft(ff(1+nx:nx2,:));
+0048 ff=ff.';
+0049 <span class="comment">%</span>
+0050 <span class="keyword">for</span> k=1:nx2
+0051    <span class="keyword">for</span> k1=1:d1y
+0052       ty(1,k1)=ff(c1y(k1),k);
+0053       ty(2,k1)=ff(c1y(k1)+ny,k);
+0054    <span class="keyword">end</span>
+0055    ty=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(ty,d1y);
+0056    <span class="keyword">for</span> k1=1:d1y
+0057       ff(c1y(k1),k)=ty(1,k1);
+0058       ff(c1y(k1)+ny,k)=ty(2,k1);
+0059    <span class="keyword">end</span>
+0060 <span class="keyword">end</span>
+0061 <span class="comment">%</span>
+0062 ff(1:ny,:)=fft(ff(1:ny,:));
+0063 ff(1+ny:ny2,:)=fft(ff(1+ny:ny2,:));
+0064 y=(1/sqrt(nx*ny))*ff.';</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

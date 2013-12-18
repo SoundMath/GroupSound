@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of rain</title>
+  <meta name="keywords" content="rain">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; rain.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>rain
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>	Use this for even n:</li><li><a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>	Use this for even n:</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=48;
+0003 n2=n*2;
+0004 orgn=1;
+0005 <span class="comment">%</span>
+0006 pp=0;
+0007 <span class="comment">% gp: 11, 13, 14, 23, 29, 31,201</span>
+0008 W=imread(<span class="string">'c:\windows\desktop\data\projects\sttr\pictures\wine1.tif'</span>);
+0009 gg(1:n2,1:n2,1:3)=W(4:n2+3,4:n2+3,1:3);
+0010 gg=double(gg);
+0011 mm=max(max(gg));
+0012 sc=128/mm;
+0013 mn=0;
+0014 sdv=0;
+0015 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n2,n2,mn,sdv);
+0016 <span class="comment">%ngg=gg+ns;</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%pg=imread('fx1.tif');</span>
+0019 <span class="comment">%spg=pg(1341:1596,1157:1412);</span>
+0020 <span class="comment">%spg=double(spg);</span>
+0021 <span class="comment">%</span>
+0022 <span class="comment">%gp2=104;</span>
+0023 <span class="comment">%[y1,y21,y22,y23,y4]=mm2_22(spg,n,gp2);</span>
+0024 <span class="comment">%yy1=real(imm2_22(y1,n,gp2));</span>
+0025 <span class="comment">%yy21=real(imm2_22(y21,n,gp2));</span>
+0026 <span class="comment">%yy22=real(imm2_22(y22,n,gp2));</span>
+0027 <span class="comment">%yy23=real(imm2_22(y23,n,gp2));</span>
+0028 <span class="comment">%yy4=real(imm2_22(y4,n,gp2));</span>
+0029 <span class="comment">%</span>
+0030 [11 12 13 14 15 18 19 23 29 31]
+0031 [103 104 201 202 203]
+0032 gp1=input(<span class="string">'input the group number    '</span>)
+0033 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(gg(:,:,1),gp1);
+0034 xx1(:,:,1)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x1,gp1));
+0035 xx21(:,:,1)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x21,gp1));
+0036 xx22(:,:,1)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x22,gp1));
+0037 xx23(:,:,1)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0038 xx4(:,:,1)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x4,gp1));
+0039 figure(1)
+0040 subplot(3,2,1),imagesc(gg(:,:,1))
+0041 subplot(3,2,2),imagesc(xx1(:,:,1))
+0042 subplot(3,2,3),imagesc(xx21(:,:,1))
+0043 subplot(3,2,4),imagesc(xx22(:,:,1))
+0044 subplot(3,2,5),imagesc(xx23(:,:,1))
+0045 subplot(3,2,6),imagesc(xx4(:,:,1))
+0046 <span class="comment">%</span>
+0047 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(gg(:,:,2),gp1);
+0048 xx1(:,:,2)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x1,gp1));
+0049 xx21(:,:,2)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x21,gp1));
+0050 xx22(:,:,2)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x22,gp1));
+0051 xx23(:,:,2)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0052 xx4(:,:,2)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x4,gp1));
+0053 figure(2)
+0054 subplot(3,2,1),imagesc(gg(:,:,2))
+0055 subplot(3,2,2),imagesc(xx1(:,:,2))
+0056 subplot(3,2,3),imagesc(xx21(:,:,2))
+0057 subplot(3,2,4),imagesc(xx22(:,:,2))
+0058 subplot(3,2,5),imagesc(xx23(:,:,2))
+0059 subplot(3,2,6),imagesc(xx4(:,:,2))
+0060 <span class="comment">%</span>
+0061 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(gg(:,:,3),gp1);
+0062 xx1(:,:,3)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x1,gp1));
+0063 xx21(:,:,3)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x21,gp1));
+0064 xx22(:,:,3)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x22,gp1));
+0065 xx23(:,:,3)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0066 xx4(:,:,3)=real(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x4,gp1));
+0067 figure(3)
+0068 subplot(3,2,1),imagesc(gg(:,:,3))
+0069 subplot(3,2,2),imagesc(xx1(:,:,3))
+0070 subplot(3,2,3),imagesc(xx21(:,:,3))
+0071 subplot(3,2,4),imagesc(xx22(:,:,3))
+0072 subplot(3,2,5),imagesc(xx23(:,:,3))
+0073 subplot(3,2,6),imagesc(xx4(:,:,3))
+0074 <span class="comment">%</span>
+0075 figure(4)
+0076 subplot(3,2,1),image(gg/256)
+0077 cx1=xx1+abs(min(min(min(xx1))));
+0078 cx1=cx1/max(max(max(cx1)));
+0079 subplot(3,2,2),image(cx1)
+0080 cx21=xx21+abs(min(min(min(xx21))));
+0081 cx21=cx21/max(max(max(cx21)));
+0082 subplot(3,2,3),image(cx21)
+0083 cx22=xx22+abs(min(min(min(xx22))));
+0084 cx22=cx22/max(max(max(cx22)));
+0085 subplot(3,2,4),image(cx22)
+0086 cx23=xx23+abs(min(min(min(xx23))));
+0087 cx23=cx23/max(max(max(cx23)));
+0088 subplot(3,2,5),image(cx23)
+0089 cx4=xx4+abs(min(min(min(xx4))));
+0090 cx4=cx4/max(max(max(cx4)));
+0091 subplot(3,2,6),image(cx4)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

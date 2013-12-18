@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of sdpt2_G4</title>
+  <meta name="keywords" content="sdpt2_G4">
+  <meta name="description" content="2-D semidirect product transform wrt group G4.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; sdpt2_G4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>sdpt2_G4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>2-D semidirect product transform wrt group G4.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=sdpt2_G4(x) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> 2-D semidirect product transform wrt group G4.
+
+ INPUTS
+   x &amp; signal for which to compute expansion coefs.
+
+ OUTPUTS
+   y &amp; expansion coefs of x wrt group G4.
+
+ REMARKS/BUGS/OPEN ISSUES
+   \item[A] 
+   This code is a slightly modified version of that given on 
+   page 201 of [1]. For a given input signal, x, it computes the
+   expansion coefficients for x wrt the semidirect product group 
+   \[
+            G4 = (C_N X C_N) \sdp [1 0; 1 -1]. 
+   \]
+   \item[B]
+   Use this program for even N.
+   \item[C]
+   Line 6 of the program listing on page 201 of [1] has a minor typo
+   (fixed in this version).
+
+ HISTORY
+   2001.04.02 &amp; Myoung An &amp; initial src code listing [1]
+   2004.02.29 &amp; William DeMeo &amp; docs/comments, minor mods/adds
+   2004.04.29 &amp; William DeMeo &amp; minor mods
+
+ REFERENCES
+ [1] Myoung An and Richard Tolimieri, 
+     &quot;Group Filters and Image Processing.&quot; 
+     Psypher Press, 2003.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=sdpt2_G4(x)</a>
+0002 <span class="comment">% 2-D semidirect product transform wrt group G4.</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% INPUTS</span>
+0005 <span class="comment">%   x &amp; signal for which to compute expansion coefs.</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% OUTPUTS</span>
+0008 <span class="comment">%   y &amp; expansion coefs of x wrt group G4.</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% REMARKS/BUGS/OPEN ISSUES</span>
+0011 <span class="comment">%   \item[A]</span>
+0012 <span class="comment">%   This code is a slightly modified version of that given on</span>
+0013 <span class="comment">%   page 201 of [1]. For a given input signal, x, it computes the</span>
+0014 <span class="comment">%   expansion coefficients for x wrt the semidirect product group</span>
+0015 <span class="comment">%   \[</span>
+0016 <span class="comment">%            G4 = (C_N X C_N) \sdp [1 0; 1 -1].</span>
+0017 <span class="comment">%   \]</span>
+0018 <span class="comment">%   \item[B]</span>
+0019 <span class="comment">%   Use this program for even N.</span>
+0020 <span class="comment">%   \item[C]</span>
+0021 <span class="comment">%   Line 6 of the program listing on page 201 of [1] has a minor typo</span>
+0022 <span class="comment">%   (fixed in this version).</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">% HISTORY</span>
+0025 <span class="comment">%   2001.04.02 &amp; Myoung An &amp; initial src code listing [1]</span>
+0026 <span class="comment">%   2004.02.29 &amp; William DeMeo &amp; docs/comments, minor mods/adds</span>
+0027 <span class="comment">%   2004.04.29 &amp; William DeMeo &amp; minor mods</span>
+0028 <span class="comment">%</span>
+0029 <span class="comment">% REFERENCES</span>
+0030 <span class="comment">% [1] Myoung An and Richard Tolimieri,</span>
+0031 <span class="comment">%     &quot;Group Filters and Image Processing.&quot;</span>
+0032 <span class="comment">%     Psypher Press, 2003.</span>
+0033 
+0034 N=size(x,1);  <span class="comment">%                            _________________</span>
+0035 n2=length(x); <span class="comment">%                           |        |        |</span>
+0036 <span class="keyword">if</span> n2~=N,     <span class="comment">% In case x is shaped like  |        |        |</span>
+0037     x=x';     <span class="comment">%                           |________|________|</span>
+0038 <span class="keyword">end</span>;          <span class="comment">%</span>
+0039 n=n2/2;       <span class="comment">% n  : abelian normal subgroup is C_n X C_n</span>
+0040 y=zeros(n2,n);
+0041 y=n*[ifft2(x(1:n,1:n)); ifft2(x(1+n:n2,1:n))];
+0042 t=zeros(2,n);
+0043 <span class="keyword">for</span> k=1:n
+0044     t(1:2,k)=[y(k,1); y(k+n,1)];  <span class="comment">% (cf. typo, p. 201)</span>
+0045 <span class="keyword">end</span>;
+0046 t=sqrt(2)*ifft(t);
+0047 <span class="keyword">for</span> k=1:n,
+0048     y(k,1)=t(1,k);
+0049     y(k+n,1)=t(2,k);
+0050 <span class="keyword">end</span>;
+0051 <span class="comment">% end of file: coef_G4.m</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

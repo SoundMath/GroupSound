@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of quads</title>
+  <meta name="keywords" content="quads">
+  <meta name="description" content="Generate numbered quadrants scene.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; quads.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>quads
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Generate numbered quadrants scene.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [q11, q12, q21, q22] = quads(N, DISPLAY) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Generate numbered quadrants scene.
+
+ HISTORY
+   2004.04.26 &amp; William DeMeo &amp; initial file
+   2004.04.29 &amp; William DeMeo &amp; minor mods
+
+ SEE ALSO
+   ex_10_7, fig_1077, <a href="rt1.html" class="code" title="">rt1</a>.m, <a href="ee_22.html" class="code" title="">ee_22</a>.m</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [q11, q12, q21, q22] = quads(N, DISPLAY)</a>
+0002 <span class="comment">% Generate numbered quadrants scene.</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% HISTORY</span>
+0005 <span class="comment">%   2004.04.26 &amp; William DeMeo &amp; initial file</span>
+0006 <span class="comment">%   2004.04.29 &amp; William DeMeo &amp; minor mods</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% SEE ALSO</span>
+0009 <span class="comment">%   ex_10_7, fig_1077, rt1.m, ee_22.m</span>
+0010 <span class="comment">%</span>
+0011 
+0012 <span class="keyword">if</span> nargin &lt; 2, DISPLAY=0; <span class="keyword">end</span>;
+0013 n=N/2;          <span class="comment">%                 =&gt; n = 32,  64, 128</span>
+0014 hn=n/2;         <span class="comment">%                 =&gt; hn= 16,  32,  64  (&quot;half n&quot;)</span>
+0015 qn=n/4;         <span class="comment">%                 =&gt; qn=  8,  16,  32  (&quot;quarter n&quot;)</span>
+0016                 <span class="comment">%</span>
+0017                 <span class="comment">%     |&lt;---------------------- N ----------------------&gt;|</span>
+0018                 <span class="comment">%      _________________________________________________</span>
+0019                 <span class="comment">%     |                   (q11)|                   (q12)|</span>
+0020                 <span class="comment">%     |                        |                        |</span>
+0021                 <span class="comment">%     |         111            |       2222222222       |</span>
+0022                 <span class="comment">%     |           1            |                2       |</span>
+0023                 <span class="comment">%     |           1            |                2       |</span>
+0024                 <span class="comment">%     |           1            |       2222222222       |</span>
+0025                 <span class="comment">%     |           1            |       2                |</span>
+0026                 <span class="comment">%     |           1            |       2                |</span>
+0027                 <span class="comment">%     |      11111111111       |       2222222222       |</span>
+0028                 <span class="comment">%     |                        |                        |</span>
+0029                 <span class="comment">%     |&lt;---------------------- | ----------------------&gt;|</span>
+0030                 <span class="comment">%     |                   (q21)|                   (q22)|</span>
+0031                 <span class="comment">%     |      3333333333        |      4      4          |</span>
+0032                 <span class="comment">%     |      3        3        |      4      4          |</span>
+0033                 <span class="comment">%     |               3        |      4      4          |</span>
+0034                 <span class="comment">%     |         3333333        |      4444444444        |</span>
+0035                 <span class="comment">%     |               3        |             4          |</span>
+0036                 <span class="comment">%     |               3        |             4          |</span>
+0037                 <span class="comment">%     |               3        |             4          |</span>
+0038                 <span class="comment">%     |      3333333333        |             4          |</span>
+0039                 <span class="comment">%     |________________________|________________________|</span>
+0040                 <span class="comment">%     |&lt;---------------------- N ----------------------&gt;|</span>
+0041                 <span class="comment">%      &lt;---------- n ---------&gt;|</span>
+0042                 <span class="comment">%      &lt;----hn----&gt;|</span>
+0043                 <span class="comment">%      &lt;-qn-&gt;|</span>
+0044 
+0045 q11=zeros(n); q12=zeros(n);
+0046 q21=zeros(n); q22=zeros(n);
+0047 
+0048 n30 = (-3:0);        <span class="comment">% n30 = [-3 -2 -1 0]</span>
+0049 iqn = (1:qn);        <span class="comment">% e.g.  iqn = 1:8</span>
+0050 ihn = (1:hn);        <span class="comment">% e.g.  ihn = 1:16</span>
+0051 
+0052 <span class="comment">% set relative magnitudes here:</span>
+0053 one=1; two=1; three=1; four=1;
+0054 
+0055 <span class="comment">% q11 (first quadrant)</span>
+0056 q11(qn, n30+hn) = one;  <span class="comment">% left side of the 4</span>
+0057 q11(hn+qn, ihn+qn)=one; <span class="comment">% bottom of the 1</span>
+0058 q11(ihn+qn, hn)=one;     <span class="comment">% middle of the 4</span>
+0059 
+0060 <span class="comment">% q12 (second quadrant)</span>
+0061 q12(qn:qn+4,qn+1)=two;  <span class="comment">% mark</span>
+0062 q12(qn,ihn+qn)=two;     <span class="comment">% top of the 2</span>
+0063 q12(iqn+qn,hn+qn)=two;  <span class="comment">% right side of the 2</span>
+0064 q12(hn,ihn+qn)=two;     <span class="comment">% middle of the 2</span>
+0065 q12(iqn+hn,qn+1)=two;   <span class="comment">% left side of the 2</span>
+0066 q12(hn+qn,ihn+qn)=two;  <span class="comment">% foot of the 2</span>
+0067 
+0068 <span class="comment">% q21 (third quadrant)</span>
+0069 q21(qn:qn+4,qn+1)=three;  <span class="comment">% mark</span>
+0070 q21(qn,ihn+qn)=three;     <span class="comment">% top of the 3</span>
+0071 q21(hn,iqn+hn)=three;     <span class="comment">% middle of the 3</span>
+0072 q21(hn+qn,ihn+qn)=three;  <span class="comment">% foot of the 3</span>
+0073 q21(ihn+qn, hn+qn)=three; <span class="comment">% right side of the 3</span>
+0074 
+0075 <span class="comment">% q22 (fourth quadrant)</span>
+0076 q22(ihn+qn, hn+qn/2)=four; <span class="comment">% right side of the 4</span>
+0077 q22(iqn+qn, qn) = four;    <span class="comment">% left side of the 4</span>
+0078 q22(hn,ihn+qn)=four;       <span class="comment">% middle of the 4</span>
+0079 
+0080 <span class="comment">%gg = [q11 q12; q21 q22];</span>
+0081 
+0082 <span class="keyword">if</span> DISPLAY,
+0083 <span class="comment">%  subplot(2,2,1),imagesc(q11); xlabel('q11');  axis image</span>
+0084 <span class="comment">%  subplot(2,2,2),imagesc(q12); xlabel('q12');  axis image</span>
+0085 <span class="comment">%  subplot(2,2,3),imagesc(q21); xlabel('q21');  axis image</span>
+0086 <span class="comment">%  subplot(2,2,4),imagesc(q22); xlabel('q22');  axis image</span>
+0087   imagesc(gg); xlabel(<span class="string">'gg'</span>);
+0088   axis image
+0089 <span class="keyword">end</span>;
+0090</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of is2_4</title>
+  <meta name="keywords" content="is2_4">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; is2_4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>is2_4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=is2_4(x,n); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+ C_N sdp K_2 
+ N must be a power of two and at least 8.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="one_4.html" class="code" title="">one_4</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=is2_4(x,n);</a>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% C_N sdp K_2</span>
+0004 <span class="comment">% N must be a power of two and at least 8.</span>
+0005 <span class="comment">%</span>
+0006 n2=n+n;
+0007 n3=n2+n;
+0008 n4=n3+n;
+0009 m2=n/2;
+0010 m4=n/4;
+0011 rt2=1/sqrt(2);
+0012 <span class="comment">%</span>
+0013 t1=x(1)+x(1+n2);
+0014 t2=x(1)-x(1+n2);
+0015 t3=x(1+n)+x(1+n3);
+0016 t4=-i*(x(1+n)-x(1+n3));
+0017 x(1) =.5*(t1+t3);
+0018 x(1+n) =.5*(t2+t4);
+0019 x(1+n2)=.5*(t1-t3);
+0020 x(1+n3)=.5*(t2-t4);
+0021 <span class="comment">%</span>
+0022 t1=x(1+m2)  +x(1+m2+n2);
+0023 t2=x(1+m2)  -x(1+m2+n2);
+0024 t3=x(1+m2+n)+x(1+m2+n3);
+0025 t4=-i*(x(1+m2+n)-x(1+m2+n3));
+0026 x(1+m2)   =.5*(t1+t3);
+0027 x(1+m2+n) =.5*(t2+t4);
+0028 x(1+m2+n2)=.5*(t1-t3);
+0029 x(1+m2+n3)=.5*(t2-t4);
+0030 <span class="comment">%</span>
+0031 <span class="keyword">for</span> k=1:m4-1
+0032    k2=1+2*k;
+0033    t1=x(k2)+x(k2+n2);
+0034    t2=x(k2)-x(k2+n2);
+0035    x(k2)=rt2*t1;
+0036    x(k2+n2)=rt2*t2;
+0037    t1=x(k2+m2)+x(k2+m2+n2);
+0038    t2=x(k2+m2)-x(k2+m2+n2);
+0039    x(k2+m2)=rt2*t1;
+0040    x(k2+m2+n2)=rt2*t2;
+0041 <span class="keyword">end</span>
+0042 <span class="comment">%</span>
+0043 y(1:n,1)=1/sqrt(n)*fft(x(1:n));
+0044 y(1+n:n2,1)=1/sqrt(n)*fft(x(1+n:n2));
+0045 y(1+n2:n3,1)=1/sqrt(n)*fft(x(1+n2:n3));
+0046 y(1+n3:n4,1)=1/sqrt(n)*fft(x(1+n3:n4));
+0047 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

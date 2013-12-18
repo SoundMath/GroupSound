@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of sqnc4</title>
+  <meta name="keywords" content="sqnc4">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; sqnc4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>sqnc4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>	n must be a multiple of 4</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 <span class="comment">%load ps_inv60</span>
+0003 n=32;
+0004 n2=2*n;
+0005 n3=3*n;
+0006 n4=4*n;
+0007 <span class="comment">%</span>
+0008 ln=zeros(n,n);
+0009 <span class="keyword">for</span> k=1:n
+0010    ln(k,k)=1;
+0011 <span class="keyword">end</span>
+0012 <span class="keyword">for</span> k1=1:n/2
+0013    <span class="keyword">for</span> k2=1:n/2
+0014       chk(2*k1-1,2*k2-1)=1;
+0015       chk(2*k1,2*k2-1)=2;
+0016       chk(2*k1-1,2*k2)=3;
+0017       chk(2*k1,2*k2)=4;
+0018    <span class="keyword">end</span>
+0019 <span class="keyword">end</span> 
+0020 rd=rand(n,n);
+0021 f1=rd+chk;
+0022 ftwo=2*rd+chk;
+0023 f3=3*rd+chk;
+0024 f4=4*rd+chk;
+0025 ff_in=[f1 ftwo f3 f4];
+0026 ff=[f1 f3; ftwo f4];
+0027 <span class="comment">%</span>
+0028 [g1,g2,g4]=scl2_4(ff,n);
+0029 c1=iscl2_4(g1,n);
+0030 c2=iscl2_4(g2,n);
+0031 c4=iscl2_4(g4,n);
+0032 cc1=[c1(1:n,1:n) c1(1+n:n2,1:n) c1(1:n,1+n:n2) c1(1+n:n2,1+n:n2)];
+0033 cc2=[c2(1:n,1:n) c2(1+n:n2,1:n) c2(1:n,1+n:n2) c2(1+n:n2,1+n:n2)];
+0034 cc4=[c4(1:n,1:n) c4(1+n:n2,1:n) c4(1:n,1+n:n2) c4(1+n:n2,1+n:n2)];
+0035 figure(1);
+0036 colormap(gray)
+0037 subplot(4,1,1),imagesc(ff_in)
+0038 subplot(4,1,2),imagesc(real(cc1))
+0039 subplot(4,1,3),imagesc(real(cc2))
+0040 subplot(4,1,4),imagesc(real(cc4))
+0041 <span class="comment">%</span>
+0042 [g1,g2,g4]=nn2_22(ff,n);
+0043 d1=inn2_22(g1,n);
+0044 d2=inn2_22(g2,n);
+0045 d4=inn2_22(g4,n);
+0046 my_dd1=[d1(1:n,1:n) d1(1+n:n2,1:n) d1(1:n,1+n:n2) d1(1+n:n2,1+n:n2)];
+0047 my_dd2=[d2(1:n,1:n) d2(1+n:n2,1:n) d2(1:n,1+n:n2) d2(1+n:n2,1+n:n2)];
+0048 my_dd4=[d4(1:n,1:n) d4(1+n:n2,1:n) d4(1:n,1+n:n2) d4(1+n:n2,1+n:n2)];
+0049 figure(2);
+0050 colormap(gray)
+0051 subplot(4,1,1),imagesc(ff_in)
+0052 subplot(4,1,2),imagesc(real(my_dd1))
+0053 subplot(4,1,3),imagesc(real(my_dd2))
+0054 subplot(4,1,4),imagesc(real(my_dd4))
+0055 <span class="comment">%</span>
+0056 [g1,g2,g4 ]=<a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>(ff,n);
+0057 e1=inn2_4(g1,n);
+0058 e2=inn2_4(g2,n);
+0059 e4=inn2_4(g4,n);
+0060 my_ee1=[e1(1:n,1:n) e1(1+n:n2,1:n) e1(1:n,1+n:n2) e1(1+n:n2,1+n:n2)];
+0061 my_ee2=[e2(1:n,1:n) e2(1+n:n2,1:n) e2(1:n,1+n:n2) e2(1+n:n2,1+n:n2)];
+0062 my_ee4=[e4(1:n,1:n) e4(1+n:n2,1:n) e4(1:n,1+n:n2) e4(1+n:n2,1+n:n2)];
+0063 figure(3);
+0064 colormap(gray)
+0065 subplot(4,1,1),imagesc(ff_in)
+0066 subplot(4,1,2),imagesc(real(my_ee1))
+0067 subplot(4,1,3),imagesc(real(my_ee2))
+0068 subplot(4,1,4),imagesc(real(my_ee4))</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

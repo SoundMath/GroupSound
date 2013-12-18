@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of in_4_2</title>
+  <meta name="keywords" content="in_4_2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; in_4_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>in_4_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=in_4_2(x,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="e_4_2.html" class="code" title="">e_4_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=in_4_2(x,gp)</a>
+0002 [n8,tem]=size(x);
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Use this routine for powers of 2.</span>
+0005 <span class="comment">% CN sdp (C4 sdp C2)</span>
+0006 <span class="comment">%</span>
+0007 n=n8/8;
+0008 n2=n+n;
+0009 n3=n2+n;
+0010 n4=n3+n;
+0011 n5=n4+n;
+0012 n6=n5+n;
+0013 n7=n6+n;
+0014 nd2=n/2;
+0015 nd4=n/4;
+0016 nd8=n/8;
+0017 rt2=1/sqrt(2);
+0018 rtn=1/sqrt(n);
+0019 <span class="comment">%</span>
+0020 <span class="comment">%</span>
+0021 <span class="keyword">if</span> (gp == 1)
+0022    d1=2;
+0023    d21=2;
+0024    c1(1)=1;
+0025    c1(2)=nd2+1;
+0026    d22=n/4-2;
+0027    <span class="keyword">for</span> k=1:nd8-1
+0028       c22(k)=4*k+1;
+0029       c22(k+nd8-1)=nd2+4*k+1;
+0030    <span class="keyword">end</span>   
+0031    d4=nd4;
+0032    <span class="keyword">for</span> k=0:d4-1
+0033       c4(k+1)=4*k+3;
+0034    <span class="keyword">end</span>   
+0035 <span class="keyword">end</span>
+0036 <span class="comment">% the H centralizer</span>
+0037 <span class="keyword">for</span> k=1:d1
+0038    <span class="keyword">for</span> l1=1:8
+0039       t1(l1,1)=x(c1(k)+n*(l1-1),1);
+0040    <span class="keyword">end</span>
+0041    tt1(1,1)=rt2*(t1(1,1)+t1(5,1));
+0042    tt1(3,1)=rt2*(t1(3,1)+t1(7,1));
+0043    tt1(5,1)=rt2*(t1(1,1)-t1(5,1));
+0044    tt1(7,1)=rt2*(t1(3,1)-t1(7,1));
+0045    tt1(2,1)=t1(2,1);
+0046    tt1(4,1)=t1(4,1);
+0047    tt1(6,1)=t1(6,1);
+0048    tt1(8,1)=t1(8,1);
+0049    
+0050    tt1(1:4,1)=.5*fft(tt1(1:4,1));
+0051    tt2(1:4,1)=.5*fft(tt1(5:8,1));
+0052    <span class="comment">%</span>
+0053    x(c1(k),1)=tt1(1);
+0054    x(c1(k)+n2,1)=tt1(3);
+0055    x(c1(k)+n4,1)=tt2(1);
+0056    x(c1(k)+n6,1)=tt2(3);
+0057    <span class="comment">%</span>
+0058    x(c1(k)+n,1)=tt1(2);
+0059    x(c1(k)+n3,1)=tt1(4);
+0060    x(c1(k)+n5,1)=tt2(2);
+0061    x(c1(k)+n7,1)=tt2(4);
+0062 <span class="keyword">end</span>
+0063 <span class="comment">%</span>
+0064 <span class="keyword">for</span> k=1:d22
+0065    t1=x(c22(k),1)+x(c22(k)+n2,1);
+0066    t2=x(c22(k),1)-x(c22(k)+n2,1);
+0067    t3=x(c22(k)+n5,1)+x(c22(k)+n7,1);
+0068    t4=x(c22(k)+n5,1)-x(c22(k)+n7,1);
+0069    x(c22(k),1)=.5*(t1+t3);
+0070    x(c22(k)+n2,1)=.5*(t2+t4);
+0071    x(c22(k)+n5,1)=.5*(t1-t3);
+0072    x(c22(k)+n7,1)=.5*(t2-t4);
+0073    
+0074    t1=x(c22(k)+n,1)+x(c22(k)+n3,1);
+0075    t2=x(c22(k)+n,1)-x(c22(k)+n3,1);
+0076    t3=x(c22(k)+n6,1)+x(c22(k)+n4,1);
+0077    t4=x(c22(k)+n6,1)-x(c22(k)+n4,1);
+0078    x(c22(k)+n,1)=.5*(t1+t3);
+0079    x(c22(k)+n3,1)=.5*(t2+t4);
+0080    x(c22(k)+n6,1)=.5*(t1-t3);
+0081    x(c22(k)+n4,1)=.5*(t2-t4);
+0082 <span class="keyword">end</span>   
+0083 <span class="comment">%</span>
+0084 <span class="keyword">for</span> k=1:d4
+0085    t1=rt2*(x(c4(k),1)+x(c4(k)+n2,1));
+0086    t2=rt2*(x(c4(k),1)-x(c4(k)+n2,1));
+0087    x(c4(k),1)=t1;
+0088    x(c4(k)+n2,1)=t2;
+0089    <span class="comment">%</span>
+0090    t1=rt2*(x(c4(k)+n,1)+x(c4(k)+n3,1));
+0091    t2=rt2*(x(c4(k)+n,1)-x(c4(k)+n3,1));
+0092    x(c4(k)+n,1)=t1;
+0093    x(c4(k)+n3,1)=t2;
+0094    <span class="comment">%</span>
+0095    t1=rt2*(x(c4(k)+n4,1)+x(c4(k)+n6,1));
+0096    t2=rt2*(x(c4(k)+n4,1)-x(c4(k)+n6,1));
+0097    x(c4(k)+n4,1)=t1;
+0098    x(c4(k)+n6,1)=t2;
+0099    <span class="comment">%</span>
+0100    t1=rt2*(x(c4(k)+n5,1)+x(c4(k)+n7,1));
+0101    t2=rt2*(x(c4(k)+n5,1)-x(c4(k)+n7,1));
+0102    x(c4(k)+n5,1)=t1;
+0103    x(c4(k)+n7,1)=t2;
+0104 <span class="keyword">end</span>   
+0105 bbf=rtn*fft(reshape(x,n,8));
+0106 y=reshape(bbf,n8,1);</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

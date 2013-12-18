@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of n2n2</title>
+  <meta name="keywords" content="n2n2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; n2n2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>n2n2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [y1,y12,y21,y22]=n2n2(x,nx,ny,gx,gy) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="dsum22.html" class="code" title="">dsum22</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [y1,y12,y21,y22]=n2n2(x,nx,ny,gx,gy)</a>
+0002 nx2=nx*2;
+0003 mx=nx/2;
+0004 ny2=ny*2;
+0005 my=ny/2;
+0006 rt2=1/sqrt(2);
+0007 <span class="comment">%</span>
+0008 bf(1:nx,:)=   ifft(x(1:nx,:));
+0009 bf(nx+1:nx2,:)=ifft(x(nx+1:nx2,:));
+0010 <span class="keyword">if</span> (gx==1)
+0011    d1x=2;
+0012    c1x(1)=1;
+0013    c1x(2)=1+mx;
+0014    d2x=nx-d1x;
+0015    <span class="keyword">for</span> k=2:mx
+0016       c2x(k-1)=k;
+0017       c2x(k+mx-2)=mx+k;
+0018    <span class="keyword">end</span>   
+0019 <span class="keyword">end</span>
+0020 <span class="comment">%</span>
+0021 <span class="keyword">if</span> (gx==2)
+0022    d1x=mx;
+0023    d2x=nx-d1x;
+0024    <span class="keyword">for</span> k=1:mx
+0025       c1x(k)=2*k-1;
+0026       c2x(k)=2*k;
+0027    <span class="keyword">end</span>   
+0028    d2x=nx-d1x;
+0029    <span class="keyword">for</span> k=2:mx
+0030       c2x(k-1)=k;
+0031       c2x(k+mx-2)=mx+k;
+0032    <span class="keyword">end</span>   
+0033 <span class="keyword">end</span>
+0034 <span class="comment">%</span>
+0035 <span class="keyword">if</span> (gy==1)
+0036    d1y=2;
+0037    c1y(1)=1;
+0038    c1y(2)=1+my;
+0039    d2y=ny-d1y;
+0040    <span class="keyword">for</span> k=2:my
+0041       c2y(k-1)=k;
+0042       c2y(k+my-2)=my+k;
+0043    <span class="keyword">end</span>   
+0044 <span class="keyword">end</span>
+0045 <span class="comment">%</span>
+0046 <span class="keyword">if</span> (gy==2)
+0047    d1y=my;
+0048    d2y=ny-d1y;
+0049    <span class="keyword">for</span> k=1:my
+0050       c1y(k)=2*k-1;
+0051       c2y(k)=2*k;
+0052    <span class="keyword">end</span>   
+0053    d2y=ny-d1y;
+0054    <span class="keyword">for</span> k=2:my
+0055       c2y(k-1)=k;
+0056       c2y(k+my-2)=my+k;
+0057    <span class="keyword">end</span>   
+0058 <span class="keyword">end</span>
+0059 <span class="comment">%</span>
+0060 <span class="keyword">for</span> k=1:ny2
+0061    <span class="keyword">for</span> k1=1:d1x
+0062       tx(1,k1)=bf(c1x(k1),k);
+0063       tx(2,k1)=bf(c1x(k1)+nx,k);
+0064    <span class="keyword">end</span>
+0065    tx=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(tx,d1x);
+0066    <span class="keyword">for</span> k1=1:d1x
+0067       bf(c1x(k1),k)=tx(1,k1);
+0068       bf(c1x(k1)+nx,k)=tx(2,k1);
+0069    <span class="keyword">end</span>
+0070 <span class="keyword">end</span>   
+0071 <span class="comment">%</span>
+0072 bf=bf.';
+0073 tbf(1:ny,:)=   ifft(bf(1:ny,:));
+0074 tbf(ny+1:ny2,:)=ifft(bf(ny+1:ny2,:));
+0075 <span class="comment">%</span>
+0076 <span class="keyword">for</span> k=1:nx2
+0077    <span class="keyword">for</span> k1=1:d1y
+0078       ty(1,k1)=tbf(c1y(k1),k);
+0079       ty(2,k1)=tbf(c1y(k1)+ny,k);
+0080    <span class="keyword">end</span>
+0081    ty=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(ty,d1y);
+0082    <span class="keyword">for</span> k1=1:d1y
+0083       tbf(c1y(k1),k)=ty(1,k1);
+0084       tbf(c1y(k1)+ny,k)=ty(2,k1);
+0085    <span class="keyword">end</span>
+0086 <span class="keyword">end</span>   
+0087 <span class="comment">%</span>
+0088 bf=sqrt(nx*ny)*tbf.';
+0089 <span class="comment">%</span>
+0090 <span class="comment">%filtering by dimensionality</span>
+0091 <span class="comment">%</span>
+0092 y1=zeros(nx2,ny2);
+0093 y21=zeros(nx2,ny2);
+0094 y12=zeros(nx2,ny2);
+0095 y22=zeros(nx2,ny2);
+0096 <span class="keyword">for</span> kx=1:d1x
+0097    xx=c1x(kx);
+0098    <span class="keyword">for</span> ky=1:d1y
+0099       yy=c1y(ky);
+0100       y1(xx,yy)=bf(xx,yy);
+0101       y1(xx+nx,yy)=bf(xx+nx,yy);
+0102       y1(xx,yy+ny)=bf(xx,yy+ny);
+0103       y1(xx+nx,yy+ny)=bf(xx+nx,yy+ny);
+0104    <span class="keyword">end</span>   
+0105 <span class="keyword">end</span>   
+0106 <span class="keyword">for</span> kx=1:d2x
+0107    xx=c2x(kx);
+0108    <span class="keyword">for</span> ky=1:d1y
+0109       yy=c1y(ky);
+0110       y21(xx,yy)=bf(xx,yy);
+0111       y21(xx+nx,yy)=bf(xx+nx,yy);
+0112       y21(xx,yy+ny)=bf(xx,yy+ny);
+0113       y21(xx+nx,yy+ny)=bf(xx+nx,yy+ny);
+0114    <span class="keyword">end</span>   
+0115 <span class="keyword">end</span>   
+0116 <span class="keyword">for</span> kx=1:d1x
+0117    xx=c1x(kx);
+0118    <span class="keyword">for</span> ky=1:d2y
+0119       yy=c2y(ky);
+0120       y12(xx,yy)=bf(xx,yy);
+0121       y12(xx+nx,yy)=bf(xx+nx,yy);
+0122       y12(xx,yy+ny)=bf(xx,yy+ny);
+0123       y12(xx+nx,yy+ny)=bf(xx+nx,yy+ny);
+0124    <span class="keyword">end</span>   
+0125 <span class="keyword">end</span>   
+0126 <span class="keyword">for</span> kx=1:d2x
+0127    xx=c2x(kx);
+0128    <span class="keyword">for</span> ky=1:d2y
+0129       yy=c2y(ky);
+0130       y22(xx,yy)=bf(xx,yy);
+0131       y22(xx+nx,yy)=bf(xx+nx,yy);
+0132       y22(xx,yy+ny)=bf(xx,yy+ny);
+0133       y22(xx+nx,yy+ny)=bf(xx+nx,yy+ny);
+0134    <span class="keyword">end</span>   
+0135 <span class="keyword">end</span>   
+0136 
+0137 y22=bf-y1-y21-y12;</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

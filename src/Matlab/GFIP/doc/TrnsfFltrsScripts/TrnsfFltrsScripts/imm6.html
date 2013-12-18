@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of imm6</title>
+  <meta name="keywords" content="imm6">
+  <meta name="description" content="Use this for n = powers of 2">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; imm6.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>imm6
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for n = powers of 2</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=imm6(x) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for n = powers of 2</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="vid6.html" class="code" title="">vid6</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=imm6(x)</a>
+0002 <span class="comment">% Use this for n = powers of 2</span>
+0003 [n3,tem1,tem1]=size(x);
+0004 n=n3/3;
+0005 rt2=1/sqrt(2);
+0006 rt3=1/sqrt(3);
+0007 rt6=1/sqrt(6);
+0008 y=zeros(n3,n3,6);
+0009 <span class="comment">%</span>
+0010 d1=3;
+0011 d2=6;
+0012 d3=n3*n-3;
+0013 <span class="comment">%</span>
+0014 c1(1,1)=1;
+0015 c1(2,1)=1;
+0016 c1(1,2)=n+1;
+0017 c1(2,2)=2*n+1;
+0018 c1(1,3)=2*n+1;
+0019 c1(2,3)=n+1;
+0020 <span class="comment">%</span>
+0021 c2(1,1)=1;
+0022 c2(2,1)=n+1;
+0023 c2(1,2)=1;
+0024 c2(2,2)=2*n+1;
+0025 c2(1,3)=n+1;
+0026 c2(2,3)=1;
+0027 c2(1,4)=n+1;
+0028 c2(2,4)=n+1;
+0029 c2(1,5)=2*n+1;
+0030 c2(2,5)=1;
+0031 c2(1,6)=2*n+1;
+0032 c2(2,6)=2*n+1;
+0033 <span class="comment">%</span>
+0034 q=floor(n/3);
+0035 r=n-3*q;
+0036 tb=zeros(1,n3+2);
+0037 <span class="keyword">for</span> k=0:n-1
+0038    tb(1,3*k+1)=0;
+0039    tb(1,3*k+2)=2;
+0040    tb(1,3*k+3)=1;
+0041 <span class="keyword">end</span>   
+0042 tb(1,n3+1)=0;
+0043 tb(1,n3+2)=2;
+0044 <span class="comment">%</span>
+0045 nn=n*n;
+0046 <span class="keyword">for</span> k2=1:n-1
+0047    c3(1,k2)=1;
+0048    c3(2,k2)=3*k2+1;
+0049 <span class="keyword">end</span>
+0050 <span class="comment">%</span>
+0051 <span class="keyword">for</span> k2=0:2*q+r-2
+0052    c3(1,k2+nn)=n+1;
+0053    c3(2,k2+nn)=3*k2+tb(n+1)+1;
+0054 <span class="keyword">end</span>   
+0055 <span class="keyword">for</span> k2=2*q+r:n-1
+0056    c3(1,k2+nn-1)=n+1;
+0057    c3(2,k2+nn-1)=3*k2+tb(n+1)+1;
+0058 <span class="keyword">end</span>   
+0059 <span class="comment">%</span>
+0060 <span class="keyword">for</span> k2=0:q-1
+0061    c3(1,k2+1+(nn-1)*2)=n*2+1;
+0062    c3(2,k2+1+(nn-1)*2)=3*k2+tb(n*2+1)+1;
+0063 <span class="keyword">end</span>   
+0064 <span class="keyword">for</span> k2=q+1:n-1
+0065    c3(1,k2+(nn-1)*2)=n*2+1;
+0066    c3(2,k2+(nn-1)*2)=3*k2+tb(n*2+1)+1;
+0067 <span class="keyword">end</span>   
+0068 <span class="comment">%</span>
+0069 <span class="keyword">for</span> kk=0:2
+0070    nnk=(nn-1)*kk;
+0071    nk=n*kk;
+0072    <span class="keyword">for</span> k1=1:n-1
+0073       <span class="keyword">for</span> k2=0:n-1
+0074          c3(1,k2+1+n*k1-1+nnk)=k1+nk+1;
+0075          c3(2,k2+1+n*k1-1+nnk)=3*k2+tb(k1+nk+1)+1;
+0076       <span class="keyword">end</span>
+0077    <span class="keyword">end</span>   
+0078 <span class="keyword">end</span>   
+0079 <span class="comment">%</span>
+0080 <span class="keyword">for</span> k=1:d1
+0081    k1=c1(1,k);
+0082    k2=c1(2,k);
+0083    <span class="keyword">for</span> kk=1:6
+0084       t1(1,kk)=x(k1,k2,kk);
+0085    <span class="keyword">end</span>
+0086    tt1=rt6*fft(t1);
+0087    <span class="keyword">for</span> kk=1:6
+0088       x(k1,k2,kk)=tt1(1,kk);
+0089    <span class="keyword">end</span>
+0090 <span class="keyword">end</span>   
+0091 <span class="comment">%</span>
+0092 <span class="keyword">for</span> k=1:d2
+0093    k1=c2(1,k);
+0094    k2=c2(2,k);
+0095    t2(1)=x(k1,k2,1);
+0096    t2(2)=x(k1,k2,3);
+0097    t2(3)=x(k1,k2,5);
+0098    s2(1)=x(k1,k2,2);
+0099    s2(2)=x(k1,k2,4);
+0100    s2(3)=x(k1,k2,6);
+0101    tt2=rt3*fft(t2);
+0102    ss2=rt3*fft(s2);
+0103    x(k1,k2,1)=tt2(1);
+0104    x(k1,k2,3)=tt2(2);
+0105    x(k1,k2,5)=tt2(3);
+0106    x(k1,k2,2)=ss2(1);
+0107    x(k1,k2,4)=ss2(2);
+0108    x(k1,k2,6)=ss2(3);
+0109 <span class="keyword">end</span>   
+0110 <span class="keyword">for</span> k=1:d3
+0111    k1=c3(1,k);
+0112    k2=c3(2,k);
+0113    t3(1)=x(k1,k2,1);
+0114    t3(2)=x(k1,k2,4);
+0115    s3(1)=x(k1,k2,2);
+0116    s3(2)=x(k1,k2,5);
+0117    r3(1)=x(k1,k2,3);
+0118    r3(2)=x(k1,k2,6);
+0119    tt3=rt2*fft(t3);
+0120    ss3=rt2*fft(s3);
+0121    rr3=rt2*fft(r3);
+0122    x(k1,k2,1)=tt3(1);
+0123    x(k1,k2,4)=tt3(2);
+0124    x(k1,k2,2)=ss3(1);
+0125    x(k1,k2,5)=ss3(2);
+0126    x(k1,k2,3)=rr3(1);
+0127    x(k1,k2,6)=rr3(2);
+0128 <span class="keyword">end</span>   
+0129 <span class="comment">%</span>
+0130 <span class="keyword">for</span> k=1:6
+0131    y(1:n3,1:n3,k)=(1/n)*fft2(x(1:n3,1:n3,k));
+0132 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ee_22_alt0</title>
+  <meta name="keywords" content="ee_22_alt0">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ee_22_alt0.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ee_22_alt0
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li><li><a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=64;
+0003 n2=n*2;
+0004 nd2=n/2;
+0005 gg=zeros(n2,n2);
+0006 <span class="comment">%S=imread('c:\my documents\my pictures\toad.tif');</span>
+0007 <span class="comment">%gg=double(S(1:256,1:256));</span>
+0008 <span class="comment">%[nx,ny]=size(gg);</span>
+0009 <span class="comment">%nx2=nx/2;</span>
+0010 <span class="comment">%ny2=ny/2;</span>
+0011 <span class="keyword">for</span> k=1:n
+0012    gg(k,2*k-1)=1;
+0013 <span class="keyword">end</span>   
+0014 sdv=input(<span class="string">'noise level?   '</span>);
+0015 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n2,n2,0,sdv);
+0016 ngg=gg+ns;
+0017 <span class="comment">%</span>
+0018 [11 12 13 14 15 18 19 23 29 31]
+0019 [103 104 201 202 203]
+0020 gp=input(<span class="string">'input the group number    '</span>)
+0021 <span class="comment">%gp=203;</span>
+0022 <span class="comment">%</span>
+0023 x1=real(<a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>(ngg,gp,1));
+0024 x21=real(<a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>(ngg,gp,21));
+0025 x22=real(<a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>(ngg,gp,22));
+0026 x23=real(<a href="ww_22.html" class="code" title="function y=ww_22(x,gp,prj)">ww_22</a>(ngg,gp,23));
+0027 x4=gg-x1-x21-x22-x23;
+0028 figure(1)
+0029 colormap(gray)
+0030 subplot(3,2,1),imagesc(gg)
+0031 subplot(3,2,2),imagesc(ngg)
+0032 subplot(3,2,3),imagesc(x21)
+0033 subplot(3,2,4),imagesc(x22)
+0034 subplot(3,2,5),imagesc(x23)
+0035 subplot(3,2,6),imagesc(x4)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

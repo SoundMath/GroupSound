@@ -1,0 +1,35 @@
+clear;
+n=32;
+n2=n*2;
+n3=n*3;
+orgn=1;
+% gp; 1,2,3,11,12,21,22,23,24
+%gg=r_fence(180,180); %n=80;
+%ff=r_basket;
+ff=scene(4,n,orgn);
+%ff=r_fence(128,128);
+%ns=75*rand(128,128);
+%ff=ff+ns;
+%
+gp=1;
+[v1,v2,v4]=nn2_4(ff,n,gp);
+vv1=real(inn2_4(v1,n,gp));
+vv2=real(inn2_4(v2,n,gp));
+vv4=real(inn2_4(v4,n,gp));
+%
+gp=23;
+[y1,y2,y4]=nn2_4(vv4,n,gp);
+yy1=real(inn2_4(y1,n,gp));
+yy2=real(inn2_4(y2,n,gp));
+yy4=real(inn2_4(y4,n,gp));
+%
+gp=24;
+[u1,u2,u4]=nn2_4(vv4,n,gp);
+uu1=real(inn2_4(u1,n,gp));
+uu2=real(inn2_4(u2,n,gp));
+uu4=real(inn2_4(u4,n,gp));
+%
+subplot(2,2,1),imagesc(ff)
+subplot(2,2,2),imagesc(vv1)
+subplot(2,2,3),imagesc(vv2)
+subplot(2,2,4),imagesc(vv4)

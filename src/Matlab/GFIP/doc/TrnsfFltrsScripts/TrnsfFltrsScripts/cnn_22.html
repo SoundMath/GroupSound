@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cnn_22</title>
+  <meta name="keywords" content="cnn_22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cnn_22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cnn_22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=cnn_22(u,v,gp); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=cnn_22(u,v,gp);</a>
+0002 [n2,tem]=size(u);
+0003 n=n2/2;
+0004 m=n/2;
+0005 <span class="comment">%</span>
+0006 nn=linspace(0,n-1,n);
+0007 rnn=mod(n-nn,n);
+0008 ur(1:n,1:n)=u(1:n,1:n);
+0009 <span class="keyword">if</span> (gp==11) <span class="comment">% sdp (-x,-y) x (y,x)</span>
+0010    <span class="keyword">for</span> k2=0:n-1
+0011       <span class="keyword">for</span> k1=0:n-1
+0012          ur(k1+1+n,k2+1)=u(rnn(k1+1)+1+n,rnn(k2+1)+1);
+0013          ur(k1+1,k2+1+n)=u(k2+1,k1+1+n);
+0014          ur(k1+1+n,k2+1+n)=u(rnn(k2+1)+1+n,rnn(k1+1)+1+n);
+0015       <span class="keyword">end</span>
+0016    <span class="keyword">end</span>   
+0017 <span class="keyword">end</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">%</span>
+0021 [d1,d21,d22,d23,d4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(ur,gp);
+0022 [v1,v21,v22,v23,v4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(v,gp);
+0023 <span class="comment">%</span>
+0024 c=zeros(n2,n2);
+0025 dd1=d1(1:n,1:n);
+0026 ddtwo=d1(1+n:n2,1:n);
+0027 dd3=d1(1:n,1+n:n2);
+0028 ddfour=d1(1+n:n2,1+n:n2);
+0029 vv1=v1(1:n,1:n);
+0030 vv2=v1(1+n:n2,1:n);
+0031 vv3=v1(1:n,1+n:n2);
+0032 vv4=v1(1+n:n2,1+n:n2);
+0033 c=c+2*d1.*v1;
+0034 <span class="comment">%</span>
+0035 dd1=d21(1:n,1:n);
+0036 ddtwo=d21(1+n:n2,1:n);
+0037 dd3=d21(1:n,1+n:n2);
+0038 ddfour=d21(1+n:n2,1+n:n2);
+0039 vv1=v21(1:n,1:n);
+0040 vv2=v21(1+n:n2,1:n);
+0041 vv3=v21(1:n,1+n:n2);
+0042 vv4=v21(1+n:n2,1+n:n2);
+0043 c(1:n,1:n)=c(1:n,1:n)+sqrt(2)*(dd1*vv1+ddtwo*vv2+dd3*vv3+ddfour*vv4);
+0044 <span class="comment">%y=n*inn_22(c,gp);</span>
+0045 <span class="comment">%</span>
+0046 y=n*c;</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

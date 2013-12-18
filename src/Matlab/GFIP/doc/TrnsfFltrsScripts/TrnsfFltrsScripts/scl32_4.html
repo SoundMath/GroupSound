@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of scl32_4</title>
+  <meta name="keywords" content="scl32_4">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; scl32_4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>scl32_4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [y1,y2,y4]=scl2_4(x,n); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+ (C_n x C_n) sdp C_4 
+ n must be a power of two and at least 16.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [y1,y2,y4]=scl2_4(x,n);</a>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% (C_n x C_n) sdp C_4</span>
+0004 <span class="comment">% n must be a power of two and at least 16.</span>
+0005 <span class="comment">%</span>
+0006 n2=n+n;
+0007 m=n/2;
+0008 rt2=1/sqrt(2);
+0009 <span class="comment">%</span>
+0010 y1=zeros(n2,n2);
+0011 y2=zeros(n2,n2);
+0012 y4=zeros(n2,n2);
+0013 <span class="comment">%</span>
+0014 bf(1:n,1:n)=n*ifft2(x(1:n,1:n));
+0015 bf(1+n:n2,1:n)=n*ifft2(x(1+n:n2,1:n));
+0016 bf(1:n,1+n:n2)=n*ifft2(x(1:n,1+n:n2));
+0017 bf(1+n:n2,1+n:n2)=n*ifft2(x(1+n:n2,1+n:n2));
+0018 <span class="comment">%</span>
+0019 <span class="comment">% 2-d idempotents</span>
+0020 <span class="comment">%</span>
+0021 <span class="keyword">for</span> k2=1:m
+0022    <span class="keyword">for</span> k1=1:m
+0023       t1=bf(2*k1-1,2*k2-1)+bf(2*k1-1,2*k2-1+n);
+0024       t2=bf(2*k1-1,2*k2-1)-bf(2*k1-1,2*k2-1+n);
+0025       y2(2*k1-1,2*k2-1)=rt2*t1;
+0026       y2(2*k1-1,2*k2-1+n)=rt2*t2;
+0027       bf(2*k1-1,2*k2-1)=rt2*t1;
+0028       bf(2*k1-1,2*k2-1+n)=rt2*t2;
+0029       y2(2*k1-1+n,2*k2-1)=bf(2*k1-1+n,2*k2-1);
+0030       y2(2*k1-1+n,2*k2-1+n)=bf(2*k1-1+n,2*k2-1+n);
+0031    <span class="keyword">end</span>
+0032 <span class="keyword">end</span>
+0033 <span class="comment">%</span>
+0034 <span class="comment">% 1-d idempotents</span>
+0035 <span class="comment">%</span>
+0036 <span class="keyword">for</span> k2=1:2
+0037    kk2=1+m*(k2-1);
+0038    <span class="keyword">for</span> k1=1:2
+0039       kk1=1+m*(k1-1);
+0040       t1=bf(kk1,kk2);
+0041       t2=bf(kk1,kk2+n);
+0042       s1=rt2*(bf(kk1+n,kk2)+bf(kk1+n,kk2+n));
+0043       s2=rt2*i*(bf(kk1+n,kk2)-bf(kk1+n,kk2+n));
+0044       bf(kk1,kk2)=rt2*(t1+s1);
+0045       bf(kk1+n,kk2)=rt2*(t2+s2);
+0046       bf(kk1,kk2+n)=rt2*(t1-s1);;
+0047       bf(kk1+n,kk2+n)=rt2*(t2-s2);
+0048       y1(kk1,kk2)=bf(kk1,kk2);
+0049       y1(kk1+n,kk2)=bf(kk1+n,kk2);
+0050       y1(kk1,kk2+n)=bf(kk1,kk2+n);
+0051       y1(kk1+n,kk2+n)=bf(kk1+n,kk2+n);
+0052       y2(kk1,kk2)=0.0;
+0053       y2(kk1+n,kk2)=0.0;
+0054       y2(kk1,kk2+n)=0.0;
+0055       y2(kk1+n,kk2+n)=0.0;
+0056    <span class="keyword">end</span>
+0057 <span class="keyword">end</span>   
+0058 <span class="comment">%</span>
+0059 <span class="comment">% 4-d idempotents</span>
+0060 <span class="comment">%</span>
+0061 y4=bf-y1-y2;</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

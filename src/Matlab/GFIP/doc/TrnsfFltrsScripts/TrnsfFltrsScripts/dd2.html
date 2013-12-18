@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of dd2</title>
+  <meta name="keywords" content="dd2">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; dd2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>dd2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function g=dd2(x,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ee2.html" class="code" title="">ee2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function g=dd2(x,gp)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 [nx,ny]=size(x);
+0004 n=min(nx,ny);
+0005 m=n/2;
+0006 n2=n+n;
+0007 <span class="comment">%</span>
+0008 <span class="comment">%</span>
+0009 <span class="keyword">if</span> (gp==1) <span class="comment">% (y,x)</span>
+0010    <span class="keyword">for</span> k1=1:n
+0011       <span class="keyword">for</span> k2=1:n
+0012          kk1=k2;
+0013          kk2=k1;
+0014          <span class="keyword">if</span> (nx &gt; ny)
+0015             g(kk1+n,kk2)=x(k1,k2);
+0016             g(kk1,kk2)=x(k1+n,k2);
+0017          <span class="keyword">else</span>
+0018             g(kk1,kk2+n)=x(k1,k2);
+0019             g(kk1,kk2)=x(k1,k2+n);
+0020          <span class="keyword">end</span>   
+0021       <span class="keyword">end</span>   
+0022    <span class="keyword">end</span>   
+0023 <span class="keyword">end</span>
+0024 <span class="comment">%</span>
+0025 <span class="keyword">if</span> (gp==2) <span class="comment">% (x+y,-y)</span>
+0026    <span class="keyword">for</span> k1=1:n
+0027       <span class="keyword">for</span> k2=1:n
+0028          kk1=mod(k1+k2-2,n)+1;
+0029          kk2=mod(n-k2+1,n)+1;
+0030          <span class="keyword">if</span> (nx &gt; ny)
+0031             g(kk1+n,kk2)=x(k1,k2);
+0032             g(kk1,kk2)=x(k1+n,k2);
+0033          <span class="keyword">else</span>
+0034             g(kk1,kk2+n)=x(k1,k2);
+0035             g(kk1,kk2)=x(k1,k2+n);
+0036          <span class="keyword">end</span>   
+0037       <span class="keyword">end</span>   
+0038    <span class="keyword">end</span>   
+0039 <span class="keyword">end</span>
+0040 <span class="comment">%</span>
+0041 <span class="keyword">if</span> (gp==3) <span class="comment">% (-x-y,y)</span>
+0042    <span class="keyword">for</span> k1=1:n
+0043       <span class="keyword">for</span> k2=1:n
+0044          kk1=mod(n+n-k1-k2+2,n)+1;
+0045          kk2=k2;
+0046          <span class="keyword">if</span> (nx &gt; ny)
+0047             g(kk1+n,kk2)=x(k1,k2);
+0048             g(kk1,kk2)=x(k1+n,k2);
+0049          <span class="keyword">else</span>
+0050             g(kk1,kk2+n)=x(k1,k2);
+0051             g(kk1,kk2)=x(k1,k2+n);
+0052          <span class="keyword">end</span>   
+0053       <span class="keyword">end</span>   
+0054    <span class="keyword">end</span>   
+0055 <span class="keyword">end</span>
+0056 <span class="comment">%</span>
+0057 <span class="keyword">if</span> (gp==4) <span class="comment">% (x,x-y)</span>
+0058    <span class="keyword">for</span> k1=1:n
+0059       <span class="keyword">for</span> k2=1:n
+0060          kk1=k1;
+0061          kk2=mod(k1+n-k2,n)+1;
+0062          <span class="keyword">if</span> (nx &gt; ny)
+0063             g(k1,k2)=x(kk1+n,kk2);
+0064             g(k1+n,k2)=x(kk1,kk2);
+0065          <span class="keyword">else</span>
+0066             g(k1,k2+n)=x(kk1,kk2);
+0067             g(k1,k2)=x(kk1,kk2+n);
+0068          <span class="keyword">end</span>   
+0069       <span class="keyword">end</span>   
+0070    <span class="keyword">end</span>   
+0071 <span class="keyword">end</span>
+0072 <span class="comment">%</span>
+0073 <span class="keyword">if</span> (gp==5) <span class="comment">% (x,-x-y)</span>
+0074    <span class="keyword">for</span> k1=1:n
+0075       <span class="keyword">for</span> k2=1:n
+0076          kk1=k1;
+0077          kk2=mod(n+n-k1-k2+2,n)+1;
+0078          <span class="keyword">if</span> (nx &gt; ny)
+0079             g(kk1+n,kk2)=x(k1,k2);
+0080             g(kk1,kk2)=x(k1+n,k2);
+0081          <span class="keyword">else</span>
+0082             g(kk1,kk2+n)=x(k1,k2);
+0083             g(kk1,kk2)=x(k1,k2+n);
+0084          <span class="keyword">end</span>   
+0085       <span class="keyword">end</span>   
+0086    <span class="keyword">end</span>   
+0087 <span class="keyword">end</span>
+0088 <span class="comment">%</span>
+0089 <span class="keyword">if</span> (gp==6) <span class="comment">% (-x,-x+y)</span>
+0090    <span class="keyword">for</span> k1=1:n
+0091       <span class="keyword">for</span> k2=1:n
+0092          kk1=mod(n-k1+1,n)+1;
+0093          kk2=mod(n-k1+k2,n)+1;
+0094          <span class="keyword">if</span> (nx &gt; ny)
+0095             g(kk1+n,kk2)=x(k1,k2);
+0096             g(kk1,kk2)=x(k1+n,k2);
+0097          <span class="keyword">else</span>
+0098             g(kk1,kk2+n)=x(k1,k2);
+0099             g(kk1,kk2)=x(k1,k2+n);
+0100          <span class="keyword">end</span>   
+0101       <span class="keyword">end</span>   
+0102    <span class="keyword">end</span>   
+0103 <span class="keyword">end</span>
+0104 <span class="comment">%</span>
+0105 <span class="keyword">if</span> (gp==7) <span class="comment">% (-x,y)</span>
+0106    <span class="keyword">for</span> k1=1:n
+0107       <span class="keyword">for</span> k2=1:n
+0108          kk1=mod(n-k1+1,n)+1;
+0109          kk2=k2;
+0110          <span class="keyword">if</span> (nx &gt; ny)
+0111             g(kk1+n,kk2)=x(k1,k2);
+0112             g(kk1,kk2)=x(k1+n,k2);
+0113          <span class="keyword">else</span>
+0114             g(kk1,kk2+n)=x(k1,k2);
+0115             g(kk1,kk2)=x(k1,k2+n);
+0116          <span class="keyword">end</span>   
+0117       <span class="keyword">end</span>   
+0118    <span class="keyword">end</span>   
+0119 <span class="keyword">end</span>
+0120 <span class="comment">%</span>
+0121 <span class="comment">%</span>
+0122 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

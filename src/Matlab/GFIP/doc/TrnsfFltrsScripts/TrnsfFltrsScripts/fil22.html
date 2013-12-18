@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of fil22</title>
+  <meta name="keywords" content="fil22">
+  <meta name="description" content="Extract the filter from the coordinates of">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; fil22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>fil22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Extract the filter from the coordinates of</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=fil22(x,gp,cord) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Extract the filter from the coordinates of
+ the first quadrant.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=fil22(x,gp,cord)</a>
+0002 <span class="comment">% Extract the filter from the coordinates of</span>
+0003 <span class="comment">% the first quadrant.</span>
+0004 <span class="comment">%</span>
+0005 kk=size(cord,1);
+0006 n2=size(x,1);
+0007 n=n2/2;
+0008 y=zeros(n2,n2);
+0009 <span class="comment">%</span>
+0010 <span class="keyword">if</span> (gp==11) <span class="comment">% (-x,-y), (y,x)</span>
+0011    <span class="keyword">for</span> k=1:kk
+0012       acord(k,1)=mod(n-(cord(k,1)-1),n)+1;
+0013       acord(k,2)=mod(n-(cord(k,2)-1),n)+1;
+0014       bcord(k,1)=cord(k,2);
+0015       bcord(k,2)=cord(k,1);
+0016       ccord(k,1)=acord(k,2);
+0017       ccord(k,2)=acord(k,1);
+0018    <span class="keyword">end</span>
+0019 <span class="keyword">end</span>
+0020 <span class="keyword">if</span> (gp==13) <span class="comment">% (-x,-y), (x+y,-y)</span>
+0021    <span class="keyword">for</span> k=1:kk
+0022       acord(k,1)=mod(n-(cord(k,1)-1),n)+1;
+0023       acord(k,2)=mod(n-(cord(k,2)-1),n)+1;
+0024       bcord(k,1)=mod(cord(k,1)+cord(k,2)-2,n)+1;
+0025       bcord(k,2)=acord(k,2);
+0026       ccord(k,1)=mod(n2-cord(k,1)-cord(k,2)+2,n)+1;
+0027       ccord(k,2)=cord(k,2);
+0028    <span class="keyword">end</span>
+0029 <span class="keyword">end</span>
+0030 <span class="keyword">for</span> k=1:kk
+0031    k1=cord(k,1);
+0032    k2=cord(k,2);
+0033    a1=acord(k,1);
+0034    a2=acord(k,2);
+0035    b1=bcord(k,1);
+0036    b2=bcord(k,2);
+0037    c1=ccord(k,1);
+0038    c2=ccord(k,2);
+0039    <span class="comment">%</span>
+0040    y(k1,k2)=x(k1,k2);
+0041    y(a1,a2+n)=x(a1,a2+n);
+0042    y(b1+n,b2)=x(b1+n,b2);
+0043    y(c1+n,c2+n)=x(c1+n,c2+n);
+0044    <span class="comment">%</span>
+0045    y(k1,k2+n)=x(k1,k2+n);
+0046    y(a1,a2)=x(a1,a2);
+0047    y(b1+n,b2+n)=x(b1+n,b2+n);
+0048    y(c1+n,c2)=x(c1+n,c2);
+0049    <span class="comment">%</span>
+0050    y(k1+n,k2)=x(k1+n,k2);
+0051    y(a1+n,a2+n)=x(a1+n,a2+n);
+0052    y(b1,b2)=x(b1,b2);
+0053    y(c1,c2+n)=x(c1,c2+n);
+0054    <span class="comment">%</span>
+0055    y(k1+n,k2)=x(k1+n,k2);
+0056    y(a1+n,a2+n)=x(a1+n,a2+n);
+0057    y(b1,b2)=x(b1,b2);
+0058    y(c1,c2+n)=x(c1,c2+n);
+0059 <span class="keyword">end</span>
+0060 <span class="comment">%</span>
+0061 <span class="keyword">if</span> (gp==13) <span class="comment">% (-x,-y), (x+y,-y)</span>
+0062 <span class="keyword">end</span>
+0063 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

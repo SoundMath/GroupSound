@@ -1,0 +1,704 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ww_22</title>
+  <meta name="keywords" content="ww_22">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ww_22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ww_22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=ww_22(x,gp,prj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ee_22_alt0.html" class="code" title="">ee_22_alt0</a>	</li><li><a href="fnd.html" class="code" title="">fnd</a>	</li><li><a href="pat5.html" class="code" title="">pat5</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=ww_22(x,gp,prj)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 [n2,tem]=size(x);
+0004 y=zeros(n2,n2);
+0005 n=n2/2;
+0006 m=n/2;
+0007 l=n/4;
+0008 rt2=sqrt(2);
+0009 y1=zeros(n2,n2);
+0010 y21=zeros(n2,n2);
+0011 y22=zeros(n2,n2);
+0012 y23=zeros(n2,n2);
+0013 y4=zeros(n2,n2);
+0014 <span class="comment">%</span>
+0015 bf(1:n,1:n)=ifft2(x(1:n,1:n));
+0016 bf(1+n:n2,1:n)=ifft2(x(1+n:n2,1:n));
+0017 bf(1:n,1+n:n2)=ifft2(x(1:n,1+n:n2));
+0018 bf(1+n:n2,1+n:n2)=ifft2(x(1+n:n2,1+n:n2));
+0019 <span class="comment">%</span>
+0020 <span class="keyword">if</span> (gp==11) <span class="comment">% sdp (-x,-y) x (y,x)</span>
+0021    <span class="keyword">if</span> (prj==1)
+0022       dd=2;
+0023       c(1,1)=1;
+0024       c(2,1)=1;
+0025       c(1,2)=1+m;
+0026       c(2,2)=1+m;
+0027    <span class="keyword">end</span>  
+0028    <span class="keyword">if</span> (prj==21)
+0029       dd=2;
+0030       c(1,1)=1;
+0031       c(2,1)=1+m;
+0032       c(1,2)=1+m;
+0033       c(2,2)=1;
+0034    <span class="keyword">end</span> 
+0035    <span class="keyword">if</span> (prj==22)
+0036       dd=n-2;
+0037       <span class="keyword">for</span> k=2:m
+0038          c(1,k-1)=k;
+0039          c(2,k-1)=k;
+0040          c(1,k+m-2)=k+m;
+0041          c(2,k+m-2)=k+m;
+0042       <span class="keyword">end</span> 
+0043    <span class="keyword">end</span>
+0044    <span class="keyword">if</span> (prj==23)
+0045       dd=n-2;
+0046       <span class="keyword">for</span> k=2:m
+0047          c(1,k-1)=k;
+0048          c(2,k-1)=n-k+2;
+0049          c(1,m+k-2)=k+m;
+0050          c(2,m+k-2)=n-m-k+2;
+0051       <span class="keyword">end</span>   
+0052    <span class="keyword">end</span>   
+0053 <span class="keyword">end</span>   
+0054 <span class="comment">%</span>
+0055 <span class="comment">% [0 1;1 0], [0 n/2+1;n/2+1 0],[n/2+1 0;0 n/2+1]</span>
+0056 <span class="keyword">if</span> (gp==12) 
+0057    <span class="keyword">if</span> (prj==1)
+0058       dd=m;
+0059       <span class="keyword">for</span> k=1:m
+0060          c(1,k)=2*k-1;
+0061          c(2,k)=2*k-1;
+0062       <span class="keyword">end</span>   
+0063    <span class="keyword">end</span>   
+0064    <span class="keyword">if</span> (prj==21)
+0065       dd=m;
+0066       <span class="keyword">for</span> k=1:m
+0067          kk1=2*k;
+0068          c(1,k)=kk1;
+0069          c(2,k)=kk1;
+0070       <span class="keyword">end</span>   
+0071    <span class="keyword">end</span>   
+0072    <span class="keyword">if</span> (prj==22)
+0073       dd=m*m-m;
+0074       <span class="keyword">for</span> k2=0:m-1
+0075          kk2=1+2*k2;
+0076          kk=k2*(m-1);
+0077          <span class="keyword">for</span> k1=0:k2-1
+0078             kk1=1+2*k1;
+0079             c(1,k1+1+kk)=kk1;
+0080             c(2,k1+1+kk)=kk2;
+0081          <span class="keyword">end</span>
+0082          <span class="keyword">for</span> k1=k2+1:m-1
+0083             kk1=1+2*k1;
+0084             c(1,k1+kk)=kk1;
+0085             c(2,k1+kk)=kk2;
+0086          <span class="keyword">end</span>   
+0087       <span class="keyword">end</span>
+0088    <span class="keyword">end</span>
+0089    <span class="keyword">if</span> (prj==23)
+0090       dd=m;
+0091       <span class="keyword">for</span> k=0:l-1
+0092          k1=2+2*k;
+0093          kk1=m+k1;
+0094          c(1,k+1)=k1;
+0095          c(2,k+1)=kk1;
+0096          c(1,l+k+1)=kk1;
+0097          c(2,l+k+1)=k1;
+0098       <span class="keyword">end</span>   
+0099    <span class="keyword">end</span>
+0100 <span class="keyword">end</span>
+0101 <span class="comment">%</span>
+0102 <span class="keyword">if</span> (gp==13) <span class="comment">% sdp ([-1 0;0 -1] x [1 1;0 -1])</span>
+0103    <span class="keyword">if</span> (prj==1)
+0104       dd=2;
+0105       c(1,1)=1;
+0106       c(2,1)=1;
+0107       c(1,2)=1+m;
+0108       c(2,2)=1;
+0109    <span class="keyword">end</span>
+0110    <span class="keyword">if</span> (prj==21)
+0111       dd=2;
+0112       c(1,1)=1;
+0113       c(2,1)=1+m;
+0114       c(1,2)=1+m;
+0115       c(2,2)=1+m;
+0116    <span class="keyword">end</span>
+0117    <span class="keyword">if</span> (prj==22)
+0118       dd=n-2;
+0119       <span class="keyword">for</span> k=2:m
+0120          k2=2*k-3;
+0121          c(1,k-1)=k;
+0122          c(2,k-1)=n-2*k+3;
+0123          c(1,m+k-2)=k+m;
+0124          c(2,m+k-2)=n-2*k+3;
+0125       <span class="keyword">end</span>   
+0126    <span class="keyword">end</span>
+0127    <span class="keyword">if</span> (prj==23)
+0128       dd=n-2;
+0129       <span class="keyword">for</span> k=2:m
+0130          c(1,k-1)=k;
+0131          c(2,k-1)=1;
+0132          c(1,k+m-2)=k+m;
+0133          c(2,k+m-2)=1;
+0134       <span class="keyword">end</span>   
+0135    <span class="keyword">end</span>
+0136 <span class="keyword">end</span>
+0137 <span class="comment">%</span>
+0138 <span class="keyword">if</span> (gp==14) <span class="comment">% sdp ([-1 0;0 -1] x [-1 0;-1 1])</span>
+0139    <span class="keyword">if</span> (prj==1)
+0140       dd=2;
+0141       c(1,1)=1;
+0142       c(2,1)=1;
+0143       c(1,2)=1;
+0144       c(2,2)=1+m;
+0145    <span class="keyword">end</span>
+0146    <span class="keyword">if</span> (prj==21)
+0147       dd=n-2;
+0148       <span class="keyword">for</span> k=1:m-1
+0149          c(1,k)=2*k+1;
+0150          c(2,k)=k+1;
+0151          c(1,k+m-1)=2*k+1;
+0152          c(2,k+m-1)=k+m+1;
+0153       <span class="keyword">end</span>   
+0154    <span class="keyword">end</span>
+0155    <span class="keyword">if</span> (prj==22)
+0156       dd=2;
+0157       c(1,1)=1+m;
+0158       c(2,1)=1+m;
+0159       c(1,2)=1+m;
+0160       c(2,2)=1;
+0161    <span class="keyword">end</span>
+0162    <span class="keyword">if</span> (prj==23)
+0163       dd=n-2;
+0164       <span class="keyword">for</span> k=1:m-1
+0165          c(1,k)=1;
+0166          c(2,k)=k+1;
+0167          c(1,m+k-1)=1;
+0168          c(2,m+k-1)=k+1+m;
+0169       <span class="keyword">end</span>   
+0170    <span class="keyword">end</span>
+0171 <span class="keyword">end</span>   
+0172 <span class="comment">%</span>
+0173 <span class="keyword">if</span> (gp==15) <span class="comment">% sdp ([0 -1;-1 0] x [0 n/2+1;n/2+1 0])</span>
+0174    <span class="keyword">if</span> (prj==1)
+0175       dd=2;
+0176       c(1,1)=1;
+0177       c(2,1)=1;
+0178       c(1,2)=m+1;
+0179       c(2,2)=m+1;
+0180    <span class="keyword">end</span>
+0181    <span class="keyword">if</span> (prj==21)
+0182       dd=2;
+0183       c(1,1)=m+1;
+0184       c(2,1)=1;
+0185       c(1,2)=1;
+0186       c(2,2)=m+1;
+0187    <span class="keyword">end</span>
+0188    <span class="keyword">if</span> (prj==22)
+0189       dd=n-2;
+0190       <span class="keyword">for</span> k=1:m-1
+0191          c(1,k)=k+1;
+0192          c(2,k)=n-k+1;
+0193          c(1,k+m-1)=k+m+1;
+0194          c(2,k+m-1)=m-k+1;
+0195       <span class="keyword">end</span>   
+0196    <span class="keyword">end</span>
+0197    <span class="keyword">if</span> (prj==23)
+0198       dd=n-2;
+0199       <span class="keyword">for</span> k=1:l-1
+0200          c(1,k)=2*k+1;
+0201          c(2,k)=2*k+1;
+0202          c(1,k+l-1)=2*k+m+1;
+0203          c(2,k+l-1)=2*k+m+1;
+0204       <span class="keyword">end</span>   
+0205       <span class="keyword">for</span> k=0:l-1
+0206          c(1,k+m-1)=2*k+2;
+0207          c(2,k+m-1)=m+2*k+2;
+0208          c(1,k+m-1+l)=2*k+m+2;
+0209          c(2,k+m-1+l)=2*k+2;
+0210       <span class="keyword">end</span>   
+0211    <span class="keyword">end</span>
+0212 <span class="keyword">end</span>
+0213 <span class="comment">%</span>
+0214 <span class="keyword">if</span> (gp==18) <span class="comment">% sdp ([n/2+1 0;0 n/2+1] x [-1 1;0 1])</span>
+0215    <span class="keyword">if</span> (prj==1)
+0216       dd=m;
+0217       <span class="keyword">for</span> k=0:l-1
+0218          c(1,k+1)=2*k+1;
+0219          c(2,k+1)=4*k+1;
+0220          c(1,k+1+l)=2*k+m+1;
+0221          c(2,k+1+l)=4*k+1;
+0222       <span class="keyword">end</span>  
+0223    <span class="keyword">end</span>
+0224    <span class="keyword">if</span> (prj==21)
+0225       dd=m*m-m;
+0226       knt=0;
+0227       <span class="keyword">for</span> k2=0:l-1
+0228          <span class="keyword">for</span> k1=0:m-1
+0229             <span class="keyword">if</span> (k1~=k2 &amp; k1~=k2+l)
+0230                knt=knt+1;
+0231                c(1,knt)=2*k1+1;
+0232                c(2,knt)=4*k2+1;
+0233             <span class="keyword">end</span>   
+0234             knt=knt+1;
+0235             c(1,knt)=2*k1+1;
+0236             c(2,knt)=4*k2+3;
+0237          <span class="keyword">end</span>   
+0238       <span class="keyword">end</span>   
+0239    <span class="keyword">end</span>
+0240    <span class="keyword">if</span> (prj==22)
+0241       dd=m;
+0242       <span class="keyword">for</span> k=0:l-1
+0243          c(1,k+1)=2*k+2;
+0244          c(2,k+1)=4*k+3;
+0245          c(1,k+1+l)=2*k+m+2;
+0246          c(2,k+1+l)=4*k+3;
+0247       <span class="keyword">end</span>   
+0248    <span class="keyword">end</span>
+0249    <span class="keyword">if</span> (prj==23)
+0250       dd=m;
+0251       <span class="keyword">for</span> k=0:m-1
+0252          c(1,k+1)=2*k+2;
+0253          c(2,k+1)=4*k+2+m;
+0254       <span class="keyword">end</span>
+0255       c(2,:)=mod(c(2,:),n)+1;
+0256    <span class="keyword">end</span>
+0257 <span class="keyword">end</span>
+0258 <span class="comment">%</span>
+0259 <span class="keyword">if</span> (gp==19) <span class="comment">% sdp ([n/2-1 0;0 n/2-1] x [-1 1;0 1])</span>
+0260    <span class="keyword">if</span> (prj==1)
+0261       dd=2;
+0262       c(1,1)=1;
+0263       c(2,1)=1;
+0264       c(1,2)=1+m;
+0265       c(2,2)=1;
+0266    <span class="keyword">end</span>
+0267    <span class="keyword">if</span> (prj==21)
+0268       dd=2;
+0269       c(1,1)=1;
+0270       c(2,1)=1+m;
+0271       c(1,2)=1+m;
+0272       c(2,2)=1+m;
+0273    <span class="keyword">end</span>
+0274    <span class="keyword">if</span> (prj==22)
+0275       dd=n-2;
+0276       <span class="keyword">for</span> k=1:m-1
+0277          c(1,k)=k+1;
+0278          c(2,k)=2*k+1;
+0279          c(1,m-1+k)=k+m+1;
+0280          c(2,m-1+k)=2*k+1;
+0281       <span class="keyword">end</span>   
+0282    <span class="keyword">end</span>
+0283    <span class="keyword">if</span> (prj==23)
+0284       dd=n-2;
+0285       <span class="keyword">for</span> k=1:l-1
+0286          c(1,k)=2*k+1;
+0287          c(2,k)=1;
+0288          c(1,k+l-1)=2*k+m+1;
+0289          c(2,k+l-1)=1;
+0290       <span class="keyword">end</span>
+0291       <span class="keyword">for</span> k=0:m-1
+0292          c(1,k+m-1)=2*k+2;
+0293          c(2,k+m-1)=m+1;
+0294       <span class="keyword">end</span>
+0295    <span class="keyword">end</span>
+0296 <span class="keyword">end</span>
+0297 <span class="comment">%</span>
+0298 <span class="keyword">if</span> (gp==23) <span class="comment">% sdp ([-1 0;0 -1] x [-1 1;0 1])</span>
+0299    <span class="keyword">if</span> (prj==1)
+0300       dd=2;
+0301       c(1,1)=1;
+0302       c(2,1)=1;
+0303       c(1,2)=1+m;
+0304       c(2,2)=1;
+0305    <span class="keyword">end</span>
+0306    <span class="keyword">if</span> (prj==21)
+0307       dd=2;
+0308       c(1,1)=1;
+0309       c(2,1)=1+m;
+0310       c(1,2)=1+m;
+0311       c(2,2)=1+m;
+0312    <span class="keyword">end</span>
+0313    <span class="keyword">if</span> (prj==22)
+0314       dd=n-2;
+0315       <span class="keyword">for</span> k=1:m-1
+0316          c(1,k)=k+1;
+0317          c(2,k)=2*k+1;
+0318          c(1,k+m-1)=k+m+1;
+0319          c(2,k+m-1)=2*k+1;
+0320       <span class="keyword">end</span>   
+0321    <span class="keyword">end</span>
+0322    <span class="keyword">if</span> (prj==23)
+0323       dd=n-2;
+0324       <span class="keyword">for</span> k=1:m-1
+0325          c(1,k)=k+1;
+0326          c(2,k)=1;
+0327          c(1,m+k-1)=k+m+1;
+0328          c(2,m+k-1)=1;
+0329       <span class="keyword">end</span>   
+0330    <span class="keyword">end</span>
+0331 <span class="keyword">end</span>   
+0332 <span class="comment">%</span>
+0333 <span class="keyword">if</span> (gp==29) <span class="comment">% sdp ([-1 0;0 -1] x [0 n/2+1;n/2+1 0])</span>
+0334    <span class="keyword">if</span> (prj==1)
+0335       dd=2;
+0336       c(1,1)=1;
+0337       c(2,1)=1;
+0338       c(1,2)=m+1;
+0339       c(2,2)=m+1;
+0340    <span class="keyword">end</span>
+0341    <span class="keyword">if</span> (prj==21)
+0342       dd=2;
+0343       c(1,1)=m+1;
+0344       c(2,1)=1;
+0345       c(1,2)=1;
+0346       c(2,2)=m+1;
+0347    <span class="keyword">end</span>
+0348    <span class="keyword">if</span> (prj==22)
+0349       dd=n-2;
+0350       <span class="keyword">for</span> k=1:l-1
+0351          c(1,k)=2*k+1;
+0352          c(2,k)=2*k+1;
+0353          c(1,k+l-1)=2*(k+l)+1;
+0354          c(2,k+l-1)=2*(k+l)+1;
+0355       <span class="keyword">end</span>   
+0356       <span class="keyword">for</span> k=0:l-1
+0357          c(1,k+m-1)=2*k+2;
+0358          c(2,k+m-1)=m+2*k+2;
+0359          c(1,k+m+l-1)=2*k+m+2;
+0360          c(2,k+m+l-1)=2*k+2;
+0361       <span class="keyword">end</span>   
+0362    <span class="keyword">end</span>
+0363    <span class="keyword">if</span> (prj==23)
+0364       dd=n-2;
+0365       <span class="keyword">for</span> k=1:l-1
+0366          c(1,k)=2*k+1;
+0367          c(2,k)=n-2*k+1;
+0368          c(1,k+l-1)=2*(k+l)+1;
+0369          c(2,k+l-1)=n-2*(k+l)+1;
+0370       <span class="keyword">end</span>   
+0371       <span class="keyword">for</span> k=0:l-1
+0372          c(1,k+m-1)=2*k+2;
+0373          c(2,k+m-1)=m-2*k;
+0374          c(1,k+m+l-1)=2*k+m+2;
+0375          c(2,k+m+l-1)=n-2*k;
+0376       <span class="keyword">end</span>
+0377    <span class="keyword">end</span>
+0378 <span class="keyword">end</span>   
+0379 <span class="comment">%</span>
+0380 <span class="keyword">if</span> (gp==31) <span class="comment">% sdp ([-1 0;0 -1](n/2,n/2) x [0 1; 1 0])</span>
+0381    <span class="keyword">if</span> (prj==1)
+0382       dd=2;
+0383       c(1,1)=1+l;
+0384       c(2,1)=1+l;
+0385       c(1,2)=1+m+l;
+0386       c(2,2)=1+m+l;
+0387    <span class="keyword">end</span>
+0388    <span class="keyword">if</span> (prj==21)
+0389       dd=2;
+0390       c(1,1)=1+l;
+0391       c(2,1)=1+m+l;
+0392       c(1,2)=1+m+l;
+0393       c(2,2)=1+l;
+0394    <span class="keyword">end</span>
+0395    <span class="keyword">if</span> (prj==22)
+0396       dd=n-2;
+0397       <span class="keyword">for</span> k=1:l
+0398          c(1,k)=k;
+0399          c(2,k)=k;
+0400          c(1,k+l+m-2)=k+l+m;
+0401          c(2,k+l+m-2)=k+l+m;
+0402       <span class="keyword">end</span>   
+0403       <span class="keyword">for</span> k=l+2:l+m
+0404          c(1,k-1)=k;
+0405          c(2,k-1)=k;
+0406       <span class="keyword">end</span>   
+0407    <span class="keyword">end</span>
+0408    <span class="keyword">if</span> (prj==23)
+0409       dd=n-2;
+0410       <span class="keyword">for</span> k=1:l
+0411          c(1,k)=k;
+0412          c(2,k)=m-k+2;
+0413          c(1,k+l+m-2)=k+l+m;
+0414          c(2,k+l+m-2)=n-k-l+2;
+0415       <span class="keyword">end</span>   
+0416       <span class="keyword">for</span> k=l+2:m
+0417          c(1,k-1)=k;
+0418          c(2,k-1)=m-k+2;
+0419       <span class="keyword">end</span>
+0420       c(1,m)=m+1;
+0421       c(2,m)=1;
+0422       <span class="keyword">for</span> k=m+2:m+l
+0423          c(1,k-1)=k;
+0424          c(2,k-1)=m-k+2+n;
+0425       <span class="keyword">end</span>   
+0426    <span class="keyword">end</span>
+0427 <span class="keyword">end</span>   
+0428 <span class="comment">%</span>
+0429 <span class="keyword">if</span> (gp==103) <span class="comment">% sdp ([0 1;1 0] x [0 n/2-1;n/2-1 0])</span>
+0430    <span class="keyword">if</span> (prj==1)
+0431       dd=2;
+0432       c(1,1)=1;
+0433       c(2,1)=1;
+0434       c(1,2)=1+m;
+0435       c(2,2)=1+m;
+0436    <span class="keyword">end</span>
+0437    <span class="keyword">if</span> (prj==21)
+0438       dd=2;
+0439       c(1,1)=1+m;
+0440       c(2,1)=1; 
+0441       c(1,2)=1;
+0442       c(2,2)=1+m;
+0443    <span class="keyword">end</span>
+0444    <span class="keyword">if</span> (prj==22)
+0445       dd=n-2;
+0446       <span class="keyword">for</span> k=1:m-1
+0447          c(1,k)=k+1;
+0448          c(2,k)=k+1;
+0449          c(1,k+m-1)=m+k+1;
+0450          c(2,k+m-1)=m+k+1;
+0451       <span class="keyword">end</span>   
+0452    <span class="keyword">end</span>
+0453    <span class="keyword">if</span> (prj==23)
+0454       dd=n-2;
+0455       <span class="keyword">for</span> k=1:l-1
+0456          c(1,k)=2*k+1;
+0457          c(2,k)=n-2*k+1;
+0458          c(1,k+l-1)=2*k+m+1;
+0459          c(2,k+l-1)=m-2*k+1;
+0460       <span class="keyword">end</span>
+0461       <span class="keyword">for</span> k=0:l-1
+0462          c(1,m-2+k+1)=2*k+2;
+0463          c(2,m-2+k+1)=m-2*k;
+0464          c(1,m-2+l+k+1)=2*k+m+2;
+0465          c(2,m-2+l+k+1)=n-2*k;
+0466       <span class="keyword">end</span>   
+0467    <span class="keyword">end</span>
+0468 <span class="keyword">end</span>
+0469 <span class="comment">%</span>
+0470 <span class="keyword">if</span> (gp==104) <span class="comment">% sdp ([0 -1;-1 0] x [0 n/2-1;n/2-1 0])</span>
+0471    <span class="keyword">if</span> (prj==1)
+0472       dd=m;
+0473       c(1,1)=1;
+0474       c(2,1)=1;
+0475       <span class="keyword">for</span> k=2:m
+0476          c(1,k)=2*k-1;
+0477          c(2,k)=n-2*k+3;
+0478       <span class="keyword">end</span>  
+0479    <span class="keyword">end</span>
+0480    <span class="keyword">if</span> (prj==21)
+0481       dd=m*m-m;
+0482       <span class="keyword">for</span> k2=1:m-1
+0483          c(1,k2)=1;
+0484          c(2,k2)=2*k2+1;
+0485       <span class="keyword">end</span>   
+0486       knt=m-1;
+0487       <span class="keyword">for</span> k1=1:m-1
+0488          <span class="keyword">for</span> k2=0:m-1
+0489             <span class="keyword">if</span> (k2~=m-k1)
+0490                knt=knt+1;
+0491                c(1,knt)=2*k1+1;
+0492                c(2,knt)=2*k2+1;
+0493             <span class="keyword">end</span>   
+0494          <span class="keyword">end</span>   
+0495       <span class="keyword">end</span>  
+0496    <span class="keyword">end</span>
+0497    <span class="keyword">if</span> (prj==22)
+0498       dd=m;
+0499       <span class="keyword">for</span> k=0:m-1
+0500          c(1,k+1)=2*k+2;
+0501          c(2,k+1)=n-2*k;
+0502       <span class="keyword">end</span>   
+0503    <span class="keyword">end</span>
+0504    <span class="keyword">if</span> (prj==23)
+0505       dd=m;
+0506       c(1,1)=2;
+0507       c(2,1)=m;
+0508       c(1,l+1)=m+2;
+0509       c(2,l+1)=n;
+0510       <span class="keyword">for</span> k=1:l-1
+0511          c(1,k+1)=2*k+2;
+0512          c(2,k+1)=m-2*k;
+0513          c(1,l+k+1)=2*k+m+2;
+0514          c(2,l+k+1)=n-2*k;
+0515       <span class="keyword">end</span>   
+0516    <span class="keyword">end</span>
+0517 <span class="keyword">end</span>
+0518 <span class="comment">%</span>
+0519 <span class="keyword">if</span> (gp==201) <span class="comment">%[1 0;0 -1],[1 0;N/2 1]</span>
+0520    <span class="keyword">if</span> (prj==1)
+0521       dd=n;
+0522       <span class="keyword">for</span> k=1:m 
+0523          c(1,k)=2*k-1;
+0524          c(2,k)=1;
+0525          c(1,m+k)=2*k-1;
+0526          c(2,m+k)=1+m;
+0527       <span class="keyword">end</span>  
+0528    <span class="keyword">end</span>
+0529    <span class="keyword">if</span> (prj==21)
+0530       dd=n;
+0531       <span class="keyword">for</span> k=1:m
+0532          c(1,k)=2*k;
+0533          c(2,k)=1;
+0534          c(1,k+m)=2*k;
+0535          c(2,k+m)=m+1;
+0536       <span class="keyword">end</span>   
+0537    <span class="keyword">end</span>
+0538    <span class="keyword">if</span> (prj==22)
+0539       dd=m*(n-2);
+0540       mm=m*(m-1);
+0541       <span class="keyword">for</span> k2=2:m
+0542          <span class="keyword">for</span> k1=1:m
+0543             c(1,k1+m*(k2-2))=2*k1-1;
+0544             c(2,k1+m*(k2-2))=k2;
+0545             c(1,k1+m*(k2-2)+mm)=2*k1-1;
+0546             c(2,k1+m*(k2-2)+mm)=k2+m;
+0547          <span class="keyword">end</span>
+0548       <span class="keyword">end</span>   
+0549    <span class="keyword">end</span>
+0550    <span class="keyword">if</span> (prj==23)
+0551       dd=n;
+0552       <span class="keyword">for</span> k=1:m
+0553          c(1,k)=2*k;
+0554          c(2,k)=l+1;
+0555          c(1,m+k)=2*k;
+0556          c(2,m+k)=m+l+1;
+0557       <span class="keyword">end</span>   
+0558    <span class="keyword">end</span>
+0559 <span class="keyword">end</span>   
+0560 <span class="comment">%</span>
+0561 <span class="keyword">if</span> (gp==202) <span class="comment">%[1 0;N/2 N/2-1],[1 N/2;N/2 1]</span>
+0562    <span class="keyword">if</span> (prj==1)
+0563       dd=n;
+0564       <span class="keyword">for</span> k=1:m
+0565          c(1,k)=2*k-1;
+0566          c(2,k)=1; 
+0567          c(1,m+k)=2*k-1;
+0568          c(2,m+k)=1+m;
+0569       <span class="keyword">end</span>  
+0570    <span class="keyword">end</span>
+0571    <span class="keyword">if</span> (prj==21)
+0572       dd=n;
+0573       <span class="keyword">for</span> k=1:m
+0574          c(1,k)=2*k;
+0575          c(2,k)=l+1;
+0576          c(1,k+m)=2*k;
+0577          c(2,k+m)=m+l+1;
+0578       <span class="keyword">end</span>   
+0579    <span class="keyword">end</span>
+0580    <span class="keyword">if</span> (prj==22)
+0581       dd=m*(m-2);
+0582       mm=m*(l-1);
+0583       <span class="keyword">for</span> k2=2:l
+0584          <span class="keyword">for</span> k1=1:m
+0585             c(1,k1+m*(k2-2))=2*k1-1;
+0586             c(2,k1+m*(k2-2))=2*k2-1;
+0587             c(1,k1+m*(k2-2)+mm)=2*k1-1;
+0588             c(2,k1+m*(k2-2)+mm)=2*k2-1+m;
+0589          <span class="keyword">end</span>
+0590       <span class="keyword">end</span>   
+0591    <span class="keyword">end</span>
+0592    <span class="keyword">if</span> (prj==23)
+0593       dd=n;
+0594       <span class="keyword">for</span> k=1:m
+0595          c(1,k)=2*k;
+0596          c(2,k)=1;
+0597          c(1,m+k)=2*k;
+0598          c(2,m+k)=m+1;
+0599       <span class="keyword">end</span>   
+0600    <span class="keyword">end</span>
+0601 <span class="keyword">end</span>   
+0602 <span class="comment">%</span>
+0603 <span class="keyword">if</span> (gp==203) <span class="comment">%[-1 0;0 1],[N/2+1 N/2;N/2 1]</span>
+0604    <span class="keyword">if</span> (prj==1)
+0605       dd=n;
+0606       <span class="keyword">for</span> k=1:m
+0607          c(1,k)=1;
+0608          c(2,k)=2*k-1;
+0609          c(1,m+k)=1+m;
+0610          c(2,m+k)=2*k-1;
+0611       <span class="keyword">end</span>  
+0612    <span class="keyword">end</span>
+0613    <span class="keyword">if</span> (prj==21)
+0614       dd=n;
+0615       <span class="keyword">for</span> k=1:m
+0616          c(1,k)=1;
+0617          c(2,k)=2*k;
+0618          c(1,k+m)=m+1;
+0619          c(2,k+m)=2*k;
+0620       <span class="keyword">end</span>   
+0621    <span class="keyword">end</span>
+0622    <span class="keyword">if</span> (prj==22)
+0623       dd=m*(m-2);
+0624       <span class="keyword">for</span> k2=1:m
+0625          kk=(k2-1)*(m-2);
+0626          <span class="keyword">for</span> k1=1:l-1
+0627             c(1,k1+kk)=2*k1+1;
+0628             c(2,k1+kk)=2*k2-1;
+0629             c(1,k1+l-1+kk)=2*k1+1+m;
+0630             c(2,k1+l-1+kk)=2*k2-1;
+0631          <span class="keyword">end</span>
+0632       <span class="keyword">end</span>   
+0633    <span class="keyword">end</span>
+0634    <span class="keyword">if</span> (prj==23)
+0635       dd=n;
+0636       <span class="keyword">for</span> k=1:m
+0637          c(1,k)=l+1;
+0638          c(2,k)=2*k;
+0639          c(1,m+k)=l+m+1;
+0640          c(2,m+k)=2*k;
+0641       <span class="keyword">end</span>   
+0642    <span class="keyword">end</span>
+0643 <span class="keyword">end</span>   
+0644 <span class="comment">%</span>
+0645 <span class="comment">%</span>
+0646 <span class="keyword">for</span> k=1:dd
+0647    k1=c(1,k);
+0648    k2=c(2,k);
+0649    y(k1,k2)=bf(k1,k2);
+0650    y(k1+n,k2)=bf(k1+n,k2);
+0651    y(k1,k2+n)=bf(k1,k2+n);
+0652    y(k1+n,k2+n)=bf(k1+n,k2+n);
+0653 <span class="keyword">end</span>   
+0654 <span class="comment">%</span>
+0655 y(1:n,1:n)=fft2(y(1:n,1:n));
+0656 y(1+n:n2,1:n)=fft2(y(1+n:n2,1:n));
+0657 y(1:n,1+n:n2)=fft2(y(1:n,1+n:n2));
+0658 y(1+n:n2,1+n:n2)=fft2(y(1+n:n2,1+n:n2));</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,33 @@
+clear;
+n=8;
+n3=n*3;
+ff=bkgd(3,2,n3/2);
+for k=1:6
+   x(1:n3,1:n3,k)=ff;
+   x(n,n+2*k,k)=1;
+end   
+[x1,x2,x3,x6]=mm6(x);
+y1=imm6(x1);
+y2=imm6(x2);
+y3=imm6(x3);
+y6=imm6(x6);
+for k=1:6
+   xx(1:n3,1+(k-1)*n3:k*n3)=x(:,:,k);
+   yy1(1:n3,1+(k-1)*n3:k*n3)=y1(:,:,k);
+   yy2(1:n3,1+(k-1)*n3:k*n3)=y2(:,:,k);
+   yy3(1:n3,1+(k-1)*n3:k*n3)=y3(:,:,k);
+   yy6(1:n3,1+(k-1)*n3:k*n3)=y6(:,:,k);
+end   
+figure(1)
+clf
+colormap(gray)
+subplot(5,1,1),imagesc(xx)
+subplot(5,1,2),imagesc(real(yy1))
+subplot(5,1,3),imagesc(real(yy2))
+subplot(5,1,4),imagesc(real(yy3))
+subplot(5,1,5),imagesc(real(yy6))
+mm(1)=max(max(real(yy1)));
+mm(2)=max(max(real(yy2)));
+mm(3)=max(max(real(yy3)));
+mm(4)=max(max(real(yy6)));
+mm

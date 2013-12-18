@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cnv22</title>
+  <meta name="keywords" content="cnv22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cnv22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cnv22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="cnvmt.html" class="code" title="function y=cnvmt(x)">cnvmt</a>	return convolution matrix for 1d input signal x</li><li><a href="imn_2.html" class="code" title="function y=imn_2(x,gp)">imn_2</a>	Use this for even m and even n:</li><li><a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>	Use this for even m and n:</li><li><a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>	Semidirect product transform.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n2=input(<span class="string">'input the data size    '</span>);
+0003 n=n2/2;
+0004 m=n/2;
+0005 u=rand(n2,n);
+0006 v=rand(n2,n);
+0007 <span class="comment">%</span>
+0008 u1=<a href="cnvmt.html" class="code" title="function y=cnvmt(x)">cnvmt</a>(u(1:n,1));
+0009 u2=<a href="cnvmt.html" class="code" title="function y=cnvmt(x)">cnvmt</a>(u(1+n:n2,1));
+0010 <span class="comment">%</span>
+0011 nn=linspace(0,n-1,n);
+0012 gp=input(<span class="string">'input the group number     '</span>);
+0013 <span class="keyword">if</span> (gp==1) <span class="comment">% x --&gt; x^-1</span>
+0014    rn=mod(n-nn,n)+1;
+0015    d1=4;
+0016    c1(1,1)=1;
+0017    c1(2,1)=1;
+0018    c1(1,2)=1+m;
+0019    c1(2,2)=1;
+0020    c1(1,3)=1+m;
+0021    c1(2,3)=1;
+0022    c1(1,4)=1+m;
+0023    c1(2,4)=1+m;
+0024 <span class="keyword">end</span>
+0025 <span class="comment">%</span>
+0026 <span class="keyword">if</span> (gp==2) <span class="comment">% x^k --&gt; x^(m+1)*k</span>
+0027    rn=mod((m+1)*nn,n)+1;
+0028    d1=m*m;
+0029    <span class="keyword">for</span> k2=0:m-1
+0030       <span class="keyword">for</span> k1=0:m-1
+0031          c1(1,k1+1+m*k2)=2*k1+1;
+0032          c1(2,k1+1+m*k2)=2*k2+1;
+0033       <span class="keyword">end</span>   
+0034    <span class="keyword">end</span>   
+0035 <span class="keyword">end</span>
+0036 <span class="comment">%</span>
+0037 <span class="keyword">if</span> (gp==3) <span class="comment">% x^k --&gt; x^(m-1)*k</span>
+0038    rn=mod((m-1)*nn,n)+1;
+0039    d1=4;
+0040    c1(1,1)=1;
+0041    c1(2,1)=1;
+0042    c1(1,2)=1+m;
+0043    c1(2,2)=1;
+0044    c1(1,3)=1+m;
+0045    c1(2,3)=1;
+0046    c1(1,4)=1+m;
+0047    c1(2,4)=1+m;
+0048 <span class="keyword">end</span>
+0049 <span class="comment">%</span>
+0050 <span class="keyword">for</span> k1=1:n
+0051    <span class="keyword">for</span> k2=1:n
+0052       v2(k1,k2)=u2(rn(k1),rn(k2));
+0053    <span class="keyword">end</span>   
+0054 <span class="keyword">end</span>   
+0055 uu=[u1 v2;v2 u1];
+0056 dr=uu*v;
+0057 <span class="comment">%</span>
+0058 <span class="comment">% convolution theorem</span>
+0059 <span class="keyword">for</span> k=1:n2
+0060    [f1,f2]=<a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>(uu(:,k),n,gp);
+0061    fu(:,k)=f1+f2;
+0062 <span class="keyword">end</span>   
+0063 fut=fu';
+0064 <span class="keyword">for</span> k=1:n2
+0065    [a1,a2]=<a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>(fut(:,k),gp);
+0066    at(:,k)=a1+a2;
+0067 <span class="keyword">end</span>
+0068 fuf=at';
+0069 [fv1,fv2]=<a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>(v,gp);
+0070 fv=fv1+fv2;
+0071 dd=fuf*fv;
+0072 c2=<a href="imn_2.html" class="code" title="function y=imn_2(x,gp)">imn_2</a>(dd,gp);
+0073 <span class="comment">%</span>
+0074 <span class="comment">%</span>
+0075 <span class="comment">%</span>
+0076 [d11,d12]=<a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>(u(:,1),gp);
+0077 [d21,d22]=<a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>(v(:,1),gp);
+0078 <span class="keyword">for</span> k=1:n
+0079    c(k,1)=d12(k)*d22(k)+d12(k+n)*d22(rn(k)+n);
+0080    c(k+n,1)=d12(k+n)*d22(rn(k))+d12(k)*d22(k+n);
+0081 <span class="keyword">end</span>   
+0082 <span class="comment">%</span>
+0083 <span class="keyword">for</span> k=1:d1
+0084    c(c1(k),1)=sqrt(2)*d11(c1(k),1)*d21(c1(k),1);
+0085    c(c1(k)+n,1)=sqrt(2)*d11(c1(k)+n,1)*d21(c1(k)+n,1);
+0086 <span class="keyword">end</span>
+0087 <span class="comment">%</span>
+0088 <span class="comment">%cv=sqrt(n)*imn_2(c,gp);</span>
+0089 <span class="comment">%cc=gp_mn2(u,v,gp);</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of lct</title>
+  <meta name="keywords" content="lct">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; lct.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>lct
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ox,oy]=lct(y1,frm0,tr,gp); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="mysort.html" class="code" title="function [a,b]=mysort(nn);">mysort</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ox,oy]=lct(y1,frm0,tr,gp);</a>
+0002 [n2,tem]=size(y1);
+0003 n=n2/2;
+0004 tr2=tr/2;
+0005 nn(1)=max(max(y1(1:n,1:n)));
+0006 nn(2)=max(max(y1(1+n:n2,1:n)));
+0007 nn(3)=max(max(y1(1:n,1+n:n2)));
+0008 nn(4)=max(max(y1(1+n:n2,1+n:n2)));
+0009 [a,b]=<a href="mysort.html" class="code" title="function [a,b]=mysort(nn);">mysort</a>(nn);
+0010 ox=n2;
+0011 oy=n2;
+0012 <span class="keyword">if</span> (a(4)/a(1) &lt; 1.2)
+0013    ox=tr2;
+0014    oy=tr2;
+0015 <span class="keyword">end</span>   
+0016 <span class="keyword">if</span> (.9*a(4) &gt; a(3) &amp; ox==n2)
+0017    <span class="keyword">if</span> (b(4)==1)
+0018       ox=0;
+0019       oy=0;
+0020    <span class="keyword">end</span>
+0021    <span class="keyword">if</span> (b(4)==2)
+0022       ox=tr;
+0023       oy=0;
+0024    <span class="keyword">end</span>
+0025    <span class="keyword">if</span> (b(4)==3)
+0026       ox=0;
+0027       oy=tr;
+0028    <span class="keyword">end</span>
+0029    <span class="keyword">if</span> (b(4)==4)
+0030       ox=tr;
+0031       oy=tr;
+0032    <span class="keyword">end</span>   
+0033 <span class="keyword">else</span>
+0034    <span class="keyword">if</span> (.99*a(4)&gt;a(3) &amp; b(4)+b(1)==5)
+0035       <span class="keyword">if</span> (b(4)==1)
+0036          ox=0;
+0037          oy=0;
+0038       <span class="keyword">end</span>
+0039       <span class="keyword">if</span> (b(4)==2)
+0040          ox=tr;
+0041          oy=0;
+0042       <span class="keyword">end</span>
+0043       <span class="keyword">if</span> (b(4)==3)
+0044          ox=0;
+0045          oy=tr;
+0046       <span class="keyword">end</span>
+0047       <span class="keyword">if</span> (b(4)==4)
+0048          ox=tr;
+0049          oy=tr;
+0050       <span class="keyword">end</span>   
+0051    <span class="keyword">end</span>   
+0052 <span class="keyword">end</span>
+0053 <span class="comment">%</span>
+0054 <span class="keyword">if</span> (.95*a(4) &lt; a(1) &amp; ox==n2)
+0055    ox=tr/2;
+0056    oy=tr/2;
+0057 <span class="keyword">end</span>   
+0058 <span class="keyword">if</span> (ox==n2)
+0059    <span class="keyword">if</span> (b(4)==1)
+0060       ox=0;
+0061       oy=0;
+0062    <span class="keyword">end</span>
+0063    <span class="keyword">if</span> (b(4)==2)
+0064       ox=tr;
+0065       oy=0;
+0066    <span class="keyword">end</span>
+0067    <span class="keyword">if</span> (b(4)==3)
+0068       ox=0;
+0069       oy=tr;
+0070    <span class="keyword">end</span>
+0071    <span class="keyword">if</span> (b(4)==4)
+0072       ox=tr;
+0073       oy=tr;
+0074    <span class="keyword">end</span>   
+0075 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

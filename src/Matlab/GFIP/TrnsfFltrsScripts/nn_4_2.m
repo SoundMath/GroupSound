@@ -1,0 +1,268 @@
+function [y1,y21,y22,y41,y42,y43,y44,y8]=nn_4_2(x,gp)
+[n4,tem]=size(x);
+%
+% Use this routine for powers of 2.
+% (CN X CN) sdp (C4 sdp C2)
+%
+n=n4/4;
+n2=n+n;
+n3=n2+n;
+n4=n3+n;
+nd2=n/2;
+rt2=1/sqrt(2);
+rtn=sqrt(n);
+y1=zeros(n4,n2);
+y21=zeros(n4,n2);
+y22=zeros(n4,n2);
+y41=zeros(n4,n2);
+y42=zeros(n4,n2);
+y43=zeros(n4,n2);
+y44=zeros(n4,n2);
+y8=zeros(n4,n2);
+%
+bf(1:n,1:n)=n*ifft2(x(1:n,1:n));
+bf(1+n:n2,1:n)=n*ifft2(x(1+n:n2,1:n));
+bf(1+n2:n3,1:n)=n*ifft2(x(1+n2:n3,1:n));
+bf(1+n3:n4,1:n)=n*ifft2(x(1+n3:n4,1:n));
+bf(1:n,1+n:n2)=n*ifft2(x(1:n,1+n:n2));
+bf(1+n:n2,1+n:n2)=n*ifft2(x(1+n:n2,1+n:n2));
+bf(1+n2:n3,1+n:n2)=n*ifft2(x(1+n2:n3,1+n:n2));
+bf(1+n3:n4,1+n:n2)=n*ifft2(x(1+n3:n4,1+n:n2));
+%
+if (gp == 1)
+   d1=2;
+   d21=2;
+   c1(1,1)=1;
+   c1(2,1)=1;
+   c1(1,2)=nd2+1;
+   c1(2,2)=nd2+1;
+   c21=c1;
+   d22=2;
+   c22(1,1)=1;
+   c22(2,1)=nd2+1;
+   c22(1,2)=nd2+1;
+   c22(2,2)=1;
+   d41=n2-4;
+   d42=n2-4;
+   d43=n-2;
+   d44=n-2;
+   for k=2:nd2
+      c41(1,k-1)=k;
+      c41(2,k-1)=1;
+      c41(1,k+nd2-2)=k+nd2;
+      c41(2,k+nd2-2)=1;
+      c41(1,k+n-3)=k;
+      c41(2,k+n-3)=nd2+1;
+      c41(1,k+nd2+n-4)=k+nd2;
+      c41(2,k+nd2+n-4)=nd2+1;
+      %
+      c42(1,k-1)=1;
+      c42(2,k-1)=k;
+      c42(1,k+nd2-2)=1;
+      c42(2,k+nd2-2)=k+nd2;
+      c42(1,k+n-3)=nd2+1;
+      c42(2,k+n-3)=k;
+      c42(1,k+nd2+n-4)=nd2+1;
+      c42(2,k+nd2+n-4)=k+nd2;
+      %
+      c43(1,k-1)=k;
+      c43(2,k-1)=k;
+      c43(1,k+nd2-2)=k+nd2;
+      c43(2,k+nd2-2)=k+nd2;
+      %
+      c44(1,k-1)=k;
+      c44(2,k-1)=n-k+2;
+      c44(1,k+nd2-2)=nd2+k;
+      c44(2,k+nd2-2)=nd2-k+2;      
+   end   
+end
+% the H centralizer
+for k=1:d1
+   k1=c1(1,k);
+   k2=c1(2,k);
+   t1(1,1)=bf(k1,k2);
+   t1(2,1)=bf(k1+n,k2);
+   t1(3,1)=bf(k1+n2,k2);
+   t1(4,1)=bf(k1+n3,k2);
+   t1(5,1)=bf(k1,k2+n);
+   t1(6,1)=bf(k1+n,k2+n);
+   t1(7,1)=bf(k1+n2,k2+n);
+   t1(8,1)=bf(k1+n3,k2+n);
+   %
+   tt1(1:4,1)=2*ifft(t1(1:4,1));
+   tt2(1:4,1)=2*ifft(t1(5:8,1));
+   %
+   bf(k1,k2)=rt2*(tt1(1)+tt2(1));
+   bf(k1+n2,k2)=rt2*(tt1(3)+tt2(3));
+   bf(k1,k2+n)=rt2*(tt1(1)-tt2(1));
+   bf(k1+n2,k2+n)=rt2*(tt1(3)-tt2(3));
+   y1(k1,k2)=bf(k1,k2);
+   y1(k1+n2,k2)=bf(k1+n2,k2);
+   y1(k1,k2+n)=bf(k1,k2+n);
+   y1(k1+n2,k2+n)=bf(k1+n2,k2+n);
+   %
+   bf(k1+n,k2)=tt1(2);
+   bf(k1+n3,k2)=tt1(4);
+   bf(k1+n,k2+n)=tt2(2);
+   bf(k1+n3,k2+n)=tt2(4);
+   y21(k1+n,k2)=tt1(2);
+   y21(k1+n3,k2)=tt1(4);
+   y21(k1+n,k2+n)=tt2(2);
+   y21(k1+n3,k2+n)=tt2(4);
+end
+%
+for k=1:d22
+   k1=c22(1,k);
+   k2=c22(2,k);
+   t1=bf(k1,k2)+bf(k1+n2,k2);
+   t2=bf(k1,k2)-bf(k1+n2,k2);
+   t3=bf(k1+n,k2+n)+bf(k1+n3,k2+n);
+   t4=bf(k1+n,k2+n)-bf(k1+n3,k2+n);
+   bf(k1,k2)=.5*(t1+t3);
+   bf(k1+n2,k2)=.5*(t2+t4);
+   bf(k1+n,k2+n,1)=.5*(t1-t3);
+   bf(k1+n3,k2+n,1)=.5*(t2-t4);
+   y22(k1,k2)=bf(k1,k2);
+   y22(k1+n2,k2)=bf(k1+n2,k2);
+   y22(k1+n,k2+n)=bf(k1+n,k2+n);
+   y22(k1+n3,k2+n)=bf(k1+n3,k2+n);
+   
+   t1=bf(k1+n,k2)+bf(k1+n3,k2);
+   t2=bf(k1+n,k2)-bf(k1+n3,k2);
+   t3=bf(k1+n2,k2+n)+bf(k1,k2+n);
+   t4=bf(k1+n2,k2+n)-bf(k1,k2+n);
+   bf(k1+n,k2)=.5*(t1+t3);
+   bf(k1+n3,k2)=.5*(t2+t4);
+   bf(k1+n2,k2+n)=.5*(t1-t3);
+   bf(k1,k2+n)=.5*(t2-t4);
+   y22(k1+n,k2)=bf(k1+n,k2);
+   y22(k1+n3,k2)=bf(k1+n3,k2);
+   y22(k1+n2,k2+n)=bf(k1+n2,k2+n);
+   y22(k1,k2+n)=bf(k1,k2+n);
+end   
+%
+for k=1:d41
+   k1=c41(1,k);
+   k2=c41(2,k);
+   t1=rt2*(bf(k1,k2)+bf(k1+n,k2+n));
+   t2=rt2*(bf(k1,k2)-bf(k1+n,k2+n));
+   bf(k1,k2)=t1;
+   bf(k1+n,k2+n)=t2;
+   y41(k1,k2)=t1;
+   y41(k1+n,k2+n)=t2;
+   %
+   t1=rt2*(bf(k1+n,k2)+bf(k1+n2,k2+n));
+   t2=rt2*(bf(k1+n,k2)-bf(k1+n2,k2+n));
+   bf(k1+n,k2)=t1;
+   bf(k1+n2,k2+n)=t2;
+   y41(k1+n,k2)=t1;
+   y41(k1+n2,k2+n)=t2;
+   %
+   t1=rt2*(bf(k1+n2,k2)+bf(k1+n3,k2+n));
+   t2=rt2*(bf(k1+n2,k2)-bf(k1+n3,k2+n));
+   bf(k1+n2,k2)=t1;
+   bf(k1+n3,k2+n)=t2;
+   y41(k1+n2,k2)=t1;
+   y41(k1+n3,k2+n)=t2;
+   %
+   t1=rt2*(bf(k1+n3,k2)+bf(k1,k2+n));
+   t2=rt2*(bf(k1+n3,k2)-bf(k1,k2+n));
+   bf(k1+n3,k2)=t1;
+   bf(k1,k2+n)=t2;
+   y41(k1+n3,k2)=t1;
+   y41(k1,k2+n)=t2;
+end   
+for k=1:d42
+   k1=c42(1,k);
+   k2=c42(2,k);
+   t1=rt2*(bf(k1,k2)+bf(k1+n3,k2+n));
+   t2=rt2*(bf(k1,k2)-bf(k1+n3,k2+n));
+   bf(k1,k2)=t1;
+   bf(k1+n3,k2+n)=t2;
+   y42(k1,k2)=t1;
+   y42(k1+n3,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n,k2)+bf(k1,k2+n));
+   t2=rt2*(bf(k1+n,k2)-bf(k1,k2+n));
+   bf(k1+n,k2)=t1;
+   bf(k1,k2+n)=t2;
+   y42(k1+n,k2)=t1;
+   y42(k1,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n2,k2)+bf(k1+n,k2+n));
+   t2=rt2*(bf(k1+n2,k2)-bf(k1+n,k2+n));
+   bf(k1+n2,k2)=t1;
+   bf(k1+n,k2+n)=t2;
+   y42(k1+n2,k2)=t1;
+   y42(k1+n,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n3,k2)+bf(k1+n2,k2+n));
+   t2=rt2*(bf(k1+n3,k2)-bf(k1+n2,k2+n));
+   bf(k1+n3,k2)=t1;
+   bf(k1+n2,k2+n)=t2;
+   y42(k1+n3,k2)=t1;
+   y42(k1+n2,k2+n)=t2;
+end   
+for k=1:d43
+   k1=c43(1,k);
+   k2=c43(2,k);
+   t1=rt2*(bf(k1,k2)+bf(k1,k2+n));
+   t2=rt2*(bf(k1,k2)-bf(k1,k2+n));
+   bf(k1,k2)=t1;
+   bf(k1,k2+n)=t2;
+   y43(k1,k2)=t1;
+   y43(k1,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n,k2)+bf(k1+n,k2+n));
+   t2=rt2*(bf(k1+n,k2)-bf(k1+n,k2+n));
+   bf(k1+n,k2)=t1;
+   bf(k1+n,k2+n)=t2;
+   y43(k1+n,k2)=t1;
+   y43(k1+n,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n2,k2)+bf(k1+n2,k2+n));
+   t2=rt2*(bf(k1+n2,k2)-bf(k1+n2,k2+n));
+   bf(k1+n2,k2)=t1;
+   bf(k1+n2,k2+n)=t2;
+   y43(k1+n2,k2)=t1;
+   y43(k1+n2,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n3,k2)+bf(k1+n3,k2+n));
+   t2=rt2*(bf(k1+n3,k2)-bf(k1+n3,k2+n));
+   bf(k1+n3,k2)=t1;
+   bf(k1+n3,k2+n)=t2;
+   y43(k1+n3,k2)=t1;
+   y43(k1+n3,k2+n)=t2;
+end   
+for k=1:d44
+   k1=c44(1,k);
+   k2=c44(2,k);
+   t1=rt2*(bf(k1,k2)+bf(k1+n2,k2+n));
+   t2=rt2*(bf(k1,k2)-bf(k1+n2,k2+n));
+   bf(k1,k2)=t1;
+   bf(k1+n2,k2+n)=t2;
+   y44(k1,k2)=t1;
+   y44(k1+n2,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n,k2)+bf(k1+n3,k2+n));
+   t2=rt2*(bf(k1+n,k2)-bf(k1+n3,k2+n));
+   bf(k1+n,k2)=t1;
+   bf(k1+n3,k2+n)=t2;
+   y44(k1+n,k2)=t1;
+   y44(k1+n3,k2+n)=t2;
+
+   t1=rt2*(bf(k1+n2,k2)+bf(k1,k2+n));
+   t2=rt2*(bf(k1+n2,k2)-bf(k1,k2+n));
+   bf(k1+n2,k2)=t1;
+   bf(k1,k2+n)=t2;
+   y44(k1+n2,k2)=t1;
+   y44(k1,k2+n)=t2;
+   
+   t1=rt2*(bf(k1+n3,k2)+bf(k1+n,k2+n));
+   t2=rt2*(bf(k1+n3,k2)-bf(k1+n,k2+n));
+   bf(k1+n3,k2)=t1;
+   bf(k1+n,k2+n)=t2;
+   y44(k1+n3,k2)=t1;
+   y44(k1+n,k2+n)=t2;
+end
+y8=bf-y1-y21-y22-y41-y42-y43-y44;

@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of imm2_22</title>
+  <meta name="keywords" content="imm2_22">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; imm2_22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>imm2_22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=imm2_22(x,n,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>	</li><li><a href="ft4.html" class="code" title="function y=ft4(x,d1);">ft4</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=imm2_22(x,n,gp)</a>
+0002 <span class="comment">% Use this for even n:</span>
+0003 n2=n+n;
+0004 m=n/2;
+0005 rt2=1/sqrt(2);
+0006 <span class="comment">%</span>
+0007 <span class="comment">%</span>
+0008 <span class="keyword">if</span> (gp==12) <span class="comment">% sdp (R22 x A_29)</span>
+0009    d1=m;
+0010    <span class="keyword">for</span> k=1:m
+0011       c1(1,k)=2*k-1;
+0012       c1(2,k)=2*k-1;
+0013    <span class="keyword">end</span>   
+0014    d21=m;
+0015    <span class="keyword">for</span> k=1:m
+0016       kk1=2*k;
+0017       c21(1,k)=kk1;
+0018       c21(2,k)=kk1;
+0019    <span class="keyword">end</span>   
+0020    d22=m*m-m;
+0021    knt=0;
+0022    <span class="keyword">for</span> k2=0:m-1
+0023       kk2=1+2*k2;
+0024       <span class="keyword">for</span> k1=0:k2-1
+0025          kk1=1+2*k1;
+0026          knt=knt+1;
+0027          c22(1,knt)=kk1;
+0028          c22(2,knt)=kk2;
+0029       <span class="keyword">end</span>
+0030       <span class="keyword">for</span> k1=k2+1:m-1
+0031          kk1=1+2*k1;
+0032          knt=knt+1;
+0033          c22(1,knt)=kk1;
+0034          c22(2,knt)=kk2;
+0035       <span class="keyword">end</span>   
+0036    <span class="keyword">end</span>   
+0037    d23=m;
+0038    <span class="keyword">for</span> k=0:m/2-1
+0039       k1=2+2*k;
+0040       kk1=m+k1;
+0041       c23(1,k+1)=k1;
+0042       c23(2,k+1)=kk1;
+0043       c23(1,m/2+k+1)=kk1;
+0044       c23(2,m/2+k+1)=k1;
+0045    <span class="keyword">end</span>   
+0046 <span class="keyword">end</span>
+0047 <span class="comment">%</span>
+0048 <span class="keyword">if</span> (gp==103) <span class="comment">% sdp (R22 x A_30)</span>
+0049    d1=2;
+0050    c1(1,1)=1;
+0051    c1(2,1)=1;
+0052    c1(1,2)=1+m;
+0053    c1(2,2)=1+m;
+0054    d21=2;
+0055    c21(1,1)=1+m;
+0056    c21(2,1)=1;
+0057    c21(1,2)=1;
+0058    c21(2,2)=1+m;
+0059    d22=n-2;
+0060    <span class="keyword">for</span> k=1:m-1
+0061       c22(1,k)=k+1;
+0062       c22(2,k)=k+1;
+0063       c22(1,k+m-1)=m+k+1;
+0064       c22(2,k+m-1)=m+k+1;
+0065    <span class="keyword">end</span>   
+0066    d23=n-2;
+0067    <span class="keyword">for</span> k=1:m/2-1
+0068       c23(1,k)=2*k+1;
+0069       c23(2,k)=n-2*k+1;
+0070       c23(1,k+m/2-1)=2*k+m+1;
+0071       c23(2,k+m/2-1)=m-2*k+1;
+0072    <span class="keyword">end</span>
+0073    <span class="keyword">for</span> k=0:m/2-1
+0074       c23(1,m-2+k+1)=2*k+2;
+0075       c23(2,m-2+k+1)=m-2*k;
+0076       c23(1,m-2+m/2+k+1)=2*k+m+2;
+0077       c23(2,m-2+m/2+k+1)=n-2*k;
+0078    <span class="keyword">end</span>   
+0079 <span class="keyword">end</span>
+0080 <span class="comment">%</span>
+0081 <span class="keyword">if</span> (gp==104) <span class="comment">% sdp (A_12 x A_30)</span>
+0082    d1=m;
+0083    c1(1,1)=1;
+0084    c1(2,1)=1;
+0085    <span class="keyword">for</span> k=2:m
+0086       c1(1,k)=2*k-1;
+0087       c1(2,k)=n-2*k+3;
+0088    <span class="keyword">end</span>   
+0089    d21=m*m-m;
+0090    <span class="keyword">for</span> k2=1:m-1
+0091       c21(1,k2)=1;
+0092       c21(2,k2)=2*k2+1;
+0093    <span class="keyword">end</span>   
+0094    knt=m-1;
+0095    <span class="keyword">for</span> k1=1:m-1
+0096       <span class="keyword">for</span> k2=0:m-1
+0097          <span class="keyword">if</span> (k2~=m-k1)
+0098             knt=knt+1;
+0099             c21(1,knt)=2*k1+1;
+0100             c21(2,knt)=2*k2+1;
+0101          <span class="keyword">end</span>   
+0102       <span class="keyword">end</span>   
+0103    <span class="keyword">end</span>  
+0104    d22=m;
+0105    <span class="keyword">for</span> k=0:m-1
+0106       c22(1,k+1)=2*k+2;
+0107       c22(2,k+1)=n-2*k;
+0108    <span class="keyword">end</span>   
+0109    d23=m;
+0110    c23(1,1)=2;
+0111    c23(2,1)=m;
+0112    c23(1,m/2+1)=m+2;
+0113    c23(2,m/2+1)=n;
+0114    <span class="keyword">for</span> k=1:m/2-1
+0115       c23(1,k+1)=2*k+2;
+0116       c23(2,k+1)=m-2*k;
+0117       c23(1,m/2+k+1)=2*k+m+2;
+0118       c23(2,m/2+k+1)=n-2*k;
+0119    <span class="keyword">end</span>   
+0120 <span class="keyword">end</span>
+0121 <span class="comment">%</span>
+0122 <span class="keyword">if</span> (gp==15) <span class="comment">% sdp (A_12 x A_29)</span>
+0123    d1=2;
+0124    c1(1,1)=1;
+0125    c1(2,1)=1;
+0126    c1(1,2)=m+1;
+0127    c1(2,2)=m+1;
+0128    d21=2;
+0129    c21(1,1)=m+1;
+0130    c21(2,1)=1;
+0131    c21(1,2)=1;
+0132    c21(2,2)=m+1;
+0133    d22=n-2;
+0134    <span class="keyword">for</span> k=1:m-1
+0135       c22(1,k)=k+1;
+0136       c22(2,k)=n-k+1;
+0137       c22(1,k+m-1)=k+m+1;
+0138       c22(2,k+m-1)=m-k+1;
+0139    <span class="keyword">end</span>   
+0140    d23=n-2;
+0141    <span class="keyword">for</span> k=1:m/2-1
+0142       c23(1,k)=2*k+1;
+0143       c23(2,k)=2*k+1;
+0144       c23(1,k+m/2-1)=2*k+m+1;
+0145       c23(2,k+m/2-1)=2*k+m+1;
+0146    <span class="keyword">end</span>   
+0147    <span class="keyword">for</span> k=0:m/2-1
+0148       c23(1,k+m-1)=2*k+2;
+0149       c23(2,k+m-1)=m+2*k+2;
+0150       c23(1,k+m-1+m/2)=2*k+m+2;
+0151       c23(2,k+m-1+m/2)=2*k+2;
+0152    <span class="keyword">end</span>   
+0153 <span class="keyword">end</span>
+0154 <span class="comment">%</span>
+0155 <span class="keyword">if</span> (gp==18) <span class="comment">% sdp (A_71 x A_23)</span>
+0156    d1=m;
+0157    <span class="keyword">for</span> k=0:m/2-1
+0158       c1(1,k+1)=2*k+1;
+0159       c1(2,k+1)=4*k+1;
+0160       c1(1,k+1+m/2)=2*k+m+1;
+0161       c1(2,k+1+m/2)=4*k+1;
+0162    <span class="keyword">end</span>   
+0163    d21=m*m-m;
+0164    knt=0;
+0165    <span class="keyword">for</span> k2=0:m/2-1
+0166       <span class="keyword">for</span> k1=0:m-1
+0167          <span class="keyword">if</span> (k1~=k2 &amp; k1~=k2+m/2)
+0168             knt=knt+1;
+0169             c21(1,knt)=2*k1+1;
+0170             c21(2,knt)=4*k2+1;
+0171          <span class="keyword">end</span>   
+0172          knt=knt+1;
+0173          c21(1,knt)=2*k1+1;
+0174          c21(2,knt)=4*k2+3;
+0175       <span class="keyword">end</span>   
+0176    <span class="keyword">end</span>   
+0177    d22=m;
+0178    <span class="keyword">for</span> k=0:m/2-1
+0179       c22(1,k+1)=2*k+2;
+0180       c22(2,k+1)=4*k+3;
+0181       c22(1,k+1+m/2)=2*k+m+2;
+0182       c22(2,k+1+m/2)=4*k+3;
+0183    <span class="keyword">end</span>   
+0184    d23=m;
+0185    <span class="keyword">for</span> k=0:m-1
+0186       c23(1,k+1)=2*k+2;
+0187       c23(2,k+1)=4*k+2+m;
+0188    <span class="keyword">end</span>
+0189    c23(2,:)=mod(c23(2,:),n)+1;
+0190 <span class="keyword">end</span>
+0191 <span class="comment">%</span>
+0192 <span class="keyword">if</span> (gp==19) <span class="comment">% sdp (B_0 x A_23)</span>
+0193    d1=2;
+0194    c1(1,1)=1;
+0195    c1(2,1)=1;
+0196    c1(1,2)=1+m;
+0197    c1(2,2)=1;
+0198    d21=2;
+0199    c21(1,1)=1;
+0200    c21(2,1)=1+m;
+0201    c21(1,2)=1+m;
+0202    c21(2,2)=1+m;
+0203    d22=n-2;
+0204    <span class="keyword">for</span> k=1:m-1
+0205       c22(1,k)=k+1;
+0206       c22(2,k)=2*k+1;
+0207       c22(1,m-1+k)=k+m+1;
+0208       c22(2,m-1+k)=2*k+1;
+0209    <span class="keyword">end</span>
+0210    d23=n-2;
+0211    <span class="keyword">for</span> k=1:m/2-1
+0212       c23(1,k)=2*k+1;
+0213       c23(2,k)=1;
+0214       c23(1,k+m/2-1)=2*k+m+1;
+0215       c23(2,k+m/2-1)=1;
+0216    <span class="keyword">end</span>
+0217    <span class="keyword">for</span> k=0:m-1
+0218       c23(1,k+m-1)=2*k+2;
+0219       c23(2,k+m-1)=m+1;
+0220    <span class="keyword">end</span>   
+0221 <span class="keyword">end</span>
+0222 <span class="comment">%</span>
+0223 <span class="comment">%</span>
+0224 <span class="comment">%</span>
+0225 <span class="keyword">for</span> k=1:d1
+0226    t1(1,k)=x(c1(1,k),c1(2,k));
+0227    t1(3,k)=x(c1(1,k),c1(2,k)+n);
+0228    t1(2,k)=x(c1(1,k)+n,c1(2,k));
+0229    t1(4,k)=x(c1(1,k)+n,c1(2,k)+n);
+0230 <span class="keyword">end</span>      
+0231 t1=<a href="ft4.html" class="code" title="function y=ft4(x,d1);">ft4</a>(t1,d1);
+0232 <span class="keyword">for</span> k=1:d1
+0233    x(c1(1,k),c1(2,k))=t1(1,k);
+0234    x(c1(1,k),c1(2,k)+n)=t1(3,k);
+0235    x(c1(1,k)+n,c1(2,k))=t1(2,k);
+0236    x(c1(1,k)+n,c1(2,k)+n)=t1(4,k);
+0237 <span class="keyword">end</span>
+0238 <span class="keyword">for</span> k=1:d21
+0239    t21(1,k)=x(c21(1,k),c21(2,k));
+0240    t21(2,k)=x(c21(1,k)+n,c21(2,k));
+0241 <span class="keyword">end</span>   
+0242 t21=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(t21,d21);
+0243 <span class="keyword">for</span> k=1:d21
+0244    x(c21(1,k),c21(2,k))=t21(1,k);
+0245    x(c21(1,k)+n,c21(2,k))=t21(2,k);
+0246 <span class="keyword">end</span>
+0247 <span class="keyword">for</span> k=1:d22
+0248    t22(1,k)=x(c22(1,k),c22(2,k));
+0249    t22(2,k)=x(c22(1,k),c22(2,k)+n);
+0250 <span class="keyword">end</span>   
+0251 t22=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(t22,d22);
+0252 <span class="keyword">for</span> k=1:d22
+0253    x(c22(1,k),c22(2,k))=t22(1,k);
+0254    x(c22(1,k),c22(2,k)+n)=t22(2,k);
+0255 <span class="keyword">end</span>
+0256 <span class="keyword">for</span> k=1:d23
+0257    t23(1,k)=x(c23(1,k),c23(2,k));
+0258    t23(2,k)=x(c23(1,k)+n,c23(2,k)+n);
+0259 <span class="keyword">end</span>   
+0260 t23=<a href="ft2.html" class="code" title="function y=ft2(x,d2);">ft2</a>(t23,d23);
+0261 <span class="keyword">for</span> k=1:d23
+0262    x(c23(1,k),c23(2,k))=t23(1,k);
+0263    x(c23(1,k)+n,c23(2,k)+n)=t23(2,k);
+0264 <span class="keyword">end</span>
+0265 <span class="comment">%</span>
+0266 y(1:n,1:n)=(1/n)*fft2(x(1:n,1:n));
+0267 y(1+n:n2,1:n)=(1/n)*fft2(x(1+n:n2,1:n));
+0268 y(1:n,1+n:n2)=(1/n)*fft2(x(1:n,1+n:n2));
+0269 y(1+n:n2,1+n:n2)=(1/n)*fft2(x(1+n:n2,1+n:n2));</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

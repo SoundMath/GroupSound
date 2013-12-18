@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tnn_22</title>
+  <meta name="keywords" content="tnn_22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; tnn_22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>tnn_22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="gnn_22.html" class="code" title="function ww=gnn_22(u,gp);">gnn_22</a>	</li><li><a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>	Use this for even n:</li><li><a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>	Use this for even n:</li><li><a href="rho1to2.html" class="code" title="function y=rho1to2(x,n)">rho1to2</a>	</li><li><a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=4;
+0003 n2=n+n;
+0004 m=n/2;
+0005 nn1=n*n;
+0006 nn2=nn1+nn1;
+0007 nn3=nn2+nn1;
+0008 nn4=nn3+nn1;
+0009 <span class="comment">%s2=input('input the scene number 0--6     ')</span>
+0010 <span class="comment">%sz=input('input the strip size 1--4    ')</span>
+0011 <span class="comment">%gg=bkgd(s2,sz,n);</span>
+0012 <span class="comment">%xx=gg(1:n,1:n2);</span>
+0013 <span class="comment">%</span>
+0014 gp=input(<span class="string">'enter group number 11 --4            '</span>)
+0015 <span class="comment">%</span>
+0016 uu=rand(n2,n2);
+0017 vv=rand(n2,n2);
+0018 <span class="comment">%uu=zeros(n2,n2);</span>
+0019 <span class="comment">%vv=zeros(n2,n2);</span>
+0020 <span class="comment">%uu(2+n,3+n)=1;</span>
+0021 <span class="comment">%vv(3+n,2+n)=1;</span>
+0022 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(uu,gp);
+0023 xx1=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x1,gp);
+0024 xx21=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x21,gp);
+0025 xx22=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x22,gp);
+0026 xx23=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp);
+0027 xx4=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x4,gp);
+0028 <span class="comment">%</span>
+0029 v1=reshape(vv(1:n,1:n),nn1,1);
+0030 v2=reshape(vv(1+n:n2,1:n),nn1,1);
+0031 v3=reshape(vv(1:n,1+n:n2),nn1,1);
+0032 v4=reshape(vv(1+n:n2,1+n:n2),nn1,1);
+0033 <span class="comment">%</span>
+0034 v=[v1;v2;v3;v4];
+0035 y=<a href="gnn_22.html" class="code" title="function ww=gnn_22(u,gp);">gnn_22</a>(xx21,gp);
+0036 b=y*v;
+0037 <span class="comment">%</span>
+0038 bb=<a href="rho1to2.html" class="code" title="function y=rho1to2(x,n)">rho1to2</a>(b,n);
+0039 <span class="comment">%</span>
+0040 <span class="comment">% convolution theorem</span>
+0041 <span class="keyword">for</span> k=1:nn4
+0042    yy=<a href="rho1to2.html" class="code" title="function y=rho1to2(x,n)">rho1to2</a>(y(:,k),n);
+0043    [ff1,ff21,ff22,ff23,ff4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(yy,gp);
+0044    f1=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff1,n);
+0045    f21=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff21,n);
+0046    f_22=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff22,n);
+0047    f23=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff23,n);
+0048    f4=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff4,n);
+0049    fu(:,k)=f1+f21+f_22+f23+f4;
+0050 <span class="keyword">end</span>   
+0051 fut=fu';
+0052 <span class="keyword">for</span> k=1:nn4
+0053    ff=<a href="rho1to2.html" class="code" title="function y=rho1to2(x,n)">rho1to2</a>(fut(:,k),n);
+0054    [ff1,ff21,ff22,ff23,ff4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(ff,gp);
+0055    f1=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff1,n);
+0056    f21=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff21,n);
+0057    f_22=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff22,n);
+0058    f23=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff23,n);
+0059    f4=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(ff4,n);
+0060    fu(:,k)=f1+f21+f_22+f23+f4;
+0061 <span class="keyword">end</span>
+0062 fuf=fu';
+0063 [fv1,fv21,fv22,fv23,fv4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(vv,gp);
+0064 fv=fv1+fv21+fv22+fv23+fv4;
+0065 fvv=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(fv,n);
+0066 dd=fuf*fvv;
+0067 fd=<a href="rho1to2.html" class="code" title="function y=rho1to2(x,n)">rho1to2</a>(dd,n);
+0068 c2=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(fd,gp);
+0069 cv=<a href="rho2to1.html" class="code" title="function y=rho2to1(x,n)">rho2to1</a>(c2,n);
+0070 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

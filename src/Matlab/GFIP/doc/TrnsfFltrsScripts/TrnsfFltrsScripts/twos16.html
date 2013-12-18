@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of twos16</title>
+  <meta name="keywords" content="twos16">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; twos16.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>twos16
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="iscl2_16.html" class="code" title="function y=iscl2_16(x,n);">iscl2_16</a>	</li><li><a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>	</li><li><a href="scl2_16.html" class="code" title="function [y1,y2,y4,y8,y16]=scl2_16(x,n);">scl2_16</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=64;
+0003 n4=n*4;
+0004 <span class="comment">%gg=mdaread('plane.tiff',256,256);</span>
+0005 <span class="comment">%gg=gg1(1:128,113:240);</span>
+0006 <span class="comment">%gg1=mdaread('grass.tiff',512,512);</span>
+0007 <span class="comment">%gg(1:256,1:256)=gg1(1:256,1:256);</span>
+0008 <span class="comment">%gg=zeros(n4,n4);</span>
+0009 <span class="comment">%f1 = fopen('brst512.mat','rt');</span>
+0010 <span class="comment">%[gg,cc]=fscanf(f1,'%4f',[512,512]);</span>
+0011 <span class="comment">%fclose(f1);</span>
+0012 <span class="comment">%gg=gg';</span>
+0013 <span class="comment">%ff(1:256,1:256)=gg(257:512,100:355);</span>
+0014 <span class="comment">%</span>
+0015 chk=zeros(n4,n4);
+0016 <span class="keyword">for</span> k1=1:n*2
+0017    <span class="keyword">for</span> k2=1:n*2
+0018       chk(2*k1-1,2*k2-1)=1;
+0019       chk(2*k1,2*k2-1)=2;
+0020       chk(2*k1-1,2*k2)=3;
+0021       chk(2*k1,2*k2)=4;
+0022    <span class="keyword">end</span>
+0023 <span class="keyword">end</span>   
+0024 sm=zeros(n4,n4);
+0025 <span class="keyword">for</span> k1=1:n/4
+0026    <span class="keyword">for</span> k2=1:n/4
+0027       sm(2*k1-1+n,2*k2-1+n)=5;
+0028    <span class="keyword">end</span>
+0029 <span class="keyword">end</span>   
+0030 <span class="keyword">for</span> k=1:n4
+0031    ln(k,k)=5;
+0032 <span class="keyword">end</span> 
+0033 chk=chk+<a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>(ln,n4,25)+<a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>(ln,n4,79);
+0034 chk=chk+<a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>(sm,n4,30)+<a href="rrtt.html" class="code" title="function f=rrtt(f1,n2,rr)">rrtt</a>(sm,n4,55);
+0035 <span class="comment">%chk=gg;</span>
+0036 <span class="comment">%</span>
+0037 [f1,f2,f4,f8,f16]=<a href="scl2_16.html" class="code" title="function [y1,y2,y4,y8,y16]=scl2_16(x,n);">scl2_16</a>(chk,n);
+0038 c1=<a href="iscl2_16.html" class="code" title="function y=iscl2_16(x,n);">iscl2_16</a>(f1,n);
+0039 c2=<a href="iscl2_16.html" class="code" title="function y=iscl2_16(x,n);">iscl2_16</a>(f2,n);
+0040 c4=<a href="iscl2_16.html" class="code" title="function y=iscl2_16(x,n);">iscl2_16</a>(f4,n);
+0041 c8=<a href="iscl2_16.html" class="code" title="function y=iscl2_16(x,n);">iscl2_16</a>(f8,n);
+0042 c16=<a href="iscl2_16.html" class="code" title="function y=iscl2_16(x,n);">iscl2_16</a>(f16,n);
+0043 figure(1);
+0044 subplot(2,3,1),imagesc(chk)
+0045 subplot(2,3,2),imagesc(real(c1))
+0046 subplot(2,3,3),imagesc(real(c2))
+0047 subplot(2,3,4),imagesc(real(c4))
+0048 subplot(2,3,5),imagesc(real(c8))
+0049 subplot(2,3,6),imagesc(real(c16))
+0050 <span class="comment">%</span>
+0051</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

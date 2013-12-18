@@ -1,0 +1,13 @@
+clear;
+n=8;
+n8=n*8;
+gp=1;
+ff=rand(n8,1);
+u=un_4_2(n);
+[v1,v21,v22,v4,v8]=n_4_2(ff,gp);
+y1=in_4_2(v1,gp);
+y21=in_4_2(v21,gp);
+y22=in_4_2(v22,gp);
+y4=in_4_2(v4,gp);
+y8=in_4_2(v8,gp);
+%

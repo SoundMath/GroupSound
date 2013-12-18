@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of isee</title>
+  <meta name="keywords" content="isee">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; isee.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>isee
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 n=32;
+0002 m=n/2;
+0003 <span class="comment">%</span>
+0004 gp=201;
+0005 <span class="keyword">if</span> (gp==201) <span class="comment">%[1 0;0 -1],[1 0;N/2 1]</span>
+0006    d1=n;
+0007    <span class="keyword">for</span> k=1:m
+0008       c1(1,k)=2*k-1;
+0009       c1(2,k)=1;
+0010       c1(1,m+k)=2*k-1;
+0011       c1(2,m+k)=1+m;
+0012    <span class="keyword">end</span>   
+0013    d21=n;
+0014    <span class="keyword">for</span> k=1:m
+0015       c21(1,k)=2*k;
+0016       c21(2,k)=1;
+0017       c21(1,k+m)=2*k;
+0018       c21(2,k+m)=m+1;
+0019    <span class="keyword">end</span>   
+0020    d22=m*(n-2);
+0021    mm=m*(m-1);
+0022    <span class="keyword">for</span> k2=2:m
+0023       <span class="keyword">for</span> k1=1:m
+0024          c22(1,k1+m*(k2-2))=2*k1-1;
+0025          c22(2,k1+m*(k2-2))=k2;
+0026          c22(1,k1+m*(k2-2)+mm)=2*k1-1;
+0027          c22(2,k1+m*(k2-2)+mm)=k2+m;
+0028       <span class="keyword">end</span>
+0029    <span class="keyword">end</span>   
+0030    d23=n;
+0031    <span class="keyword">for</span> k=1:m
+0032       c23(1,k)=2*k;
+0033       c23(2,k)=m/2+1;
+0034       c23(1,m+k)=2*k;
+0035       c23(2,m+k)=m+m/2+1;
+0036    <span class="keyword">end</span>   
+0037 <span class="keyword">end</span> 
+0038 iy201=zeros(n,n);
+0039 <span class="keyword">for</span> k=1:d1
+0040    iy201(c1(1,k),c1(2,k))=1;
+0041 <span class="keyword">end</span>   
+0042 <span class="keyword">for</span> k=1:d21
+0043    iy201(c21(1,k),c21(2,k))=1;
+0044 <span class="keyword">end</span>   
+0045 <span class="keyword">for</span> k=1:d22
+0046    iy201(c22(1,k),c22(2,k))=1;
+0047 <span class="keyword">end</span>   
+0048 <span class="keyword">for</span> k=1:d23
+0049    iy201(c23(1,k),c23(2,k))=1;
+0050 <span class="keyword">end</span>   
+0051 <span class="comment">%</span>
+0052 gp=202;
+0053 <span class="keyword">if</span> (gp==202) <span class="comment">%[1 0;N/2 N/2-1],[1 N/2;N/2 1]</span>
+0054    d1=n;
+0055    <span class="keyword">for</span> k=1:m
+0056       c1(1,k)=2*k-1;
+0057       c1(2,k)=1;
+0058       c1(1,m+k)=2*k-1;
+0059       c1(2,m+k)=1+m;
+0060    <span class="keyword">end</span>   
+0061    d21=n;
+0062    <span class="keyword">for</span> k=1:m
+0063       c21(1,k)=2*k;
+0064       c21(2,k)=n/4+1;
+0065       c21(1,k+m)=2*k;
+0066       c21(2,k+m)=m+n/4+1;
+0067    <span class="keyword">end</span>   
+0068    d22=m*(m-2);
+0069    mm=m*(m/2-1);
+0070    <span class="keyword">for</span> k2=2:m/2
+0071       <span class="keyword">for</span> k1=1:m
+0072          c22(1,k1+m*(k2-2))=2*k1-1;
+0073          c22(2,k1+m*(k2-2))=2*k2-1;
+0074          c22(1,k1+m*(k2-2)+mm)=2*k1-1;
+0075          c22(2,k1+m*(k2-2)+mm)=2*k2-1+m;
+0076       <span class="keyword">end</span>
+0077    <span class="keyword">end</span>   
+0078    d23=n;
+0079    <span class="keyword">for</span> k=1:m
+0080       c23(1,k)=2*k;
+0081       c23(2,k)=1;
+0082       c23(1,m+k)=2*k;
+0083       c23(2,m+k)=m+1;
+0084    <span class="keyword">end</span>   
+0085 <span class="keyword">end</span>   
+0086 iy202=zeros(n,n);
+0087 <span class="keyword">for</span> k=1:d1
+0088    iy202(c1(1,k),c1(2,k))=1;
+0089 <span class="keyword">end</span>   
+0090 <span class="keyword">for</span> k=1:d21
+0091    iy202(c21(1,k),c21(2,k))=1;
+0092 <span class="keyword">end</span>   
+0093 <span class="keyword">for</span> k=1:d22
+0094    iy202(c22(1,k),c22(2,k))=1;
+0095 <span class="keyword">end</span>   
+0096 <span class="keyword">for</span> k=1:d23
+0097    iy202(c23(1,k),c23(2,k))=1;
+0098 <span class="keyword">end</span>   
+0099 <span class="comment">%</span>
+0100 gp=203;
+0101 <span class="keyword">if</span> (gp==203) <span class="comment">%[-1 0;0 1],[N/2+1 N/2;N/2 1]</span>
+0102    d1=n;
+0103    <span class="keyword">for</span> k=1:m
+0104       c1(1,k)=1;
+0105       c1(2,k)=2*k-1;
+0106       c1(1,m+k)=1+m;
+0107       c1(2,m+k)=2*k-1;
+0108    <span class="keyword">end</span>   
+0109    d21=n;
+0110    <span class="keyword">for</span> k=1:m
+0111       c21(1,k)=1;
+0112       c21(2,k)=2*k;
+0113       c21(1,k+m)=m+1;
+0114       c21(2,k+m)=2*k;
+0115    <span class="keyword">end</span>   
+0116    d22=m*(m-2);
+0117    <span class="keyword">for</span> k2=1:m
+0118       kk=(k2-1)*(m-2);
+0119       <span class="keyword">for</span> k1=1:m/2-1
+0120          c22(1,k1+kk)=2*k1+1;
+0121          c22(2,k1+kk)=2*k2-1;
+0122          c22(1,k1+m/2-1+kk)=2*k1+1+m;
+0123          c22(2,k1+m/2-1+kk)=2*k2-1;
+0124       <span class="keyword">end</span>
+0125    <span class="keyword">end</span>   
+0126    d23=n;
+0127    <span class="keyword">for</span> k=1:m
+0128       c23(1,k)=n/4+1;
+0129       c23(2,k)=2*k;
+0130       c23(1,m+k)=n/4+m+1;
+0131       c23(2,m+k)=2*k;
+0132    <span class="keyword">end</span>   
+0133 <span class="keyword">end</span>   
+0134 iy203=zeros(n,n);
+0135 <span class="keyword">for</span> k=1:d1
+0136    iy203(c1(1,k),c1(2,k))=1;
+0137 <span class="keyword">end</span>   
+0138 <span class="keyword">for</span> k=1:d21
+0139    iy203(c21(1,k),c21(2,k))=1;
+0140 <span class="keyword">end</span>   
+0141 <span class="keyword">for</span> k=1:d22
+0142    iy203(c22(1,k),c22(2,k))=1;
+0143 <span class="keyword">end</span>   
+0144 <span class="keyword">for</span> k=1:d23
+0145    iy203(c23(1,k),c23(2,k))=1;
+0146 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

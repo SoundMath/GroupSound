@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tem22</title>
+  <meta name="keywords" content="tem22">
+  <meta name="description" content="Use this for even n:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; tem22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>tem22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Use this for even n:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Use this for even n:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="com222.html" class="code" title="">com222</a>	</li><li><a href="comute22.html" class="code" title="">comute22</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Use this for even n:</span>
+0002 n=16;
+0003 gp=1;
+0004 n2=n+n;
+0005 m=n/2;
+0006 rt2=1/sqrt(2);
+0007 x=rand(n2,n2);
+0008 <span class="comment">%</span>
+0009 <span class="keyword">if</span> (gp==1) <span class="comment">% sdp (R_0 x R_1)</span>
+0010    d1=2;
+0011    c1(1,1)=1;
+0012    c1(2,1)=1;
+0013    c1(1,2)=1+m;
+0014    c1(2,2)=1+m;
+0015    d21=n-2;
+0016    <span class="keyword">for</span> k=2:m
+0017       c21(1,k-1)=k;
+0018       c21(2,k-1)=k;
+0019       c21(1,k+m-2)=k+m;
+0020       c21(2,k+m-2)=k+m;
+0021    <span class="keyword">end</span>   
+0022    d22=2;
+0023    c22(1,1)=1;
+0024    c22(2,1)=1+m;
+0025    c22(1,2)=1+m;
+0026    c22(2,2)=1;
+0027    d23=n-2;
+0028    <span class="keyword">for</span> k=2:m
+0029       c23(1,k-1)=k;
+0030       c23(2,k-1)=n-k+2;
+0031       c23(1,m+k-2)=k+m;
+0032       c23(2,m+k-2)=n-m-k+2;
+0033    <span class="keyword">end</span>  
+0034 <span class="comment">%</span>
+0035    <span class="keyword">for</span> k=1:d1
+0036       t1(1,k)=x(c1(1,k),c1(2,k));
+0037       t1(3,k)=x(c1(1,k),c1(2,k)+n);
+0038       t1(2,k)=x(c1(1,k)+n,c1(2,k));
+0039       t1(4,k)=x(c1(1,k)+n,c1(2,k)+n);
+0040    <span class="keyword">end</span>      
+0041    t1=f22(t1,d1);
+0042    <span class="keyword">for</span> k=1:d1
+0043       x(c1(1,k),c1(2,k))=t1(1,k);
+0044       x(c1(1,k),c1(2,k)+n)=t1(3,k);
+0045       x(c1(1,k)+n,c1(2,k))=t1(2,k);
+0046       x(c1(1,k)+n,c1(2,k)+n)=t1(4,k);
+0047    <span class="keyword">end</span>      
+0048    <span class="keyword">for</span> k=1:d21
+0049       t2(1,k)=x(c21(1,k),c21(2,k));
+0050       t2(2,k)=x(c21(1,k)+n,c21(2,k));
+0051    <span class="keyword">end</span>   
+0052    <span class="keyword">for</span> k=1:d22
+0053       t2(1,k+d21)=x(c22(1,k),c22(2,k));
+0054       t2(2,k+d21)=x(c22(1,k),c22(2,k)+n);
+0055    <span class="keyword">end</span>   
+0056    <span class="keyword">for</span> k=1:d23
+0057       t2(1,k+d21+d22)=x(c23(1,k),c23(2,k));
+0058       t2(2,k+d21+d22)=x(c23(1,k)+n,c23(2,k)+n);
+0059    <span class="keyword">end</span>   
+0060    t2=f2(t2,d21+d22+d23);
+0061    <span class="keyword">for</span> k=1:d21
+0062       x(c21(1,k),c21(2,k))=t2(1,k);
+0063       x(c21(1,k)+n,c21(2,k))=t2(2,k);
+0064    <span class="keyword">end</span>   
+0065    <span class="keyword">for</span> k=1:d22
+0066       x(c22(1,k),c22(2,k))=t2(1,k+d21);
+0067       x(c22(1,k),c22(2,k)+n)=t2(2,k+d21);
+0068    <span class="keyword">end</span>   
+0069    <span class="keyword">for</span> k=1:d23
+0070       x(c23(1,k),c23(2,k))=t2(1,k+d21+d22);
+0071       x(c23(1,k)+n,c23(2,k)+n)=t2(2,k+d21+d22);
+0072    <span class="keyword">end</span>   
+0073 <span class="comment">%</span>
+0074 <span class="comment">%</span>
+0075 <span class="comment">% 2-d idempotents</span>
+0076 <span class="comment">%   t1=rt2*(x(1,1+m)+x(1,1+m+n));</span>
+0077 <span class="comment">%   t2=rt2*(x(1,1+m)-x(1,1+m+n));</span>
+0078 <span class="comment">%   t3=rt2*(x(1+m,1)+x(1+m,1+n));</span>
+0079 <span class="comment">%   t4=rt2*(x(1+m,1)-x(1+m,1+n));</span>
+0080 <span class="comment">%   x(1,1+m)=t1;</span>
+0081 <span class="comment">%   x(1,1+m+n)=t2;</span>
+0082 <span class="comment">%   x(1+m,1)=t3;</span>
+0083 <span class="comment">%   x(1+m,1+n)=t4;</span>
+0084 <span class="comment">%   for k=2:m</span>
+0085 <span class="comment">%      t1=rt2*(x(k,k)+x(k+n,k));</span>
+0086 <span class="comment">%      t2=rt2*(x(k,k)-x(k+n,k));</span>
+0087 <span class="comment">%      x(k,k)=t1;</span>
+0088 <span class="comment">%      x(k+n,k)=t2;</span>
+0089 <span class="comment">%      t1=rt2*(x(k+m,k+m)+x(k+m+n,k+m));</span>
+0090 <span class="comment">%      t2=rt2*(x(k+m,k+m)-x(k+m+n,k+m));</span>
+0091 <span class="comment">%      x(k+m,k+m)=t1;</span>
+0092 <span class="comment">%      x(k+m+n,k+m)=t2;</span>
+0093 <span class="comment">%      t1=rt2*(x(k,n-k+2)+x(k+n,n-k+2+n));</span>
+0094 <span class="comment">%      t2=rt2*(x(k,n-k+2)-x(k+n,n-k+2+n));</span>
+0095 <span class="comment">%      x(k,n-k+2)=t1;</span>
+0096 <span class="comment">%      x(k+n,n-k+2+n)=t2;</span>
+0097 <span class="comment">%      t1=rt2*(x(k+m,n-k-m+2)+x(k+m+n,n-k-m+2+n));</span>
+0098 <span class="comment">%      t2=rt2*(x(k+m,n-k-m+2)-x(k+m+n,n-k-m+2+n));</span>
+0099 <span class="comment">%      x(k+m,n-k-m+2)=t1;</span>
+0100 <span class="comment">%      x(k+m+n,n-k-m+2+n)=t2;</span>
+0101 <span class="comment">%   end</span>
+0102 <span class="keyword">end</span>
+0103 <span class="comment">%</span>
+0104 <span class="keyword">if</span> (gp==2) <span class="comment">% sdp (R_0 x R_2)</span>
+0105    d1=2;
+0106    c1(1,1)=1;
+0107    c1(2,1)=1;
+0108    c1(1,2)=1+m;
+0109    c1(2,2)=1;
+0110    <span class="keyword">for</span> k=1:d1
+0111       t(1,k)=x(c1(1,k),c1(2,k));
+0112       t(3,k)=x(c1(1,k),c1(2,k)+n);
+0113       t(2,k)=x(c1(1,k)+n,c1(2,k));
+0114       t(4,k)=x(c1(1,k)+n,c1(2,k)+n);
+0115    <span class="keyword">end</span>      
+0116    t=f22(t,d1);
+0117    <span class="keyword">for</span> k=1:d1
+0118       x(c1(1,k),c1(2,k))=t(1,k);
+0119       x(c1(1,k),c1(2,k)+n)=t(3,k);
+0120       x(c1(1,k)+n,c1(2,k))=t(2,k);
+0121       x(c1(1,k)+n,c1(2,k)+n)=t(4,k);
+0122    <span class="keyword">end</span>      
+0123 <span class="comment">% 2-d idempotents</span>
+0124    t1=rt2*(x(1,1+m)+x(1+n,1+m));
+0125    t2=rt2*(x(1,1+m)-x(1+n,1+m));
+0126    t3=rt2*(x(1+m,1+m)+x(1+m+n,1+m));
+0127    t4=rt2*(x(1+m,1+m)-x(1+m+n,1+m));
+0128    x(1,1+m)=t1;
+0129    x(1+n,1+m)=t2;
+0130    x(1+m,1+m)=t3;
+0131    x(1+m+n,1+m)=t4;
+0132    <span class="keyword">for</span> k=2:m
+0133       k2=2*k-1;
+0134       t1=rt2*(x(k,k2)+x(k,k2+n));
+0135       t2=rt2*(x(k,k2)-x(k,k2+n));
+0136       x(k,k2)=t1;
+0137       x(k,k2+n)=t2;
+0138       t1=rt2*(x(k+m,k2)+x(k+m,k2+n));
+0139       t2=rt2*(x(k+m,k2)-x(k+m,k2+n));
+0140       x(k+m,k2)=t1;
+0141       x(k+m,k2+n)=t2;
+0142       t1=rt2*(x(k,1)+x(k+n,1+n));
+0143       t2=rt2*(x(k,1)-x(k+n,1+n));
+0144       x(k,1)=t1;
+0145       x(k+n,1+n)=t2;
+0146       t1=rt2*(x(k+m,1)+x(k+m+n,1+n));
+0147       t2=rt2*(x(k+m,1)-x(k+m+n,1+n));
+0148       x(k+m,1)=t1;
+0149       x(k+m+n,1+n)=t2;
+0150    <span class="keyword">end</span>   
+0151 <span class="keyword">end</span>   
+0152 <span class="comment">%</span>
+0153 <span class="keyword">if</span> (gp==3) <span class="comment">% sdp (R_1 x R_4)</span>
+0154    d1=m;
+0155    <span class="keyword">for</span> k=1:m
+0156       c1(1,k)=2*k-1;
+0157       c1(2,k)=2*k-1;
+0158    <span class="keyword">end</span>   
+0159    <span class="keyword">for</span> k=1:d1
+0160       t(1,k)=x(c1(1,k),c1(2,k));
+0161       t(3,k)=x(c1(1,k),c1(2,k)+n);
+0162       t(2,k)=x(c1(1,k)+n,c1(2,k));
+0163       t(4,k)=x(c1(1,k)+n,c1(2,k)+n);
+0164    <span class="keyword">end</span>      
+0165    t=f22(t,d1);
+0166    <span class="keyword">for</span> k=1:d1
+0167       x(c1(1,k),c1(2,k))=t(1,k);
+0168       x(c1(1,k),c1(2,k)+n)=t(3,k);
+0169       x(c1(1,k)+n,c1(2,k))=t(2,k);
+0170       x(c1(1,k)+n,c1(2,k)+n)=t(4,k);
+0171    <span class="keyword">end</span>      
+0172    <span class="keyword">for</span> k=0:m-1
+0173       kk1=2+2*k;
+0174       kk2=1+2*k;
+0175       s1=x(kk1,kk1)+x(kk1+n,kk1);
+0176       s2=x(kk1,kk1)-x(kk1+n,kk1);
+0177       x(kk1,kk1)=rt2*s1;
+0178       x(kk1+n,kk1)=rt2*s2;
+0179    <span class="keyword">end</span>
+0180    <span class="keyword">for</span> k=0:m/2-1
+0181       k1=2+2*k;
+0182       kk1=n/2+k1;
+0183       r1=x(k1,kk1)+x(k1+n,kk1+n);
+0184       r2=x(k1,kk1)-x(k1+n,kk1+n);
+0185       x(k1,kk1)=rt2*r1;
+0186       x(k1+n,kk1+n)=rt2*r2;
+0187       r1=x(kk1,k1)+x(kk1+n,k1+n);
+0188       r2=x(kk1,k1)-x(kk1+n,k1+n);
+0189       x(kk1,k1)=rt2*r1;
+0190       x(kk1+n,k1+n)=rt2*r2;
+0191    <span class="keyword">end</span>   
+0192 <span class="comment">%</span>
+0193    <span class="keyword">for</span> k2=0:m-1
+0194       kk2=1+2*k2;
+0195       <span class="keyword">for</span> k1=0:m-1
+0196          kk1=1+2*k1;
+0197          <span class="keyword">if</span> (k1 ~= k2)
+0198             s1=x(kk1,kk2)+x(kk1,kk2+n);
+0199             s2=x(kk1,kk2)-x(kk1,kk2+n);
+0200             x(kk1,kk2)=rt2*s1;
+0201             x(kk1,kk2+n)=rt2*s2;
+0202          <span class="keyword">end</span>
+0203       <span class="keyword">end</span>
+0204    <span class="keyword">end</span>   
+0205 <span class="keyword">end</span>
+0206 <span class="comment">%</span>
+0207 y(1:n,1:n)=(1/n)*fft2(x(1:n,1:n));
+0208 y(1+n:n2,1:n)=(1/n)*fft2(x(1+n:n2,1:n));
+0209 y(1:n,1+n:n2)=(1/n)*fft2(x(1:n,1+n:n2));
+0210 y(1+n:n2,1+n:n2)=(1/n)*fft2(x(1+n:n2,1+n:n2));
+0211 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

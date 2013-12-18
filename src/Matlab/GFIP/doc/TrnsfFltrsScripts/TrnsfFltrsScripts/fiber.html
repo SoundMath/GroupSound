@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of fiber</title>
+  <meta name="keywords" content="fiber">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; fiber.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>fiber
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=128;
+0003 n2=n*2;
+0004 orgn=1;
+0005 <span class="comment">%</span>
+0006 A=imread(<span class="string">'fiber.bmp'</span>);
+0007 <span class="comment">%B=double(A(43:534,1:648));</span>
+0008 B=double(A(54:309,11:266));
+0009 <span class="comment">%spg=pg(1341:1596,1157:1412);</span>
+0010 <span class="comment">%spg=double(spg);</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%nn2_22</span>
+0013 [11 12 13 14 15 18 19 23 29 31]
+0014 [103 104 201 202 203]
+0015 <span class="comment">%12 (R22 X A29)</span>
+0016 <span class="comment">%18 (A71 x A23)</span>
+0017 <span class="comment">%104 (A12 X A30)</span>
+0018 <span class="comment">%201 [1 0;0 -1],[1 0;N/2 1]</span>
+0019 <span class="comment">%202 [1 0;N/2 N/2-1],[1 N/2;N/2 1]</span>
+0020 <span class="comment">%203 [-1 0;0 1],[N/2+1 N/2;N/2 1]</span>
+0021 <span class="comment">%</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%nn2_4</span>
+0024 <span class="comment">%[1 2 11 12 21 22 23 24]</span>
+0025 gp1=input(<span class="string">'input the group number    '</span>)
+0026 [x1,x21,x22,x23,x4]=nn2_22(B,n,gp1,orgn);
+0027 xx1=real(inn2_22(x1,n,gp1,orgn));
+0028 xx21=real(inn2_22(x21,n,gp1,orgn));
+0029 xx22=real(inn2_22(x22,n,gp1,orgn));
+0030 xx23=real(inn2_22(x23,n,gp1,orgn));
+0031 xx4=real(inn2_22(x4,n,gp1,orgn));
+0032 <span class="comment">%</span>
+0033 subplot(3,2,1),imagesc(B)
+0034 subplot(3,2,2),imagesc(xx1)
+0035 subplot(3,2,3),imagesc(xx21)
+0036 subplot(3,2,4),imagesc(xx22)
+0037 subplot(3,2,5),imagesc(xx23)
+0038 subplot(3,2,6),imagesc(xx4)
+0039 <span class="comment">%</span>
+0040 <span class="comment">%[x1,x2,x4]=nn2_4(B,n,gp1);</span>
+0041 <span class="comment">%xx1=real(inn2_4(x1,n,gp1));</span>
+0042 <span class="comment">%xx2=real(inn2_4(x2,n,gp1));</span>
+0043 <span class="comment">%xx22=real(inn2_22(x22,n,gp1,orgn));</span>
+0044 <span class="comment">%xx23=real(inn2_22(x23,n,gp1,orgn));</span>
+0045 <span class="comment">%xx4=real(inn2_4(x4,n,gp1));</span>
+0046 <span class="comment">%</span>
+0047 <span class="comment">%subplot(2,2,1),imagesc(B)</span>
+0048 <span class="comment">%subplot(2,2,2),imagesc(xx1)</span>
+0049 <span class="comment">%subplot(2,2,3),imagesc(xx2)</span>
+0050 <span class="comment">%subplot(3,2,4),imagesc(xx22)</span>
+0051 <span class="comment">%subplot(3,2,5),imagesc(xx23)</span>
+0052 <span class="comment">%subplot(2,2,4),imagesc(xx4)</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

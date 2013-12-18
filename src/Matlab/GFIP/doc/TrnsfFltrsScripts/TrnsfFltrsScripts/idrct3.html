@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of idrct3</title>
+  <meta name="keywords" content="idrct3">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; idrct3.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>idrct3
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=idrct3(x,nx,ny) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+ s2_4xn2_2 
+ Use this for 2^n x 2M</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="dsum4.html" class="code" title="">dsum4</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=idrct3(x,nx,ny)</a>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% s2_4xn2_2</span>
+0004 <span class="comment">% Use this for 2^n x 2M</span>
+0005 <span class="comment">%</span>
+0006 ny2=ny+ny;
+0007 ny3=ny2+ny;
+0008 ny4=ny3+ny;
+0009 my2=ny/2;
+0010 my4=ny/4;
+0011 rt2=1/sqrt(2);
+0012 <span class="comment">%</span>
+0013 nx2=nx+nx;
+0014 nx3=nx2+nx;
+0015 nx4=nx3+nx;
+0016 mx2=nx/2;
+0017 mx4=nx/4;
+0018 <span class="comment">%</span>
+0019 <span class="keyword">for</span> ky=1:ny4
+0020    <span class="keyword">for</span> k=1:mx4-1
+0021       k2=1+2*k;
+0022       t1=x(k2,ky)+x(k2+nx2,ky);
+0023       t2=x(k2,ky)-x(k2+nx2,ky);
+0024       x(k2,ky)=rt2*t1;
+0025       x(k2+nx2,ky)=rt2*t2;
+0026       t1=x(k2+mx2,ky)+x(k2+mx2+nx2,ky);
+0027       t2=x(k2+mx2,ky)-x(k2+mx2+nx2,ky);
+0028       x(k2+mx2,ky)=rt2*t1;
+0029       x(k2+mx2+nx2,ky)=rt2*t2;
+0030    <span class="keyword">end</span>   
+0031    t1=x(1,ky)+x(1+nx2,ky);
+0032    t2=x(1,ky)-x(1+nx2,ky);
+0033    t3=x(1+nx,ky)+x(1+nx3,ky);
+0034    t4=-i*(x(1+nx,ky)-x(1+nx3,ky));
+0035    x(1,ky) =.5*(t1+t3);
+0036    x(1+nx,ky) =.5*(t2+t4);
+0037    x(1+nx2,ky)=.5*(t1-t3);
+0038    x(1+nx3,ky)=.5*(t2-t4);
+0039 <span class="comment">%</span>
+0040    t1=x(1+mx2,ky)  +x(1+mx2+nx2,ky);
+0041    t2=x(1+mx2,ky)  -x(1+mx2+nx2,ky);
+0042    t3=x(1+mx2+nx,ky)+x(1+mx2+nx3,ky);
+0043    t4=-i*(x(1+mx2+nx,ky)-x(1+mx2+nx3,ky));
+0044    x(1+mx2,ky)   =.5*(t1+t3);
+0045    x(1+mx2+nx,ky) =.5*(t2+t4);
+0046    x(1+mx2+nx2,ky)=.5*(t1-t3);
+0047    x(1+mx2+nx3,ky)=.5*(t2-t4);
+0048 <span class="keyword">end</span>
+0049 <span class="comment">%</span>
+0050 x(1:nx,1:ny4)=1/sqrt(nx)*fft(x(1:nx,1:ny4));
+0051 x(1+nx:nx2,1:ny4)=1/sqrt(nx)*fft(x(1+nx:nx2,1:ny4));
+0052 x(1+nx2:nx3,1:ny4)=1/sqrt(nx)*fft(x(1+nx2:nx3,1:ny4));
+0053 x(1+nx3:nx4,1:ny4)=1/sqrt(nx)*fft(x(1+nx3:nx4,1:ny4));
+0054 <span class="comment">%</span>
+0055 tx=x.';
+0056 <span class="comment">%</span>
+0057 <span class="keyword">for</span> kx=1:nx4
+0058    <span class="keyword">for</span> k=1:my4-1
+0059       k2=1+2*k;
+0060       t1=tx(k2,kx)+tx(k2+ny2,kx);
+0061       t2=tx(k2,kx)-tx(k2+ny2,kx);
+0062       tx(k2,kx)=rt2*t1;
+0063       tx(k2+ny2,kx)=rt2*t2;
+0064       t1=tx(k2+my2,kx)+tx(k2+my2+ny2,kx);
+0065       t2=tx(k2+my2,kx)-tx(k2+my2+ny2,kx);
+0066       tx(k2+my2,kx)=rt2*t1;
+0067       tx(k2+my2+ny2,kx)=rt2*t2;
+0068    <span class="keyword">end</span>   
+0069    t1=tx(1,kx)+tx(1+ny2,kx);
+0070    t2=tx(1,kx)-tx(1+ny2,kx);
+0071    t3=tx(1+ny,kx)+tx(1+ny3,kx);
+0072    t4=-i*(tx(1+ny,kx)-tx(1+ny3,kx));
+0073    tx(1,kx) =.5*(t1+t3);
+0074    tx(1+ny,kx) =.5*(t2+t4);
+0075    tx(1+ny2,kx)=.5*(t1-t3);
+0076    tx(1+ny3,kx)=.5*(t2-t4);
+0077 <span class="comment">%</span>
+0078    t1=tx(1+my2,kx)  +tx(1+my2+ny2,kx);
+0079    t2=tx(1+my2,kx)  -tx(1+my2+ny2,kx);
+0080    t3=tx(1+my2+ny,kx)+tx(1+my2+ny3,kx);
+0081    t4=-i*(tx(1+my2+ny,kx)-tx(1+my2+ny3,kx));
+0082    tx(1+my2,kx)   =.5*(t1+t3);
+0083    tx(1+my2+ny,kx) =.5*(t2+t4);
+0084    tx(1+my2+ny2,kx)=.5*(t1-t3);
+0085    tx(1+my2+ny3,kx)=.5*(t2-t4);
+0086 <span class="keyword">end</span>
+0087 <span class="comment">%</span>
+0088 tx(1:ny,1:nx4)=1/sqrt(nx)*fft(tx(1:ny,1:nx4));
+0089 tx(1+ny:ny2,1:nx4)=1/sqrt(nx)*fft(tx(1+ny:ny2,1:nx4));
+0090 tx(1+ny2:ny3,1:nx4)=1/sqrt(nx)*fft(tx(1+ny2:ny3,1:nx4));
+0091 tx(1+ny3:ny4,1:nx4)=1/sqrt(nx)*fft(tx(1+ny3:ny4,1:nx4));
+0092 <span class="comment">%</span>
+0093 <span class="comment">%</span>
+0094 y=tx.';</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

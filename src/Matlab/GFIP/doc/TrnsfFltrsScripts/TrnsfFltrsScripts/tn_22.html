@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tn_22</title>
+  <meta name="keywords" content="tn_22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; tn_22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>tn_22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="gn_22.html" class="code" title="function y=gn_22(u);">gn_22</a>	</li><li><a href="in_22.html" class="code" title="function y=in_22(x)">in_22</a>	</li><li><a href="n_22.html" class="code" title="function [y1,y2,y4]=n_22(x)">n_22</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=8;
+0003 n2=n+n;
+0004 n4=n2+n2;
+0005 m=n/2;
+0006 u=rand(n4,1);
+0007 v=rand(n4,1);
+0008 <span class="comment">%</span>
+0009 [x1,x2,x4]=<a href="n_22.html" class="code" title="function [y1,y2,y4]=n_22(x)">n_22</a>(u);
+0010 xx1=<a href="in_22.html" class="code" title="function y=in_22(x)">in_22</a>(x1);
+0011 xx2=<a href="in_22.html" class="code" title="function y=in_22(x)">in_22</a>(x2);
+0012 xx4=<a href="in_22.html" class="code" title="function y=in_22(x)">in_22</a>(x4);
+0013 <span class="comment">%</span>
+0014 uu=<a href="gn_22.html" class="code" title="function y=gn_22(u);">gn_22</a>(u);
+0015 y=uu*v;
+0016 <span class="comment">%</span>
+0017 <span class="comment">%yy=cn_22(u,v);</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">% convolution theorem</span>
+0020 <span class="keyword">for</span> k=1:n4
+0021    [f1,ftwo,f4]=<a href="n_22.html" class="code" title="function [y1,y2,y4]=n_22(x)">n_22</a>(uu(:,k));
+0022    fu(:,k)=f1+ftwo+f4;
+0023 <span class="keyword">end</span>   
+0024 fut=fu';
+0025 <span class="keyword">for</span> k=1:n4
+0026    [f1,ftwo,f4]=<a href="n_22.html" class="code" title="function [y1,y2,y4]=n_22(x)">n_22</a>(fut(:,k));
+0027    ffu(:,k)=f1+ftwo+f4;
+0028 <span class="keyword">end</span>
+0029 fuf=ffu';
+0030 [fv1,fv2,fv4]=<a href="n_22.html" class="code" title="function [y1,y2,y4]=n_22(x)">n_22</a>(v);
+0031 fv=fv1+fv2+fv4;
+0032 dd=fuf*fv;
+0033 c2=<a href="in_22.html" class="code" title="function y=in_22(x)">in_22</a>(dd);
+0034 <span class="comment">%</span>
+0035 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

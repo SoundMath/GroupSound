@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of nxnx3</title>
+  <meta name="keywords" content="nxnx3">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; nxnx3.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>nxnx3
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=8;
+0003 nn=n*n;
+0004 nn2=2*nn;
+0005 rt3=sqrt(3);
+0006 w=exp(-2*pi*i/3);
+0007 w2=w*w;
+0008 m=nn*3;
+0009 b=zeros(m,m);
+0010 c=conj(fft(eye(n,n)));
+0011 cc=kron(c,c);
+0012 b(1:nn,1:nn)=cc;
+0013 b(nn+1:nn2,nn+1:nn2)=cc;
+0014 b(nn2+1:m,nn2+1:m)=cc;
+0015 b(1,:)=1.0;
+0016 b(nn+1,1:nn)=1.0;
+0017 b(nn+1,nn+1:nn2)=w;
+0018 b(nn+1,nn2+1:m)=w2;
+0019 b(nn2+1,1:nn)=1.0;
+0020 b(nn2+1,nn+1:nn2)=w2;
+0021 b(nn2+1,nn2+1:m)=w;
+0022 b(1,:)=(1/rt3)*b(1,:);
+0023 b(nn+1,:)=(1/rt3)*b(nn+1,:);
+0024 b(nn2+1,:)=(1/rt3)*b(nn2+1,:);
+0025 b=(1/n)*b;</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

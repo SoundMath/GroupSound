@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ihh6</title>
+  <meta name="keywords" content="ihh6">
+  <meta name="description" content="n must be a multiple of 3">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; ihh6.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ihh6
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>n must be a multiple of 3</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=ihh6(x,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> n must be a multiple of 3</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=ihh6(x,gp)</a>
+0002 <span class="comment">% n must be a multiple of 3</span>
+0003 [n,tem]=size(x);
+0004 n2=n+n;
+0005 n3=n2+n;
+0006 n4=n3+n;
+0007 n5=n4+n;
+0008 n6=n5+n;
+0009 nd3=n/3;
+0010 nd2=n/2;
+0011 y=x;
+0012 <span class="comment">%</span>
+0013 <span class="keyword">if</span> (gp==1) <span class="comment">% sdp [0 1; -1 1]</span>
+0014    d1=1;
+0015    c1(1,1)=1;
+0016    c1(2,1)=1;
+0017    d2=2;
+0018    c2(1,1)=nd3+1;
+0019    c2(2,1)=2*nd3+1;
+0020    c2(1,2)=2*nd3+1;
+0021    c2(2,2)=nd3+1;
+0022    d3=3;
+0023    c3(1,1)=1;
+0024    c3(2,1)=nd2+1;
+0025    c3(1,2)=nd2+1;
+0026    c3(2,2)=1;
+0027    c3(1,3)=nd2+1;
+0028    c3(2,3)=nd2+1;
+0029 <span class="keyword">end</span>   
+0030 <span class="comment">%</span>
+0031 <span class="keyword">if</span> (gp==2) <span class="comment">% [0 -1; 1 1]</span>
+0032    d1=1;
+0033    c1(1,1)=1;
+0034    c1(2,1)=1;
+0035    d2=2;
+0036    c2(1,1)=nd3+1;
+0037    c2(2,1)=nd3+1;
+0038    c2(1,2)=2*nd3+1;
+0039    c2(2,2)=2*nd3+1;
+0040    d3=3;
+0041    c3(1,1)=1;
+0042    c3(2,1)=nd2+1;
+0043    c3(1,2)=nd2+1;
+0044    c3(2,2)=1;
+0045    c3(1,3)=nd2+1;
+0046    c3(2,3)=nd2+1;
+0047 <span class="keyword">end</span>   
+0048 <span class="comment">%</span>
+0049 <span class="keyword">if</span> (gp==3 &amp; rem(n/3,4)==0) <span class="comment">% [-1 n/3+1;n/3-1 n/3]</span>
+0050    d1=3;
+0051    c1(1,1)=1;
+0052    c1(2,1)=1;
+0053    c1(1,2)=nd3+1;
+0054    c1(2,2)=nd3+1;
+0055    c1(1,3)=2*nd3+1;
+0056    c1(2,3)=2*nd3+1;
+0057    d2=6;
+0058    c2(1,1)=1;
+0059    c2(2,1)=nd3+1;
+0060    c2(1,2)=1;
+0061    c2(2,2)=2*nd3+1;
+0062    c2(1,3)=nd3+1;
+0063    c2(2,3)=1;
+0064    c2(1,4)=nd3+1;
+0065    c2(2,4)=2*nd3+1;
+0066    c2(1,5)=2*nd3+1;
+0067    c2(2,5)=1;
+0068    c2(1,6)=2*nd3+1;
+0069    c2(2,6)=nd3+1;
+0070    d3=n*nd3;
+0071    <span class="keyword">for</span> k1=0:n-1
+0072       kk=rem(k1,3);
+0073       <span class="keyword">for</span> k2=0:nd3-1
+0074          c3(1,1+k2+nd3*k1)=1+k1;
+0075          c3(2,1+k2+nd3*k1)=1+kk+3*k2;
+0076       <span class="keyword">end</span>   
+0077    <span class="keyword">end</span>   
+0078 <span class="keyword">end</span>   
+0079 <span class="keyword">if</span> (gp==3 &amp; rem(n/3,4)==2) <span class="comment">% [-1 n/3+1;n/3-1 n/3]</span>
+0080    d1=1;
+0081    c1(1,1)=1;
+0082    c1(2,1)=1;
+0083    d2=2;
+0084    c2(1,1)=1;
+0085    c2(2,1)=nd3;
+0086    c2(1,2)=1;
+0087    c2(2,2)=2*nd3+1;
+0088    d3=nd3*nd3;
+0089    <span class="keyword">for</span> k1=0:nd3-1
+0090       <span class="keyword">for</span> k2=0:nd3-1
+0091          c3(1,1+k2+nd3*k1)=1+3*k1;
+0092          c3(2,1+k2+nd3*k1)=1+3*k2;
+0093       <span class="keyword">end</span>   
+0094    <span class="keyword">end</span>   
+0095 <span class="keyword">end</span>   
+0096 <span class="comment">%</span>
+0097 <span class="keyword">if</span> (gp==4 &amp; rem(n/3,4)==0) <span class="comment">% [n/2-1 n/3-1;n/3+1 n/3];</span>
+0098    d1=3;
+0099    c1(1,1)=1;
+0100    c1(2,1)=1;
+0101    c1(1,2)=1;
+0102    c1(2,2)=nd3+1;
+0103    c1(1,3)=1;
+0104    c1(2,3)=2*nd3+1;
+0105    d2=6;
+0106    c2(1,1)=nd3+1;
+0107    c2(2,1)=1;
+0108    c2(1,2)=nd3+1;
+0109    c2(2,2)=nd3+1;
+0110    c2(1,3)=nd3+1;
+0111    c2(2,3)=2*nd3+1;
+0112    c2(1,4)=2*nd3+1;
+0113    c2(2,4)=1;
+0114    c2(1,5)=2*nd3+1;
+0115    c2(2,5)=nd3+1;
+0116    c2(1,6)=2*nd3+1;
+0117    c2(2,6)=2*nd3+1;
+0118    d3=n*n/12;
+0119    <span class="keyword">for</span> k1=0:n/6-1
+0120       <span class="keyword">for</span> k2=0:n/2-1
+0121          c3(1,1+k2+(n/2)*k1)=6*k1+1;
+0122          c3(2,1+k2+(n/2)*k1)=2*k2+1;
+0123       <span class="keyword">end</span>
+0124    <span class="keyword">end</span>   
+0125 <span class="keyword">end</span>
+0126 <span class="keyword">if</span> (gp==4 &amp; rem(n/3,4)==0) <span class="comment">% [n/2-1 n/3-1;n/3+1 n/3];</span>
+0127    d1=1;
+0128    c1(1,1)=1;
+0129    c1(2,1)=1;
+0130    d2=2;
+0131    c2(1,1)=nd3+1;
+0132    c2(2,1)=1;
+0133    c2(1,2)=2*nd3+1;
+0134    c2(2,2)=1;
+0135    d3=(n/6)*(n/6)
+0136    <span class="keyword">for</span> k1=0:n/6-1
+0137       <span class="keyword">for</span> k2=0:n/6-1
+0138          c3(1,1+k2+(n/6)*k1)=6*k1+1;
+0139          c3(2,1+k2+(n/6)*k1)=6*k2+1;
+0140       <span class="keyword">end</span>
+0141    <span class="keyword">end</span>      
+0142 <span class="keyword">end</span>
+0143 <span class="comment">%</span>
+0144 <span class="comment">%</span>
+0145 <span class="comment">%</span>
+0146 <span class="keyword">for</span> k=1:d3
+0147    t3(1,k)=x(c3(1,k),c3(2,k));
+0148    t3(2,k)=x(c3(1,k),c3(2,k)+n3);
+0149    s3(1,k)=x(c3(1,k),c3(2,k)+n);
+0150    s3(2,k)=x(c3(1,k),c3(2,k)+n4);
+0151    r3(1,k)=x(c3(1,k),c3(2,k)+n2);
+0152    r3(2,k)=x(c3(1,k),c3(2,k)+n5);
+0153 <span class="keyword">end</span>
+0154 t3=(1/sqrt(2))*fft(t3);
+0155 s3=(1/sqrt(2))*fft(s3);
+0156 r3=(1/sqrt(2))*fft(r3);
+0157 <span class="keyword">for</span> k=1:d3
+0158    y(c3(1,k),c3(2,k))=t3(1,k);
+0159    y(c3(1,k),c3(2,k)+n3)=t3(2,k);
+0160    y(c3(1,k),c3(2,k)+n)=s3(1,k);
+0161    y(c3(1,k),c3(2,k)+n4)=s3(2,k);
+0162    y(c3(1,k),c3(2,k)+n2)=r3(1,k);
+0163    y(c3(1,k),c3(2,k)+n5)=r3(2,k);
+0164 <span class="keyword">end</span>
+0165 <span class="keyword">for</span> k=1:d2
+0166    t2(1,k)=x(c2(1,k),c2(2,k));
+0167    t2(2,k)=x(c2(1,k),c2(2,k)+n2);
+0168    t2(3,k)=x(c2(1,k),c2(2,k)+n4);
+0169    s2(1,k)=x(c2(1,k),c2(2,k)+n);
+0170    s2(2,k)=x(c2(1,k),c2(2,k)+n3);
+0171    s2(3,k)=x(c2(1,k),c2(2,k)+n5);
+0172 <span class="keyword">end</span>   
+0173 t2=(1/sqrt(3))*fft(t2);
+0174 s2=(1/sqrt(3))*fft(s2);
+0175 <span class="keyword">for</span> k=1:d2
+0176    k1=c2(1,k);
+0177    k2=c2(2,k);
+0178    y(k1,k2)=t2(1,k);
+0179    y(k1,k2+n2)=t2(2,k);
+0180    y(k1,k2+n4)=t2(3,k);
+0181    y(k1,k2+n)=s2(1,k);
+0182    y(k1,k2+n3)=s2(2,k);
+0183    y(k1,k2+n5)=s2(3,k);
+0184 <span class="keyword">end</span>
+0185 <span class="keyword">for</span> k=1:d1
+0186    t1(1,k)=x(c1(1,k),c1(2,k));
+0187    t1(2,k)=x(c1(1,k),c1(2,k)+n);
+0188    t1(3,k)=x(c1(1,k),c1(2,k)+n2);
+0189    t1(4,k)=x(c1(1,k),c1(2,k)+n3);
+0190    t1(5,k)=x(c1(1,k),c1(2,k)+n4);
+0191    t1(6,k)=x(c1(1,k),c1(2,k)+n5);
+0192 <span class="keyword">end</span>   
+0193 t1=(1/sqrt(6))*fft(t1);
+0194 <span class="keyword">for</span> k=1:d1
+0195    y(c1(1,k),c1(2,k))=t1(1,k);
+0196    y(c1(1,k),c1(2,k)+n)=t1(2,k);
+0197    y(c1(1,k),c1(2,k)+n2)=t1(3,k);
+0198    y(c1(1,k),c1(2,k)+n3)=t1(4,k);
+0199    y(c1(1,k),c1(2,k)+n4)=t1(5,k);
+0200    y(c1(1,k),c1(2,k)+n5)=t1(6,k);
+0201 <span class="keyword">end</span>   
+0202 <span class="comment">%</span>
+0203 <span class="comment">%</span>
+0204 <span class="keyword">for</span> k=1:6
+0205    y(1:n,1+(k-1)*n:k*n)=(1/n)*fft2(y(1:n,1+(k-1)*n:k*n));
+0206 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

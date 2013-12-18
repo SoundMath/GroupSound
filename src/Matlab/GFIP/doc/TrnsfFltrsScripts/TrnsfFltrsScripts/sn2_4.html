@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of sn2_4</title>
+  <meta name="keywords" content="sn2_4">
+  <meta name="description" content="function [y1,y2,y4]=sn2_4(x,n)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; sn2_4.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>sn2_4
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [y1,y2,y4]=sn2_4(x,n)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">function [y1,y2,y4]=sn2_4(x,n)
+ Use this for even n:
+ (C_n x C_n) sdp C_4</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>	n must be a multiple of 4</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%function [y1,y2,y4]=sn2_4(x,n)</span>
+0002 <span class="comment">% Use this for even n:</span>
+0003 <span class="comment">% (C_n x C_n) sdp C_4</span>
+0004 clear;
+0005 n=8;
+0006 nn=n*n;
+0007 nn2=nn+nn;
+0008 nn3=nn2+nn;
+0009 nn4=nn3+nn;
+0010 n2=n+n;
+0011 m=n/2;
+0012 rt2=1/sqrt(2);
+0013 <span class="comment">%</span>
+0014 f=ifft(eye(n));
+0015 ff=n*kron(f,f);
+0016 <span class="comment">%</span>
+0017 bf(1:nn,1:nn)=ff;
+0018 bf(1+nn:nn2,1+nn:nn2)=ff;
+0019 bf(1+nn2:nn3,1+nn2:nn3)=ff;
+0020 bf(1+nn3:nn4,1+nn3:nn4)=ff;
+0021 <span class="comment">%</span>
+0022 <span class="comment">% 1-d idempotents</span>
+0023 x(1,1:nn)=.5*bf(1,1:nn);
+0024 bf(1,1:nn)     =x;
+0025 bf(1,1+nn:nn2) =x;
+0026 bf(1,1+nn2:nn3)=x;
+0027 bf(1,1+nn3:nn4)=x;
+0028 bf(1+nn,1:nn)     =   x;
+0029 bf(1+nn,1+nn:nn2) = i*x;
+0030 bf(1+nn,1+nn2:nn3)=  -x;
+0031 bf(1+nn,1+nn3:nn4)=-i*x;
+0032 bf(1+nn2,1:nn)     = x;
+0033 bf(1+nn2,1+nn:nn2) =-x;
+0034 bf(1+nn2,1+nn2:nn3)= x;
+0035 bf(1+nn2,1+nn3:nn4)=-x;
+0036 bf(1+nn3,1:nn)     =   x;
+0037 bf(1+nn3,1+nn:nn2) =-i*x;
+0038 bf(1+nn3,1+nn2:nn3)=  -x;
+0039 bf(1+nn3,1+nn3:nn4)= i*x;
+0040 <span class="comment">%</span>
+0041 x=.5*bf(1+m+m*n,1:nn);
+0042 bf(1+m+m*n,1:nn)     =x; 
+0043 bf(1+m+m*n,1+nn:nn2) =x;
+0044 bf(1+m+m*n,1+nn2:nn3)=x;
+0045 bf(1+m+m*n,1+nn3:nn4)=x;
+0046 bf(1+m+m*n+nn,1:nn)     =   x;
+0047 bf(1+m+m*n+nn,1+nn:nn2) = i*x;
+0048 bf(1+m+m*n+nn,1+nn2:nn3)=  -x;
+0049 bf(1+m+m*n+nn,1+nn3:nn4)=-i*x;
+0050 bf(1+m+m*n+nn2,1:nn)     = x;
+0051 bf(1+m+m*n+nn2,1+nn:nn2) =-x;
+0052 bf(1+m+m*n+nn2,1+nn2:nn3)= x;
+0053 bf(1+m+m*n+nn2,1+nn3:nn4)=-x;
+0054 bf(1+m+m*n+nn3,1:nn)     =   x;
+0055 bf(1+m+m*n+nn3,1+nn:nn2) =-i*x;
+0056 bf(1+m+m*n+nn3,1+nn2:nn3)=  -x;
+0057 bf(1+m+m*n+nn3,1+nn3:nn4)= i*x;
+0058 <span class="comment">%</span>
+0059 <span class="comment">% 2-d idempotents</span>
+0060 x=rt2*bf(1+m*n,1:nn);
+0061 bf(1+m*n,1:nn)         = x;
+0062 bf(1+m*n,1+nn2:nn3)    = x;
+0063 bf(1+m*n+nn2,1:nn)     = x;
+0064 bf(1+m*n+nn2,1+nn2:nn3)=-x;
+0065 x=rt2*bf(1+m,1:nn);
+0066 bf(1+m,1:nn)         = x;
+0067 bf(1+m,1+nn2:nn3)    = x;
+0068 bf(1+m+nn2,1:nn)     = x;
+0069 bf(1+m+nn2,1+nn2:nn3)=-x;
+0070 <span class="comment">%</span>
+0071 xx(1:n2,1:n2)=rand(n2,n2);
+0072 x1=xx(1:n,1:n);
+0073 x2=xx(1+n:n2,1:n);
+0074 x3=xx(1:n,1+n:n2);
+0075 x4=xx(1+n:n2,1+n:n2);
+0076 y(1:nn,1)=reshape(x1,nn,1);
+0077 y(1+nn:nn2,1)=reshape(x2,nn,1);
+0078 y(1+nn2:nn3,1)=reshape(x3,nn,1);
+0079 y(1+nn3:nn4,1)=reshape(x4,nn,1);
+0080 <span class="comment">%</span>
+0081 <span class="comment">% filtering by dimensionality</span>
+0082 by=bf*y;
+0083 id1=zeros(nn4,1);
+0084 id2=zeros(nn4,1);
+0085 id4=zeros(nn4,1);
+0086 id1(1,1)=by(1);
+0087 id1(1+nn,1)=by(1+nn);
+0088 id1(1+nn2,1)=by(1+nn2);
+0089 id1(1+nn3,1)=by(1+nn3);
+0090 <span class="comment">%</span>
+0091 id1(1+m+m*n,1)=by(1+m+m*n); 
+0092 id1(1+m+m*n+nn,1)=by(1+m+m*n+nn);
+0093 id1(1+m+m*n+nn2,1)=by(1+m+m*n+nn2);
+0094 id1(1+m+m*n+nn3,1)=by(1+m+m*n+nn3);
+0095 idd1(1:n,1:n)=reshape(id1(1:nn,1),n,n);
+0096 idd1(1+n:n2,1:n)=reshape(id1(1+nn:nn2,1),n,n);
+0097 idd1(1:n,1+n:n2)=reshape(id1(1+nn2:nn3,1),n,n);
+0098 idd1(1+n:n2,1+n:n2)=reshape(id1(1+nn3:nn4,1),n,n);
+0099 <span class="comment">%</span>
+0100 id2(1+m*n,1)=by(1+m*n);
+0101 id2(1+m*n+nn2,1)=by(1+m*n+nn2);
+0102 id2(1+m,1)=by(1+m);
+0103 id2(1+m+nn2,1)=by(1+m+nn2);
+0104 <span class="comment">%</span>
+0105 idd2(1:n,1:n)=reshape(id2(1:nn,1),n,n);
+0106 idd2(1+n:n2,1:n)=reshape(id2(1+nn:nn2,1),n,n);
+0107 idd2(1:n,1+n:n2)=reshape(id2(1+nn2:nn3,1),n,n);
+0108 idd2(1+n:n2,1+n:n2)=reshape(id2(1+nn3:nn4,1),n,n);
+0109 <span class="comment">%</span>
+0110 [fs1,fs2,fs4]=<a href="nn2_4.html" class="code" title="function [y1,y2,y4]=nn2_4(x,n,gp)">nn2_4</a>(xx,n);
+0111 <span class="comment">%</span>
+0112 bk1=bf'*id1;
+0113 bb1(1:n,1:n)=reshape(bk1(1:nn,1),n,n);
+0114 bb1(1+n:n2,1:n)=reshape(bk1(1+nn:nn2,1),n,n);
+0115 bb1(1:n,1+n:n2)=reshape(bk1(1+nn2:nn3,1),n,n);
+0116 bb1(1+n:n2,1+n:n2)=reshape(bk1(1+nn3:nn4,1),n,n);
+0117 <span class="comment">%</span>
+0118 fst1=ppt(fs1,n);
+0119 <span class="comment">%</span>
+0120 bk2=bf'*id2;
+0121 bb2(1:n,1:n)=reshape(bk2(1:nn,1),n,n);
+0122 bb2(1+n:n2,1:n)=reshape(bk2(1+nn:nn2,1),n,n);
+0123 bb2(1:n,1+n:n2)=reshape(bk2(1+nn2:nn3,1),n,n);
+0124 bb2(1+n:n2,1+n:n2)=reshape(bk2(1+nn3:nn4,1),n,n);
+0125 <span class="comment">%</span>
+0126 fst2=ppt(fs2,n);
+0127 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of nn_22_2</title>
+  <meta name="keywords" content="nn_22_2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; nn_22_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>nn_22_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [y1,y21,y22,y41,y42,y43,y44,y8]=nn_22_2(x,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ee_22_2.html" class="code" title="">ee_22_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [y1,y21,y22,y41,y42,y43,y44,y8]=nn_22_2(x,gp)</a>
+0002 [n4,tem]=size(x);
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Use this routine for powers of 2.</span>
+0005 <span class="comment">% (CN X CN) sdp ((C2 X C2) sdp C2)</span>
+0006 <span class="comment">%</span>
+0007 n=n4/4;
+0008 n2=n+n;
+0009 n3=n2+n;
+0010 n4=n3+n;
+0011 nd2=n/2;
+0012 nd4=n/4;
+0013 nd8=n/8;
+0014 rt2=1/sqrt(2);
+0015 rtn=sqrt(n);
+0016 y1=zeros(n4,n2);
+0017 y21=zeros(n4,n2);
+0018 y22=zeros(n4,n2);
+0019 y41=zeros(n4,n2);
+0020 y42=zeros(n4,n2);
+0021 y43=zeros(n4,n2);
+0022 y44=zeros(n4,n2);
+0023 y8=zeros(n4,n2);
+0024 <span class="comment">%</span>
+0025 bf(1:n,1:n)=n*ifft2(x(1:n,1:n));
+0026 bf(1+n:n2,1:n)=n*ifft2(x(1+n:n2,1:n));
+0027 bf(1+n2:n3,1:n)=n*ifft2(x(1+n2:n3,1:n));
+0028 bf(1+n3:n4,1:n)=n*ifft2(x(1+n3:n4,1:n));
+0029 bf(1:n,1+n:n2)=n*ifft2(x(1:n,1+n:n2));
+0030 bf(1+n:n2,1+n:n2)=n*ifft2(x(1+n:n2,1+n:n2));
+0031 bf(1+n2:n3,1+n:n2)=n*ifft2(x(1+n2:n3,1+n:n2));
+0032 bf(1+n3:n4,1+n:n2)=n*ifft2(x(1+n3:n4,1+n:n2));
+0033 <span class="comment">%</span>
+0034 <span class="keyword">if</span> (gp == 1)
+0035    d1=nd2;
+0036    d21=nd2;
+0037    d22=nd2*nd2-nd2;
+0038    d41=nd2;
+0039    d42=nd2;
+0040    d43=nd2*nd2;
+0041    d44=nd2*nd2;
+0042    <span class="keyword">for</span> k1=0:nd4-1
+0043       c1(1,k1+1)=4*k1+1;
+0044       c1(2,k1+1)=2*k1+1;
+0045       c1(1,k1+nd4+1)=4*k1+1;
+0046       c1(2,k1+nd4+1)=2*k1+nd2+1;
+0047       <span class="keyword">for</span> k2=0:2*k1-1
+0048          c22(1,k2+1+(nd2-1)*k1)=2*k2+1;
+0049          c22(2,k2+1+(nd2-1)*k1)=2*k1+1;
+0050          c22(1,k2+1+(nd2-1)*(k1+nd4))=2*k2+1;
+0051          c22(2,k2+1+(nd2-1)*(k1+nd4))=2*k1+nd2+1;
+0052       <span class="keyword">end</span>
+0053       <span class="keyword">for</span> k2=2*k1+1:nd2-1
+0054          c22(1,k2+(nd2-1)*k1)=2*k2+1;
+0055          c22(2,k2+(nd2-1)*k1)=2*k1+1;
+0056          c22(1,k2+(nd2-1)*(k1+nd4))=2*k2+1;
+0057          c22(2,k2+(nd2-1)*(k1+nd4))=2*k1+nd2+1;
+0058       <span class="keyword">end</span>   
+0059       c41(1,k1+1)=4*k1+3;
+0060       c41(2,k1+1)=2*k1+2;
+0061       c41(1,k1+1+nd4)=4*k1+3;
+0062       c41(2,k1+1+nd4)=2*k1+nd2+2;
+0063    <span class="keyword">end</span> 
+0064    <span class="keyword">for</span> k1=0:nd8-1
+0065       c42(1,k1+1)=nd2+4*k1+3;
+0066       c42(2,k1+1)=2*k1+2;
+0067       c42(1,k1+nd8+1)=4*k1+3;
+0068       c42(2,k1+nd8+1)=2*k1+nd4+2;
+0069       c42(1,k1+nd4+1)=nd2+4*k1+3;
+0070       c42(2,k1+nd4+1)=2*k1+nd2+2;
+0071       c42(1,k1+nd4+nd8+1)=4*k1+3;
+0072       c42(2,k1+nd4+nd8+1)=2*k1+nd2+nd4+2;
+0073    <span class="keyword">end</span>   
+0074    <span class="keyword">for</span> k1=0:nd2-1
+0075       <span class="keyword">for</span> k2=0:nd2-1
+0076          c43(1,k2+1+nd2*k1)=2*k2+2;
+0077          c43(2,k2+1+nd2*k1)=2*k1+1;
+0078          c44(1,k2+1+nd2*k1)=2*k2+2;
+0079          c44(2,k2+1+nd2*k1)=2*k1+2;
+0080       <span class="keyword">end</span>   
+0081    <span class="keyword">end</span>   
+0082 <span class="keyword">end</span>   
+0083 <span class="comment">% the H centralizer</span>
+0084 <span class="keyword">for</span> k=1:d1
+0085    k1=c1(1,k);
+0086    k2=c1(2,k);
+0087    t1(1,1)=bf(k1,k2)+bf(k1+n2,k2);
+0088    t1(2,1)=bf(k1+n,k2)+bf(k1+n3,k2);
+0089    t1(3,1)=bf(k1,k2)-bf(k1+n2,k2);
+0090    t1(4,1)=bf(k1+n,k2)-bf(k1+n3,k2);
+0091    t1(5,1)=bf(k1,k2+n)+bf(k1+n2,k2+n);
+0092    t1(6,1)=bf(k1+n,k2+n)+bf(k1+n3,k2+n);
+0093    t1(7,1)=bf(k1,k2+n)-bf(k1+n2,k2+n);
+0094    t1(8,1)=bf(k1+n,k2+n)-bf(k1+n3,k2+n);
+0095    <span class="comment">%</span>
+0096    tt1(1,1)=.5*(t1(1,1)+t1(2,1));
+0097    tt1(2,1)=.5*(t1(1,1)-t1(2,1));
+0098    tt1(3,1)=.5*(t1(3,1)+t1(4,1));
+0099    tt1(4,1)=.5*(t1(3,1)-t1(4,1));
+0100    <span class="comment">%</span>
+0101    tt2(1,1)=.5*(t1(5,1)+t1(6,1));
+0102    tt2(2,1)=.5*(t1(5,1)-t1(6,1));
+0103    tt2(3,1)=.5*(t1(7,1)+t1(8,1));
+0104    tt2(4,1)=.5*(t1(7,1)-t1(8,1));
+0105    <span class="comment">%</span>
+0106    bf(k1,k2)=rt2*(tt1(1)+tt2(1));
+0107    bf(k1+n2,k2)=rt2*(tt1(3)+tt2(3));
+0108    bf(k1,k2+n)=rt2*(tt1(1)-tt2(1));
+0109    bf(k1+n2,k2+n)=rt2*(tt1(3)-tt2(3));
+0110    y1(k1,k2)=bf(k1,k2);
+0111    y1(k1+n2,k2)=bf(k1+n2,k2);
+0112    y1(k1,k2+n)=bf(k1,k2+n);
+0113    y1(k1+n2,k2+n)=bf(k1+n2,k2+n);
+0114    <span class="comment">%</span>
+0115    bf(k1+n,k2)=tt1(2);
+0116    bf(k1+n3,k2)=tt1(4);
+0117    bf(k1+n,k2+n)=tt2(2);
+0118    bf(k1+n3,k2+n)=tt2(4);
+0119    y21(k1+n,k2)=tt1(2);
+0120    y21(k1+n3,k2)=tt1(4);
+0121    y21(k1+n,k2+n)=tt2(2);
+0122    y21(k1+n3,k2+n)=tt2(4);
+0123 <span class="keyword">end</span>
+0124 <span class="comment">%</span>
+0125 <span class="keyword">for</span> k=1:d22
+0126    k1=c22(1,k);
+0127    k2=c22(2,k);
+0128    t1=bf(k1,k2)+bf(k1+n2,k2);
+0129    t2=bf(k1,k2)-bf(k1+n2,k2);
+0130    t3=bf(k1+n,k2+n)+bf(k1+n3,k2+n);
+0131    t4=bf(k1+n,k2+n)-bf(k1+n3,k2+n);
+0132    bf(k1,k2)=.5*(t1+t3);
+0133    bf(k1+n2,k2)=.5*(t2+t4);
+0134    bf(k1+n,k2+n,1)=.5*(t1-t3);
+0135    bf(k1+n3,k2+n,1)=.5*(t2-t4);
+0136    y22(k1,k2)=bf(k1,k2);
+0137    y22(k1+n2,k2)=bf(k1+n2,k2);
+0138    y22(k1+n,k2+n)=bf(k1+n,k2+n);
+0139    y22(k1+n3,k2+n)=bf(k1+n3,k2+n);
+0140    
+0141    t1=bf(k1+n,k2)+bf(k1+n3,k2);
+0142    t2=bf(k1+n,k2)-bf(k1+n3,k2);
+0143    t3=bf(k1+n2,k2+n)+bf(k1,k2+n);
+0144    t4=bf(k1+n2,k2+n)-bf(k1,k2+n);
+0145    bf(k1+n,k2)=.5*(t1+t3);
+0146    bf(k1+n3,k2)=.5*(t2+t4);
+0147    bf(k1+n2,k2+n)=.5*(t1-t3);
+0148    bf(k1,k2+n)=.5*(t2-t4);
+0149    y22(k1+n,k2)=bf(k1+n,k2);
+0150    y22(k1+n3,k2)=bf(k1+n3,k2);
+0151    y22(k1+n2,k2+n)=bf(k1+n2,k2+n);
+0152    y22(k1,k2+n)=bf(k1,k2+n);
+0153 <span class="keyword">end</span>   
+0154 <span class="comment">%</span>
+0155 <span class="keyword">for</span> k=1:d41
+0156    k1=c41(1,k);
+0157    k2=c41(2,k);
+0158    t1=rt2*(bf(k1,k2)+bf(k1+n,k2+n));
+0159    t2=rt2*(bf(k1,k2)-bf(k1+n,k2+n));
+0160    bf(k1,k2)=t1;
+0161    bf(k1+n,k2+n)=t2;
+0162    y41(k1,k2)=t1;
+0163    y41(k1+n,k2+n)=t2;
+0164    <span class="comment">%</span>
+0165    t1=rt2*(bf(k1+n,k2)+bf(k1+n2,k2+n));
+0166    t2=rt2*(bf(k1+n,k2)-bf(k1+n2,k2+n));
+0167    bf(k1+n,k2)=t1;
+0168    bf(k1+n2,k2+n)=t2;
+0169    y41(k1+n,k2)=t1;
+0170    y41(k1+n2,k2+n)=t2;
+0171    <span class="comment">%</span>
+0172    t1=rt2*(bf(k1+n2,k2)+bf(k1+n3,k2+n));
+0173    t2=rt2*(bf(k1+n2,k2)-bf(k1+n3,k2+n));
+0174    bf(k1+n2,k2)=t1;
+0175    bf(k1+n3,k2+n)=t2;
+0176    y41(k1+n2,k2)=t1;
+0177    y41(k1+n3,k2+n)=t2;
+0178    <span class="comment">%</span>
+0179    t1=rt2*(bf(k1+n3,k2)+bf(k1,k2+n));
+0180    t2=rt2*(bf(k1+n3,k2)-bf(k1,k2+n));
+0181    bf(k1+n3,k2)=t1;
+0182    bf(k1,k2+n)=t2;
+0183    y41(k1+n3,k2)=t1;
+0184    y41(k1,k2+n)=t2;
+0185 <span class="keyword">end</span>   
+0186 <span class="keyword">for</span> k=1:d42
+0187    k1=c42(1,k);
+0188    k2=c42(2,k);
+0189    t1=rt2*(bf(k1,k2)+bf(k1+n3,k2+n));
+0190    t2=rt2*(bf(k1,k2)-bf(k1+n3,k2+n));
+0191    bf(k1,k2)=t1;
+0192    bf(k1+n3,k2+n)=t2;
+0193    y42(k1,k2)=t1;
+0194    y42(k1+n3,k2+n)=t2;
+0195    
+0196    t1=rt2*(bf(k1+n,k2)+bf(k1,k2+n));
+0197    t2=rt2*(bf(k1+n,k2)-bf(k1,k2+n));
+0198    bf(k1+n,k2)=t1;
+0199    bf(k1,k2+n)=t2;
+0200    y42(k1+n,k2)=t1;
+0201    y42(k1,k2+n)=t2;
+0202    
+0203    t1=rt2*(bf(k1+n2,k2)+bf(k1+n,k2+n));
+0204    t2=rt2*(bf(k1+n2,k2)-bf(k1+n,k2+n));
+0205    bf(k1+n2,k2)=t1;
+0206    bf(k1+n,k2+n)=t2;
+0207    y42(k1+n2,k2)=t1;
+0208    y42(k1+n,k2+n)=t2;
+0209    
+0210    t1=rt2*(bf(k1+n3,k2)+bf(k1+n2,k2+n));
+0211    t2=rt2*(bf(k1+n3,k2)-bf(k1+n2,k2+n));
+0212    bf(k1+n3,k2)=t1;
+0213    bf(k1+n2,k2+n)=t2;
+0214    y42(k1+n3,k2)=t1;
+0215    y42(k1+n2,k2+n)=t2;
+0216 <span class="keyword">end</span>   
+0217 <span class="keyword">for</span> k=1:d43
+0218    k1=c43(1,k);
+0219    k2=c43(2,k);
+0220    t1=rt2*(bf(k1,k2)+bf(k1,k2+n));
+0221    t2=rt2*(bf(k1,k2)-bf(k1,k2+n));
+0222    bf(k1,k2)=t1;
+0223    bf(k1,k2+n)=t2;
+0224    y43(k1,k2)=t1;
+0225    y43(k1,k2+n)=t2;
+0226    
+0227    t1=rt2*(bf(k1+n,k2)+bf(k1+n,k2+n));
+0228    t2=rt2*(bf(k1+n,k2)-bf(k1+n,k2+n));
+0229    bf(k1+n,k2)=t1;
+0230    bf(k1+n,k2+n)=t2;
+0231    y43(k1+n,k2)=t1;
+0232    y43(k1+n,k2+n)=t2;
+0233    
+0234    t1=rt2*(bf(k1+n2,k2)+bf(k1+n2,k2+n));
+0235    t2=rt2*(bf(k1+n2,k2)-bf(k1+n2,k2+n));
+0236    bf(k1+n2,k2)=t1;
+0237    bf(k1+n2,k2+n)=t2;
+0238    y43(k1+n2,k2)=t1;
+0239    y43(k1+n2,k2+n)=t2;
+0240    
+0241    t1=rt2*(bf(k1+n3,k2)+bf(k1+n3,k2+n));
+0242    t2=rt2*(bf(k1+n3,k2)-bf(k1+n3,k2+n));
+0243    bf(k1+n3,k2)=t1;
+0244    bf(k1+n3,k2+n)=t2;
+0245    y43(k1+n3,k2)=t1;
+0246    y43(k1+n3,k2+n)=t2;
+0247 <span class="keyword">end</span>   
+0248 <span class="keyword">for</span> k=1:d44
+0249    k1=c44(1,k);
+0250    k2=c44(2,k);
+0251    t1=rt2*(bf(k1,k2)+bf(k1+n2,k2+n));
+0252    t2=rt2*(bf(k1,k2)-bf(k1+n2,k2+n));
+0253    bf(k1,k2)=t1;
+0254    bf(k1+n2,k2+n)=t2;
+0255    y44(k1,k2)=t1;
+0256    y44(k1+n2,k2+n)=t2;
+0257    
+0258    t1=rt2*(bf(k1+n,k2)+bf(k1+n3,k2+n));
+0259    t2=rt2*(bf(k1+n,k2)-bf(k1+n3,k2+n));
+0260    bf(k1+n,k2)=t1;
+0261    bf(k1+n3,k2+n)=t2;
+0262    y44(k1+n,k2)=t1;
+0263    y44(k1+n3,k2+n)=t2;
+0264 
+0265    t1=rt2*(bf(k1+n2,k2)+bf(k1,k2+n));
+0266    t2=rt2*(bf(k1+n2,k2)-bf(k1,k2+n));
+0267    bf(k1+n2,k2)=t1;
+0268    bf(k1,k2+n)=t2;
+0269    y44(k1+n2,k2)=t1;
+0270    y44(k1,k2+n)=t2;
+0271    
+0272    t1=rt2*(bf(k1+n3,k2)+bf(k1+n,k2+n));
+0273    t2=rt2*(bf(k1+n3,k2)-bf(k1+n,k2+n));
+0274    bf(k1+n3,k2)=t1;
+0275    bf(k1+n,k2+n)=t2;
+0276    y44(k1+n3,k2)=t1;
+0277    y44(k1+n,k2+n)=t2;
+0278 <span class="keyword">end</span>
+0279 y8=bf-y1-y21-y22-y41-y42-y43-y44;</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

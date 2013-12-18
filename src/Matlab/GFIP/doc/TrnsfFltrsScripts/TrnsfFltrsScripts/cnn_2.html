@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cnn_2</title>
+  <meta name="keywords" content="cnn_2">
+  <meta name="description" content="file/fctn name mismatch: was file cnn_2.m">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cnn_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cnn_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>file/fctn name mismatch: was file cnn_2.m</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=cnn_2(u,v,gp); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> file/fctn name mismatch: was file cnn_2.m</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="inn_2.html" class="code" title="function y=inn_2(x,gp)">inn_2</a>	Use this for even m and even n:</li><li><a href="nn_2.html" class="code" title="function [y1,y2]=nn_2(x,gp)">nn_2</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=cnn_2(u,v,gp);</a>
+0002 <span class="comment">% file/fctn name mismatch: was file cnn_2.m</span>
+0003 [n,tem]=size(u);
+0004 m=n/2;
+0005 n2=n+n;
+0006 <span class="comment">%</span>
+0007 <span class="comment">%</span>
+0008 ur(1:n,1:n)=u(1:n,1:n);
+0009 <span class="keyword">if</span> (gp==1) <span class="comment">% (y,x)</span>
+0010    <span class="keyword">for</span> k2=0:n-1
+0011       <span class="keyword">for</span> k1=0:n-1
+0012          ur(k1+1,k2+1+n)=u(k2+1,k1+1+n);
+0013       <span class="keyword">end</span>
+0014    <span class="keyword">end</span>   
+0015 <span class="keyword">end</span>   
+0016 <span class="comment">%</span>
+0017 <span class="keyword">if</span> (gp==2) <span class="comment">% (x+y,-y)</span>
+0018    <span class="keyword">for</span> k2=0:n-1
+0019       ak2=mod(n-k2,n);
+0020       <span class="keyword">for</span> k1=0:n-1
+0021          ak1=mod(k1+k2,n);
+0022          ur(k1+1,k2+1+n)=u(ak1+1,ak2+1+n);
+0023       <span class="keyword">end</span>
+0024    <span class="keyword">end</span>   
+0025 <span class="keyword">end</span>
+0026 <span class="comment">%</span>
+0027 <span class="keyword">if</span> (gp==3) <span class="comment">% (-x-y,y)</span>
+0028    <span class="keyword">for</span> k2=0:n-1
+0029       <span class="keyword">for</span> k1=0:n-1
+0030          ak1=mod(n-k1-k2,n);
+0031          ur(k1+1,k2+1+n)=u(ak1+1,k2+1+n);
+0032       <span class="keyword">end</span>
+0033    <span class="keyword">end</span>   
+0034 <span class="keyword">end</span>
+0035 <span class="comment">%</span>
+0036 <span class="keyword">if</span> (gp==4) <span class="comment">% (x,x-y)</span>
+0037    <span class="keyword">for</span> k2=0:n-1
+0038       <span class="keyword">for</span> k1=0:n-1
+0039          ak2=mod(k1-k2,n);
+0040          ur(k1+1,k2+1+n)=u(k1+1,ak2+1+n);
+0041       <span class="keyword">end</span>
+0042    <span class="keyword">end</span>   
+0043 <span class="keyword">end</span>
+0044 <span class="comment">%</span>
+0045 [d11,d12]=<a href="nn_2.html" class="code" title="function [y1,y2]=nn_2(x,gp)">nn_2</a>(ur,gp);
+0046 [d21,d22]=<a href="nn_2.html" class="code" title="function [y1,y2]=nn_2(x,gp)">nn_2</a>(v,gp);
+0047 <span class="comment">%</span>
+0048 c(:,1:n)=d12(:,1:n).*d22(:,1:n)+d12(:,1+n:n2).*d22(:,1+n:n2);
+0049 c(:,1+n:n2)=d12(:,1+n:n2).*d22(:,1:n)+d12(:,1:n).*d22(:,1+n:n2);
+0050 c=c+sqrt(2)*d11.*d21;
+0051 y=n*<a href="inn_2.html" class="code" title="function y=inn_2(x,gp)">inn_2</a>(c,gp);
+0052 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,45 @@
+clear;
+n=32;
+n2=n+n;
+n3=n2+n;
+n4=n3+n;
+gp=1;
+s2=input('input the scene   ')
+sz=input('input the strip size  ')
+hh=bkgd(s2,sz,n2);
+gg(1:n4,1:n2)=hh(1:n4,1:n2);
+%m=n/2;
+%hh=obj(0,n);
+%[a,b]=size(hh);
+%gg=zeros(n4,n2);
+gg(1:n4,1:n2)=hh(1:n4,1:n2);
+%
+%hh=imread('c:\windows\desktop\data\projects\sttr\pictures\wall.tif');
+%gg(1:n4,1:n2)=double(hh(1:n4,1:n2));
+mm=max(max(gg));
+mn=0;
+lvl=input('input the noise level     ')
+sdv=lvl*mm;
+ns=noise(n4,n2,mn,sdv);
+ngg=gg+ns;
+%
+[x1,x21,x22,x41,x42,x43,x44,x8]=nn_4_2(ngg,gp);
+y1=real(inn_4_2(x1,gp));
+y21=real(inn_4_2(x21,gp));
+y22=real(inn_4_2(x22,gp));
+y41=real(inn_4_2(x41,gp));
+y42=real(inn_4_2(x42,gp));
+y43=real(inn_4_2(x43,gp));
+y44=real(inn_4_2(x44,gp));
+y8=real(inn_4_2(x8,gp));
+%
+figure(1)
+subplot(3,3,1),imagesc(ngg)
+subplot(3,3,2),imagesc(y1)
+subplot(3,3,3),imagesc(y21)
+subplot(3,3,4),imagesc(y22)
+subplot(3,3,5),imagesc(y41)
+subplot(3,3,6),imagesc(y42)
+subplot(3,3,7),imagesc(y43)
+subplot(3,3,8),imagesc(y44)
+subplot(3,3,9),imagesc(y8)

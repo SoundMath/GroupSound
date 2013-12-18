@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cn_2</title>
+  <meta name="keywords" content="cn_2">
+  <meta name="description" content="Semidirect product convolution of 1-dimensional signals.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cn_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cn_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Semidirect product convolution of 1-dimensional signals.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=cn_2(u,v,gp) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Semidirect product convolution of 1-dimensional signals.
+
+ INPUT
+   u &amp; 1D array (signal)
+   v &amp; 1D array (signal) of same length as u
+   gp &amp; (int) indicates group wrtw convolution is performed &amp; default: 1 
+
+ OUTPUT
+   y &amp; 1D array (signal) stores resulting convolution product.
+
+ REMARKS
+   o  The key operation which distinguishes the convolution
+      \[        
+             C(u)v = sum_x u(x) T(x) v
+      \]
+      over different groups is the translation $T(x) v$.
+
+ HISTORY
+ 2001.04.03 &amp; Myoung An &amp; wrote original program, named 
+                          the file cn_2.m, but named the 
+                          function contained in that file cnv2. 
+ 2004.03.29 &amp; William DeMeo &amp; added documentation,modified name 
+                              of this file and name of some
+                              functions called from this file.
+ 2004.04.29 &amp; William DeMeo &amp; minor mods</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="in_2.html" class="code" title="function f=in_2(y,gp)">in_2</a>	Inverse semidirect product transform.</li><li><a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>	Semidirect product transform.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="even2.html" class="code" title="">even2</a>	</li><li><a href="tn_2.html" class="code" title="">tn_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=cn_2(u,v,gp)</a>
+0002 <span class="comment">% Semidirect product convolution of 1-dimensional signals.</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% INPUT</span>
+0005 <span class="comment">%   u &amp; 1D array (signal)</span>
+0006 <span class="comment">%   v &amp; 1D array (signal) of same length as u</span>
+0007 <span class="comment">%   gp &amp; (int) indicates group wrtw convolution is performed &amp; default: 1</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% OUTPUT</span>
+0010 <span class="comment">%   y &amp; 1D array (signal) stores resulting convolution product.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% REMARKS</span>
+0013 <span class="comment">%   o  The key operation which distinguishes the convolution</span>
+0014 <span class="comment">%      \[</span>
+0015 <span class="comment">%             C(u)v = sum_x u(x) T(x) v</span>
+0016 <span class="comment">%      \]</span>
+0017 <span class="comment">%      over different groups is the translation $T(x) v$.</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">% HISTORY</span>
+0020 <span class="comment">% 2001.04.03 &amp; Myoung An &amp; wrote original program, named</span>
+0021 <span class="comment">%                          the file cn_2.m, but named the</span>
+0022 <span class="comment">%                          function contained in that file cnv2.</span>
+0023 <span class="comment">% 2004.03.29 &amp; William DeMeo &amp; added documentation,modified name</span>
+0024 <span class="comment">%                              of this file and name of some</span>
+0025 <span class="comment">%                              functions called from this file.</span>
+0026 <span class="comment">% 2004.04.29 &amp; William DeMeo &amp; minor mods</span>
+0027 <span class="comment">%</span>
+0028 <span class="keyword">if</span> nargin &lt; 3, 
+0029   gp=1;    
+0030 <span class="keyword">end</span>;
+0031 <span class="keyword">if</span> length(u) ~= length(v), 
+0032   error(<span class="string">'input signals must be of the same length'</span>); 
+0033 <span class="keyword">end</span>;
+0034 <span class="comment">% TODO % accomodate signals of different length</span>
+0035 n2=size(u,1);             <span class="comment">% signal length $2N$</span>
+0036 n=n2/2;                <span class="comment">% $N$ : signal half-length</span>
+0037 m=n/2;                 <span class="comment">% $N/2$ : signal quarter-length</span>
+0038 nn=(0:n-1);            <span class="comment">% $\{0,1,\ldots,N-1\}$</span>
+0039 
+0040 rn = indexset(n,gp);
+0041 
+0042 uu(1:n,1)=u(1:n,1);
+0043 <span class="keyword">for</span> k=1:n
+0044   uu(k+n,1)=u(rn(k)+n,1);
+0045 <span class="keyword">end</span>   
+0046 [u1,u2]=<a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>(uu(:,1),gp);
+0047 [v1,v2]=<a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>(v(:,1),gp); 
+0048 c(1:n) = u2(1:n).*v2(1:n) + u2(1+n:n2).*v2(1+n:n2) + sqrt(2)*u1(1:n).*v1(1:n);
+0049 c(1+n:n2) = u2(1+n:n2).*v2(1:n) + u2(1:n).*v2(1+n:n2) + sqrt(2)*u1(1+n:n2).*v1(1+n:n2);
+0050 
+0051 y=sqrt(n)*<a href="in_2.html" class="code" title="function f=in_2(y,gp)">in_2</a>(c,gp);                <span class="comment">% was: sqrt(n)*in_2(c,gp);</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

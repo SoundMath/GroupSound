@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cmn_2</title>
+  <meta name="keywords" content="cmn_2">
+  <meta name="description" content="nx=4;">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; cmn_2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>cmn_2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>nx=4;</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=cnv_2(u,v,gp); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">nx=4;
+ny=4;
+ny2=2*ny;
+gp=2;
+u=rand(nx,ny2);
+v=rand(nx,ny2);</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="imn_2.html" class="code" title="function y=imn_2(x,gp)">imn_2</a>	Use this for even m and even n:</li><li><a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>	Use this for even m and n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="tmn_2.html" class="code" title="">tmn_2</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=cnv_2(u,v,gp);</a>
+0002 <span class="comment">%nx=4;</span>
+0003 <span class="comment">%ny=4;</span>
+0004 <span class="comment">%ny2=2*ny;</span>
+0005 <span class="comment">%gp=2;</span>
+0006 <span class="comment">%u=rand(nx,ny2);</span>
+0007 <span class="comment">%v=rand(nx,ny2);</span>
+0008 [nx,ny2]=size(u);
+0009 mx=nx/2;
+0010 ny=ny2/2;
+0011 my=ny/2;
+0012 nnx=linspace(0,nx-1,nx);
+0013 nny=linspace(0,ny-1,ny);
+0014 <span class="comment">%</span>
+0015 <span class="keyword">if</span> (gp==1) <span class="comment">% (x,-y)</span>
+0016    actx=nnx+1;
+0017    acty=mod(ny-nny,ny)+1;
+0018 <span class="keyword">end</span>
+0019 <span class="comment">%</span>
+0020 <span class="keyword">if</span> (gp==2) <span class="comment">% (x,(my+1)y)</span>
+0021    actx=nnx+1;
+0022    acty=mod((my+1)*nny,ny)+1;
+0023 <span class="keyword">end</span>
+0024 <span class="keyword">if</span> (gp==3) <span class="comment">% (x,(my-1)y);</span>
+0025    actx=nnx+1;
+0026    acty=mod((my-1)*nny,ny)+1;
+0027 <span class="keyword">end</span>
+0028 <span class="comment">%</span>
+0029 <span class="keyword">if</span> (gp==4) <span class="comment">% (-x,y)</span>
+0030    actx=mod(nx-nnx,nx)+1;
+0031    acty=nny+1;
+0032 <span class="keyword">end</span>
+0033 <span class="comment">%</span>
+0034 <span class="keyword">if</span> (gp==5) <span class="comment">% (-x,-y)</span>
+0035    actx=mod(nx-nnx,nx)+1;
+0036    acty=mod(ny-nny,ny)+1;
+0037 <span class="keyword">end</span>
+0038 <span class="comment">%</span>
+0039 <span class="keyword">if</span> (gp==6) <span class="comment">% (-x,(my+1)y)</span>
+0040    actx=mod(nx-nnx,nx)+1;
+0041    acty=mod((my+1)*nny,ny)+1;
+0042 <span class="keyword">end</span>
+0043 <span class="comment">%</span>
+0044 <span class="keyword">if</span> (gp==7) <span class="comment">% (-x,(my-1)y)</span>
+0045    actx=mod(nx-nnx,nx)+1;
+0046    acty=mod((my-1)*nny,ny)+1;
+0047 <span class="keyword">end</span>
+0048 <span class="comment">%</span>
+0049 <span class="keyword">if</span> (gp==8) <span class="comment">% ((mx+1)x,y)</span>
+0050    actx=mod((mx+1)*nnx,nx)+1;
+0051    acty=nny+1;
+0052 <span class="keyword">end</span>
+0053 <span class="comment">%</span>
+0054 <span class="keyword">if</span> (gp==9) <span class="comment">% ((mx+1)x,-y)</span>
+0055    actx=mod((mx+1)*nnx,nx)+1;
+0056    acty=mod(ny-nny,ny)+1;
+0057 <span class="keyword">end</span>
+0058 <span class="comment">%</span>
+0059 <span class="keyword">if</span> (gp==10) <span class="comment">% ((mx+1)x,(my+1)y)</span>
+0060    actx=mod((mx+1)*nnx,nx)+1;
+0061    acty=mod((my+1)*nny,ny)+1;
+0062 <span class="keyword">end</span>
+0063 <span class="comment">%</span>
+0064 <span class="keyword">if</span> (gp==11) <span class="comment">% ((mx+1)x,(my-1)y)</span>
+0065    actx=mod((mx+1)*nnx,nx)+1;
+0066    acty=mod((my-1)*nny,ny)+1;
+0067 <span class="keyword">end</span>
+0068 <span class="comment">%</span>
+0069 <span class="keyword">if</span> (gp==12) <span class="comment">% ((mx-1)x,y)</span>
+0070    actx=mod((mx-1)*nnx,nx)+1;
+0071    acty=nny+1;
+0072 <span class="keyword">end</span>
+0073 <span class="comment">%</span>
+0074 <span class="keyword">if</span> (gp==13) <span class="comment">% ((mx-1)x,-y)</span>
+0075    actx=mod((mx-1)*nnx,nx)+1;
+0076    acty=mod(ny-nny,ny)+1;
+0077 <span class="keyword">end</span>
+0078 <span class="comment">%</span>
+0079 <span class="keyword">if</span> (gp==14) <span class="comment">% ((mx-1)x,(my+1)y)</span>
+0080    actx=mod((mx-1)*nnx,nx)+1;
+0081    acty=mod((my+1)*nny,ny)+1;
+0082 <span class="keyword">end</span>
+0083 <span class="comment">%</span>
+0084 <span class="keyword">if</span> (gp==15) <span class="comment">% ((mx-1)x,(my-1)y)</span>
+0085    actx=mod((mx-1)*nnx,nx)+1;
+0086    acty=mod((my-1)*nny,ny)+1;
+0087 <span class="keyword">end</span>
+0088 <span class="comment">%</span>
+0089 <span class="comment">%</span>
+0090 ur(1:nx,1:ny)=u(1:nx,1:ny);
+0091 <span class="keyword">for</span> ky=1:ny
+0092    <span class="keyword">for</span> kx=1:nx
+0093       ur(kx,ky+ny)=u(actx(kx),acty(ky)+ny);
+0094    <span class="keyword">end</span>
+0095 <span class="keyword">end</span>   
+0096 <span class="comment">%</span>
+0097 [d11,d12]=<a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>(ur,gp);
+0098 [d21,d22]=<a href="mn_2.html" class="code" title="function [y1,y2]=mn_2(x,gp)">mn_2</a>(v,gp);
+0099 <span class="comment">%</span>
+0100 c(:,1:ny)=d12(:,1:ny).*d22(:,1:ny)+d12(:,1+ny:ny2).*d22(:,1+ny:ny2);
+0101 c(:,1+ny:ny2)=d12(:,1+ny:ny2).*d22(:,1:ny)+d12(:,1:ny).*d22(:,1+ny:ny2);
+0102 c=c+sqrt(2)*d11.*d21;
+0103 <span class="comment">%</span>
+0104 y=sqrt(nx*ny)*<a href="imn_2.html" class="code" title="function y=imn_2(x,gp)">imn_2</a>(c,gp);</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

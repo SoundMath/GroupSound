@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of box</title>
+  <meta name="keywords" content="box">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; box.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>box
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>	</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li><li><a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=16;
+0003 n2=n+n;
+0004 n3=n2+n;
+0005 n4=n3+n;
+0006 bkg=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(2,2,n2);
+0007 gg=zeros(n4,n4);
+0008 bbv(1:n+2,1:n/2)=1;
+0009 bbh(1:n/2,1:n+2)=1;
+0010 xv=floor((n4-n-2)*rand);
+0011 yv=floor((n4-n/2)*rand);
+0012 xh=floor((n4-n/2)*rand);
+0013 yh=floor((n4-n-2)*rand);
+0014 [xv+1 yv+1]
+0015 [xh+1 yh+1]
+0016 xb=floor(n4*rand)+1;
+0017 yb=floor(n4*rand)+1;
+0018 <span class="keyword">for</span> k=2:n2
+0019    ngg(k,k+n)=1;
+0020    ngg(k,n2-k+2)=1;
+0021 <span class="keyword">end</span>   
+0022 gg(1+xv:xv+n+2,1+yv:yv+n/2)=bbv;
+0023 gg(1+xh:xh+n/2,1+yh:yh+n+2)=bbh;
+0024 gg(xb,yb)=4;
+0025 <span class="comment">%</span>
+0026 mm=.25*max(max(gg));
+0027 mn=0;
+0028 lvl=input(<span class="string">'input the noise level     '</span>)
+0029 sdv=lvl*mm;
+0030 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n4,n4,mn,sdv);
+0031 ngg=-ns.*(gg+bkg);
+0032 <span class="comment">%ngg(1+xv:xv+n+2,1+yv:yv+n/2)=bbv;</span>
+0033 <span class="comment">%ngg(1+xh:xh+n/2,1+yh:yh+n+2)=bbh;</span>
+0034 <span class="comment">%</span>
+0035 gp=2;
+0036 y42=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg,1,42));
+0037 x41=real(<a href="ww_2222.html" class="code" title="function y=ww_2222(x,gp,prj)">ww_2222</a>(ngg-y42,2,41));
+0038 <span class="comment">%y42=real(ww_2222(ngg-x41,1,42));</span>
+0039 subplot(2,2,1),imagesc(gg)
+0040 axis image
+0041 subplot(2,2,2),imagesc(ngg)
+0042 axis image
+0043 subplot(2,2,3),imagesc(y42)
+0044 axis image
+0045 subplot(2,2,4),imagesc(x41)
+0046 axis image</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

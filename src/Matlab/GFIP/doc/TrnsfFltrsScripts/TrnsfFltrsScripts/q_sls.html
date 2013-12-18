@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of q_sls</title>
+  <meta name="keywords" content="q_sls">
+  <meta name="description" content="fid=fopen(filename,'r');">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; q_sls.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>q_sls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>fid=fopen(filename,'r');</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">fid=fopen(filename,'r');</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ee_6.html" class="code" title="">ee_6</a>	</li><li><a href="ff_6.html" class="code" title="">ff_6</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%fid=fopen(filename,'r');</span>
+0002 fid=fopen(<span class="string">'SLS_PORT.CAD'</span>,<span class="string">'r'</span>);
+0003 overlap = 26;
+0004 filter_delay = 5;
+0005 column_size = 712;
+0006 row_size = 507;
+0007 qdata=zeros(column_size,row_size);
+0008 figure(1);
+0009 colormap(gray);
+0010 brighten(0.8);
+0011 <span class="keyword">for</span> n=1:filter_delay,
+0012 qdata(1:column_size,n)=fread(fid,column_size,<span class="string">'uchar'</span>);
+0013 <span class="keyword">end</span>;
+0014 <span class="keyword">for</span> n=1:overlap,
+0015 qdata(1:column_size,n+row_size-overlap)=fread(fid,column_size,<span class="string">'uchar'</span>);
+0016 <span class="keyword">end</span>;
+0017 figure(1);
+0018 slsimage=0;
+0019 stop_image=1;
+0020 brighten(-0.6)
+0021 
+0022 stop_image=     input(<span class="string">' Enter SLS Image #: '</span>);
+0023   
+0024 <span class="keyword">while</span> slsimage&lt;stop_image,
+0025 <span class="keyword">for</span> n=1:overlap,
+0026 qdata(1:column_size,n)=qdata(1:column_size,n+row_size-overlap);
+0027 <span class="keyword">end</span>;
+0028 <span class="keyword">for</span> n=overlap+1:row_size,
+0029 qdata(1:column_size,n)=fread(fid,column_size,<span class="string">'uchar'</span>);
+0030 <span class="keyword">end</span>;
+0031 slsimage=slsimage+1;
+0032 <span class="keyword">end</span>;
+0033 stop_image=stop_image+1;
+0034 figure(1);
+0035 imagesc(qdata);
+0036 xxx=sprintf(<span class="string">'%d'</span>,slsimage);
+0037 titleLine=[<span class="string">'sls image '</span>,xxx];
+0038 title(titleLine);
+0039 <span class="comment">%</span>
+0040 <span class="comment">%</span>
+0041 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

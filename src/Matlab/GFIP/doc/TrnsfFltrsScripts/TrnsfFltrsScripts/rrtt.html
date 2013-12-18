@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of rrtt</title>
+  <meta name="keywords" content="rrtt">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; rrtt.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>rrtt
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function f=rrtt(f1,n2,rr) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="scene.html" class="code" title="function yyy=scene(m,n,orgn)">scene</a>	</li><li><a href="scenexy.html" class="code" title="function yy=scene(m,nx,ny)">scenexy</a>	</li><li><a href="twos16.html" class="code" title="">twos16</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function f=rrtt(f1,n2,rr)</a>
+0002 f=zeros(n2,n2);
+0003 n=n2/2;
+0004 <span class="comment">%</span>
+0005 th=pi*rr/180;
+0006 cc=cos(th);
+0007 ss=sin(th);
+0008 [u,v]=find(f1);
+0009 [nk,nl]=size(u);
+0010 <span class="keyword">for</span> kk=1:nk
+0011    k1=u(kk);
+0012    k2=v(kk);
+0013    nu=(k1-n-1)*cc-(k2-n-1)*ss+n+1;
+0014    du=nu-floor(nu);
+0015    nu=floor(nu);
+0016    <span class="keyword">if</span> (nu == n2)
+0017       nu1=nu;
+0018    <span class="keyword">else</span>
+0019       nu1=1+nu;
+0020    <span class="keyword">end</span>   
+0021    nv=(k1-n-1)*ss+(k2-n-1)*cc+n+1;
+0022    dv=nv-floor(nv);
+0023    nv=floor(nv);
+0024    <span class="keyword">if</span> (nv==n2)
+0025       nv1=nv;
+0026    <span class="keyword">else</span>
+0027       nv1=1+nv;
+0028    <span class="keyword">end</span>
+0029    du1=1-du;
+0030    dv1=1-dv;
+0031    <span class="keyword">if</span> (nu &gt; 0 &amp; nv &gt; 0 )
+0032       <span class="keyword">if</span> (nu &lt; n2+1 &amp; nv &lt; n2+1)
+0033          f(nu,nv)=f(nu,nv)+du1*dv1*f1(k1,k2);
+0034          f(nu1,nv)=f(nu1,nv)+du*dv1*f1(k1,k2);
+0035          f(nu,nv1)=f(nu,nv1)+du1*dv*f1(k1,k2);
+0036          f(nu1,nv1)=f(nu1,nv1)+du*dv*f1(k1,k2);
+0037       <span class="keyword">end</span>
+0038    <span class="keyword">end</span>
+0039 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

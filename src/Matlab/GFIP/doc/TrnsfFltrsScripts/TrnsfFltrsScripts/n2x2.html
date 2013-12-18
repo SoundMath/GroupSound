@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of n2x2</title>
+  <meta name="keywords" content="n2x2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; n2x2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>n2x2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 <span class="comment">% Use this for even n</span>
+0003 <span class="comment">% n2 sdp c2</span>
+0004 <span class="comment">%</span>
+0005 n=32;
+0006 n2=n*2;
+0007 m=n/2;
+0008 rt2=1/sqrt(2);
+0009 rtn=sqrt(n);
+0010 a=sqrt(n)*ifft(eye(n));
+0011 <span class="comment">%</span>
+0012 <span class="comment">%b=zeros(n2,n2);</span>
+0013 <span class="comment">%b(1:n,1:n)=a;</span>
+0014 <span class="comment">%b(n+1:n2,n+1:n2)=a;</span>
+0015 <span class="comment">%b(1,1:n)=rt2*a(1,1:n);</span>
+0016 <span class="comment">%b(1,1+n:n2)=rt2*a(1,1:n);</span>
+0017 <span class="comment">%b(m+1,1:n)=rt2*a(m+1,1:n);</span>
+0018 <span class="comment">%b(m+1,n+1:n2)=rt2*a(m+1,1:n);</span>
+0019 <span class="comment">%b(n+1,1:n)=rt2*a(1,1:n);</span>
+0020 <span class="comment">%b(n+1,n+1:n2)=-rt2*a(1,1:n);</span>
+0021 <span class="comment">%b(n+m+1,1:n)=rt2*a(m+1,1:n);</span>
+0022 <span class="comment">%b(n+m+1,n+1:n2)=-rt2*a(m+1,1:n);</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">%c=zeros(n2,n2);</span>
+0025 <span class="comment">%c(1:n,1:n)=a';</span>
+0026 <span class="comment">%c(n+1:n2,n+1:n2)=a';</span>
+0027 <span class="comment">%c(1:n,1)=rt2*a(1:n,1);</span>
+0028 <span class="comment">%c(1+n:n2,1)=rt2*a(1:n,1);</span>
+0029 <span class="comment">%c(1:n,m+1)=rt2*a(1:n,m+1);</span>
+0030 <span class="comment">%c(n+1:n2,m+1)=rt2*a(1:n,m+1);</span>
+0031 <span class="comment">%c(1:n,n+1)=rt2*a(1:n,1);</span>
+0032 <span class="comment">%c(n+1:n2,n+1)=-rt2*a(1:n,1);</span>
+0033 <span class="comment">%c(1:n,n+m+1)=rt2*a(1:n,m+1);</span>
+0034 <span class="comment">%c(n+1:n2,n+m+1)=-rt2*a(1:n,m+1);</span>
+0035 <span class="comment">% generate some images here</span>
+0036 f=rand(n2,1);
+0037 <span class="comment">%for k=1:n</span>
+0038 <span class="comment">%   f(2*k-1)=1;</span>
+0039 <span class="comment">%end</span>
+0040 f(m/2:n-4)=1;
+0041 x=linspace(-pi,pi,n2);
+0042 f=sin(2*(x.*x))';
+0043 <span class="comment">%</span>
+0044 <span class="comment">%bf=b*f;</span>
+0045 <span class="comment">%</span>
+0046 bf(1:n)=rtn*ifft(f(1:n));
+0047 bf(n+1:n2)=rtn*ifft(f(n+1:n2));
+0048 bf(1)=rt2*(bf(1)+a(1,1:n)*f(1+n:n2));
+0049 bf(m+1)=rt2*(bf(m+1)+a(m+1,1:n)*f(n+1:n2));
+0050 bf(n+1)=rt2*(a(1,1:n)*f(1:n)-bf(n+1));
+0051 bf(n+m+1)=rt2*(a(m+1,1:n)*f(1:n)-bf(n+m+1));
+0052 bf=bf.';
+0053 <span class="comment">%</span>
+0054 id1=zeros(n2,1);
+0055 id2=zeros(n2,1);
+0056 id1(1)=bf(1);
+0057 id1(m+1)=bf(m+1);
+0058 id1(n+1)=bf(n+1);
+0059 id1(n+m+1)=bf(n+m+1);
+0060 id2=bf-id1;
+0061 <span class="keyword">for</span> k=1:n2
+0062    <span class="keyword">if</span> (abs(real(id2(k))) &lt; .2)
+0063       id2(k)=i*imag(id2(k));
+0064    <span class="keyword">end</span>   
+0065    <span class="keyword">if</span> (abs(imag(id2(k))) &lt; .2)
+0066       id2(k)=real(id2(k));
+0067    <span class="keyword">end</span>      
+0068 <span class="keyword">end</span>   
+0069 <span class="comment">%</span>
+0070 <span class="comment">%rb1=c*id1;</span>
+0071 rb1=zeros(n2,1);
+0072 rb1(1:n)=1/sqrt(n)*fft(id1(1:n));
+0073 rb1(1:n)=rb1(1:n)-id1(1)*a(1:n,1)-id1(m+1)*a(1:n,m+1);
+0074 rb1(1:n)=rb1(1:n)+rt2*(id1(1)+id1(n+1))*a(1:n,1);
+0075 rb1(1:n)=rb1(1:n)+rt2*(id1(m+1)+id1(n+m+1))*a(1:n,m+1);
+0076 rb1(n+1:n2)=1/sqrt(n)*fft(id1(n+1:n2));
+0077 rb1(1+n:n2)=rb1(1+n:n2)-id1(n+1)*a(1:n,1)-id1(n+m+1)*a(1:n,m+1);
+0078 rb1(1+n:n2)=rb1(n+1:n2)+rt2*(id1(1)-id1(n+1))*a(1:n,1);
+0079 rb1(1+n:n2)=rb1(1+n:n2)+rt2*(id1(m+1)-id1(n+m+1))*a(1:n,m+1);
+0080 <span class="comment">%</span>
+0081 <span class="comment">%rb2=c*id2;</span>
+0082 rb2=zeros(n2,1);
+0083 rb2(1:n)=1/sqrt(n)*fft(id2(1:n));
+0084 rb2(1:n)=rb2(1:n)-id2(1)*a(1:n,1)-id2(m+1)*a(1:n,m+1);
+0085 rb2(1:n)=rb2(1:n)+rt2*(id2(1)+id2(n+1))*a(1:n,1);
+0086 rb2(1:n)=rb2(1:n)+rt2*(id2(m+1)+id2(n+m+1))*a(1:n,m+1);
+0087 rb2(1+n:n2)=1/sqrt(n)*fft(id2(1+n:n2));
+0088 rb2(1+n:n2)=rb2(1+n:n2)-id2(n+1)*a(1:n,1)-id2(n+m+1)*a(1:n,m+1);
+0089 rb2(1+n:n2)=rb2(n+1:n2)+rt2*(id2(1)-id2(n+1))*a(1:n,1);
+0090 rb2(1+n:n2)=rb2(1+n:n2)+rt2*(id2(m+1)-id2(n+m+1))*a(1:n,m+1);</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

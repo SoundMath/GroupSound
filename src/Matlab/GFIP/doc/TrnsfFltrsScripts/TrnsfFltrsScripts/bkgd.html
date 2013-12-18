@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of bkgd</title>
+  <meta name="keywords" content="bkgd">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; bkgd.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>bkgd
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function yy=bkgd(s,m,n) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="box.html" class="code" title="">box</a>	</li><li><a href="com222.html" class="code" title="">com222</a>	</li><li><a href="comute22.html" class="code" title="">comute22</a>	</li><li><a href="ee2.html" class="code" title="">ee2</a>	</li><li><a href="ee6.html" class="code" title="">ee6</a>	</li><li><a href="ee_22_2.html" class="code" title="">ee_22_2</a>	</li><li><a href="ee_4_2.html" class="code" title="">ee_4_2</a>	</li><li><a href="flt1.html" class="code" title="">flt1</a>	</li><li><a href="fnd.html" class="code" title="">fnd</a>	</li><li><a href="fnd8.html" class="code" title="">fnd8</a>	</li><li><a href="new22.html" class="code" title="">new22</a>	</li><li><a href="other22.html" class="code" title="">other22</a>	</li><li><a href="pat5.html" class="code" title="">pat5</a>	</li><li><a href="sample.html" class="code" title="">sample</a>	</li><li><a href="sb2sp4.html" class="code" title="">sb2sp4</a>	</li><li><a href="vid6.html" class="code" title="">vid6</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function yy=bkgd(s,m,n)</a>
+0002 n2=2*n;
+0003 nn=ceil(n/m);
+0004 nn2=2*m*ceil(n/m);
+0005 chk=zeros(nn2,nn2);
+0006 dhk=zeros(nn2,nn2);
+0007 <span class="comment">%</span>
+0008 <span class="keyword">if</span> (s==0)
+0009    <span class="keyword">for</span> m1=1:m
+0010       <span class="keyword">for</span> m2=1:m
+0011          blck(m1,m2)=m1+m2;
+0012       <span class="keyword">end</span>
+0013    <span class="keyword">end</span>   
+0014    <span class="keyword">for</span> k1=0:nn-1
+0015       kk1=2*k1*m;
+0016       <span class="keyword">for</span> k2=0:nn-1
+0017          kk2=2*k2*m;
+0018          chk(1+kk1:m+kk1,1+kk2:m+kk2)=blck;
+0019          chk(1+kk1+m:2*m+kk1,1+kk2+m:2*m+kk2)=blck;
+0020       <span class="keyword">end</span>
+0021    <span class="keyword">end</span>
+0022 <span class="keyword">end</span>
+0023 <span class="comment">%</span>
+0024 <span class="keyword">if</span> (s==1) 
+0025    fm=floor(m/2);
+0026    <span class="keyword">for</span> mm=1:fm
+0027       strp(mm,1)=mm;
+0028       strp(m-mm+1,1)=mm;
+0029    <span class="keyword">end</span>   
+0030    <span class="keyword">if</span> (fm*2 &lt; m)
+0031       strp(fm+1,1)=fm+1;
+0032    <span class="keyword">end</span>   
+0033    <span class="comment">%</span>
+0034    <span class="keyword">for</span> l1=0:nn-1
+0035       ll1=2*l1*m;
+0036       <span class="keyword">for</span> k1=1:n2-ll1
+0037          chk(ll1+k1:ll1+m+k1-1,k1)=strp;
+0038       <span class="keyword">end</span>   
+0039    <span class="keyword">end</span>
+0040    <span class="keyword">for</span> l2=1:nn
+0041       ll2=2*l2*m;
+0042       <span class="keyword">for</span> k1=1:n2-ll2+1
+0043          chk(k1:m+k1-1,ll2+k1)=strp;
+0044       <span class="keyword">end</span>   
+0045       <span class="keyword">for</span> k=1:m-1
+0046          chk(1:m-k,ll2-k+1)=strp(1+k:m);
+0047       <span class="keyword">end</span>   
+0048    <span class="keyword">end</span>   
+0049 <span class="keyword">end</span>   
+0050 <span class="comment">%</span>
+0051 <span class="keyword">if</span> (s==2)
+0052    fm=floor(m/2);
+0053    <span class="keyword">for</span> mm=1:fm
+0054       strp(mm,1)=mm;
+0055       strp(m-mm+1,1)=mm;
+0056    <span class="keyword">end</span>   
+0057    <span class="keyword">if</span> (fm*2 &lt; m)
+0058       strp(fm+1,1)=fm+1;
+0059    <span class="keyword">end</span>   
+0060    <span class="keyword">for</span> l1=0:nn-1
+0061       ll1=2*l1*m;
+0062       <span class="keyword">for</span> k1=1:n2-ll1
+0063          chk(ll1+k1:ll1+m+k1-1,n2-k1+1)=strp;
+0064       <span class="keyword">end</span>   
+0065    <span class="keyword">end</span>
+0066    <span class="keyword">for</span> ll=1:nn-1
+0067       ll2=2*m*ll;
+0068       <span class="keyword">for</span> k1=1:n2-ll2
+0069          chk(n2-ll2-k1+1:n2-ll2+m-k1,k1)=strp;
+0070       <span class="keyword">end</span> 
+0071       <span class="keyword">for</span> k=1:m-1
+0072          chk(1:m-k,n2-ll2+k)=strp(k+1:m,1);
+0073       <span class="keyword">end</span>   
+0074    <span class="keyword">end</span>   
+0075    <span class="keyword">if</span> (nn == n/m)
+0076       ll=nn;
+0077       ll2=2*m*nn;
+0078       <span class="keyword">for</span> k1=1:n2-ll2
+0079          chk(n2-ll2-k1+1:n2-ll2+m-k1,k1)=strp;
+0080       <span class="keyword">end</span> 
+0081       <span class="keyword">for</span> k=1:m-1
+0082          chk(1:m-k,n2-ll2+k)=strp(k+1:m,1);
+0083       <span class="keyword">end</span>   
+0084    <span class="keyword">end</span>   
+0085 <span class="keyword">end</span>   
+0086 <span class="comment">%</span>
+0087 <span class="keyword">if</span> (s==3)
+0088    nn=ceil(n2/m);
+0089    <span class="keyword">for</span> k=0:nn-1
+0090       <span class="keyword">for</span> mm=1:m
+0091          chk(mm+k*m,1:n2)=m-mm+1;
+0092       <span class="keyword">end</span>   
+0093    <span class="keyword">end</span>   
+0094 <span class="keyword">end</span>   
+0095 <span class="comment">%</span>
+0096 <span class="keyword">if</span> (s==4) <span class="comment">%uniform vertical strips</span>
+0097    nn=ceil(n2/m);
+0098    <span class="keyword">for</span> k=0:nn-1
+0099       <span class="keyword">for</span> mm=1:m
+0100          chk(1:n2,mm+k*m)=mm;
+0101       <span class="keyword">end</span>   
+0102    <span class="keyword">end</span>   
+0103 <span class="keyword">end</span>   
+0104 <span class="comment">%</span>
+0105 <span class="keyword">if</span> (s==5) <span class="comment">%growing horizontal strips</span>
+0106    ll=0;
+0107    k=1;
+0108    <span class="keyword">while</span> (ll &lt;= n2)
+0109       st(k)=ll;
+0110       ll=ll+k;
+0111       k=k+1;
+0112    <span class="keyword">end</span>
+0113    <span class="keyword">for</span> kk=1:k-1
+0114       <span class="keyword">for</span> mm=1:kk
+0115          chk(st(kk)+mm,1:n2)=mm;
+0116       <span class="keyword">end</span>   
+0117    <span class="keyword">end</span>   
+0118 <span class="keyword">end</span>   
+0119 <span class="comment">%</span>
+0120 <span class="keyword">if</span> (s==6) <span class="comment">% growing vertical strips</span>
+0121    ll=0;
+0122    k=1;
+0123    <span class="keyword">while</span> (ll &lt;= n2)
+0124       st(k)=ll;
+0125       ll=ll+k;
+0126       k=k+1;
+0127    <span class="keyword">end</span>
+0128    <span class="keyword">for</span> kk=1:k-1
+0129       <span class="keyword">for</span> mm=1:kk
+0130          chk(1:n2,st(kk)+mm)=mm;
+0131       <span class="keyword">end</span>   
+0132    <span class="keyword">end</span>   
+0133 <span class="keyword">end</span>   
+0134 <span class="comment">%</span>
+0135 <span class="keyword">if</span> (s==7) <span class="comment">%lines of slope -2</span>
+0136    <span class="keyword">for</span> mm=1:m 
+0137       <span class="keyword">for</span> k=1:n
+0138          chk(n-k+1+mm,2*k)=mm;
+0139       <span class="keyword">end</span>   
+0140    <span class="keyword">end</span>   
+0141 <span class="keyword">end</span>   
+0142 <span class="comment">%</span>
+0143 <span class="keyword">if</span> (s==8) <span class="comment">%lines of slope -2</span>
+0144    <span class="keyword">for</span> mm=1:m 
+0145       <span class="keyword">for</span> k=1:n
+0146          chk(2*k,n-k+1+mm)=mm;
+0147       <span class="keyword">end</span>   
+0148    <span class="keyword">end</span>   
+0149 <span class="keyword">end</span>   
+0150 <span class="comment">%</span>
+0151 <span class="comment">%</span>
+0152 mm=max(max(chk));
+0153 yy(1:n2,1:n2)=chk(1:n2,1:n2)/mm;
+0154 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

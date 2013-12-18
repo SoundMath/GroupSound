@@ -1,0 +1,10 @@
+function y=rho1to2(x,n)
+nn1=n*n;
+nn2=nn1+nn1;
+nn3=nn2+nn1;
+nn4=nn3+nn1;
+y1=reshape(x(1:nn1,1),n,n);
+y2=reshape(x(1+nn1:nn2),n,n);
+y3=reshape(x(1+nn2:nn3),n,n);
+y4=reshape(x(1+nn3:nn4),n,n);
+y=[y1 y3;y2 y4];

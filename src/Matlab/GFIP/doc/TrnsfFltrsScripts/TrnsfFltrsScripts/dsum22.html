@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of dsum22</title>
+  <meta name="keywords" content="dsum22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; dsum22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>dsum22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="in2n2.html" class="code" title="function y=in2n2(ff,nx,ny,gx,gy)">in2n2</a>	</li><li><a href="n2n2.html" class="code" title="function [y1,y12,y21,y22]=n2n2(x,nx,ny,gx,gy)">n2n2</a>	</li><li><a href="scene.html" class="code" title="function yyy=scene(m,n,orgn)">scene</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 ny=32;
+0003 nx=32;
+0004 orgn=1;
+0005 nn=max(nx,ny);
+0006 ff=<a href="scene.html" class="code" title="function yyy=scene(m,n,orgn)">scene</a>(6,nn,orgn);
+0007 ff=ff(1:2*nx,1:2*ny);
+0008 gx=2;
+0009 gy=2;
+0010 <span class="comment">%</span>
+0011 [y1,y21,y12,y22]=<a href="n2n2.html" class="code" title="function [y1,y12,y21,y22]=n2n2(x,nx,ny,gx,gy)">n2n2</a>(ff,nx,ny,gx,gy);
+0012 yy1=real(<a href="in2n2.html" class="code" title="function y=in2n2(ff,nx,ny,gx,gy)">in2n2</a>(y1,nx,ny,gx,gy));
+0013 yy21=real(<a href="in2n2.html" class="code" title="function y=in2n2(ff,nx,ny,gx,gy)">in2n2</a>(y21,nx,ny,gx,gy));
+0014 yy12=real(<a href="in2n2.html" class="code" title="function y=in2n2(ff,nx,ny,gx,gy)">in2n2</a>(y12,nx,ny,gx,gy));
+0015 yy22=real(<a href="in2n2.html" class="code" title="function y=in2n2(ff,nx,ny,gx,gy)">in2n2</a>(y22,nx,ny,gx,gy));</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of abeltr</title>
+  <meta name="keywords" content="abeltr">
+  <meta name="description" content="Abelian (cyclic) translation">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; abeltr.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>abeltr
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Abelian (cyclic) translation</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function y=abeltr(x,t1,t2) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Abelian (cyclic) translation
+
+ INPUT
+   x   2-D array
+   t1  integer by which to translate x in first dimension
+   t2  integer by which to translate x in second dimension
+
+ OUTPUT
+   y   2-D array containing translated version of x
+
+
+ HISTORY
+   2002.08.20 &amp; Myoung An &amp; wrote original program named abel_tr.m
+   2004.04.23 &amp; William DeMeo &amp; documentation, minor mods/additions</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="ex_rt2.html" class="code" title="">ex_rt2</a>	</li><li><a href="rt1.html" class="code" title="">rt1</a>	</li><li><a href="rt1_alt0.html" class="code" title="">rt1_alt0</a>	Example of nonabelian translates of lines</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y=abeltr(x,t1,t2)</a>
+0002 <span class="comment">% Abelian (cyclic) translation</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% INPUT</span>
+0005 <span class="comment">%   x   2-D array</span>
+0006 <span class="comment">%   t1  integer by which to translate x in first dimension</span>
+0007 <span class="comment">%   t2  integer by which to translate x in second dimension</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% OUTPUT</span>
+0010 <span class="comment">%   y   2-D array containing translated version of x</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% HISTORY</span>
+0014 <span class="comment">%   2002.08.20 &amp; Myoung An &amp; wrote original program named abel_tr.m</span>
+0015 <span class="comment">%   2004.04.23 &amp; William DeMeo &amp; documentation, minor mods/additions</span>
+0016 <span class="comment">%</span>
+0017 
+0018 [m2,n2]=size(x);
+0019 <span class="keyword">for</span> k1=1:m2
+0020    kk1=mod(k1-1-t1,m2)+1;
+0021    <span class="keyword">for</span> k2=1:n2
+0022       kk2=mod(k2-1-t2,n2)+1;
+0023       y(k1,k2)=x(kk1,kk2);
+0024    <span class="keyword">end</span>
+0025 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

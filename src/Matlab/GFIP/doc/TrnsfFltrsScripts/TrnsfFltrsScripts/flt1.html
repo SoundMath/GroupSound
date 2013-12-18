@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of flt1</title>
+  <meta name="keywords" content="flt1">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; flt1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>flt1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>	</li><li><a href="dd22.html" class="code" title="function g=dd22(x,gp,act)">dd22</a>	Use this for even n:</li><li><a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>	Use this for even n:</li><li><a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>	Use this for even n:</li><li><a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=8;
+0003 n2=n*2;
+0004 nd2=n/2;
+0005 <span class="comment">%gg=zeros(n2,n2);</span>
+0006 <span class="comment">%gg(1:n2,6)=1;</span>
+0007 <span class="comment">%gg(5:n2-6,6)=1;</span>
+0008 <span class="comment">%s2=input('input the scene number 0--6     ');</span>
+0009 <span class="comment">%sz=input('input the strip size 1--32    ');</span>
+0010 <span class="comment">%sz=4;</span>
+0011 gg=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(1,18,n);
+0012 [nx,ny]=size(gg);
+0013 nx2=nx/2;
+0014 szx=n/2;
+0015 szy=2;
+0016 hh=<a href="bkgd.html" class="code" title="function yy=bkgd(s,m,n)">bkgd</a>(3,4,n);
+0017 gg=hh;
+0018 <span class="comment">%</span>
+0019 [11,12, 13, 14, 15, 18, 19,23]
+0020 [29,31,103,104,201,202,203]
+0021 gp1=input(<span class="string">'input the group number    '</span>);
+0022 <span class="comment">%gp1=11;</span>
+0023 mm=max(max(gg));
+0024 mn=0;
+0025 <span class="comment">%lvl=input('input the noise level     ');</span>
+0026 lvl=1;
+0027 sdv=lvl*mm;
+0028 ns=<a href="noise.html" class="code" title="function y=noise(bk,bm,mn,sdv);">noise</a>(n2,n2,mn,sdv);
+0029 gg=gg+ns;
+0030 gg1=<a href="dd22.html" class="code" title="function g=dd22(x,gp,act)">dd22</a>(gg,11,1);
+0031 gg=gg+gg1+<a href="dd22.html" class="code" title="function g=dd22(x,gp,act)">dd22</a>(gg,gp1,2)+<a href="dd22.html" class="code" title="function g=dd22(x,gp,act)">dd22</a>(gg1,gp1,2);
+0032 <span class="comment">%</span>
+0033 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(gg,gp1);
+0034 xx1=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x1,gp1));
+0035 xx21=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x21,gp1));
+0036 xx22=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x22,gp1));
+0037 xx23=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0038 xx4=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x4,gp1));
+0039 [max(max(xx1)) max(max(xx21)) max(max(xx22)) max(max(xx23)) max(max(xx4))]'
+0040 <span class="comment">%for k=1:n</span>
+0041 <span class="comment">%   kk1=mod(p1-(k-1),n)+1;</span>
+0042 <span class="comment">%   v2(p1+1,k)=y2(p1+1,k);</span>
+0043 <span class="comment">%   v2(p1+1+n,kk1)=y2(p1+1+n,kk1);</span>
+0044 <span class="comment">%end</span>
+0045 <span class="comment">%</span>
+0046 figure(1)
+0047 colormap(gray)
+0048 subplot(3,2,1),imagesc(gg)
+0049 axis image
+0050 axis off
+0051 subplot(3,2,2),imagesc(real(xx1))
+0052 axis image
+0053 axis off
+0054 subplot(3,2,3),imagesc(real(xx21))
+0055 axis image
+0056 axis off
+0057 subplot(3,2,4),imagesc(real(xx22))
+0058 axis image
+0059 axis off
+0060 subplot(3,2,5),imagesc(real(xx23))
+0061 axis image
+0062 axis off
+0063 subplot(3,2,6),spy(abs(x1)&gt;.00001)</pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gnn_22</title>
+  <meta name="keywords" content="gnn_22">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; gnn_22.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>gnn_22
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function ww=gnn_22(u,gp); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="tnn_22.html" class="code" title="">tnn_22</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function ww=gnn_22(u,gp);</a>
+0002 [n2,tm]=size(u);
+0003 n=n2/2;
+0004 <span class="comment">%</span>
+0005 nn1=n*n;
+0006 nn2=nn1+nn1;
+0007 nn3=nn2+nn1;
+0008 nn4=nn3+nn1;
+0009 nn=linspace(0,n-1,n);
+0010 rnn=mod(n-nn,n);
+0011 <span class="comment">%</span>
+0012 <span class="keyword">if</span> (gp==11)
+0013    <span class="keyword">for</span> k2=0:n-1
+0014       <span class="keyword">for</span> k1=0:n-1
+0015          act1(k1+1+n*k2)=rnn(k1+1)+1+n*rnn(k2+1);
+0016          act2(k1+1+n*k2)=k2+1+n*k1;
+0017          act3(k1+1+n*k2)=rnn(k2+1)+1+n*rnn(k1+1);
+0018       <span class="keyword">end</span>   
+0019    <span class="keyword">end</span>   
+0020 <span class="keyword">end</span>   
+0021 <span class="keyword">for</span> l=0:n-1
+0022    l1=l+1;
+0023    <span class="keyword">for</span> k=0:n-1
+0024       k1=k+1;
+0025       <span class="keyword">for</span> j=0:n-1
+0026          j1=j+1;
+0027          lmj=mod(l-j,n)+1;
+0028          lpj=mod(l+j,n)+1;
+0029          kmj=mod(k-j,n)+1;
+0030          kpj=mod(k+j,n)+1;
+0031          <span class="keyword">for</span> i=0:n-1
+0032             i1=i+1;
+0033             kmi=mod(k-i,n)+1;
+0034             kpi=mod(k+i,n)+1;
+0035             lpi=mod(l+i,n)+1;
+0036             lmi=mod(l-i,n)+1;
+0037             <span class="comment">%</span>
+0038             ww(k1+n*l,i1+n*j)=u(kmi,lmj);
+0039             ww(k1+n*l,i1+n*j+nn1)=u(kpi+n,lpj);
+0040             ww(k1+n*l,i1+n*j+nn2)=u(kmj,lmi+n);
+0041             ww(k1+n*l,i1+n*j+nn3)=u(kpj+n,lpi+n);
+0042             <span class="comment">%</span>
+0043             ww(k1+n*l+nn1,i1+n*j)=u(kpi+n,lpj);
+0044             ww(k1+n*l+nn1,i1+n*j+nn1)=u(kmi,lmj);
+0045             ww(k1+n*l+nn1,i1+n*j+nn2)=u(kpj+n,lpi+n);
+0046             ww(k1+n*l+nn1,i1+n*j+nn3)=u(kmj,lmi+n);
+0047             <span class="comment">%</span>
+0048             ww(k1+n*l+nn2,i1+n*j)=u(kmj,lmi+n);
+0049             ww(k1+n*l+nn2,i1+n*j+nn1)=u(kpj+n,lpi+n);
+0050             ww(k1+n*l+nn2,i1+n*j+nn2)=u(kmi,lmj);
+0051             ww(k1+n*l+nn2,i1+n*j+nn3)=u(kpi+n,lpj);
+0052             <span class="comment">%</span>
+0053             ww(k1+n*l+nn3,i1+n*j)=u(kpj+n,lpi+n);
+0054             ww(k1+n*l+nn3,i1+n*j+nn1)=u(kmj,lmi+n);
+0055             ww(k1+n*l+nn3,i1+n*j+nn2)=u(kpi+n,lpj);
+0056             ww(k1+n*l+nn3,i1+n*j+nn3)=u(kmi,lmj);
+0057          <span class="keyword">end</span>
+0058       <span class="keyword">end</span>   
+0059    <span class="keyword">end</span>   
+0060 <span class="keyword">end</span>   
+0061 <span class="comment">%</span>
+0062 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

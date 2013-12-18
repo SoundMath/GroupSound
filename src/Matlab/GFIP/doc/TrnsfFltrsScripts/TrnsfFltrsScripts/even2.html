@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of even2</title>
+  <meta name="keywords" content="even2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; even2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>even2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="cn_2.html" class="code" title="function y=cn_2(u,v,gp)">cn_2</a>	Semidirect product convolution of 1-dimensional signals.</li><li><a href="in_2.html" class="code" title="function f=in_2(y,gp)">in_2</a>	Inverse semidirect product transform.</li><li><a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>	Semidirect product transform.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=8;
+0003 n2=n*2;
+0004 m=n/2;
+0005 orgn=0;
+0006 <span class="comment">%</span>
+0007 xx=rand(n2,1);
+0008 uu=rand(n2,1);
+0009 [y1,y2]=<a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>(xx,n);
+0010 z=zeros(n2,1);
+0011 z(3,1)=y2(3,1);
+0012 z(3+n,1)=y2(3+n,1);
+0013 <span class="comment">%</span>
+0014 zz=<a href="in_2.html" class="code" title="function f=in_2(y,gp)">in_2</a>(z,n);
+0015 yy2=<a href="in_2.html" class="code" title="function f=in_2(y,gp)">in_2</a>(y2,n);
+0016 <span class="comment">%</span>
+0017 uz=<a href="cn_2.html" class="code" title="function y=cn_2(u,v,gp)">cn_2</a>(uu,zz);
+0018 [u1,u2]=<a href="n_2.html" class="code" title="function [y1,y2]=n_2(f,gp)">n_2</a>(uz,n);
+0019 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

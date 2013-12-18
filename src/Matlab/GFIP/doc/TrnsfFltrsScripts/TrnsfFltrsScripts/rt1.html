@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of rt1</title>
+  <meta name="keywords" content="rt1">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">TrnsfFltrsScripts</a> &gt; rt1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for TrnsfFltrsScripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>rt1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="abeltr.html" class="code" title="function y=abeltr(x,t1,t2)">abeltr</a>	Abelian (cyclic) translation</li><li><a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>	Use this for even n:</li><li><a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>	Use this for even n:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear;
+0002 n=32;
+0003 n2=n*2;
+0004 nd2=n/2;
+0005 <span class="comment">%orgn=1;</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%S=imread('c:\my documents\my pictures\toad.tif');</span>
+0008 <span class="comment">%gg=double(S(1:256,1:256));</span>
+0009 <span class="comment">%sc=input('input the scene number    ');</span>
+0010 gg=zeros(n2,n2);
+0011 <span class="keyword">for</span> k=1:n
+0012    gg(k,k)=1;
+0013    gg(k,6)=1;
+0014 <span class="keyword">end</span>   
+0015 mm=0;
+0016 nn=0;
+0017 gg1=<a href="abeltr.html" class="code" title="function y=abeltr(x,t1,t2)">abeltr</a>(gg,mm,nn);
+0018 gg2=[<a href="abeltr.html" class="code" title="function y=abeltr(x,t1,t2)">abeltr</a>(gg(1:n,1:n),mm,nn)<span class="keyword">...</span>
+0019       <a href="abeltr.html" class="code" title="function y=abeltr(x,t1,t2)">abeltr</a>(gg(1:n,1+n:n2),mm,nn);<span class="keyword">...</span>
+0020       <a href="abeltr.html" class="code" title="function y=abeltr(x,t1,t2)">abeltr</a>(gg(1+n:n2,1:n),mm,nn)<span class="keyword">...</span>
+0021       <a href="abeltr.html" class="code" title="function y=abeltr(x,t1,t2)">abeltr</a>(gg(1+n:n2,1+n:n2),mm,nn)];
+0022 <span class="keyword">for</span> k1=1:n
+0023    rk1=mod(n-k1+1,n)+1;
+0024    <span class="keyword">for</span> k2=1:n
+0025       rk2=mod(n-k2+1,n)+1;
+0026       hh1(rk1,rk2)=gg(k1+n,k2);
+0027       hh1(rk1+n,rk2)=gg(k1,k2);
+0028       hh1(rk1,rk2+n)=gg(k1+n,k2+n);
+0029       hh1(rk1+n,rk2+n)=gg(k1,k2+n);
+0030       hh2(k2,k1)=gg(k1,k2+n);
+0031       hh2(k2+n,k1)=gg(k1+n,k2+n);
+0032       hh2(k2,k1+n)=gg(k1,k2);
+0033       hh2(k2+n,k1+n)=gg(k1+n,k2);
+0034       hh3(rk2,rk1)=gg(k1+n,k2+n);
+0035       hh3(rk2+n,rk1)=gg(k1,k2+n);
+0036       hh3(rk2,rk1+n)=gg(k1+n,k2);
+0037       hh3(rk2+n,rk1+n)=gg(k1,k2);
+0038    <span class="keyword">end</span>
+0039 <span class="keyword">end</span>   
+0040 <span class="comment">%</span>
+0041 lvl=input(<span class="string">'input the noise level   '</span>);
+0042 ns=lvl*rand(n2,n2);
+0043 gg1=gg1+ns;
+0044 gg2=gg2+ns;
+0045 gg=gg+ns;
+0046 hh1=hh1+ns;
+0047 hh2=hh2+ns;
+0048 hh3=hh3+ns;
+0049 [11 12 13 14 15 18 19 23 29 31]
+0050 [103 104 201 202 203]
+0051 gp1=11;
+0052 <span class="comment">%</span>
+0053 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(gg,gp1);
+0054 xx23=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0055 y4=zeros(n2,n2);
+0056 <span class="keyword">for</span> k=1:n
+0057    y4(k,1)=x4(k,1);
+0058    y4(k+n,1)=x4(k+n,1);
+0059    y4(1,k+n)=x4(1,k+n);
+0060    y4(1+n,k+n)=x4(1+n,k+n);
+0061    <span class="comment">%</span>
+0062    y4(1,k)=x4(1,k);
+0063    y4(1+n,k)=x4(1+n,k);
+0064    y4(k,1+n)=x4(k,1+n);
+0065    y4(k+n,1+n)=x4(k+n,1+n);
+0066 <span class="keyword">end</span>   
+0067 yy4=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(y4,gp1);
+0068 nabel1=real(yy4+xx23);
+0069 <span class="comment">%</span>
+0070 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(hh1,gp1);
+0071 xx23=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0072 y4=zeros(n2,n2);
+0073 <span class="keyword">for</span> k=1:n
+0074    y4(k,1)=x4(k,1);
+0075    y4(k+n,1)=x4(k+n,1);
+0076    y4(1,k+n)=x4(1,k+n);
+0077    y4(1+n,k+n)=x4(1+n,k+n);
+0078    <span class="comment">%</span>
+0079    y4(1,k)=x4(1,k);
+0080    y4(1+n,k)=x4(1+n,k);
+0081    y4(k,1+n)=x4(k,1+n);
+0082    y4(k+n,1+n)=x4(k+n,1+n);
+0083 <span class="keyword">end</span>   
+0084 yy4=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(y4,gp1);
+0085 nabel2=real(yy4+xx23);
+0086 <span class="comment">%</span>
+0087 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(hh2,gp1);
+0088 xx23=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0089 y4=zeros(n2,n2);
+0090 <span class="keyword">for</span> k=1:n
+0091    y4(k,1)=x4(k,1);
+0092    y4(k+n,1)=x4(k+n,1);
+0093    y4(1,k+n)=x4(1,k+n);
+0094    y4(1+n,k+n)=x4(1+n,k+n);
+0095    <span class="comment">%</span>
+0096    y4(1,k)=x4(1,k);
+0097    y4(1+n,k)=x4(1+n,k);
+0098    y4(k,1+n)=x4(k,1+n);
+0099    y4(k+n,1+n)=x4(k+n,1+n);
+0100 <span class="keyword">end</span>   
+0101 yy4=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(y4,gp1);
+0102 nabel3=real(yy4+xx23);
+0103 <span class="comment">%</span>
+0104 [x1,x21,x22,x23,x4]=<a href="nn_22.html" class="code" title="function [y1,y21,y22,y23,y4]=nn_22(x,gp)">nn_22</a>(hh3,gp1);
+0105 xx23=(<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(x23,gp1));
+0106 y4=zeros(n2,n2);
+0107 <span class="keyword">for</span> k=1:n
+0108    y4(k,1)=x4(k,1);
+0109    y4(k+n,1)=x4(k+n,1);
+0110    y4(1,k+n)=x4(1,k+n);
+0111    y4(1+n,k+n)=x4(1+n,k+n);
+0112    <span class="comment">%</span>
+0113    y4(1,k)=x4(1,k);
+0114    y4(1+n,k)=x4(1+n,k);
+0115    y4(k,1+n)=x4(k,1+n);
+0116    y4(k+n,1+n)=x4(k+n,1+n);
+0117 <span class="keyword">end</span>   
+0118 yy4=<a href="inn_22.html" class="code" title="function y=inn_22(x,gp)">inn_22</a>(y4,gp1);
+0119 nabel4=real(yy4+xx23);
+0120 <span class="comment">%</span>
+0121 ff=fft2(gg1);
+0122 <span class="keyword">for</span> k=2:n2
+0123    kk=mod(n2-(k-1),n2)+1;
+0124    <span class="keyword">if</span> (k~=kk)
+0125       bb(k,kk)=ff(k,kk);
+0126       bb(1,k)=ff(1,k);
+0127    <span class="keyword">end</span>   
+0128 <span class="keyword">end</span>   
+0129 fbb=ifft2(bb);
+0130 big=.8*max(max(yy4+xx23))*ones(n2,3*n2+4);
+0131 nabel=real(yy4+xx23);
+0132 big(1:n2,1:n2)=real(gg);
+0133 big(1:n2,3+n2:2+2*n2)=real(fbb);
+0134 big(1:n2,5+2*n2:4+3*n2)=real(nabel);
+0135 <span class="comment">%</span>
+0136 big1=.8*max(max(yy4+xx23))*ones(n2,4*n2+6);
+0137 big1(1:n2,1:n2)=real(gg);
+0138 big1(1:n2,3+n2:2+2*n2)=real(hh1);
+0139 big1(1:n2,5+2*n2:4+3*n2)=real(hh2);
+0140 big1(1:n2,7+3*n2:6+4*n2)=real(hh3);
+0141 <span class="comment">%</span>
+0142 big2=.8*max(max(yy4+xx23))*ones(n2,4*n2+6);
+0143 big2(1:n2,1:n2)=real(nabel1);
+0144 big2(1:n2,3+n2:2+2*n2)=real(nabel2);
+0145 big2(1:n2,5+2*n2:4+3*n2)=real(nabel3);
+0146 big2(1:n2,7+3*n2:6+4*n2)=real(nabel4);
+0147 <span class="comment">%</span>
+0148 figure(1)
+0149 colormap(gray)
+0150 clf
+0151 imagesc(real(big1))
+0152 axis image
+0153 axis off
+0154 <span class="comment">%</span>
+0155 <span class="comment">%subplot(3,2,1),imagesc(gg)</span>
+0156 <span class="comment">%axis image</span>
+0157 <span class="comment">%subplot(3,2,2),imagesc(real(xx23))</span>
+0158 <span class="comment">%axis image</span>
+0159 <span class="comment">%subplot(3,2,3),imagesc(real(yy4))</span>
+0160 <span class="comment">%axis image</span>
+0161 <span class="comment">%subplot(3,2,4),imagesc(real(bb))</span>
+0162 <span class="comment">%axis image</span>
+0163 <span class="comment">%subplot(3,2,5),imagesc(real(fbb))</span>
+0164 <span class="comment">%axis image</span>
+0165 <span class="comment">%subplot(3,2,6),imagesc(imag(fbb))</span>
+0166 <span class="comment">%axis image</span>
+0167 <span class="comment">%subplot(3,2,5),imagesc(real(xx23))</span>
+0168 <span class="comment">%axis image</span>
+0169 <span class="comment">%subplot(3,2,6),imagesc(real(yy4))</span>
+0170 <span class="comment">%axis image</span>
+0171 <span class="comment">%colormap(gray)</span>
+0172 <span class="comment">%imagesc(big)</span>
+0173 <span class="comment">%axis image</span>
+0174 <span class="comment">%axis off</span></pre></div>
+<hr><address>Generated on Thu 10-Mar-2005 11:25:12 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>
