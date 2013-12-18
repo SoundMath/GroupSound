@@ -1,0 +1,30 @@
+The file WHopera.tar.gz contains all files in this directory.  
+Uncompress it with the following command:
+
+  tar xvzf WHopera.tar.gz
+
+The file Contents.m describes each of the files.  
+
+Example use of the WHopera library:
+
+Change to the directory ./WHopera created in the step above.
+
+>> K = 8; TOL = 0.05; ITERS = 20; DEBUG = 1; DISP = 1;
+>> sig = beats;  % create an example signal
+>> [MaxC, MaxP] = WHMP(sig,ITERS,TOL,DEBUG,DISP);  % run MP on signal
+>> [WVE, WVI] = DEnergy(sig,MaxP,MaxC,DEBUG,DISP);  % find WV
+
+--
+William DeMeo <william.demeo@verizon.net>, 2001 July 23
+
+Scratch:
+
+Error in ==> /home/moonchild/pub/research/dsp/DeMeo/matlab/WHopera/WHip.m
+On line 117  ==>   G(y1,:) = H(1:M2:N);
+
+Error in ==> /home/moonchild/pub/research/dsp/DeMeo/matlab/WHopera/IP.m
+On line 71  ==>   C2d = WHip(f,s); % each row represents all modulations at a single translation
+
+Error in ==> /home/moonchild/pub/research/dsp/DeMeo/matlab/WHopera/WHMP.m
+On line 70  ==> [C, P] = IP(x,DEBUG);  
+
