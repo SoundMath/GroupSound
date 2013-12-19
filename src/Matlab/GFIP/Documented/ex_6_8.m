@@ -24,9 +24,9 @@ u=zeros(N,1);  uu=zeros(N,1);  v=zeros(N,1);
 % -- First example (figures 6.1--6.5) --
 %
 fig61 = amgauss(N,N/2,4*sqrt(N));         % gaussian window (center, scale)=(N/2, 2*sqrt(N))
-x=linspace(-16,16,N);
-fig62 = sinc(x);
-u=fig61(:);  
+x=linspace(-16,16,N);    % N equally spaced points form -16 to 16.
+fig62 = sinc(x);         % Matlab's sinc function
+u=fig61(:);              % reshape these into column vectors (instead of row vectors)
 v=fig62(:);
 
 figure(1); clf; 

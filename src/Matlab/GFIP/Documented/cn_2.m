@@ -34,7 +34,6 @@ end;
 % TODO % accommodate signals of different length
 n2=size(u,1);             % signal length $2N$
 n=n2/2;                % $N$ : signal half-length
-m=n/2;                 % $N/2$ : signal quarter-length
 nn=(0:n-1);            % $\{0,1,\ldots,N-1\}$
 rn = indexset(n,gp);
 uu(1:n,1)=u(1:n,1);

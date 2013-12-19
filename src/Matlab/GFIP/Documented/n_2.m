@@ -36,8 +36,14 @@ m=n/2;                 % $N/2$ : signal quarter-length
 nn=(0:n-1);            % $\{0,1,\ldots,N-1\}$
 rt2=1/sqrt(2);
 y1=zeros(n2,1); y2=zeros(n2,1);
-bf(1:n)=sqrt(n)*ifft(f(1:n,1));
+bf = zeros(n2,1);
+bf(1:n)=sqrt(n)*ifft(f(1:n,1));          
 bf(1+n:n2)=sqrt(n)*ifft(f(1+n:n2,1));
+
+if size(y1) ~= size(bf),
+  error('somethings wrong: bf and y1 should have same size');
+end;
+
 if (gp==1)                % x --> x^{-1}
    d1 = 2;
    c1 = [1 m+1];
@@ -58,4 +64,10 @@ for k=1:d1
    y1(c1(k))=t1;
    y1(c1(k)+n)=t2;
 end
+
+if size(y1) ~= size(bf),
+  disp('size(y1) = [%d %d] is not [%d %d] = size(bf)', size(y1,1), size(y1,2), size(bf,1),size(bf,2));
+  error('somethings wrong: bf and y1 should have same size');
+end;
+
 y2=bf-y1;
