@@ -1,5 +1,8 @@
-%  localpaths -- initialize MATLAB path to include local directories
+%  startup.m 
 %
+%  Put this file in ~/.octaverc  to initialize Octave path.
+%  Put this file in ~/matlab/startup.m to initialize Matlab path.
+%  
   disp('---------------------------------------------------');
   disp(' ');
   disp(' __________________________________________/\  ________');
@@ -15,15 +18,15 @@
   % (util)
   dir2add = fullfile(MATLABROOT, 'util');
   if(exist(dir2add)==7),
-    disp(sprintf('      %s', dir2add));  addpath(dir2add,1);
+    addpath(dir2add,1);
   end;
 
   % "Group Filters and Image Processing," by An & Tolimieri
   dir2add = fullfile(MATLABROOT, 'GFIP', 'TrnsfFltrsScripts');
-  if(exist(dir2add)==7), appendpath(dir2add); end;
+  if(exist(dir2add)==7), addpath(dir2add); end;
 
   dir2add = fullfile(MATLABROOT, 'GFIP', 'Documented');
-  if(exist(dir2add)==7), appendpath(dir2add); end;
+  if(exist(dir2add)==7), addpath(dir2add); end;
 
 
   disp(' ');
