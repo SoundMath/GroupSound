@@ -3,7 +3,6 @@
 %  Put this file in ~/.octaverc to initialize Octave path.
 %  Put this file in ~/matlab/startup.m to initialize Matlab path.
 %  
-  disp('---------------------------------------------------');
   disp(' ');
   disp(' __________________________________________/\  ________');
   disp(' GroupSound Matlab/Octave path setup...      \/        ');
