@@ -43,17 +43,14 @@ myfigure(real(cuv),real(ccuv),1);
 
 %uu=gn2(u,1);  y=uu*v;                    % get convolution matrix
 
-% y1=convsdp(u,v,1);
-% y2=convsdp(u,v,2);
-
-y1=cn_2(u,v,1);
-y2=cn_2(u,v,2);
+y1=convsdp(u,v,1);
+y2=convsdp(u,v,2);
 
 figure(3); clf;
 myfigure(real(y1),real(y2),0);
 
-%y3=convsdp(u,v,3);
-y3=cn_2(u,v,3);
+y3=convsdp(u,v,3);
+
 uu=gn2(u,3);  yy3=uu*v;                    % get convolution matrix
 
 figure(4); clf; axis tight;
