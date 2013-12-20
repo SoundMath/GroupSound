@@ -220,3 +220,67 @@ groups2uacalc:=function(N)
     AppendTo(outfile, "</algebraList>\n");
 end;
       
+group2table:=function(args)
+    # group2table:=function([G, algebraname])
+    # Write the multiplcation table of a group to a file as an array that is easy 
+    # to read into Matlab or Octave.   
+    #
+    # Input: G               A group created in GAP.
+    #
+    #        name            A string which will serve as both the name of 
+    #                        the resulting variable in Matlab/Octave, and 
+    #                        also the filename (the .m suffix will be added).
+    #
+    # Output: name_table.m   A file containing the multiplication table in an array.
+    #
+    # Examples:
+    #         1.    gap> G := SymmetricGroup(5);      # S5
+    #               gap> group2table([G, "S5"]);
+    #
+    #         2.    gap> G := SmallGroup(60,5);       # A5
+    #               gap> group2table([G, "A5"]);
+    #
+    #         3.    gap> G := SmallGroup(16,6);       # C8 : C2
+    #               gap> group2table([G, "C8sdpC2"]);
+    #
+    #         4.    gap> G := SmallGroup(64,51);      # C32 : C2
+    #               gap> group2table([G, "C32sdpC2"]);
+    #
+    local nargin, G, algebraname, filename, outfile, N, g, f, h, elements, pos, i, j;
+    G:=args[1]; 
+    nargin := Length(args);
+    filename := Concatenation(algebraname, "_table.m");
+    outfile := OutputTextFile(filename, false);
+    SetPrintFormattingStatus(outfile, false);   # This prevents automatic indentation and line breaks.
+    Print("Matlab/Octave file: ", filename, "\n");
+    N:=Order(G);
+    elements:=Elements(G);
+    PrintTo(outfile, algebraname, " = [");
+    for i in [1..N-1] do
+        g:=elements[i];
+        for j in [1..N-1] do
+            h:=elements[j];
+            f:=g*h;
+            pos:=Position(elements, f);
+            AppendTo(outfile, pos-1, " ");
+        od;
+        h:=elements[N];
+        f:=g*h;
+        pos:=Position(elements, f);
+        AppendTo(outfile, pos-1, ";\n");
+    od;
+    g:=elements[N];
+    for j in [1..N-1] do
+        h:=elements[j];
+        f:=g*h;
+        pos:=Position(elements, f);
+        AppendTo(outfile, pos-1, " ");
+    od;
+    h:=elements[N];
+    f:=g*h;
+    pos:=Position(elements, f);
+    AppendTo(outfile, pos-1, "];\n");
+end;
+
+
+      
