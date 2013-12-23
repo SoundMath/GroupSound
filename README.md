@@ -20,7 +20,7 @@ weighted sum of translations f(x-y). Most classical results of dsp are easily
 and elegantly derived if we define our functions on Z/nZ, the abelian group of
 integers modulo n. If we replace this underlying "index set" with a nonabelian
 group, then translation may be written f(y<sup>-1</sup>x), and the resulting audio
-filters arising from convolution naturally produce different effects that those
+filters arising from convolution naturally produce different effects than those
 obtained with ordinary (abelian group) convolution.  
 
 The aim of this project is to explore the idea of using the underlying finite
