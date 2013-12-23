@@ -4,6 +4,8 @@ Group Sound
 This is the main repository for original research on the acoustical properties
 of nonabelian group filters.   
 
+--------------------------------------------
+
 Research Team
 --------------
 Matthew Corley -- University of South Carolina (CS major)
@@ -11,6 +13,8 @@ Matthew Corley -- University of South Carolina (CS major)
 William DeMeo -- University of South Carolina (Math faculty mentor)
 
 Reginald Bain -- University of South Carolina (Music faculty mentor)
+
+---------------------------------------------------
 
 Abstract
 --------
