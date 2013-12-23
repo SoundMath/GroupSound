@@ -40,8 +40,8 @@ News
   [Magellan Scholar](http://www.sc.edu/our/magellan.shtml) and a grant will fund
   his work on this project.  *Congratulations, Matt!*  
 + *October 18, 2013:* [Our abstract][] was accepted; we will present preliminary
-  results of this project at the [Joint Math Meetings][] in Baltimore, Maryland.
-    **Event:** *At the Intersection of Mathematics and the Arts, III.*
+  results of this project at the [Joint Math Meetings][] in Baltimore, Maryland on 
+  January 16, 2014 at 10:40am. **Event:** *At the Intersection of Mathematics and the Arts, III.*
 
 ----------------------------------------------------------
 Related Resources
