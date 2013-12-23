@@ -5,7 +5,6 @@ This is the main repository for original research on the acoustical properties
 of nonabelian group filters.   
 
 --------------------------------------------
-
 Research Team
 --------------
 Matthew Corley -- University of South Carolina (CS major)
@@ -15,7 +14,6 @@ William DeMeo -- University of South Carolina (Math faculty mentor)
 Reginald Bain -- University of South Carolina (Music faculty mentor)
 
 ---------------------------------------------------
-
 Abstract
 --------
 Underlying many digital signal processing (dsp) algorithms, in particular those
@@ -32,7 +30,7 @@ group (i.e., the index set) as an adjustable parameter of a digital audio
 filter. By listening to samples produced using various nonabelian groups, we try
 to get a sense of the "acoustical characters" of finite groups. 
 
-A new webpage is at: http://soundmath.github.io/GroupSound
+The main project webpage is at [soundmath.github.io/GroupSound](http://soundmath.github.io/GroupSound).
 
 ------------------------------------------------
 
@@ -46,7 +44,6 @@ News
     **Event:** *At the Intersection of Mathematics and the Arts, III.*
 
 ----------------------------------------------------------
-
 Related Resources
 -----------------
 1.  Programming:
