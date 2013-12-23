@@ -1,7 +1,8 @@
 Group Sound
 ===========
 
-This is the main repository for original research on the acoustical properties of nonabelian group filters.  As the project has just begun (October 2013), there is not much in the repository yet.  Check back in a month or two!
+This is the main repository for original research on the acoustical properties
+of nonabelian group filters.   
 
 Research Team
 --------------
@@ -13,11 +14,34 @@ Reginald Bain -- University of South Carolina (Music faculty mentor)
 
 Abstract
 --------
-Underlying many digital signal processing (dsp) algorithms, in particular those used for digital audio filters, is the convolution operation, which is a weighted sum of translations f(x-y). Most classical results of dsp are easily and elegantly derived if we define our functions on Z/nZ, the abelian group of integers modulo n. If we replace this underlying "index set" with a nonabelian group, then translation may be written f(y^{-1}x), and the resulting audio filters arising from convolution naturally produce different effects that those obtained with ordinary (abelian group) convolution. 
+Underlying many digital signal processing (dsp) algorithms, in particular those
+used for digital audio filters, is the convolution operation, which is a
+weighted sum of translations f(x-y). Most classical results of dsp are easily
+and elegantly derived if we define our functions on Z/nZ, the abelian group of
+integers modulo n. If we replace this underlying "index set" with a nonabelian
+group, then translation may be written f(y^{-1}x), and the resulting audio
+filters arising from convolution naturally produce different effects that those
+obtained with ordinary (abelian group) convolution.  
 
-The aim of this project is to explore the idea of using the underlying finite group (i.e., the index set) as an adjustable parameter of a digital audio filter. By listening to samples produced using various nonabelian groups, we try to get a sense of the "acoustical characters" of finite groups.
+The aim of this project is to explore the idea of using the underlying finite
+group (i.e., the index set) as an adjustable parameter of a digital audio
+filter. By listening to samples produced using various nonabelian groups, we try
+to get a sense of the "acoustical characters" of finite groups. 
 
 A new webpage is at: http://soundmath.github.io/GroupSound
+
+------------------------------------------------
+
+News
+----
++ *December 9, 2013:* [Matt Corley](mailto:corleymj@email.sc.edu) is now a
+  [Magellan Scholar](http://www.sc.edu/our/magellan.shtml) and a grant will fund
+  his work on this project.  *Congratulations, Matt!*  
++ *October 18, 2013:* [Our abstract][] was accepted; we will present preliminary
+  results of this project at the [Joint Math Meetings][] in Baltimore, Maryland.
+    **Event:** *At the Intersection of Mathematics and the Arts, III.*
+
+----------------------------------------------------------
 
 Related Resources
 -----------------
@@ -46,3 +70,5 @@ Related Resources
 
 
 
+[Our abstract]: https://github.com/SoundMath/GroupSound/raw/master/Conferences/AMSBaltimore2013/abstract.pdf
+[Joint Math Meetings]: http://jointmathematicsmeetings.org/jmm
