@@ -60,7 +60,7 @@ Related Resources
 
 3.  Conferences
 
-    [Joint Math Meetings of the AMS: Mathematical Association of America](http://jointmathematicsmeetings.org/jmm)
+    [Joint Mathematics Meetings](http://jointmathematicsmeetings.org/jmm)
 
     [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)
 
