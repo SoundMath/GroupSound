@@ -50,10 +50,13 @@ News
 Related Resources
 -----------------
 1.  **Programming**  
-    [GAP](http://gap-system.org/),
+    *Primary languages:* [GAP](http://gap-system.org/),
+    [Octave](http://www.gnu.org/software/octave/),
+    [Scala](http://www.scala-lang.org/);  
+    *Others:*
     [CSound](http://www.csounds.com/),
     [Pure Data](http://puredata.info/),
-    [Supercollider](httpp://supercollider.sourceforge.net/),
+    [Supercollider](http://supercollider.sourceforge.net/),
     [Chuck](http://chuck.cs.princeton.edu/).
 
 
