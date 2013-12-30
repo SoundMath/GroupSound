@@ -38,10 +38,10 @@ The main project webpage is at [soundmath.github.io/GroupSound](http://soundmath
 
 News
 ----
-+ *December 9, 2013:* [Matt Corley](mailto:corleymj@email.sc.edu) is now a
++ (December 9, 2013) [Matt Corley](mailto:corleymj@email.sc.edu) is now a
   [Magellan Scholar](http://www.sc.edu/our/magellan.shtml) and a grant will fund
   his work on this project.  *Congratulations, Matt!*  
-+ *October 18, 2013:* [Our abstract][] was accepted; we will present preliminary
++ (October 18, 2013) [Our abstract][] was accepted; we will present preliminary
   results of this project at the [Joint Math Meetings][] in Baltimore, Maryland on 
   January 16, 2014 at 10:40am. **Event:** *At the Intersection of Mathematics and the Arts, III.*
 
