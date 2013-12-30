@@ -247,15 +247,29 @@ group2table:=function(args)
     #               gap> group2table([G, "C32sdpC2"]);
     #
     local nargin, G, algebraname, filename, outfile, N, g, f, h, elements, pos, i, j;
-    G:=args[1]; 
     nargin := Length(args);
+    if nargin < 1 then 
+        Error("Usage: group2table([G, ... ]); first argument G must be a group.");
+    fi;
+    G:=args[1]; 
+    if nargin < 2 then 
+        algebraname:=StructureDescription(G); 
+    else 
+        algebraname:=args[2]; 
+    fi;
+
     filename := Concatenation(algebraname, "_table.m");
     outfile := OutputTextFile(filename, false);
     SetPrintFormattingStatus(outfile, false);   # This prevents automatic indentation and line breaks.
     Print("Matlab/Octave file: ", filename, "\n");
     N:=Order(G);
     elements:=Elements(G);
-    PrintTo(outfile, algebraname, " = [");
+    PrintTo(outfile, "%% G = ", StructureDescription(G), " = {");
+    for i in [1..N-1] do
+        AppendTo(outfile, elements[i] , ", ");
+    od;
+    AppendTo(outfile, elements[N] , "}\n");
+    AppendTo(outfile, algebraname, "table = [");
     for i in [1..N-1] do
         g:=elements[i];
         for j in [1..N-1] do

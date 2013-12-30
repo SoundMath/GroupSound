@@ -5,6 +5,7 @@ This is the main repository for original research on the acoustical properties
 of nonabelian group filters.   
 
 --------------------------------------------
+
 Research Team
 --------------
 Matthew Corley -- University of South Carolina (CS major)
@@ -14,6 +15,7 @@ William DeMeo -- University of South Carolina (Math faculty mentor)
 Reginald Bain -- University of South Carolina (Music faculty mentor)
 
 ---------------------------------------------------
+
 Abstract
 --------
 Underlying many digital signal processing (dsp) algorithms, in particular those
@@ -44,9 +46,10 @@ News
   January 16, 2014 at 10:40am. **Event:** *At the Intersection of Mathematics and the Arts, III.*
 
 ----------------------------------------------------------
+
 Related Resources
 -----------------
-1.  Programming:
+1.  **Programming**
     [GAP](http://gap-system.org/),
     [CSound](http://www.csounds.com/),
     [Pure Data](http://puredata.info/),
@@ -54,20 +57,16 @@ Related Resources
     [Chuck](http://chuck.cs.princeton.edu/).
 
 
-2.  Books and Notes 
-
+2.  **Books and Notes**
+    [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)  
     [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
     by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
 
-3.  Conferences
-
-    [Joint Mathematics Meetings](http://jointmathematicsmeetings.org/jmm)
-
-    [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)
-
-    [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)
-
-    [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)
+3.  **Conferences**
+    [Joint Mathematics Meetings](http://jointmathematicsmeetings.org/jmm)  
+    [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)  
+    [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)  
+    [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)  
 
 
 
