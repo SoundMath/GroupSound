@@ -49,7 +49,7 @@ News
 
 Related Resources
 -----------------
-1.  **Programming**
+1.  **Programming**  
     [GAP](http://gap-system.org/),
     [CSound](http://www.csounds.com/),
     [Pure Data](http://puredata.info/),
@@ -57,12 +57,12 @@ Related Resources
     [Chuck](http://chuck.cs.princeton.edu/).
 
 
-2.  **Books and Notes**
+2.  **Books and Notes**  
     [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)  
     [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
     by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
 
-3.  **Conferences**
+3.  **Conferences**  
     [Joint Mathematics Meetings](http://jointmathematicsmeetings.org/jmm)  
     [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)  
     [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)  
