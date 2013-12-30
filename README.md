@@ -60,7 +60,7 @@ Related Resources
     [Chuck](http://chuck.cs.princeton.edu/).
 
 
-2.  **Books and Notes**  
+2.  **Books, notes, and other references**  
     [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)  
     [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
     by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
