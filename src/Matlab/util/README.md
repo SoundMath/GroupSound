@@ -1,28 +1,12 @@
-<style TYPE="text/css">
-code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
-</style>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [['$','$'], ['\\(','\\)']],
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
-    }
-});
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+# util
 
 harmonics(K, f0, w)
 -------------------
 **FILE** harmonics.m  
 **DESCRIPTION** generate a harmonic tone of length N = pow2(K+1)  
 **INPUT**  
-    K   N = pow2(K+1) is the length of the output signal
+
+    K   the length of the output signal is N = pow2(K+1)
     f0  the base frequencies (unnormalized)
     w   (Boolean) if true, then write signals to files
 	
