@@ -50,7 +50,8 @@ News
 Related Resources
 -----------------
 1.  **Programming**  
-    *Primary languages:* [GAP](http://gap-system.org/),
+    *Primary languages:* [Sage](http://sagemath.org),
+    [GAP](http://gap-system.org/),
     [Octave](http://www.gnu.org/software/octave/),
     [Scala](http://www.scala-lang.org/);  
     *Others:*
