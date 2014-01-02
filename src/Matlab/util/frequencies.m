@@ -19,8 +19,8 @@ function f = frequencies(nsteps,noct,f0)
 %     >> f=frequencies(nsteps,noct,f0);
 %
 %     >> frequencies(12, 1, 55)
-%        55.000  58.270  61.735  65.406  69.296  73.416  77.782  82.407  87.307
-%        92.499  97.999  103.826  110.000
+%     results in: 55.000  58.270  61.735  65.406  69.296  73.416  77.782 ...
+%                 ... 82.407  87.307  92.499  97.999  103.826  110.000
 %
 % NOTES:
 %     Motivation for default starting frequency:
