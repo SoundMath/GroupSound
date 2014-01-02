@@ -62,15 +62,13 @@ Related Resources
 
 
 2.  **Books, notes, and other references**  
-    + [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)  
+    + [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)    
     + [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
-    by Burk, Polansky, Repetto, Roberts and Rockmore. 2011. 
 
 3.  **Conferences**  
-    + We will present a preliminary report on GroupSound at
+    + We will give a preliminary report on GroupSound at
       the MAA Session on the [Intersection of Mathematics and the Arts III][]
-      [Joint Math Meetings][](http://jointmathematicsmeetings.org/jmm) on
-      January 16, 2014.  
+      at the [JMM][] on January 16, 2014.  
     + [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)  
     + [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)  
     + [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)  
@@ -79,4 +77,5 @@ Related Resources
 
 [Our abstract]: https://github.com/SoundMath/GroupSound/raw/master/Conferences/AMSBaltimore2013/abstract.pdf
 [Joint Math Meetings]: http://jointmathematicsmeetings.org/jmm
+[JMM]: http://jointmathematicsmeetings.org/jmm
 [Intersection of Mathematics and the Arts III]: http://jointmathematicsmeetings.org/meetings/national/jmm2014/2160_program_thursday.html#2160:MCPNORC7
