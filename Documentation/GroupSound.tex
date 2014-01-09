@@ -23,6 +23,10 @@
 \renewcommand{\rb}{\ensuremath{\rrbracket}}
 \newcommand{\<}{\ensuremath{\langle}}
 \renewcommand{\>}{\ensuremath{\rangle}}
+\newcommand{\sdp}{\ensuremath{\rtimes}}
+\newcommand{\inverse}[1]{\ensuremath{#1^{-1}}}
+\newcommand{\zmv}{\ensuremath{x^m k_v}}
+\newcommand{\zmvInv}{\ensuremath{x^{N-wm} k_w}}
 
    \newcommand{\field}[1]{\ensuremath{\mathbb{#1}}}
    \newcommand{\N}{\field{N}}                   % natural numbers
@@ -47,6 +51,12 @@
 
    % VECTORS: use bold font
    \newcommand\vf{\ensuremath{\mathbf{f}}}
+
+   % GROUP ALGEBRA
+   \newcommand{\ga}[1]{\ensuremath{\C #1}} %  group algebras
+   \newcommand{\CA}{\ga{A}}                % the group algebra of $A$
+   \newcommand{\CG}{\ga{G}}                % the group algebra of $G$
+
 
 \newcommand{\defn}[1]{\emph{#1}}
 
@@ -142,7 +152,7 @@ certain translations of these extensions.  Some of the
 characters of $A$ cannot be extended to characters of $G$,
 but only to proper subgroups of $G$.  This presents some
 difficulties involving the underlying translation-invariant
-subspaces, some of which are now multi-dimensional.
+subspaces, some of which are now multidimensional.
 However, it also presents opportunities for alternative
 views of local signal domain information on these
 translation-invariant subspaces. 
@@ -413,6 +423,72 @@ and~(\ref{eq:conv}) becomes
 
 %--GA---------------------------------------------------------------------------
 % \input{UHEE616-ga}
+%-----------------------------------------------------------------------
+\subsection{The Group Algebra $\CG$}
+%-----------------------------------------------------------------------
+\label{sec:groupalgebra}
+The \emph{group algebra} $\CG$ is the space of all formal sums
+\begin{equation}
+f = \sum_{x\in G} f(x) x, \quad f(x) \in \C,
+\end{equation}
+with the following operations for $f, g \in \CG$:
+\begin{equation}
+f+g = \sum_{x\in G} (f(x) + g(x))x,
+\end{equation}
+\begin{equation}
+\alpha f = \sum_{x\in G} (\alpha f(x)) x, 
+           \quad \alpha \in \C,
+\end{equation}
+\begin{equation}
+fg = \sum_{x\in G}\left(\sum_{y\in G} f(y)g(y^{-1}x)\right)x. 
+\end{equation}
+
+The mapping $\lt{L}_g$ of $\CG$ defined by 
+$\lt{L}_gf = gf$
+is a linear operator on the space $\CG$ called 
+\emph{left multiplication by} $g$.  
+Since $y\in G$ can be identified with the formal
+sum $e_y \in \CG$ consisting of a single nonzero term,
+\begin{equation}\label{eq:leftmult}
+yf = \lt{L}_{e_y}f = \sum_{x\in G}f(y^{-1}x) x.
+\end{equation}
+In relation to translation of $\LG$, (\ref{eq:leftmult}) is the
+$\CG$ analog. Fig.~\ref{fig:cyclicshift} illustrates.
+
+The mapping $\Theta: \LG \to \CG$ defined by
+\begin{equation}\label{eq:iso}
+\Theta(f) = \sum_{x\in G} f(x) x, \quad f\in \LG,
+\end{equation}
+is an algebra isomorphism of the convolution algebra $\LG$
+onto the group algebra $\CG$.  
+Thus we can identify
+$\Theta(f)$ with $f$, using  context to decide whether
+$f$ refers to the function in $\LG$ or the formal sum in
+$\CG$.  
+
+An important aspect of the foregoing isomorphism is the
+correspondence between the translations of the spaces.
+Translation of $\LG$ by $y\in G$ %$\T(y)$ 
+corresponds to left multiplication of $\CG$ by $y\in G$.
+Convolution of $\LG$ by $f\in \LG$ corresponds to
+left multiplication of $\CG$ by $f\in \CG$. 
+We state 
+these relations symbolically as follows:
+\begin{center}
+\begin{tabular}{ccc}
+ $\LG$ & $\simeq$ & $\CG$ \\
+ $\lt{T}_y$ & $\leftrightarrow$ & $\lt{L}_y$\\
+ $\lt{C}(f)$ & $\leftrightarrow$ & $\lt{L}_f$
+\end{tabular}
+\end{center}
+
+\begin{figure}
+\centerline{\framebox{
+	\includegraphics[width=\columnwidth]{../figures/t_cyclicshift}}}
+  \caption{An impulse $f\in \CA$ and a few abelian group translates, $x^2f, x^9f,
+      x^{-7}f$.}
+  \label{fig:cyclicshift}
+\end{figure}
 
 %--IDEALS---------------------------------------------------------------------------
 % \input{ideals}
@@ -444,23 +520,413 @@ and~(\ref{eq:conv}) becomes
 
 %--SDP---------------------------------------------------------------------------
 %\input{SDP}
+%----------------------------------------------------------------------
+\section{Semidirect Product Groups}
+%----------------------------------------------------------------------
+To determine whether a particular group is useful for a \ac{dsp} application, we must
+specify exactly how the group indexes the data.
+An algorithm based on a given group may reduce computational complexity, it
+may make it easier to understand and perform a given signal processing task, or
+it may alter the results of a signal processing operation in an interesting or
+desirable way. 
 
-%=======================================================================
-%\ismasec{Examples}
-%=======================================================================
-% As seen above, when varying group structures are placed on indexing sets,
-% and products in the resulting group algebra are computed, 
-% interesting signal transforms obtain.  In this section,
-% we elucidate the nature of these operations by
-% examining some simple concrete examples in detail.
+This section describes a simple class of nonabelian groups, called
+\emph{abelian by abelian semidirect products}, 
+that is useful in some applications. This class is
+perhaps the simplest extension of abelian groups, and consists of groups of the
+form $G = A \sdp B$, where $A$ and $B$ 
+are abelian groups. Not surprisingly, and DSP over such groups can be carried
+out just as it is done over abelian groups.  However, the results of performing
+a given \ac{dsp} operation can be vastly different, depending on which group is
+used as the underlying indexing set.
+
+%-----------------------------------------------------------------------
+%\ismasubsec{Action Group}
+%-----------------------------------------------------------------------
+Let $G$ be a finite group of order $N$, $K$ a subgroup of $G$,
+and $H$ a normal subgroup of $G$. If $G = HK$ and $H \cap
+K = \{1\}$, then we say that $G$ is the 
+%\emph{internal semidirect product}
+\emph{semidirect product} $G = H \sdp K$. 
+It can be shown that $G = H \sdp K$ if and only if every $x \in
+G$ has a unique representation of the form $x = yz, \; y\in H,
+z\in K$.
+
+Denote by $Aut(H)$ the set of all \emph{automorphisms} of
+$H$. The mapping $\Psi:K\rightarrow Aut(H)$ defined by  
+\begin{equation}\label{eq:homo}
+\Psi_z(x) = zxz^{-1}, \quad z\in K, x\in H
+\end{equation}
+is a group homomorphism. 
+Define the binary composition in $G$
+%relative to the representation $G= H\sdp K$
+in terms of $\Psi$ as follows:
+\begin{equation}\label{eq:PsiProd}
+x_1x_2 = (y_1z_1)(y_2z_2)= y_1\Psi_{z_1}(y_2)z_1z_2,
+\end{equation}
+\[
+y_1, y_2 \in H,\; z_1, z_2 \in K. 
+\]
+
+If $K$ is a normal subgroup of $G$,
+then $y^{-1}Ky = K$ for all $y\in G$, 
+%(by definition of \emph{normal subgroup}) in which case, %$[H, K] = \{1\}$, 
+and $G$ is simply the cartesian product $H\times K$ 
+with component-wise multiplication. 
+What is new in the semidirect product is
+the possibility that $K$ acts nontrivially on $H$. 
+For this reason, $K$ is sometimes called the ``action group.''
+
+%-----------------------------------------------------------------------
+\subsubsection{Simplest Nonabelian Example}
+%-----------------------------------------------------------------------
+If the mapping $\Psi$ given in~(\ref{eq:homo}) is defined over
+$K=U(N)$, then $\Psi$ is a group isomorphism.
+Under this identification, we can form the semidirect
+product $G = H\sdp K$, with $H = C_N(x)$ and $K$ a
+subgroup of $U(N)$.  Throughout this section, $G$ will
+denote such a semidirect product group.
+
+The elements $u\in K$ are integers. However, following~\cite{An:2003} we
+denote by $k_u$ the element $u\in K$, as this avoids confusion that can arise 
+on occasion. This notation is especially useful when $K$ 
+is a cyclic group with generator $u$.  If  we denote elements of $K$ by $k_u^j$, instead of 
+by $u^j$, it is easier to distinguish them from elements of the abelian group $C_N(x)$.
+
+Suppose the action group $K$ is a cyclic group of order $J = |K|$ with generator
+$u$. We identify each element of $K$ with an index, and denote 
+the set of elements by $K = \{k_u^j: 0\leq j < J\}$.
+Thus, to each $k_v \in K$, there corresponds a $j\in \Z$ 
+such that $k_u^j=k_v$.
+We use $x^n k_v$ and $x^n k_u^j$ to denote  
+typical points of $G=C_N(x)\sdp K$.
+
+Given two points in $G$, say $z = x^m k_u$
+and $y=x^n k_v$, define multiplication %on $G$ 
+according
+to~(\ref{eq:PsiProd}) as follows:
+\begin{equation}\label{eq:prod}
+  zy = (x^m k_u)(x^n k_v) = x^{m+u n} k_u k_v,
+\end{equation}
+where %In~(\ref{eq:prod}), 
+$m+ u n$ is taken modulo $N$.
+Since $k_v=k_u^j$ for some $j\in \Z$, then 
+$k_u k_v = k_u^{1+j}$, and $zy = x^{m+u n} k_u^{j+1}$.
+
+Let $z = x^m k_v$ and suppose $k_w$ is the inverse 
+of $k_v$ in $K$.  Then the inverse of $z$ must be
+$z^{-1}=x^{N-wm} k_w$, since this satisfies
+%\begin{equation}\label{eq:inv}z^{-1}=x^{N-wm} k_w.\end{equation}
+$\inverse{z}z \equiv 1$.
+
+Suppose $K \subset U(N)$ has order $|K|=J$, 
+and consider the semidirect product group
+with elements
+\begin{equation}
+  G   = \{x^n k_u^j : 0 \leq n < N, 0 \leq j < J\}.\label{eq:sdp}
+\end{equation}
+%\ismasubsec{Translations on Semidirect Product Groups}
+For $f\in \CG$, %the formal sum can be expressed in the following ways:
+\begin{equation}
+  f = \sum_{y\in G} f(y)y= \sum_{n,j} f(x^n k_u^j)x^n k_u^j,
+\end{equation}
+%where $0\leq n <N$ and $0\leq j < J$.
+
+As above, translations of $\CG$ are defined as
+left multiplication by elements of $G$.  
+For semidirect product~(\ref{eq:sdp}) 
+there is a simple dichotomy of translation types that arise
+from left-multiplication by elements of $G$.  %Translations of the
+First, the familiar ``abelian translates'' 
+are obtained upon left-multiplication by powers of $x$
+(Fig.~\ref{fig:cyclicshift}).  
+By change of variables, 
+\begin{equation}\label{eq:001}
+x^mf = \sum_{n,j} f(x^{n-m} k_u^j)x^n k_u^j,
+\end{equation}
+which is simply a right shift of $f$ by $m$ units.
+Similarly, left-multiplication by powers of
+$x^{-1}$ effects left shift of $f$. 
+(Recall, $x^{-1} \equiv x^{N-1}$
+and $x^{-m} \equiv x^{N-m}$.)  
+
+Of the second type are the ``nonabelian translates,'' 
+obtained upon left-multiplication by $k_v \in K$.
+\begin{equation}
+  k_vf %&=& \sum_{n,j} f(x^n k_u^j)k_v x^n k_u^j\nonumber\\
+  = \sum_{n,j} f(k_v^{-1}x^n k_u^j)x^n k_u^j.
+\end{equation}
+Suppose $k_w = k_u^\ell$ is the inverse of $k_v$ in $K$.  Then,
+\begin{equation}
+  k_vf %  &=& \sum_{n,j} f(k_w x^{n}k_u^j)x^n k_u^j\nonumber\\
+  = \sum_{n,j} f(x^{wn}k_u^{\ell + j})x^n k_u^j\label{eq:nonabtrans}
+\end{equation}
+%As usual, summation is over $0\leq n <N$ and $0\leq j < J$.
+From equation~(\ref{eq:nonabtrans}) it is clear that $k_vf$ 
+results in a more complex transformation than that of 
+$x^m f$ as given by~(\ref{eq:001}).
+
+%\newcommand{\zmv}{\ensuremath{x^m k_v}}
+%\newcommand{\zmvInv}{\ensuremath{x^{N-wm} k_w}}
+
+For the general element $z = \zmv \in G$ with 
+inverse $z^{-1}=\zmvInv$ %(equation~(\ref{eq:inv})), 
+we derive rules for generalized translations.
+% with respect to $z$ and $z^{-1}$.
+\begin{equation*}
+  zf = \sum_{y\in G} f(z^{-1}y)y= \sum_{n,j} f(x^{N-w(m-n)} k_w k_u^j)x^n k_u^j
+%  &=& \sum_{y\in G} f(y)zy = \sum_{y\in G} f(z^{-1}y)y\nonumber \\  
+%  &=& \sum_{n,j} f(\zmvInv \, x^n k_u^j) x^n k_u^j\nonumber\\
+%  &=& \sum_{n,j} f(x^{N-w(m-n)} k_w k_u^j)x^n k_u^j
+\end{equation*}
+\begin{equation*}
+  z^{-1}f = \sum_{y\in G} f(zy)y= \sum_{n,j} f(x^{m+vn} k_vk_u^j)x^n k_u^j
+%  &=& \sum_{y\in G} f(y)z^{-1}y = \sum_{y\in G} f(zy)y\nonumber \\  
+%  &=& \sum_{n,j} f(\zmv x^n k_u^j)x^n k_u^j\nonumber\\
+%  &=& \sum_{n,j} f(x^{m+vn} k_vk_u^j)x^n k_u^j
+\end{equation*}
+
+
+To summarize, when different group are used as indexing sets,
+and products in the resulting group algebra are computed, 
+interesting signal transforms result.  In the next section,
+we elucidate the nature of these operations by
+examining some simple concrete examples in detail.
 
 %--EXAMPLES-----------------------------------------------------------------
 %\input{Examples}
 
-%--SUMMARY-----------------------------------------------------------------
-%\input{DSP/isma2004-summary}
-%\input{DSP/isma2004-summary-long}
-%\input{UHEE616-summary}
+%=======================================================================
+\subsection{Examples: 1-D Semidirect Product Indexing Sets}
+%\protect\footnotemark}
+%=======================================================================
+Recall, the mapping $\Psi: U(N) \to Aut(C_N(x))$ is a group
+isomorphism.
+Under this identification, we can form $C_N(x)\sdp K$
+for any subgroup $K$ of the group of units $U(N)$.  
+A typical point in $C_N(x)\sdp K$ is denoted 
+$(x^n, u), \, 0\leq n<N,\, u\in K$ with multiplication given
+by  
+\[
+(x^m, u)(x^n, v) = (x^{m+un},uv), \quad 
+0\leq m, n < N,\, u, v \in K
+\]
+where $m+un$ is taken modulo $N$.
+We often use $k_u$ to denote the element $u\in K$ as this
+avoids confusion that can arise at various places.
+
+\begin{example}
+\label{ex:g2}
+{\bf Example 1.} 
+(See also~\cite[page 125]{An:2003}.)
+Let $G_1$ be the abelian group 
+\begin{equation}
+G_1 = C_{2N}(x) = \{x^n : 0 \leq n < 2N\}. % = \{1, x, x^2, \ldots, x^{2N-1}\}
+\end{equation}
+Let $G_2$ be the \emph{dihedral group} %$\vs{D}_{2N}(x, k_{N-1})$,
+%and suppose the elements of $G_2$ are indexed as follows:
+with elements
+\begin{eqnarray*}
+G_2&=& C_N(x) \sdp \{1, k_{N-1}\}\\
+&=& \{x^n k_{N-1}^j : 0 \leq n < N, 0 \leq j < 2\}.
+\end{eqnarray*}
+We order the elements of $G_2$ as follows:
+\[
+\{1, x, \ldots, x^{N-1}, k_{N-1}, xk_{N-1}, \ldots, x^{N-1}
+k_{N-1}\}
+\]
+Thus, $G_2$ is divided into two blocks with $N$-samples per block.
+\end{example}
+
+\begin{example}
+\label{ex:g3}
+{\bf Example 2.} 
+Another group, $G_3$, will be constructed as follows: for some 
+integer $M \geq 2$, define $N= 2^M$, so that
+$\left(\frac{N}{2} + 1\right)^2 \equiv 1 \mod N$,
+and $N/2 + 1$ generates a subgroup of $U(N)$ of order 2.
+Let 
+\begin{eqnarray*}
+G_3 &=& C_N(x) \sdp \{1, k_{\frac{N}{2} + 1}\}\\
+& =& \{x^n k_{\frac{N}{2}+1}^j : 0 \leq n < N, 0 \leq j < 2\}.
+\end{eqnarray*}
+Note that $G_2$ and $G_3$ are isomorphic groups.
+\end{example}
+
+\begin{example}
+{\bf Example 1 (cont.)}  
+By describing the translations of functions in $\CG_2$,  
+we will see that the nonabelian translates of
+$\CG_2$ are ``intrablock time-reversal'' operations.
+A similar analysis of $G_3$ shows that the nonabelian 
+translates of $\CG_3$ perform an ``intrablock interleave''
+operation. 
+
+Multiplication on $G_2$ obeys the following relations:
+\begin{equation}\label{eq:id0}
+  x^N = k_{N-1}^2 = 1,
+\end{equation}
+\begin{equation}
+  x^mk_{N-1}^{j+1} \; x^nk_{N-1}^j = 
+  \begin{cases} 
+    x^{m-n}, & j=0,\\
+    x^{m+n}, & j=1.
+  \end{cases}
+\end{equation}
+If $z=x^mk_{N-1}$, then $z^2=1$, thus $\inverse{z}=z$.
+
+For $f\in \CG_2$, 
+\begin{equation}\label{eq:f}
+  f = \sum_n f(x^n)x^n + f(x^n k_{N-1})x^n k_{N-1}.
+\end{equation}
+By~(\ref{eq:id0}), the nonabelian translate $k_{N-1}f$
+is given by
+\[
+\sum_n f(k_{N-1}x^n)x^n + f(k_{N-1}x^n k_{N-1})x^n k_{N-1}
+\]
+which is equivalent to 
+%  &=& \sum_n f(x^{(N-1)n} k_{N-1})x^n + f(x^{(N-1)n}) x^n k_{N-1},\nonumber\\
+\begin{equation}\label{eq:natran}
+\sum_n f(x^{N-n} k_{N-1})x^n + f(x^{N-n}) x^n k_{N-1}.
+\end{equation}
+Comparing (\ref{eq:f}) and (\ref{eq:natran}), we see that
+the nonabelian translate of $f\in \CG_2$ swaps the first $N$
+samples of $f$ with the remaining $N$ samples, and performs
+a time-reversal within each sub-block.
+
+
+%
+% Integrated additional content from ICMC2005-examples.tex here
+%
+%For a simple linear function, this special translation is
+%illustrated in Fig.~\ref{fig:G2trans}.
+
+To express this another way, define $h=k_{N-1}f$. 
+The first $N$ coefficients of $h$ are defined in terms of $f$ as
+\[
+h(x^n)= f(x^{N-n} k_{N-1}), \quad 0\leq n < N,
+\]
+while the remaining $N$ coefficients are given by
+\[
+h(x^n k_{N-1}) = f(x^{N-n}), \quad 0\leq n < N.
+\]
+For a simple linear function, this special translation is
+illustrated in Fig.~\ref{fig:k7conv}.
+
+%\begin{figure}
+%\centerline{\epsfig{figure=figures/G2transV,width=80mm, height=55mm}}
+%\caption{{\small {\it A linear signal $f\in \CG_2$, where $N
+%    = 8$ (left); the element $k_{N-1} \in G_2$ (middle) --
+%    as an element of the group algebra, $k_{N-1}$ is the ``impulse
+%    function'' $g \in \CG_2$ with one nonzero coefficient,
+%    $g(k_{N-1}) =1$; the product $gf = k_{N-1}f$ (right) is,
+%    in general, the convolution product and is implemented
+%    by appealing to the convolution theorem and using a 
+%    generalized FFT algorithm.}}}
+%    \label{fig:G2trans}
+%\end{figure}
+
+A similar analysis of $G_3 = C_N(x) \sdp \{1,
+k_{\frac{N}{2} + 1}\}$ reveals
+that the nonabelian translates of $\CG_3$ interleave the 
+elements within each $N$-sample sub-block of $G_3$, 
+in addition to swapping the two blocks.
+This is illustrated in Fig.~\ref{fig:k5_k3_conv}.
+\end{example}
+
+\subsection{A Few Generalized Convolutions Computed}
+%Convolutions on Different Groups Computed}
+
+Fig.~\ref{fig:C16conv} illustrates a cyclic
+convolution of two discrete signals, with 16 samples each, 
+indexed with the abelian group $C_{16}$. 
+The first graph in Fig.~\ref{fig:C16conv} is a graph of the
+signal $f$, which is simply an impulse at the 9th sample; that is,
+$f(x^8) = 1$ and 
+$f(x^m) = 0, \, m\neq 8$.
+The second signal, $g$, appears in the middle graph of
+Fig.~\ref{fig:C16conv}.  A linearly increasing sequence
+of 16 numbers ranging from -1 to 1, $g$ can be represented
+as a vector of values
+\begin{equation}
+  \label{eq:gvec}
+\mathbf{g} = 
+%\begin{pmatrix}
+(-1, \, -0.8\bar{6}, \, -0.7\bar{3}, \ldots,
+%-0.6, \, -0.4\bar{6} \\ -0.\bar{3} \\  -0.2 \\  -0.0\bar{6} \\ 0.0\bar{6} \\ 0.2
+%\\ 0.\bar{3} \\ 0.4\bar{6} \\ 0.6 \\ 
+0.7\bar{3}, \, 0.8\bar{6}, \, 1)
+%\end{pmatrix}
+\end{equation}
+or as an element of the group algebra $\C C_{16}$,
+\[
+g = \sum_{m=0}^{15} g(x^m) x^m,
+\]
+where the coefficients $g(x^m)$ take the values given
+in~(\ref{eq:gvec}).  The third graph in
+Fig.~\ref{fig:C16conv} shows the result of the convolution
+$C(f)g = fg$.    Evidently, when signals are indexed by
+elements of the abelian group $C_{16}$, then the product $fg$
+is the familiar cyclic convolution of $f$ and $g$. (Recall,
+convolution by an impulse effects a translation.)
+
+\begin{figure}
+\centerline{\framebox{
+	\includegraphics[width=\columnwidth]{../figures/C16conv_1}}}
+\caption{Convolution of two signals indexed by the abelian
+  group $C_{16}$.}
+\label{fig:C16conv}
+\end{figure}
+
+Fig.~\ref{fig:k7conv} shows the convolution $C(f)g = fg$,
+where $f$ is an impulse at the 9th sample, with group index $k_7$, and
+$g$ is a linearly increasing sequence of 16 numbers ranging
+from -1 to 1; $g$ can be represented as a vector,
+or as an element of the group algebra $\C(C_8 \sdp \{1, k_7\})$,
+\[
+g = \sum_{m=0}^7 \sum_{j=0}^1 g(x^mk_7^j) x^mk_7^j
+\]
+with coefficients $g(x^mk_7^j)$ taking the values given
+in~(\ref{eq:gvec}); that is,
+\[
+g(1)=-1, \, g(x)=-0.8\bar{6}, %\, g(x^2)=-0.7\bar{3},
+\ldots, g(x^7)=-0.0\bar{6},
+\]
+\[
+g(k_7)=0.0\bar{6}, \, g(x k_7)=0.2, \ldots, g(x^7 k_7) = 1.
+\]
+
+\begin{center}
+  
+\begin{figure}
+\framebox{\includegraphics[width=\columnwidth]{../figures/k7conv_1}}
+\caption{The element $k_{N-1} \in G$ (top), where $N=8$ and $G = C_{8}\sdp \{1,k_7\}$ -- as an element of the group
+  algebra, $f =  k_7 \in \CG$ is the ``impulse 
+    function'' with one nonzero coefficient $f(k_7) =1$; 
+    A linear signal $g\in \CG$ (middle); the product $fg = k_7g$ (bottom) is,
+    in general, the convolution of $g$ by $f$, and is implemented
+    by appealing to the convolution theorem and using a 
+    generalized FFT algorithm.}
+\label{fig:k7conv}
+\end{figure}
+\begin{figure}
+	\framebox{\includegraphics[width=\columnwidth]{../figures/k5_k3_conv_1}}
+\caption{Convolution of two signals indexed by the nonabelian
+  groups $C_{8}\sdp \{1,k_5\}$ (third graph) and 
+  $C_{8}\sdp \{1,k_5\}$ (fourth graph).}
+\label{fig:k5_k3_conv}
+\end{figure}
+
+\end{center}
+
+
+\newpage
+
+\appendix
+
+\begin{center}
+{\textsc Appendix}
+\end{center}
 
 \section*{List of Acronyms}
 \begin{acronym}
