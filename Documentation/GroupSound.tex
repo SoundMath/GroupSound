@@ -1,0 +1,245 @@
+% This is the file named 'GroupSound.tex'
+% @LaTeX-file{
+% author = {Matthew Corley and William DeMeo},
+% filename = {'GroupSound.tex'}
+% date = {2014/01/08},
+% text = {main documentation file for the GroupSound project}
+% }
+
+%%%% DOCUMENTCLASS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[reqno,onecolumn,oneside]{paper}
+
+%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{latexsym,amscd,amsmath,amssymb,amsthm,stmaryrd,mathrsfs,enumerate,scalefnt}
+\usepackage{tikz}
+\usepackage{color}
+\usetikzlibrary{calc}
+\usepackage[colorlinks=true,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
+\usepackage[printonlyused,smaller]{acronym}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%% THEOREM ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+% \newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\newcounter{claim}
+\newtheorem{claim}[claim]{Claim}
+\newcounter{conjecture}
+\newtheorem{conjecture}[conjecture]{Conjecture}
+\newtheorem*{Lemma}{Lemma}
+\newtheorem*{Prop}{Proposition}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{remarks}{Remarks}
+\newtheorem*{notation}{Notation}
+
+\numberwithin{theorem}{section}
+\numberwithin{claim}{section}
+\numberwithin{equation}{section}
+\numberwithin{conjecture}{section}
+
+%%%% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lb}{\ensuremath{\llbracket}}
+\renewcommand{\rb}{\ensuremath{\rrbracket}}
+\newcommand{\<}{\ensuremath{\langle}}
+\renewcommand{\>}{\ensuremath{\rangle}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+
+\newcommand{\defn}[1]{\emph{#1}}
+
+
+%%%% TITLE/AUTHOR/DATE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{What does a nonabelian group sound like?}
+\subtitle{Harmonic Analysis on Finite Groups and DSP Applications}
+\author{Matthew Corley and William DeMeo}
+\institution{University of South Carolina}
+
+%%%% END PREAMBLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+\maketitle
+
+%--ABSTRACT---------------------------------------------------------------------------
+\begin{abstract}
+Underlying many \ac{dsp} algorithms, in particular those used for digital audio
+filters, is the convolution operation, which is a weighted sum of translations
+$f(x-y)$. Most classical results of \ac{dsp} are easily and elegantly derived if
+we define our functions on $\Z/n\Z$, the abelian group of integers modulo $n$. 
+If we replace this underlying ``index set'' with a nonabelian group, then
+translation may be written $f(y^{-1}x)$, and the resulting audio filters arising
+from convolution naturally produce different effects that those obtained with
+ordinary (abelian group) convolution. 
+
+The goal of this project is to explore the idea of using the underlying finite
+group (i.e., the index set) as an adjustable parameter of a digital audio
+filter. By listening to samples produced using various nonabelian groups, we try
+to get a sense of the ``acoustical characters'' of finite groups.
+\end{abstract}
+
+\section{Introduction}
+The \emph{translation-invariance} of most classical signal
+processing transforms and filtering operations is largely
+responsible for their widespread use, and is crucial for
+efficient algorithmic implementation and interpretation 
+of results~\cite{An:2003}. 
+
+\ac{dsp} on \emph{finite abelian groups} such as $\Z/n\Z$ is
+well understood and has great practical utility.  
+Translations are defined using addition modulo $n$, and 
+basic operations, including convolutions and Fourier 
+expansions, are developed relative to these translations~\cite{Tolimieri:1998}. 
+%An
+%excellent treatment that is applications oriented while
+%remaining fairly abstract and general, is provided by 
+%%\citeN{Tolimieri:1998}.
+%Tolimieri and An in \cite{Tolimieri:1998}.
+Recently, however, interest in the practical utility of
+\emph{finite nonabelian groups} has grown
+significantly. Although the theoretical foundations of
+nonabelian groups is well established, application of the
+theory to \ac{dsp} has yet to  become common-place.
+%; cf.~the NATO
+%ASI ``Computational Non-commutative Algebras,'' Italy,
+%2003. Another
+A notable exception is~\cite{An:2003},
+which develops theory and algorithms for
+indexing data with nonabelian groups, defining translations
+with a non-commutative group multiply operation, and
+performing typical \ac{dsp} operations relative to these
+translations. 
+%The work %of An and Tolimieri 
+%demonstrates that including nonabelian groups among the
+%possible data indexing strategies significantly broadens the
+%range of useful signal processing techniques.
+
+This paper describes the use of nonabelian groups
+for indexing one- and two-dimensional signals, and discusses 
+some computational advantages and insights that can be gained from 
+such an approach. 
+A simple but instructive class of 
+nonabelian groups 
+%-- the \emph{semidirect product} groups --
+is examined.  When elements of such
+groups are used to index the data, and standard \ac{dsp}
+operations are defined with respect to special group
+binary operators, more general and interesting
+signal transformations are possible.
+%=======================================================================
+\subsection{Preview: Two Distinctions of Consequence}
+Abelian group \ac{dsp} can be completely described in terms of a
+special class of signals called the \emph{characters} of the
+group. (For $\Z/n\Z$, the characters are simply the exponentials.)
+Each character of an abelian group represents a one-dimensional
+translation-invariant subspace, and the set of all characters
+spans the space of signals indexed by the group; any such
+signal can be uniquely expanded as a linear combination over
+the characters.
+
+%\pubidadjcol
+
+In contrast, the characters of a nonabelian group $G$ %on the other hand,
+do not determine a basis for the space of signals indexed by
+$G$.  However, a basis can be constructed by extending the
+characters of an abelian subgroup $A$ of $G$, and then taking
+certain translations of these extensions.  Some of the
+characters of $A$ cannot be extended to characters of $G$,
+but only to proper subgroups of $G$.  This presents some
+difficulties involving the underlying translation-invariant
+subspaces, some of which are now multi-dimensional.
+However, it also presents opportunities for alternative
+views of local signal domain information on these
+translation-invariant subspaces. 
+
+The other abelian/nonabelian distinction of primary importance 
+concerns translations defined on the group.  In the abelian group
+case, translations represent simple linear shifts in space or time.
+When nonabelian groups index the data, however, translations are no
+longer so narrowly defined. 
+
+
+%--INTROS---------------------------------------------------------------------------
+%\input{DSP/isma2004-intro-short}
+%\input{DSP/isma2004-intro-long}
+%\input{UHEE616-intro}
+
+%--CYCLIC---------------------------------------------------------------------------
+% \input{UHEE616-cyclic}
+
+%--TRANS---------------------------------------------------------------------------
+% \input{UHEE616-trans}
+
+%--GA---------------------------------------------------------------------------
+% \input{UHEE616-ga}
+
+%--IDEALS---------------------------------------------------------------------------
+% \input{ideals}
+
+%%=======================================================================
+%\ismasec{Abelian Group DSP}
+%%=======================================================================
+%\input{DSP/abelianTranslation}
+%\input{DSP/abelianDSP}
+
+% %=======================================================================
+% \ismasec{Nonabelian Group DSP}
+% %=======================================================================
+% This section presents some basic theory of digital 
+% signal processing (DSP), but relies on a more general 
+% mathematical formalism than that employed by the 
+% standard textbooks on the subject.\footnote{A few notable
+%   exceptions are \cite{{An:2003}, {Tolimieri:1998}}, {Chirikjian:2002}.}
+
+%--NONABELIAN---------------------------------------------------------------------------
+%\input{DSP/nonabelianDSP}
+%\input{DSP/nonabelianDSP-long}
+%\input{DSP/hafg-nonabelianDSP}
+%\input{UHEE616-nonabelianDSP}
+
+%--THEOREMS----------------------------------------------------------------------
+%\verb!\input{DSP/ngdsp-theorems}!
+%\input{DSP/ngdsp-theorems}
+
+%--SDP---------------------------------------------------------------------------
+%\input{SDP}
+
+%=======================================================================
+%\ismasec{Examples}
+%=======================================================================
+% As seen above, when varying group structures are placed on indexing sets,
+% and products in the resulting group algebra are computed, 
+% interesting signal transforms obtain.  In this section,
+% we elucidate the nature of these operations by
+% examining some simple concrete examples in detail.
+
+%--EXAMPLES-----------------------------------------------------------------
+%\input{Examples}
+
+%--SUMMARY-----------------------------------------------------------------
+%\input{DSP/isma2004-summary}
+%\input{DSP/isma2004-summary-long}
+%\input{UHEE616-summary}
+
+\section*{List of Acronyms}
+\begin{acronym}
+\acro{dsp}[DSP]{digital signal processing}
+\end{acronym}
+
+
+%-----------------------------------------------------------------------------
+\bibliographystyle{plainurl}
+\bibliography{GroupSound}
+%-----------------------------------------------------------------------------
+\end{document}
