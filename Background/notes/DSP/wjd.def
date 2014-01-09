@@ -1,0 +1,336 @@
+%%
+%% This is file `wjd.def'
+%%
+%%% ====================================================================
+%%% @LaTeX-file{
+%%%   filename  = "wjd.def",
+%%%   version   = "0.03.09.08",
+%%%   date      = "2003/09/08",
+%%%   author    = "William DeMeo",
+%%%   email     = "williamdemeo@yahoo.com"
+%%% }
+%%% ====================================================================
+%% 
+% -------------------------------------------------------------
+% Custom Math Definitions 
+% -------------------------------------
+%  Algebra & Analysis:
+   \newcommand{\field}[1]{\ensuremath{\mathbb{#1}}}
+   \newcommand{\Z}{\field{Z}}                   % integers
+   \newcommand{\Q}{\field{Q}}                   % rational numbers
+   \newcommand{\N}{\field{N}}                   % natural numbers
+   \def\R{\field{R}}                   % real numbers 
+   \newcommand{\Rn}{\ensuremath{\field{R}^n}}                % the set of n-tuples with elements in \R
+   \newcommand{\C}{\field{C}}                   % complex numbers 
+   \newcommand{\Cn}{\ensuremath{\field{C}^n}}                % the set of n-tuples with elements in \C
+   \newcommand{\rel}{\ensuremath{\mathcal{R}}}                % a general relation
+   \newcommand{\Gplus}{\ensuremath{\langle G, + \rangle}}  % a group with binary op \cdot
+   \newcommand{\Gdot}{\ensuremath{\langle G, \cdot \rangle}}   % a group with binary op \cdot
+   \newcommand{\Group}{\ensuremath{\langle G, * \rangle}}      % a group with binary op *
+   \newcommand{\Ring}{\ensuremath{\langle R, +, \cdot \rangle}} % a ring
+   \newcommand{\F}{\field{F}}                   % a field
+   \newcommand{\Fn}{\ensuremath{\field{F}^n}}                % the set of n-tuples with elements in \F
+   \newcommand{\FN}{\ensuremath{\field{F}^N}}                % the set of N-tuples with elements in \F
+   \newcommand{\ztwo}{\ensuremath{\field{Z}_2}}              % Cyclic groups (rings)
+   \newcommand{\zthree}{\ensuremath{\field{Z}_3}}
+   \newcommand{\zfour}{\ensuremath{\field{Z}_4}}
+   \newcommand{\Real}{\mbox{Re}} % real part of a complex number  ALT: \newcommand{\Real{\Re}
+   \newcommand{\Imag}{\mbox{Im}}
+   \newcommand{\integral}{\ensuremath{\int_{-\infty}^{\infty}}}% integration ALT: \newcommand{\integral{\int_{-\infty}^{+\infty}} 
+
+%  Operator Theory and Vector Spaces
+   \newcommand{\pv}{\ensuremath{\operatorname{pv}}}
+   \newcommand{\W}{\ensuremath{\operatorname{W}}}       % an operator (\eg Wigner-Ville transform)
+   \newcommand{\Per}{\ensuremath{\operatorname{Per}}}   % a periodizing operator
+
+   %linear transformations \lt should be sans-serif
+   \newcommand{\lt}[1]{\ensuremath{\mathsf{#1}}}
+   \newcommand{\ltb}[1]{\ensuremath{[\mathsf{#1}]}}
+   \newcommand{\linmap}[3]{\ensuremath{\lt{#1}: \vs{#2} \rightarrow \vs{#3}}}
+   \renewcommand{\S}{\lt{S}}       % a linear operator (\eg translation)
+   \newcommand{\T}{\lt{T}}       % a linear operator (\eg translation)
+   \newcommand{\eye}{\lt{I}}     % the identity operator
+   \newcommand{\eyeb}{[\,\lt{I}\,]}     % the identity operator
+
+   % vector spaces should appear in mathcal font.
+   \newcommand{\vs}[1]{\ensuremath{\mathcal{#1}}}
+   \newcommand{\Lp}{\ensuremath{L^p}}%\newcommand{\Lone}{\vs{L}^1}
+   \newcommand{\Linfty}{\ensuremath{L^\infty}}%\newcommand{\Lone}{\vs{L}^1}
+   \newcommand{\Lone}{\ensuremath{L^1}}%\newcommand{\Lone}{\vs{L}^1}
+   \newcommand{\Ltwo}{\ensuremath{L^2}}%\newcommand{\Ltwo}{\vs{L}^2}
+   \newcommand{\ltwo}{\ensuremath{\ell^2}}
+   \newcommand{\LpR}{\Lp(\R)}
+   \newcommand{\LoneR}{\Lone(\R)}
+   \newcommand{\LtwoR}{\Ltwo(\R)}
+   \newcommand{\ltwoR}{\ltwo(\R)}
+   \newcommand{\LA}{\vs{L}(A)}        % the collection of complex valued functions of $A$.
+   \newcommand{\LG}{\vs{L}(G)}        % the collection of complex valued functions of $G$.
+   \newcommand{\LZN}{\vs{L}(\Z/N)}    % the collection of complex valued functions of $\Z/N$.
+   \newcommand{\Hilbert}{\vs{H}}      % a Hilbert space
+   \newcommand{\Banach}{\vs{B}}       % a Banach space
+   %   \newcommand{\BanachHH}{\Banach(\Hilbert,\Hilbert)}   % a Banach space
+   \newcommand{\Hone}{\vs{H}_1}
+   \newcommand{\Htwo}{\vs{H}_2}
+   %   \newcommand{\BanachHoneHtwo}{\vs{B}(\Hone,\Htwo)}}
+   %   \newcommand{\BanachHtwoHone}{\vs{B}(\Htwo,\Hone)}}
+   \newcommand{\esssup}[1]{\ensuremath{\text{ess}\sup_{#1}}}
+
+% old:   
+%   \newcommand{\T}{\ensuremath{\operatorname{T}}}
+%   \newcommand{\Hilbert}{\ensuremath{\mathcal{H}}}      % a Hilbert space
+%   \newcommand{\Hone}{\ensuremath{\mathcal{H}_1}}
+%   \newcommand{\Htwo}{\ensuremath{\mathcal{H}_2}}
+%   \newcommand{\Banach}{\ensuremath{\mathcal{B}(\Hilbert,\Hilbert)}}   % a Banach space
+%   \newcommand{\Banachonetwo}{\ensuremath{\mathcal{B}(\Hone,\Htwo)}}
+%   \newcommand{\Banachtwoone}{\ensuremath{\mathcal{B}(\Htwo,\Hone)}}
+
+
+   \newcommand{\ga}[1]{\ensuremath{\C #1}} %  group algebras
+   \newcommand{\CA}{\ga{A}}                % the group algebra of $A$
+   \newcommand{\CG}{\ga{G}}                % the group algebra of $G$
+   \newcommand{\basis}{\ensuremath{\mathcal{B}}}     % basis
+   \newcommand{\Span}{\ensuremath{\mbox{span}}}
+   \newcommand{\Null}{\ensuremath{\mathcal{N}}}      % null space
+   \newcommand{\Range}{\ensuremath{\mathcal{R}}}     % range
+   \newcommand{\Krylov}{\ensuremath{\mathcal{K}}}    
+   \newcommand{\FT}{\ensuremath{\mathcal{F}}}    % fourier transform
+   \newcommand{\invFT}{\ensuremath{\mathcal{F}^{-1}}} % inverse fourier transform
+   \newcommand{\Poi}{\ensuremath{\operatorname{Poi}}}   % Poisson distribution
+
+% The following definition was for manual bolding of vectors:
+%   \newcommand{\bx}{\ensuremath{\mathbf{x}}}
+% It is ugly and deprecated; better to use the \vec command; e.g. \vec{x}  
+%   @ifundefined{vec}{\newcommand{\vec}[1]{\mathbf{#1}}}{}
+%   \newcommand{\vec}[1]{\mathbf{#1}}
+
+   \newcommand{\mean}[1]{\overline{#1}} % sample mean of x
+% should now use \mean{x} instead of:
+%   \newcommand{\sm}{\ensuremath{\overline{x}}}    % sample mean of x
+   \newcommand{\Prob}{\field{P}}                      % a probability distribution
+
+% Latin (see LaTeX Companion, p. 50)
+   \newcommand{\eg}{e.g.,\space}            % for example (latin: {\it exempli gratia})
+   \newcommand{\ie}{i.e.,\space}            % that is     (latin: {\it id est})
+   \newcommand{\etc}{etc.\@\space}          % etcetera    (latin: {\it et cetera})
+\newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+
+\newcommand\defeq{\ensuremath{\stackrel{\text{def}}{=}}}
+\newcommand\net{\ensuremath{\{x_\alpha\}}}
+\newcommand\Net{\ensuremath{\{x_\alpha : \alpha \in A\}}}
+\newcommand\Netn{\ensuremath{\{x_\alpha : \alpha \in A_n\}}}
+\newcommand\rsum{\ensuremath{R(f,P,c)}}
+\newcommand\intab{\ensuremath{\int_a^b}}
+\newcommand\unsolved{\textcolor{red}{\it Have yet to solve this one!}}
+\newcommand\onlyif{\ensuremath{\quad \Rightarrow \quad}}
+\newcommand\iif{\ensuremath{\quad \Leftrightarrow \quad}}
+
+\newcommand{\inverse}[1]{\ensuremath{#1^{-1}}}
+\newcommand{\inv}[1]{\ensuremath{#1^{-1}}}
+\newcommand{\transpose}[1]{\ensuremath{#1^{\lt{t}}}}
+\newcommand{\compl}[1]{\ensuremath{#1^{\complement}}}
+\newcommand{\smallfrac}[2]{\ensuremath{{\scriptstyle \frac{#1}{#2}}}}
+\newcommand{\Clifford}[2]{\ensuremath{\mathcal{C\ell}_{#1,#2}}}
+
+% Memorandum meta data fields
+\newcommand{\memometa}[2]{\underline{{\sc {\bf #1:}}}\; #2\\\\}
+\newcommand{\memohead}[1]{\lhead{{\sc Textron} Systems}\chead{{\sc Memorandum}}\rhead{#1}}
+%\newcommand{\memosec}[1]{\noindent\underline{\bf #1}}
+\newcommand{\memosec}[1]{\begin{center}\noindent {\bf #1}\end{center}}
+
+\newcommand{\given}{\ensuremath{\,|\,}}
+%\newcommand{\indicator}[1]{\ensuremath{\vec{1}(#1)}}
+\newcommand{\vA}{\ensuremath{\vec{A}}}
+\newcommand{\vU}{\ensuremath{\vec{U}}}
+\newcommand{\Uperp}{\ensuremath{\vec{U}_\perp}}
+\newcommand{\Upara}{\ensuremath{\vec{U}_\parallel}}
+\newcommand{\Uparaa}{\ensuremath{\vec{U}_{\va}}}
+\newcommand{\uperp}{\ensuremath{\vec{u}_\perp}}
+\newcommand{\upara}{\ensuremath{\vec{u}_\parallel}}
+\newcommand{\vperp}{\ensuremath{\vec{v}_\perp}}
+\newcommand{\vpara}{\ensuremath{\vec{v}_\parallel}}
+
+\newcommand\eone{\ensuremath{\vec{e}_1}}
+\newcommand\etwo{\ensuremath{\vec{e}_2}}
+\newcommand\ethree{\ensuremath{\vec{e}_3}}
+\newcommand\Itwo{\ensuremath{\vec{I}_2}}
+\newcommand\ITWO{\ensuremath{\eone \wedge \etwo}}
+\newcommand\Ithree{\ensuremath{\vec{I}_3}}
+\newcommand\ITHREE{\ensuremath{\eone \wedge \etwo \wedge \ethree}}
+\newcommand\carrot{\ensuremath{\wedge}}
+\newcommand\dual{\text{dual}}
+\newcommand\va{\ensuremath{\vec{a}}}
+\newcommand\vb{\ensuremath{\vec{b}}}
+\newcommand\vB{\ensuremath{\vec{B}}}
+\newcommand\vc{\ensuremath{\vec{c}}}
+\newcommand\vY{\ensuremath{\vec{Y}}}
+\newcommand\vw{\ensuremath{\vec{x}}}
+\newcommand\vu{\ensuremath{\vec{u}}}
+\newcommand\vv{\ensuremath{\vec{v}}}
+\newcommand\vx{\ensuremath{\vec{x}}}
+\newcommand\vy{\ensuremath{\vec{y}}}
+\newcommand\vz{\ensuremath{\vec{z}}}
+\newcommand\indicator[1]{\ensuremath{\vec{1}\{#1\}}}
+
+% might use \startcodebox{12}
+\newcommand{\startcodebox}[1]{\begin{center}\setlength{\fboxsep}{4mm}\begin{boxedminipage}[t]{#1cm}}
+\newcommand\stopcodebox{\end{boxedminipage}\end{center}\vspace{2mm}}
+
+%--- begin 2004.11.01 additions ---
+%\newcommand\UCB{U.~C.~Berkeley}
+\newcommand{\school}[1]{{\large{\itshape{#1}}}}
+\newcommand{\inst}[1]{{\large{\itshape{#1}}}}
+\newcommand{\job}[1]{{\small{\bfseries\sffamily{#1}}}}
+\newcommand\hsptwo{}
+\newcommand\adjsl{\small  \vspace*{-10pt}}  
+\newcommand\brr{\begin{raggedright}}
+\newcommand\err{\end{raggedright}}
+\newcommand\smallsep{\setlength{\itemsep}{-1pt}}
+\newcommand\bigsep{\setlength{\itemsep}{+1pt}}
+\newcommand\Yj{\ensuremath{Y_j}}
+\newcommand\Xij{\ensuremath{X(i,j)}}
+\newcommand{\bi}{\begin{itemize}} 
+\newcommand{\ei}{\end{itemize}} 
+\newcommand{\bis}{\begin{itemstep}} 
+\newcommand{\eis}{\end{itemstep}} 
+\newcommand\yields{\ensuremath{\leadsto \;}} 
+%--- end 2004.11.01 additions ---
+
+\newcommand\e{\mathrm{e}}    % exponential
+   \newcommand\A{\operatorname{A}}
+%   \newcommand\E{\operatorname{E}}   % prefer to use \E for e = 3.14...
+   \renewcommand\H{\operatorname{H}}
+%   \newcommand\I{\operatorname{I}}   % prefer to use \I for imaginary number
+   \newcommand\Banachonetwo{\mathcal{B}(\Hone,\Htwo)}
+   \newcommand\Banachtwoone{\mathcal{B}(\Htwo,\Hone)}
+% Signals, Time-Frequency shifts, etc.
+   \newcommand\scale{\frac{1}{\sqrt{s}}}
+   \newcommand\transcale{\left(\frac{t-u}{s}\right)}
+   \newcommand\xpull{x_{\frac{\tau}{2}, -\frac{\xi}{2}}}
+   \newcommand\xpush{x_{-\frac{\tau}{2}, \frac{\xi}{2}}}
+   \newcommand\xpullpush{x_{\frac{\tau}{2}, \frac{\xi}{2}}}
+   \newcommand\xpushpull{x_{-\frac{\tau}{2}, -\frac{\xi}{2}}}
+   \newcommand\xfpull{x_{-\frac{\Delta\nu}{2}}}
+   \newcommand\xfpush{x_{\frac{\Delta\nu}{2}}}
+   \newcommand\apull{a_{-}}
+   \newcommand\apush{a_{+}}
+   \newcommand\ytnu{y_{t,\nu}}
+   \newcommand\ytnut{\tilde{y}_{t,\nu}}
+   \newcommand\half{{\scriptstyle \frac{1}{2}}}
+   \newcommand\halftau{{\scriptstyle \frac{\tau}{2}}}
+   \newcommand\halfxi{{\scriptstyle \frac{\xi}{2}}}
+   \newcommand\halfnu{{\scriptstyle \frac{\nu}{2}}}
+   \newcommand\halfDnu{{\scriptstyle \frac{\Delta\nu}{2}}}
+   \newcommand\xtpull{x\left(t+\halftau\right)}
+   \newcommand\xtpush{x\left(t-\halftau\right)}
+%   (shouldn't need this) \newcommand\xtpullconj{x^*\left(t+\halftau\right)}
+   \newcommand\xtpushconj{x^*\left(t-\halftau\right)}
+   \newcommand\Xtpull{X\left(\nu+\halfxi\right)}
+   \newcommand\Xtpush{X\left(\nu-\halfxi\right)}
+   \newcommand\Xtpullconj{X^*\left(\nu+\halfxi\right)}
+%   (shouldn't need this) \newcommand\Xtpushconj{X^*\left(\nu-\halfxi\right)}
+
+   \newcommand\ytpull{y\left(t+\halftau\right)}
+   \newcommand\ytpush{y\left(t-\halftau\right)}
+%   (shouldn't need this) \newcommand\ytpullconj{y^*\left(t+\halftau\right)}
+   \newcommand\ytpushconj{y^*\left(t-\halftau\right)}
+   \newcommand\Ytpull{Y\left(\nu+\halfxi\right)}
+   \newcommand\Ytpush{Y\left(\nu-\halfxi\right)}
+   \newcommand\Ytpullconj{Y^*\left(\nu+\halfxi\right)}
+%   (shouldn't need this) \newcommand\Ytpushconj{Y^*\left(\nu-\halfxi\right)}
+
+% Language
+%   \newcommand\FT{Fourier transform}
+   \newcommand\WT{Wigner transform}
+   \newcommand\WV{Wigner-Ville}
+
+
+%% Customized section style commands
+
+   \newcommand{\wjdsecstyle}{\scshape\boldmath}
+   \newcommand{\wjdsubsecstyle}{\scshape\boldmath}
+
+%     \newcommand\wjdsec[1]{\chapter{\normalfont\wjdsecstyle #1}}
+%     \newcommand\wjdsec[1]{\chapter{#1}}
+     \newcommand\wjdsec[1]{\section{#1}}
+     \newcommand\wjdsubsec[1]{\subsection{#1}}
+     \newcommand\wjdsubsubsec[1]{\subsubsection{#1}}
+%     \newcommand\wjdparasec[1]{\paragraph{#1}}
+     \newcommand\wjdparasec[1]{\subsubsection{#1}}
+     \newcommand\wjdappsec[1]{\section{#1}}
+     \newcommand\wjdappsubsec[1]{\subsection{#1}}
+%     \newcommand\wjdappsubsubsec[1]{\paragraph{#1}}
+     \newcommand\wjdappsubsubsec[1]{\subsubsection{#1}}
+%     \newcommand\wjdappparasec[1]{\subparagraph{#1}}
+     \newcommand\wjdappparasec[1]{\subsubsection{#1}}
+
+     \newcommand\hafgsec[1]{\section{#1}}
+     \newcommand\hafgsubsec[1]{\subsection{#1}}
+     \newcommand\hafgsubsubsec[1]{\subsubsection{#1}}
+     \newcommand\hafgparasec[1]{\paragraph{#1}}
+
+   \newcommand\ismasec[1]{\section{#1}}
+   \newcommand\ismasubsec[1]{\subsection{#1}}
+   \newcommand\ismasubsubsec[1]{\subsubsection{#1}}
+   \newcommand\ismaparasec[1]{\subsubsection{#1}}
+
+
+   % Binary operator symbols
+   \newcommand\sdp{\ensuremath{\varangle}}                      % semi-direct product
+
+   \newcommand\scriptfrac[2]{\ensuremath{{\scriptstyle \frac{#1}{#2}}}}
+
+\newcommand{\functionsec}[1]{\wjdparasec{\hrule\vspace{1mm}\noindent#1}}
+\newcommand{\rootxref}[1]{The main function definition begins
+  at $\langle${\it #1} \subpageref{root:#1}$\rangle$.}
+\newcommand{\shortrootxref}[1]{The main function definition begins
+  at chunk~\subpageref{root:#1}.}
+
+\newcommand{\authorref}[1]{{\scshape #1}}
+
+\newcommand{\dotB}{\ensuremath{\dot{\vec{B}}}}
+\newcommand{\dotH}{\ensuremath{\dot{\vec{H}}}}
+\newcommand{\dotE}{\ensuremath{\dot{\vec{E}}}}
+\newcommand{\DdotE}{\ensuremath{\Ddot{\vec{E}}}}
+\newcommand{\dotD}{\ensuremath{\dot{\vec{D}}}}
+\newcommand{\DdotD}{\ensuremath{\Ddot{\vec{D}}}}
+
+\newcommand{\curl}{\ensuremath{\mathrm{curl\,}}}
+\renewcommand{\div}{\ensuremath{\mathrm{div\,}}}
+\newcommand{\grad}{\ensuremath{\mathrm{grad\,}}}
+
+% Special notation for exponents and the imaginary number
+\newcommand{\E}{\ensuremath{\mathrm{e}}}
+\newcommand{\I}{\ensuremath{\mathrm{i}}}
+
+%
+% --- Radar and Imaging Definitions ---
+%
+\newcommand\autocorrelation{\ensuremath{\hat{R}_{\hat{f}\hat{f}}}}
+\newcommand\MIf{\ensuremath{\hat{R}_{\hat{f}\hat{f}}}}
+\newcommand{\MI}[1]{\ensuremath{\hat{R}_{\hat{#1}\hat{#1}}}}
+\newcommand\Pupil{\ensuremath{\vs{P}}}
+\newcommand\Focal{\ensuremath{\vs{F}}}
+%\newcommand\micro{\ensuremath{\mu}}
+\newcommand{\micro}[1]{\ensuremath{\mu\text{#1}}}
+\newcommand\km{\ensuremath{\text{km}}}
+\newcommand\nmi{\ensuremath{\text{nmi}}}
+%\newcommand\Tintrapulse{\ensuremath{\tau_{\text{intrapulse}}}}
+\newcommand\pbw{\ensuremath{\tau_{\text{b}}}}  % pulse-burst width
+\newcommand\ptw{\ensuremath{\tau_{\text{t}}}}  % pulse-tone width
+\newcommand\prp{\ensuremath{T_{\text{p}}}}  % pulse repetition period
+\newcommand\prf{\ensuremath{f_{\text{p}}}}  % pulse repetition frequency
+
+\newcommand{\zmv}{\ensuremath{x^m k_v}}
+\newcommand{\zmvInv}{\ensuremath{x^{N-wm} k_w}}
+
+
+% [NB Include file 'wjdthms.def' for end-of-proof symbol]
+%\newcommand\qedsymbol{\hbox{\rlap{$\sqcap$}$\sqcup$}}
+%\newcommand\qed{\relax\ifmmode\else\unskip\quad\fi\qedsymbol}
+%\newcommand\smartqed{\renewcommand\qed{\relax\ifmmode\qedsymbol\else
+%  {\unskip\nobreak\hfil\penalty50\hskip1em\null\nobreak\hfil\qedsymbol
+%  \parfillskip=\z@\finalhyphendemerits=0\endgraf}\fi}}
+
+%\smartqed
+
+%%-------------------------------------------------------------

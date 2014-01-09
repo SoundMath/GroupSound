@@ -18,45 +18,42 @@
 \usepackage[printonlyused,smaller]{acronym}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%%%% THEOREM ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{prop}[theorem]{Proposition}
-\newtheorem{assumption}[theorem]{Assumption}
-
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-% \newtheorem{example}[theorem]{Example}
-\newtheorem{question}[theorem]{Question}
-\newcounter{claim}
-\newtheorem{claim}[claim]{Claim}
-\newcounter{conjecture}
-\newtheorem{conjecture}[conjecture]{Conjecture}
-\newtheorem*{Lemma}{Lemma}
-\newtheorem*{Prop}{Proposition}
-
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{remarks}{Remarks}
-\newtheorem*{notation}{Notation}
-
-\numberwithin{theorem}{section}
-\numberwithin{claim}{section}
-\numberwithin{equation}{section}
-\numberwithin{conjecture}{section}
-
 %%%% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\lb}{\ensuremath{\llbracket}}
 \renewcommand{\rb}{\ensuremath{\rrbracket}}
 \newcommand{\<}{\ensuremath{\langle}}
 \renewcommand{\>}{\ensuremath{\rangle}}
-\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+
+   \newcommand{\field}[1]{\ensuremath{\mathbb{#1}}}
+   \newcommand{\N}{\field{N}}                   % natural numbers
+   \newcommand{\Z}{\field{Z}}                   % integers
+   \newcommand{\Q}{\field{Q}}                   % rationals
+   \newcommand{\R}{\field{R}}                   % reals
+   \newcommand{\Rn}{\ensuremath{\field{R}^n}}                % the set of n-tuples with elements in \R
+   \newcommand{\C}{\field{C}}                   % complex numbers 
+   \newcommand{\Cn}{\ensuremath{\field{C}^n}}                % the set of n-tuples with elements in \C
+
+
+   \newcommand{\vs}[1]{\ensuremath{\mathcal{#1}}}
+   \newcommand\sL{\vs{L}}
+   \newcommand{\LA}{\vs{L}(A)}        % the collection of complex valued functions of $A$.
+   \newcommand{\LG}{\vs{L}(G)}        % the collection of complex valued functions of $G$.
+   \newcommand{\LZn}{\vs{L}(\Z/n\Z)}    % the collection of complex valued functions of $\Z/N$.
+
+   % LINEAR TRANSFORMATIONS: use sansserif with \lt,as in \lt{T}.
+   \newcommand{\lt}[1]{\ensuremath{\mathsf{#1}}}
+   \newcommand{\T}{\lt{T}}       % a linear operator (\eg translation)
+   \newcommand\conv{\lt{C}}
+
+   % VECTORS: use bold font
+   \newcommand\vf{\ensuremath{\mathbf{f}}}
 
 \newcommand{\defn}[1]{\emph{#1}}
 
+%%%% To add notes about things that need to be fixed/addressed, use todo
+     \newcommand{\todo}[1]{
+     {\bf TODO(wjd):} \emph{#1}\\
+     }
 
 %%%% TITLE/AUTHOR/DATE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{What does a nonabelian group sound like?}
@@ -89,6 +86,9 @@ filter. By listening to samples produced using various nonabelian groups, we try
 to get a sense of the ``acoustical characters'' of finite groups.
 \end{abstract}
 
+
+%=======================================================================
+%--INTRO----------------------------------------------------------------
 \section{Introduction}
 The \emph{translation-invariance} of most classical signal
 processing transforms and filtering operations is largely
@@ -101,29 +101,17 @@ well understood and has great practical utility.
 Translations are defined using addition modulo $n$, and 
 basic operations, including convolutions and Fourier 
 expansions, are developed relative to these translations~\cite{Tolimieri:1998}. 
-%An
-%excellent treatment that is applications oriented while
-%remaining fairly abstract and general, is provided by 
-%%\citeN{Tolimieri:1998}.
-%Tolimieri and An in \cite{Tolimieri:1998}.
 Recently, however, interest in the practical utility of
 \emph{finite nonabelian groups} has grown
 significantly. Although the theoretical foundations of
 nonabelian groups is well established, application of the
 theory to \ac{dsp} has yet to  become common-place.
-%; cf.~the NATO
-%ASI ``Computational Non-commutative Algebras,'' Italy,
-%2003. Another
 A notable exception is~\cite{An:2003},
 which develops theory and algorithms for
 indexing data with nonabelian groups, defining translations
 with a non-commutative group multiply operation, and
 performing typical \ac{dsp} operations relative to these
 translations. 
-%The work %of An and Tolimieri 
-%demonstrates that including nonabelian groups among the
-%possible data indexing strategies significantly broadens the
-%range of useful signal processing techniques.
 
 This paper describes the use of nonabelian groups
 for indexing one- and two-dimensional signals, and discusses 
@@ -131,13 +119,11 @@ some computational advantages and insights that can be gained from
 such an approach. 
 A simple but instructive class of 
 nonabelian groups 
-%-- the \emph{semidirect product} groups --
 is examined.  When elements of such
 groups are used to index the data, and standard \ac{dsp}
 operations are defined with respect to special group
 binary operators, more general and interesting
 signal transformations are possible.
-%=======================================================================
 \subsection{Preview: Two Distinctions of Consequence}
 Abelian group \ac{dsp} can be completely described in terms of a
 special class of signals called the \emph{characters} of the
@@ -148,9 +134,7 @@ spans the space of signals indexed by the group; any such
 signal can be uniquely expanded as a linear combination over
 the characters.
 
-%\pubidadjcol
-
-In contrast, the characters of a nonabelian group $G$ %on the other hand,
+In contrast, the characters of a nonabelian group $G$
 do not determine a basis for the space of signals indexed by
 $G$.  However, a basis can be constructed by extending the
 characters of an abelian subgroup $A$ of $G$, and then taking
@@ -169,17 +153,263 @@ case, translations represent simple linear shifts in space or time.
 When nonabelian groups index the data, however, translations are no
 longer so narrowly defined. 
 
+\subsection{Brief overview of nonabelian convolution}
+Since the main operation we will consider is convolution, we must 
+think about how best to view this operation mathematically, as well as how best to
+represent it in the computer.  In this section is some background on the
+mathematical aspects.  In later sections we provide more details and examples.
 
-%--INTROS---------------------------------------------------------------------------
-%\input{DSP/isma2004-intro-short}
-%\input{DSP/isma2004-intro-long}
-%\input{UHEE616-intro}
+Let $\C^G$ denote the set of complex valued functions defined on the group
+$G$.  That is 
+\[
+\C^G = \{f : G\rightarrow \C \}.
+\]
+(In the Tolimieri-An books, \cite{Tolimieri:1998} \cite{Tolimieri:2003}, this set is also denoted by
+$\sL(G)$.)  If the group has $|G| = n$ elements, say, 
+$G = \{x_0, x_1, \dots, x_{n-1}\}$, 
+then each function $f\in  \C^G$ can be represented as
+a length-$n$ vector in $\C^n$---namely, the vector of its values on $G$:
+\[
+\vf = [f(x_0), f(x_1), \dots, f(x_{n-1})].
+\]
+
+Given two functions $f$ and $g$ in $\C^G$, the \emph{convolution of
+$f$ and $g$}, denoted, $f*g$, is also function in $\C^G$ and is
+defined by the values it takes at each $x\in G$ as follows:
+\begin{equation}
+\label{eq:1}  
+(f*g)(x) = \sum_{y \in G} f(y) g(y^{-1}x).
+\end{equation}
+Note that this is a weighted sum of translations of $g$.
+Indeed, let $\T_y: \C^G\rightarrow \C^G$ denote
+the \emph{translation by $y$} operator---that is, $\T_y$ maps 
+a function $g\in \C^G$ to a translated version of itself, $\T_y(g)$, which is defined at each 
+$x \in G$ by $\T_y(g)(x) = g(y^{-1}x)$.
+Then~(\ref{eq:1}) can be written as
+\begin{equation}
+\label{eq:4}  
+(f*g)(x) = \sum_{y \in G} f(y) \T_y(g)(x),
+\end{equation}
+a sum of weighted translations of $g$ where 
+the coefficients $f(y)$ are the weights, and 
+$\T_y(g)$ is the function $g$ ``shifted'' by $y$. (When $G$ is the abelian
+group $\Z/n\Z$ with addition modulo $n$, we have
+$\T_y(g)(x) = g(y^{-1}x) = g(x-y)$, so in this case
+$\T_y(g)$ is literally $g$ shifted by $y$ units to the right.)
+
+Equation~(\ref{eq:4}) defines the convolution, $f * g$, by giving its
+value at each $x\in G$. Using the 
+translation operator, however, we can define convolution
+ ``functionally,'' instead of element-wise, as follows:
+\begin{equation}
+\label{eq:2}  
+f*g = \sum_{y \in G} f(y) \T_y(g)
+\end{equation}
+(Pause to look at the right hand side of~(\ref{eq:2}), and let it sink in that
+this is a function that takes arguments $x\in G$; compare with the right
+hand side of~(\ref{eq:4}).)
+
+ This is fine, but it is also useful to think of~(\ref{eq:2}) as $f$ acting
+on $g$.  Indeed, on the right hand side of~(\ref{eq:2}) we have the operator 
+$\sum_{y \in G} f(y) \T_y$ that maps the function $g$ to the function $f*g$.  But
+on the left hand side we have a binary operation $f*g$, written in infix
+notation, which doesn't jibe very well with this functional interpretation.  So,
+instead of saying ``the convolution of $f$ and $g$'', and writing $f*g$, we will
+say
+%% \emph{convolution by $f$ of $g$} 
+``the convolution {\bf by} $f$ {\bf of} $g$,'' and write $\conv(f)(g)$. In this
+way, we have the \emph{convolution by $f$} operator:
+\begin{equation}
+\label{eq:3}  
+\conv(f) = \sum_{y \in G} f(y) \T_y,
+\end{equation}
+which is a weighted sum of translation operators.  The function $\conv(f)$ takes other
+functions, like $g$, as its argument.
+
+So, the functional types we have here are the following:
+\[
+\conv : \C^G \rightarrow (\C^G)^{\C^G}
+\]
+Given $f\in \C^G$,
+\[
+\conv(f) : \C^G \rightarrow \C^G
+\]
+Given $f\in \C^G$ and $g\in \C^G$,
+\[
+\conv(f)(g) : G \rightarrow \C
+\]
+Or, in the notational style of a functional programming language like Scala:
+\[
+\conv : (G \Rightarrow \C) \Rightarrow ( (G \Rightarrow \C) \Rightarrow (G \Rightarrow \C) )
+\]
+Given $f\in \C^G$,
+\[
+\conv(f) : (G \Rightarrow \C) \Rightarrow (G \Rightarrow \C)
+\]
+Given $f\in \C^G$ and $g\in \C^G$,
+\[
+\conv(f)(g) : (G \Rightarrow \C)
+\]
+
 
 %--CYCLIC---------------------------------------------------------------------------
-% \input{UHEE616-cyclic}
+%============================================================
+\section{Background: Finite Groups}
+%============================================================
+\label{sec:hafg}
+\todo{Decide whether this section should go in the appendix.}
 
-%--TRANS---------------------------------------------------------------------------
-% \input{UHEE616-trans}
+This section summarizes the notations, definitions, and important facts needed
+below. The presentation style is terse since the goal of this section is to
+distill from the more general literature only those results that are most
+relevant to our application. 
+The books~\cite{An:2003} and~\cite{Tolimieri:1998} treat similar material in a
+more thorough and rigorous manner. Throughout, $\C$ denotes complex numbers, 
+$G$ an arbitrary finite group, and $\LG$ the collection of complex valued
+functions defined on $G$. Other notations for $\LG$ are $\C^G$ and 
+$\{f : G \rightarrow \C\}$.
+
+\subsection{Cyclic Groups}
+A group $C$ is called a \emph{cyclic group} if there exists $x\in C$ such that
+every $y\in C$ has the form $y=x^n$ for some integer $n$.  In this case, we call
+$x$ a \emph{generator} of $C$, and we say that such a group is \emph{one generated}.
+
+If $G$ is an arbitrary finite group, and $x\in G$, then the set of powers of $x$,
+\begin{equation}
+  \label{eq:cyclic-group}
+\<x\> = \{x^n : n\in \Z\},
+\end{equation}
+is a cyclic subgroup of $G$ called the 
+\emph{group generated by} $x$ \emph{in} $G$.
+
+It will be convenient to have notation for a cyclic group of
+order $N$ without reference to a particular underlying group.
+Let the set of formal symbols
+\begin{equation}\label{eq:cyclicGroup}
+C_N(x) = \{ x^n : 0 \leq n < N\}
+\end{equation} 
+denote the cyclic group of order $N$ with
+generator $x$, and define binary composition by
+\begin{equation}\label{eq:binarycomp}
+x^m x^n = x^{m+n}, \quad 0\leq m, n < N,
+\end{equation}
+where $m+n$ is addition modulo $N$.  Then $C_N(x)$ is a
+cyclic group of order $N$ having generator $x$. The identity
+element of $C_N(x)$ is $x^0 = 1$, and the inverse of $x^n$
+in $C_N(x)$ is $x^{N-n}$.
+
+To say that a group is \emph{abelian} is to specify that the binary
+composition of the group is commutative, in which case the
+symbol $+$ is usually used to represent this operation.
+For nonabelian groups, we write the (non-commutative) binary
+composition as multiplication.  Since our work involves
+both abelian and nonabelian groups, it is notationally
+cleaner to write the binary operations of an arbitrary group --
+abelian or otherwise -- as multiplication. The
+following examples illustrate that additive groups, such as $\Z/N\Z$, have
+simple multiplicative representations. 
+
+\begin{example}
+{\bf Example.} Let $\Z_N = \{0, 1, \ldots, N-1\}$,
+and let addition modulo $N$ be the binary composition defined on $\Z_N$.
+This group is isomorphic to the cyclic group $C_N(x)$, 
+\[
+\Z_N = \{ n : 0 \leq n < N\} \simeq \{ x^n : 0 \leq n < N\}
+= C_N(x),
+\]
+and it is by this identification that the binary composition
+of $\Z_N$ can be written as multiplication. 
+More precisely, by uniquely identifying each element $m \in \Z_N$
+with the corresponding element $x^m \in C_N(x)$, the binary composition
+$m+n$ is replaced with that of~(\ref{eq:binarycomp}).  
+\end{example}
+
+
+\begin{example}
+{\bf Example.} For an integer $\ell \in \Z_N$, denote by 
+$\<x^\ell\>$ 
+the subgroup generated by $x^\ell$ in $C_N(x)$. If $\ell$ divides $N$,
+then   
+\[
+%gp_N(x^L) 
+\<x^\ell\> = \{x^{m\ell} : 0\leq m < M\}, \quad \ell M = N,
+\]
+and $\<x^\ell\>$ is a cyclic group of order $M$.
+\end{example}
+
+%---
+\subsection{Group of Units}
+%---
+Multiplication modulo $N$ is a ring product on the group of
+integers $\Z_N$. An element $m\in \Z_N$ is called a {\it unit} if
+there exists an $n\in \Z_N$ such that $mn = 1$.  The set
+$U(N)$ of all units in $\Z_N$ is a group with respect to
+multiplication modulo $N$, and is called the 
+\emph{group of units}.%unit group} of $\Z/N\Z$. 
+The group of units can be described %characterized 
+as the set of all integers $0<m<N$ such that $m$ and $N$ are
+relatively prime.  
+\begin{example}
+For $N=8$, 
+%\begin{equation}\label{eq:unitGroup}
+$U(8) = \{1, 3, 5, 7\}$.
+%\end{equation}
+\end{example}
+
+%======================================================================
+%--TRANS---------------------------------------------------------------
+\section{Translation Invariance}
+%======================================================================
+%-----------------------------------------------------------------------
+\subsection{Generalized Translation and Convolution}
+%-----------------------------------------------------------------------
+%\ismasubsubsec{General definition of translation}
+For $y\in G$, the mapping $\lt{T}_y$ of $\LG$ defined by 
+\begin{equation}\label{eq:trans}
+(\lt{T}_yf)(x) = f(y^{-1}x), \quad x \in G,
+\end{equation}
+is a linear operator of $\LG$ called 
+\emph{left translation by} $y$.
+
+%---
+%\ismasubsubsec{General definition of convolution}
+%---
+The mapping $\lt{C}(f)$ of $\LG$ defined by 
+\begin{equation}
+\lt{C}(f) = \sum_{y\in G} f(y) \lt{T}_y, \quad f\in \LG,
+\end{equation}
+is a linear operator of $\LG$ called 
+\emph{left convolution by} $f$.  By definition, for $x\in G$,
+\begin{equation}\label{eq:conv}
+(\lt{C}(f)g)(x) = \sum_{y\in G} f(y) g(y^{-1}x), \quad g \in \LG.
+\end{equation}
+%The collection of all left convolutions of $\LG$ is
+%$\vs{C}(G) = \left\{\lt{C}(f) : f \in G \right\}$.
+
+For $f, g \in \LG$, the composition
+$f * g  = \lt{C}(f)g$
+is called the \emph{convolution product}.
+The vector space $\LG$ paired with the convolution product
+is an algebra, the \emph{convolution algebra over} $G$.
+
+To gain some familiarity with the general 
+definitions of translation %~(\ref{eq:trans}) 
+and convolution, %~(\ref{eq:conv}), 
+it helps to verify 
+that these definitions agree with what we expect 
+when $G$ is a familiar abelian group. 
+%---
+\begin{example}
+{\bf Example:}
+If $G=\Z_N$, then~(\ref{eq:trans}) becomes
+\begin{equation}
+(\lt{T}_yf)(x) = f(x-y),  \qquad x \in G,
+\end{equation}
+and~(\ref{eq:conv}) becomes
+\begin{equation}
+(\lt{C}(g)f)(x) =\sum_{y \in G} g(y)f(x-y).
+\end{equation}
+\end{example}
 
 %--GA---------------------------------------------------------------------------
 % \input{UHEE616-ga}
