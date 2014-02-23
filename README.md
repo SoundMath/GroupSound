@@ -31,23 +31,21 @@ group (i.e., the index set) as an adjustable parameter of a digital audio
 filter. By listening to samples produced using various nonabelian groups, we try
 to get a sense of the "acoustical characters" of finite groups. 
 
-The main project webpage is at [soundmath.github.io/GroupSound](http://soundmath.github.io/GroupSound).
-
 ------------------------------------------------
 
 News
 ----
-+ (Feb 25, 2014) [Matt Corley][] gives a preliminary report on GroupSound at the
++ (Feb 25, 2014) [@corleymj][] gave a preliminary report on GroupSound at the
   spring Pi Mu Epsilon Math Honors Society initiation meeting.  
 + (Feb 17, 2014) Research team meeting in the [xMuse Experimental Music Studio][].  
-+ (Feb 14, 2014) [Matt Corley][] adjusts map-reduce convolution to work for
++ (Feb 14, 2014) [@corleymj][] adjusted map-reduce convolution to work for
   small audio samples. You can now listen to audio convolution by downloading
   the [Sage worksheet (experiements.sws)][].    
-+ (Jan 16, 2014) [William DeMeo][] gives a preliminary report on the project at the MAA Session on the
++ (Jan 16, 2014) [@williamdemeo][] gave a preliminary report on the project at the MAA Session on the
   [Intersection of Mathematics and the Arts III][].   
-+ (Jan 10, 2014) [William DeMeo][] develops a map-reduce algorithm for convolution over finite groups.
++ (Jan 10, 2014) [@williamdemeo][] develops a map-reduce algorithm for convolution over finite groups.
   Get the [Sage worksheet (GroupDSP.sws)][].  
-+ (Jan 8, 2014) [Matt Corley][] develops Sage/Python routines for creating/playing sound signals and writing them to wav files. 
++ (Jan 8, 2014) [@corleymj][] develops Sage/Python routines for creating/playing sound signals and writing them to wav files. 
   Get the [Sage worksheet (wavwrite_examples.sws)][].   
 + (Dec 9, 2013) [Matt Corley][] is now a
   [Magellan Scholar](http://www.sc.edu/our/magellan.shtml) and a grant will fund
@@ -105,6 +103,11 @@ Related Resources
 
 [Reginald Bain]: mailto:rbain@mozart.sc.edu
 [Reg Bain]: mailto:rbain@mozart.sc.edu
+[@regbain]: https://github.com/regbain
+
 [Matthew Corley]: mailto:corleymj@email.sc.edu
 [Matt Corley]: mailto:corleymj@email.sc.edu
+[@corleymj]: https://github.com/corleymj
+
 [William DeMeo]: mailto:williamdemeo@gmail.com
+[@williamdemeo]: https://github.com/williamdemeo
