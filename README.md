@@ -38,10 +38,17 @@ The main project webpage is at [soundmath.github.io/GroupSound](http://soundmath
 
 News
 ----
-+ (December 9, 2013) [Matt Corley](mailto:corleymj@email.sc.edu) is now a
++ (Feb 25, 2014) [Matt Corley](mailto:corleymj@email.sc.edu) will give a
+  preliminary report on GroupSound at the spring Pi Mu Epsilon (math honors
+  society) initiation meeting.
+  [Intersection of Mathematics and the Arts III][].  
++ (Jan 16, 2014) [William DeMeo](mailto:williamdemeo@gmail.com) gave a
+  preliminary report on the project at the MAA Session on the
+  [Intersection of Mathematics and the Arts III][].  
++ (Dec 9, 2013) [Matt Corley](mailto:corleymj@email.sc.edu) is now a
   [Magellan Scholar](http://www.sc.edu/our/magellan.shtml) and a grant will fund
   his work on this project.  *Congratulations, Matt!*  
-+ (October 18, 2013) [Our abstract][] was accepted; we will present preliminary
++ (Oct 18, 2013) [Our abstract][] was accepted; we will present preliminary
   results of this project at the [Joint Math Meetings][] in Baltimore, Maryland on 
   January 16, 2014 at 10:40am. **Event:** *At the Intersection of Mathematics and the Arts, III.*
 
@@ -64,9 +71,10 @@ Related Resources
 2.  **Books, notes, and other references**  
     + [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)    
     + [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
+	+ [Convolution reverb explanation](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/convolution.html)
 
 3.  **Conferences**  
-    + We will give a preliminary report on GroupSound at
+	+ We gave a preliminary report on GroupSound at
       the MAA Session on the [Intersection of Mathematics and the Arts III][]
       at the [JMM][] on January 16, 2014.  
     + [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)  
