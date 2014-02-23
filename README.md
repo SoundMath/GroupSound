@@ -8,11 +8,10 @@ of nonabelian group filters.
 
 Research Team
 --------------
-Matthew Corley -- University of South Carolina (CS major)
+[Reginald Bain][] -- University of South Carolina (Music faculty mentor)  
+[Matthew Corley][] -- University of South Carolina (CS major)  
+[William DeMeo][] -- University of South Carolina (Math faculty mentor)  
 
-William DeMeo -- University of South Carolina (Math faculty mentor)
-
-Reginald Bain -- University of South Carolina (Music faculty mentor)
 
 ---------------------------------------------------
 
@@ -85,7 +84,8 @@ Related Resources
 		- [Convolution reverb](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/convolution.html)
 
 3.  **Conferences**  
-	+ [Intersection of Mathematics and the Arts III][] (DeMeo gave preliminary report at MAA Session, Jan 16, 2014.)
+	+ [Intersection of Mathematics and the Arts III][]   
+	  (DeMeo gave preliminary report at MAA Session, Jan 16, 2014.)
     + [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)  
     + [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)  
     + [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)  
@@ -93,13 +93,18 @@ Related Resources
 
 
 [Our abstract]: https://github.com/SoundMath/GroupSound/raw/master/Conferences/AMSBaltimore2013/abstract.pdf
+
 [Joint Math Meetings]: http://jointmathematicsmeetings.org/jmm
 [JMM]: http://jointmathematicsmeetings.org/jmm
 [Intersection of Mathematics and the Arts III]: http://jointmathematicsmeetings.org/meetings/national/jmm2014/2160_program_thursday.html#2160:MCPNORC7
 
-[Matt Corley]: mailto:corleymj@email.sc.edu
-[William DeMeo]: mailto:williamdemeo@gmail.com
 [Sage worksheet (experiements.sws)]: https://github.com/SoundMath/GroupSound/blob/develop/src/Sage/experiments.sws
 [Sage worksheet (GroupDSP.sws)]: https://github.com/SoundMath/GroupSound/blob/master/src/Sage/GroupDSP.sws
 [Sage worksheet (wavwrite_examples.sws)]: https://github.com/SoundMath/GroupSound/blob/master/src/Sage/wavwrite_examples.sws
 [xMuse Experimental Music Studio]: (http://www.sc.edu/study/colleges_schools/music/study/academic_areas/composition/xmuse_experimental_studio.php)
+
+[Reginald Bain]: mailto:rbain@mozart.sc.edu
+[Reg Bain]: mailto:rbain@mozart.sc.edu
+[Matthew Corley]: mailto:corleymj@email.sc.edu
+[Matt Corley]: mailto:corleymj@email.sc.edu
+[William DeMeo]: mailto:williamdemeo@gmail.com
