@@ -44,9 +44,9 @@ News
   the [Sage worksheet (experiements.sws)][].    
 + (Jan 16, 2014) [@williamdemeo][] gave a preliminary report on the project at the MAA Session on the
   [Intersection of Mathematics and the Arts III][].   
-+ (Jan 10, 2014) [@williamdemeo][] develops a map-reduce algorithm for convolution over finite groups.
++ (Jan 10, 2014) [@williamdemeo][] developed a map-reduce algorithm for convolution over finite groups.
   Get the [Sage worksheet (GroupDSP.sws)][].  
-+ (Jan 8, 2014) [@corleymj][] develops Sage/Python routines for creating/playing sound signals and writing them to wav files. 
++ (Jan 8, 2014) [@corleymj][] developed Sage/Python routines for creating/playing sound signals and writing them to wav files. 
   Get the [Sage worksheet (wavwrite_examples.sws)][].   
 + (Dec 9, 2013) [Matt Corley][] is now a
   [Magellan Scholar](http://www.sc.edu/our/magellan.shtml) and a grant will fund
