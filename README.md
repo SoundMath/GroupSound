@@ -83,12 +83,9 @@ Related Resources
     + Explanation of Some standard methods for ordinary (abelian group) convolution:
 	    - [Overlap add method](http://en.wikipedia.org/wiki/Overlap%E2%80%93add_method)
 		- [Convolution reverb](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/convolution.html)
-		- 
 
 3.  **Conferences**  
-	+ We gave a preliminary report on GroupSound at
-      the MAA Session on the [Intersection of Mathematics and the Arts III][]
-      at the [JMM][] on January 16, 2014.  
+	+ [Intersection of Mathematics and the Arts III][] (DeMeo gave preliminary report at MAA Session, Jan 16, 2014.)
     + [New Interfaces for Musical Expression (NIME)](http://www.nime.org/nime2014/)  
     + [International Symposium on Musical Acoustics (ISMA)](http://isma.univ-lemans.fr/en/index.html)  
     + [International Computer Music Conference (ICMC)](http://www.computermusic.org/page/23/)  
