@@ -76,7 +76,14 @@ Related Resources
 2.  **Books, notes, and other references**  
     + [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)    
     + [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
-	+ [Convolution reverb explanation](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/convolution.html)
+	+ [Malsen and Rockmore](http://www.ams.org/journals/jams/1997-10-01/S0894-0347-97-00219-1/S0894-0347-97-00219-1.pdf)
+	  1997 article on computing FT over nonabelian groups.  
+    + [Baum and Clausen](http://theory.cs.uni-bonn.de/ftp/reports/cs-reports/1990/8551-CS.pdf)
+      1990 report on complexity of FT over nonabelian groups.  
+    + Explanation of Some standard methods for ordinary (abelian group) convolution:
+	    - [Overlap add method](http://en.wikipedia.org/wiki/Overlap%E2%80%93add_method)
+		- [Convolution reverb](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/convolution.html)
+		- 
 
 3.  **Conferences**  
 	+ We gave a preliminary report on GroupSound at
