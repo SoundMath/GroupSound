@@ -62,7 +62,8 @@ Related Resources
 1.  **Programming**  
     *Primary languages:*
 	- [Sage](http://sagemath.org) -- our primary language (for now at least).
-	- [GAP](http://gap-system.org/) -- we use GAP functions from within Sage.
+	    -  [useful doc page](http://www.sagemath.org/doc/constructions/groups.html) explaining how to construct finite groups in Sage.
+		- [GAP](http://gap-system.org/) -- we use GAP functions from within Sage.  
     - [Scala](http://www.scala-lang.org/) -- we will program in Scala later, after the initial prototyping phase of development.  
 	- [Of Algebird, Monoids, Monads,...](http://www.michael-noll.com/blog/2013/12/02/twitter-algebird-monoid-monad-for-large-scala-data-analytics/)
 -- explains some of the interesting new Twitter libraries that assume data structures with certain algebraic properties.  
@@ -70,7 +71,6 @@ Related Resources
 	*Others:*  
     [CSound](http://www.csounds.com/), [Pure Data](http://puredata.info/), [Supercollider](http://supercollider.sourceforge.net/), 
     [Chuck](http://chuck.cs.princeton.edu/).
-	http://www.sagemath.org/doc/constructions/groups.html
 
 
 2.  **Books, notes, and other references**  
