@@ -36,7 +36,7 @@ to get a sense of the "acoustical characters" of finite groups.
 News
 ----
 + (Feb 25, 2014) [@corleymj][] will give a preliminary report on GroupSound at the
-  spring Pi Mu Epsilon Math Honors Society initiation meeting (in Petigru at
+  spring Pi Mu Epsilon Math Honors Society initiation meeting (in LeConte 310 at
   6:30; [advertisement](http://www.math.sc.edu/~pme/year/2013-14/14sInitiationTalk.pdf)).  
 + (Feb 17, 2014) Research team meeting in the [xMuse Experimental Music Studio][].  
 + (Feb 14, 2014) [@corleymj][] adjusted map-reduce convolution to work for
