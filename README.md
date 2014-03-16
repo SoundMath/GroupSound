@@ -37,7 +37,11 @@ News
 ----
 + (Feb 25, 2014) [@corleymj][] will give a preliminary report on GroupSound at the
   spring Pi Mu Epsilon Math Honors Society initiation meeting (in LeConte 310 at
-  6:30; [advertisement](http://www.math.sc.edu/~pme/year/2013-14/14sInitiationTalk.pdf)).  
+  6:30;
+  [advertisement](http://www.math.sc.edu/~pme/year/2013-14/14sInitiationTalk.pdf)).  
+  Matt's talk went exceptionally well, especially considering it was his first
+  time presenting on this topic.  Music Mentor Reg Bain said the talk was
+  "fantasik" and I (the math mentor) quite agree.  Way to go Matt!
 + (Feb 17, 2014) Research team meeting in the [xMuse Experimental Music Studio][].  
 + (Feb 14, 2014) [@corleymj][] adjusted map-reduce convolution to work for
   small audio samples. You can now listen to audio convolution by downloading
@@ -74,6 +78,8 @@ Related Resources
 
 
 2.  **Books, notes, and other references**  
+    + [Haskell School of Music](http://haskell.cs.yale.edu/wp-content/uploads/2014/02/HSoM1.pdf)
+      from the [Yale Haskel Group](http://haskell.cs.yale.edu/).
     + [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
 	+ [Malsen and Rockmore](http://www.ams.org/journals/jams/1997-10-01/S0894-0347-97-00219-1/S0894-0347-97-00219-1.pdf)
 	  1997 article on computing FT over nonabelian groups.  
