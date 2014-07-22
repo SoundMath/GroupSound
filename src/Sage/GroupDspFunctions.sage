@@ -145,6 +145,7 @@ def displayTranslations(els,f):
     for i in range(len(f)):
         print i, "* f: ", translation(els,f,els[i])
 
+<<<<<<< HEAD
 
 '''Fast convolution for semidirect product groups of the form C_n:C_2'''
 def SdpConvolution(u, v, gp):
@@ -397,3 +398,53 @@ def scalarMultiple(c, x):
 
 
 
+=======
+class GroupDSP:
+    def __init__(self,els):
+        self.els = els
+        self.size = len(els)
+        self.inverses = []
+        self.mult_table=[]
+        for x in range(self.size):
+            self.inverses.append(els[x]^-1)
+            self.mult_table.append([])
+            for y in range(self.size):
+                self.mult_table[x].append(els[x]*els[y])
+        
+   
+    def translation(self,f,y):
+        if(self.size != len(f)):
+            raise Exception("Signal length must be equal to order of group")
+        z = self.inverses[self.els.index(y)]
+        Tfy = [None]*self.size
+        for k in range(self.size):
+            Tfy[k] = f[self.els.index(z*self.els[k])]
+           
+        return Tfy
+       
+    def prodTranslation(self,f,g,k):
+        x = f[k]
+        #print(els[k])
+        y = self.translation(g,self.els[k])
+        return [x * y1 for y1 in y]
+       
+    def bruteConvolution(self, f, g):
+        if(self.size != len(f) or self.size != len(g)):
+            raise Exception("Length of input functions must match the order of the group")
+        
+        weightedTranslations = [None]*self.size
+        for k in range(self.size):
+            weightedTranslations[k] = self.prodTranslation(f,g,k)
+        
+        retvals = [sum(i) for i in zip(*weightedTranslations)]
+        return retvals
+           
+    
+    
+        weightedTranslations = [None]*self.size
+        for k in range(self.size):
+            weightedTranslations[k] = self.prodTranslation(f,g,k)
+        
+        retvals = [sum(i) for i in zip(*weightedTranslations)]
+        return retvals
+>>>>>>> 6a9c1b4a370ac17c1be5f8a3ec7173de5182b01e
