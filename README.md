@@ -2,7 +2,7 @@ Group Sound
 ===========
 
 This is the main repository for original research on the acoustical properties
-of nonabelian group filters.   
+of nonabelian group filters.  
 
 --------------------------------------------
 
@@ -24,7 +24,7 @@ and elegantly derived if we define our functions on Z/nZ, the abelian group of
 integers modulo n. If we replace this underlying "index set" with a nonabelian
 group, then translation may be written f(y<sup>-1</sup>x), and the resulting audio
 filters arising from convolution naturally produce different effects than those
-obtained with ordinary (abelian group) convolution.  
+obtained with ordinary (abelian group) convolution.
 
 The aim of this project is to explore the idea of using the underlying finite
 group (i.e., the index set) as an adjustable parameter of a digital audio
@@ -36,8 +36,12 @@ to get a sense of the "acoustical characters" of finite groups.
 News
 ----
 + (Feb 25, 2014) [@corleymj][] will give a preliminary report on GroupSound at the
-  spring Pi Mu Epsilon Math Honors Society initiation meeting (in Petigru at
-  6:30; [advertisement](http://www.math.sc.edu/~pme/year/2013-14/14sInitiationTalk.pdf)).  
+  spring Pi Mu Epsilon Math Honors Society initiation meeting (in LeConte 310 at
+  6:30;
+  [advertisement](http://www.math.sc.edu/~pme/year/2013-14/14sInitiationTalk.pdf)).  
+  Matt's talk went exceptionally well, especially considering it was his first
+  time presenting on this topic.  Music Mentor Reg Bain said the talk was
+  "fantasic" and I (the math mentor) quite agree.  Way to go Matt!  
 + (Feb 17, 2014) Research team meeting in the [xMuse Experimental Music Studio][].  
 + (Feb 14, 2014) [@corleymj][] adjusted map-reduce convolution to work for
   small audio samples. You can now listen to audio convolution by downloading
@@ -60,19 +64,22 @@ News
 Related Resources
 -----------------
 1.  **Programming**  
-    *Primary languages:* [Sage](http://sagemath.org),
-    [GAP](http://gap-system.org/),
-    [Octave](http://www.gnu.org/software/octave/),
-    [Scala](http://www.scala-lang.org/);  
-    *Others:*
-    [CSound](http://www.csounds.com/),
-    [Pure Data](http://puredata.info/),
-    [Supercollider](http://supercollider.sourceforge.net/),
+    *Primary languages:*
+	- [Sage](http://sagemath.org) -- our primary language (for now at least).
+	    -  [useful doc page](http://www.sagemath.org/doc/constructions/groups.html) explaining how to construct finite groups in Sage.
+		- [GAP](http://gap-system.org/) -- we use GAP functions from within Sage.  
+    - [Scala](http://www.scala-lang.org/) -- we will program in Scala later, after the initial prototyping phase of development.  
+	- [Of Algebird, Monoids, Monads,...](http://www.michael-noll.com/blog/2013/12/02/twitter-algebird-monoid-monad-for-large-scala-data-analytics/)
+-- explains some of the interesting new Twitter libraries that assume data structures with certain algebraic properties.  
+
+	*Others:*  
+    [CSound](http://www.csounds.com/), [Pure Data](http://puredata.info/), [Supercollider](http://supercollider.sourceforge.net/), 
     [Chuck](http://chuck.cs.princeton.edu/).
 
 
 2.  **Books, notes, and other references**  
-    + [Algebraic Signal Processing Theory](http://www.ece.cmu.edu/~smart/research.html)    
+    + [Haskell School of Music](http://haskell.cs.yale.edu/wp-content/uploads/2014/02/HSoM1.pdf)
+      from the [Yale Haskel Group](http://haskell.cs.yale.edu/).
     + [Music and Computers: a theoretical and historical approach](http://music.columbia.edu/cmc/MusicAndComputers/)
 	+ [Malsen and Rockmore](http://www.ams.org/journals/jams/1997-10-01/S0894-0347-97-00219-1/S0894-0347-97-00219-1.pdf)
 	  1997 article on computing FT over nonabelian groups.  
