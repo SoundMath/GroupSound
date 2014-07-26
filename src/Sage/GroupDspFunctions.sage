@@ -1,4 +1,5 @@
 from sys import exit
+import numpy
 import wave
 
 def translation(els, f, y):
@@ -206,7 +207,7 @@ def SdpConvolution(u, v, gp):
     Args:
         u -- 1D array (signal)
         v -- 1D array (signal) of same length as u
-        gp -- (int) indicates group wrtw convolution is performed
+        gp -- (int) indicates which group action to use in semidirect product.
 
     Returns:
         y -- 1D array (signal) stores resulting convolution product.
@@ -229,46 +230,44 @@ def SdpConvolution(u, v, gp):
     n2 = len(u)    # signal length: 2*n
     n = n2/2       # signal half-length: n
     nn = range(n)  # {0, 1, ..., n-1}
-    rn = indexset(n,gp);
-    uu = u[:n]     # first half of signal
+    rn = indexset(n, gp);
+    uu2 = [u[rn[k]+n] for k in range(n)]
+    uu = u[:n] + uu2  # concatenation
 
-    for k in range(n):
-        uu[k+n]=u[rn[k]+n]
-
-    [u1,u2]=SdpTransform(uu,gp)
-    [v1,v2]=SdpTransform(v,gp)
-
-    uhvh2 = pprod(u2[:n],v2[:n])
-    utvt2 = pprod(u2[n:],v2[n:])
-    uhvh1 = pprod(u1[:n],v1[:n])
-    c1 = uhvh2 + utvt2 + scalarMultiple(math.sqrt(2), uhvh1)
-
-    utvh2 = pprod(u2[n:],v2[:n])
-    uhvt2 = pprod(u2[:n],v2[n:])
-    utvt1 = pprod(u1[n:],v1[n:])
-    c2 = utvh2 + uhvt2 + scalarMultiple(math.sqrt(2), utvt1)
-
-    c = c1 + c2
-
-    y = scalarMultiple(math.sqrt(n), in_2(c,gp))
-
-    return y
+    [u1, u2] = SdpTransform(uu, gp)  # matlab: [u1,u2]=n_2(uu(:,1),gp);
+    [v1, v2] = SdpTransform(v, gp)   # matlab: [v1,v2]=n_2(v(:,1),gp);
 
 
+    # matlab: c1 = u2(1:n).*v2(1:n) + u2(1+n:n2).*v2(1+n:n2) + sqrt(2)*u1(1:n).*v1(1:n);
+    uhvh2 = pprod( u2[:n], v2[:n] )
+    utvt2 = pprod( u2[n:], v2[n:] )
+    uhvh1 = scalarMultiple( math.sqrt(2), pprod( u1[:n], v1[:n] ) )
+    c1 = ppsum( [uhvh2, utvt2, uhvh1 ] )  # point-wise sum of three vectors
+
+    # matlab: c2 = u2(1+n:n2).*v2(1:n) + u2(1:n).*v2(1+n:n2) + sqrt(2)*u1(1+n:n2).*v1(1+n:n2);
+    utvh2 = pprod( u2[n:], v2[:n] )
+    uhvt2 = pprod( u2[:n], v2[n:] )
+    utvt1 = scalarMultiple(math.sqrt(2), pprod( u1[n:], v1[n:] ) )
+    c2 = ppsum( [utvh2, uhvt2, utvt1] )
+
+    c = c1 + c2  # concatenation
+
+    # matlab: return sqrt(n)*in_2(c,gp);
+    return scalarMultiple( math.sqrt(n), inverseSdpTransform(c, gp) )
 
 
 def SdpTransform(f,gp):
     '''Semidirect product transform.
     Args:
         f -- signal whose expansion coefs will be computed.
-        gp -- (int) indicates action group to use for C_2.
+        gp -- (int) indicates which group action to use in semidirect product.
 
     Returns:
         y1 -- expansion coefs of signal wrt semidirect product group C_N:C_2.
         y2 -- ???
 
     Remarks:
-        o  For input signal f, n_2(f,gp) computes expansion coefficients 
+        o  For input signal f, SdpTransform(f,gp) computes expansion coefficients 
            wrt semidirect product group C_N:C_2 where input argument 
            gp specifies the action group C_2.
         o  Use this for abelian by abelian semidirect product groups 
@@ -283,7 +282,6 @@ def SdpTransform(f,gp):
                 gp=1:  x --> x^{-1}
                 gp=2:  x^k --> x^{(m+1)k}
                 gp=3:  x^k --> x^{(m-1)k}
-
 
     See also: matlab program n_2.m
     '''
@@ -301,19 +299,20 @@ def SdpTransform(f,gp):
     nn = range(n)            # {0, 1, ..., N-1}
     rt2 = 1/math.sqrt(2)
     y1 = n2*[0]
-    y2 = n2*[0]
-    bf = n2*[0]
+
     # Take ifft of first half of signal:
-    bf[:n] = math.sqrt(n) * numpy.fft.ifft(f[:n])
+    bf1 = scalarMultiple( math.sqrt(n), numpy.fft.ifft(f[:n]) )
     # Take ifft of second half of signal:
-    bf[n:] = math.sqrt(n) * numpy.fft.ifft(f[n:]);
+    bf2 = scalarMultiple( math.sqrt(n), numpy.fft.ifft(f[n:]) )
+    # Concatenate the results:
+    bf = bf1 + bf2  
 
     if len(y1) != len(bf):
         raise Exception("somethings wrong: bf and y1 should have same length")
 
     if (gp==1):    # x --> x^{-1}
         d1 = 2
-        c1 = [1, m+1]
+        c1 = [0, m]
 
     if (gp==2):    # x^k --> x^{(m+1)k}
         raise Exception("not implemented: gp must be 1")
@@ -325,25 +324,133 @@ def SdpTransform(f,gp):
         raise Exception("not implemented: gp must be 1")
         # TODO: implement other groups
         # d1 = 2
-        # c1 = [1, m-1]
+        # c1 = [0, m-2]
 
-    for k in range(d1):
-        t1 = rt2 * ( bf[c1[k]] + bf[c1[k]+n] )
-        t2 = rt2 * ( bf[c1[k]] - bf[c1[k]+n] )
-        bf[c1[k]] = t1
-        bf[c1[k]+n] = t2
-        y1[c1[k]] = t1
-        y1[c1[k]+n] = t2
+    # WARNING: the indices used here might be the wrong ones!
+    t1 = 1/math.sqrt(2) * (bf[0] + bf[n])
+    t2 = 1/math.sqrt(2) * (bf[0] - bf[n])
+    bf[0] = t1
+    bf[n] = t2
+    y1[0] = t1
+    y1[n] = t2
 
-    if len(y1) != len(bf):
-        raise Exception("somethings wrong: bf and y1 should have same size")
+    t1 = 1/math.sqrt(2) * ( bf[m] + bf[m+n] )
+    t2 = 1/math.sqrt(2) * ( bf[m] - bf[m+n] )
+    bf[m] = t1
+    bf[m+n] = t2
+    y1[m] = t1
+    y1[m+n] = t2
 
-    return pdiff(bf, y1)
+    # For now, we've just implemented a special case, so we don't need
+    # this more general for loop:
+    #   for k in range(d1):
+    #       t1 = rt2 * ( bf[c1[k]] + bf[c1[k]+n] )
+    #       t2 = rt2 * ( bf[c1[k]] - bf[c1[k]+n] )
+    #       bf[c1[k]] = t1
+    #       bf[c1[k]+n] = t2
+    #       y1[c1[k]] = t1
+    #       y1[c1[k]+n] = t2
+
+
+    # matlab:
+    # t1=rt2*(bf(c1(k))+bf(c1(k)+n));
+    # t2=rt2*(bf(c1(k))-bf(c1(k)+n));
+    # bf(c1(k))=t1;
+    # bf(c1(k)+n)=t2;
+    # y1(c1(k))=t1;
+    # y1(c1(k)+n)=t2;
+
+    return y1, pdiff(bf, y1)
 
 
 # TODO: implement the in_2 function!
-# function f=in_2(y,gp)
-# % Inverse semidirect product transform.
+def inverseSdpTransform(y, gp):
+    ''' Inverse semidirect product transform.
+    Args:
+        y -- expansion coefficients of a signal wrt semidirect product group C_N:C_2.
+        gp -- (int) indicates which group action to use in semidirect product.
+
+    Returns:
+        f -- signal for which y holds expansion coefficients wrt C_N:C_2.
+
+    Remarks:
+    o  Computes the inverse transform coefficients of a 1D signal 
+       with respect to the semidirect product group $C_N \sdp C_2$.
+       In other words, output f is the signal for which input y is 
+       the set of expansion coefficients wrt the sdp group.
+    o  Use this for abelian by abelian semidirect product groups 
+       of the form $C_N \sdp C_2$, where N is even and $C_2 = \{1, k\}$.
+    o  Signals are indexed by the elements of $C_N \sdp C_2$,
+       ordered as follows:
+       \[ 
+         C_N:C_2 = \{ 1, x, ..., x^{N-1}, k, xk, ..., x^{N-1}k \} 
+       \]
+   o  The argument gp specifies the "action" group to which 
+      $C_2 = \{1, k\}$ corresponds. Possible group actions are: 
+                gp=1:  x --> x^{-1}
+                gp=2:  x^k --> x^{(m+1)k}  (not yet implemented)
+                gp=3:  x^k --> x^{(m-1)k}  (not yet implemented)
+
+   o See also: the matlab program in_2.m.
+
+    History:
+    2001.04.02 -- original matlab program by Myoung An.
+    2004.03.23 -- comments, minor mods/additions by williamdemeo@gmail.com.
+    2014.07.25 -- python version by williamdemeo@gmail.com.
+    '''
+    n2 = len(y)              # signal length: 2*n
+    if (n2%2 != 0):
+        raise Exception("not implemented: signal length must be even")
+        # TODO: accommodate signals of odd length
+
+    if (gp!=1):
+        raise Exception("not implemented: gp must be 1")
+        # TODO: implement other groups
+
+    n = n2/2             # $N$ : signal half-length
+    m = n/2              # $N/2$ : signal quarter-length
+    nn = range(n)        # $\{ 0, 1, ..., N-1 \}$
+    rt2 = 1/math.sqrt(2)
+
+    if (gp==1):           # x --> x^{-1}
+        d1 = 2
+        c1 = [0, m]
+
+    if (gp==2):    # x^k --> x^{(m+1)k}
+        raise Exception("not implemented: gp must be 1")
+        # TODO: implement other groups
+        # d1 = m
+        # c1 = 2*range(m)
+
+    if (gp==3):    # x^k --> x^{(m-1)k}
+        raise Exception("not implemented: gp must be 1")
+        # TODO: implement other groups
+        # d1 = 2
+        # c1 = [0, m-2]
+
+    # for k in range(d1):
+    #     t1 = y[c1[k]] + y[c1[k]+n]
+    #     t2 = y[c1[k]] - y[c1[k]+n]
+    #     y[c1[k]] = rt2 * t1
+    #     y[c1[k]+n] = rt2 * t2
+
+    t1 = y[0] + y[n]
+    t2 = y[0] - y[n]
+    y[0] = rt2 * t1
+    y[n] = rt2 * t2
+
+    t1 = y[m] + y[m+n]
+    t2 = y[m] - y[m+n]
+    y[m] = rt2 * t1
+    y[m+n] = rt2 * t2
+
+    # matlab: f1 = (1/sqrt(n))*fft(y(1:n));
+    f1 = scalarMultiple( 1/math.sqrt(n), numpy.fft.fft( y[:n] ) )
+    # matlab: f2 = (1/sqrt(n))*fft(y(1+n:n2));
+    f2 = scalarMultiple( 1/math.sqrt(n), numpy.fft.fft( y[n:] ) )
+
+    return f1 + f2
+
 
 
 '''Some Utility functions'''
@@ -372,6 +479,19 @@ def shiftInPlace(l, n):
     l.extend(head)
     return l
 
+
+
+'''Point-wise sum of two vectors.'''
+def psum(x, y):
+    return map(lambda a, b: a+b, x, y) 
+
+
+'''Point-wise sum of a vector of vectors.'''
+def ppsum(X):
+    if (len(X)==1):
+        return X[0]
+    else:
+        return psum( X[0], ppsum(X[1:]) )
 
 
 '''Point-wise product of two vectors.'''
