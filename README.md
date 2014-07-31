@@ -2,7 +2,7 @@ Group Sound
 ===========
 
 This is the main repository for original research on the acoustical properties
-of nonabelian group filters.   
+of nonabelian group filters.  
 
 --------------------------------------------
 
@@ -24,7 +24,7 @@ and elegantly derived if we define our functions on Z/nZ, the abelian group of
 integers modulo n. If we replace this underlying "index set" with a nonabelian
 group, then translation may be written f(y<sup>-1</sup>x), and the resulting audio
 filters arising from convolution naturally produce different effects than those
-obtained with ordinary (abelian group) convolution.  
+obtained with ordinary (abelian group) convolution.
 
 The aim of this project is to explore the idea of using the underlying finite
 group (i.e., the index set) as an adjustable parameter of a digital audio
@@ -41,7 +41,7 @@ News
   [advertisement](http://www.math.sc.edu/~pme/year/2013-14/14sInitiationTalk.pdf)).  
   Matt's talk went exceptionally well, especially considering it was his first
   time presenting on this topic.  Music Mentor Reg Bain said the talk was
-  "fantasik" and I (the math mentor) quite agree.  Way to go Matt!
+  "fantasic" and I (the math mentor) quite agree.  Way to go Matt!  
 + (Feb 17, 2014) Research team meeting in the [xMuse Experimental Music Studio][].  
 + (Feb 14, 2014) [@corleymj][] adjusted map-reduce convolution to work for
   small audio samples. You can now listen to audio convolution by downloading
